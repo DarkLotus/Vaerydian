@@ -1,0 +1,6 @@
+G:\workspace\Vaerydian\WorldGeneration\bin\x86\Debug\WorldGeneration.dll
+G:\workspace\Vaerydian\WorldGeneration\bin\x86\Debug\WorldGeneration.pdb
+G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.dll
+G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.pdb
