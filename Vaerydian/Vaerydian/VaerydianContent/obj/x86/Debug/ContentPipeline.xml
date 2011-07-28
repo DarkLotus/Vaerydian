@@ -7,8 +7,17 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\General.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\General.xnb</Output>
       <Time>2011-07-17T08:29:58.0953573-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Loading.spritefont</Source>
+      <Name>Loading</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Loading.xnb</Output>
+      <Time>2011-07-25T16:49:41.9466461-04:00</Time>
     </Item>
     <Item>
       <Source>frame.bmp</Source>
@@ -16,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame.xnb</Output>
       <Time>2011-07-16T15:29:32.5214548-04:00</Time>
     </Item>
     <Item>
@@ -25,7 +34,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_h.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_h.xnb</Output>
       <Time>2011-07-16T14:45:14.6054307-04:00</Time>
     </Item>
     <Item>
@@ -34,7 +43,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_v.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_v.xnb</Output>
       <Time>2011-07-16T14:44:56.1053726-04:00</Time>
     </Item>
     <Item>
@@ -43,7 +52,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_c.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\frame_c.xnb</Output>
       <Time>2011-07-16T15:42:35.3472299-04:00</Time>
     </Item>
     <Item>
@@ -52,7 +61,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Frame_c2.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Frame_c2.xnb</Output>
       <Time>2011-07-16T15:37:05.7803797-04:00</Time>
     </Item>
     <Item>
@@ -61,7 +70,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\grass.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\grass.xnb</Output>
       <Time>2011-07-21T21:36:06.8423675-04:00</Time>
     </Item>
     <Item>
@@ -70,7 +79,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\mountains.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\mountains.xnb</Output>
       <Time>2011-07-21T21:36:06.8453677-04:00</Time>
     </Item>
     <Item>
@@ -79,7 +88,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\ocean.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\ocean.xnb</Output>
       <Time>2011-07-21T21:36:06.8483678-04:00</Time>
     </Item>
     <Item>
@@ -88,7 +97,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\temperature.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\temperature.xnb</Output>
       <Time>2011-07-23T07:07:39.249631-04:00</Time>
     </Item>
     <Item>
@@ -97,17 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\export.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\export.xnb</Output>
       <Time>2011-07-23T20:25:24.0235044-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Loading.spritefont</Source>
-      <Name>Loading</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Loading.xnb</Output>
-      <Time>2011-07-25T16:49:41.9466461-04:00</Time>
     </Item>
     <Item>
       <Source>arctic.png</Source>
@@ -115,7 +115,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\arctic.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\arctic.xnb</Output>
       <Time>2011-07-25T21:00:57.894941-04:00</Time>
     </Item>
     <Item>
@@ -124,7 +124,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\beach.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\beach.xnb</Output>
       <Time>2011-07-25T21:00:57.8979412-04:00</Time>
     </Item>
     <Item>
@@ -133,7 +133,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\forest.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\forest.xnb</Output>
       <Time>2011-07-25T21:00:57.8999413-04:00</Time>
     </Item>
     <Item>
@@ -142,7 +142,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\grasslands.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\grasslands.xnb</Output>
       <Time>2011-07-25T21:00:57.9019414-04:00</Time>
     </Item>
     <Item>
@@ -151,7 +151,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\jungle.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\jungle.xnb</Output>
       <Time>2011-07-25T21:00:57.9049416-04:00</Time>
     </Item>
     <Item>
@@ -160,7 +160,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\desert.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\desert.xnb</Output>
       <Time>2011-07-25T21:00:57.9079417-04:00</Time>
     </Item>
     <Item>
@@ -169,7 +169,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\swamp.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\swamp.xnb</Output>
       <Time>2011-07-25T21:00:57.9109419-04:00</Time>
     </Item>
     <Item>
@@ -178,7 +178,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\tundra.xnb</Output>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\tundra.xnb</Output>
       <Time>2011-07-25T21:00:57.9139421-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -187,10 +187,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>G:\workspace\Vaerydian\Vaerydian\VaerydianContent\</RootDirectory>
-      <LoggerRootDirectory>G:\workspace\Vaerydian\Vaerydian\Vaerydian\</LoggerRootDirectory>
-      <IntermediateDirectory>G:\workspace\Vaerydian\Vaerydian\VaerydianContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>G:\workspace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\workplace\Vaerydian\Vaerydian\VaerydianContent\</RootDirectory>
+      <LoggerRootDirectory>C:\workplace\Vaerydian\Vaerydian\Vaerydian\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\workplace\Vaerydian\Vaerydian\VaerydianContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

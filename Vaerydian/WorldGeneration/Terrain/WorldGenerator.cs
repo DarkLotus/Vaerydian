@@ -421,7 +421,7 @@ namespace WorldGeneration.Terrain
             int xVal;
             int yVal;
 
-            int generations = 50;
+            int generations = 40;
             float rainPropigation = 3.5f;
             float rainMultiplier = 300f;
 
@@ -572,21 +572,6 @@ namespace WorldGeneration.Terrain
                         if (terrain.Temperature <= 0.15)
                         {
                             terrain.LandTerrainType = LandTerrainType.Arctic;
-                        }
-                        else if (terrain.Temperature <=0.25f)
-                        {
-                            terrain.LandTerrainType = LandTerrainType.Tundra;
-                        }
-                        else
-                        {
-                        }
-                        
-
-
-
-                        if (terrain.Temperature <= 0.15)
-                        {
-                            terrain.LandTerrainType = LandTerrainType.Arctic;//done
                         }
                         else if (terrain.Temperature <= 0.25f && terrain.Height < 0.5)
                         {

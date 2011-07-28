@@ -1,4 +1,5 @@
 Content\General.xnb
+Content\Loading.xnb
 Content\frame.xnb
 Content\frame_h.xnb
 Content\frame_v.xnb
@@ -9,7 +10,6 @@ Content\mountains.xnb
 Content\ocean.xnb
 Content\temperature.xnb
 Content\export.xnb
-Content\Loading.xnb
 Content\arctic.xnb
 Content\beach.xnb
 Content\forest.xnb

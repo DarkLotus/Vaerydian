@@ -1,2 +1,3 @@
 F:\workspace\Vaerydian\Vaerydian\VaerydianContent\obj\x86\Debug\ResolveAssemblyReference.cache
 G:\workspace\Vaerydian\Vaerydian\VaerydianContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\workplace\Vaerydian\Vaerydian\VaerydianContent\obj\x86\Debug\ResolveAssemblyReference.cache
