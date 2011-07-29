@@ -568,14 +568,33 @@ namespace WorldGeneration.Terrain
                     else if (terrain.BaseTerrainType == BaseTerrainType.Land)
                     {
 
+                        //terrain.Temperature <= 0.15
+                        //Arctic
+                        //terrain.Temperature <= 0.25f && terrain.Height < 0.5
+                        //Tundra
+                        //terrain.Temperature >.45 && terrain.Rainfall <= 0.05
+                        //Desert
+                        //terrain.Height > 0.1 && terrain.Height <= 0.15
+                        //beach
+                        //terrain.Temperature > 0.75f && terrain.Rainfall > 0.55f
+                        //jungle
+                        //terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f
+                        //swamp
+                        //terrain.Temperature > 0.25f && terrain.Rainfall > 0.25f
+                        //forest
+                        //whatever
+                        //grassland
+
 
                         if (terrain.Temperature <= 0.15)
                         {
                             terrain.LandTerrainType = LandTerrainType.Arctic;
+                            continue;
                         }
                         else if (terrain.Temperature <= 0.25f && terrain.Height < 0.5)
                         {
                             terrain.LandTerrainType = LandTerrainType.Tundra;
+                            continue;
                         }
                         else if (terrain.Rainfall <= 0.05 && terrain.Temperature >.45)
                         {
@@ -606,6 +625,7 @@ namespace WorldGeneration.Terrain
                         else
                         {
                             terrain.LandTerrainType = LandTerrainType.Grassland;
+                            continue;
                         }
 
 

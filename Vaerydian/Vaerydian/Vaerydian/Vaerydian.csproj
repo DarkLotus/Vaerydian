@@ -107,6 +107,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Characters\Character.cs" />
     <Compile Include="FontManager.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Maps\Map.cs" />
@@ -171,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abilities\" />
-    <Folder Include="Characters\" />
     <Folder Include="Items\" />
     <Folder Include="Skills\" />
   </ItemGroup>
