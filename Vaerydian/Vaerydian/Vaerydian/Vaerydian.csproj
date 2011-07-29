@@ -109,6 +109,9 @@
   <ItemGroup>
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\EnemyCharacter.cs" />
+    <Compile Include="Characters\NonPlayerCharacter.cs" />
+    <Compile Include="Characters\PlayerCharacter.cs" />
     <Compile Include="FontManager.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Maps\Map.cs" />

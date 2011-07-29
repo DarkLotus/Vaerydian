@@ -421,7 +421,7 @@ namespace WorldGeneration.Terrain
             int xVal;
             int yVal;
 
-            int generations = 40;
+            int generations = 50;
             float rainPropigation = 3.5f;
             float rainMultiplier = 300f;
 
