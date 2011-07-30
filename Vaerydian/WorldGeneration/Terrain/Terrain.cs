@@ -49,7 +49,7 @@ namespace WorldGeneration.Terrain
         Foothill,
         Steppes,
         Cascade,
-        Divide,
+        SnowyPeak,
         Volcano
     }
 

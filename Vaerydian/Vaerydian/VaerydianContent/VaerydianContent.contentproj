@@ -91,17 +91,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="grass.png">
+    <Compile Include="terrain\grass.png">
       <Name>grass</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="mountains.png">
+    <Compile Include="terrain\mountains.png">
       <Name>mountains</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="ocean.png">
+    <Compile Include="terrain\ocean.png">
       <Name>ocean</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -122,42 +122,42 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="arctic.png">
+    <Compile Include="terrain\arctic.png">
       <Name>arctic</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="beach.png">
+    <Compile Include="terrain\beach.png">
       <Name>beach</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="forest.png">
+    <Compile Include="terrain\forest.png">
       <Name>forest</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="grasslands.png">
+    <Compile Include="terrain\grasslands.png">
       <Name>grasslands</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="jungle.png">
+    <Compile Include="terrain\jungle.png">
       <Name>jungle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="desert.png">
+    <Compile Include="terrain\desert.png">
       <Name>desert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="swamp.png">
+    <Compile Include="terrain\swamp.png">
       <Name>swamp</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="tundra.png">
+    <Compile Include="terrain\tundra.png">
       <Name>tundra</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -171,8 +171,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="foothills.png">
+    <Compile Include="terrain\steppes.png">
+      <Name>steppes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="terrain\foothills.png">
       <Name>foothills</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="terrain\cascade.png">
+      <Name>cascade</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="terrain\peak.png">
+      <Name>peak</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

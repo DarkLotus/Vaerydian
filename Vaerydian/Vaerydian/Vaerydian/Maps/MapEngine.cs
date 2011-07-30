@@ -207,18 +207,21 @@ namespace Vaerydian.Maps
         /// </summary>
         public void LoadContent()
         {
-            textures.Add(me_contentManager.Load<Texture2D>("grass"));//0
-            textures.Add(me_contentManager.Load<Texture2D>("ocean"));//1
-            textures.Add(me_contentManager.Load<Texture2D>("mountains"));//2
-            textures.Add(me_contentManager.Load<Texture2D>("arctic"));//3
-            textures.Add(me_contentManager.Load<Texture2D>("beach"));//4
-            textures.Add(me_contentManager.Load<Texture2D>("forest"));//5
-            textures.Add(me_contentManager.Load<Texture2D>("grasslands"));//6
-            textures.Add(me_contentManager.Load<Texture2D>("jungle"));//7
-            textures.Add(me_contentManager.Load<Texture2D>("desert"));//8
-            textures.Add(me_contentManager.Load<Texture2D>("swamp"));//9
-            textures.Add(me_contentManager.Load<Texture2D>("tundra"));//10
-            textures.Add(me_contentManager.Load<Texture2D>("foothills"));//11
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\grass"));//0
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\ocean"));//1
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\mountains"));//2
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\arctic"));//3
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\beach"));//4
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\forest"));//5
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\grasslands"));//6
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\jungle"));//7
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\desert"));//8
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\swamp"));//9
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\tundra"));//10
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\foothills"));//11
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\steppes"));//12
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\cascade"));//13
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\peak"));//14
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -347,8 +350,12 @@ namespace Vaerydian.Maps
                 case BaseTerrainType.Mountain:
                     if (terrain.MountainTerrainType == MountainTerrainType.Foothill)
                         return 11;
+                    if (terrain.MountainTerrainType == MountainTerrainType.Steppes)
+                        return 12;
                     if(terrain.MountainTerrainType == MountainTerrainType.Cascade)
-                        return 2;
+                        return 13;
+                    if (terrain.MountainTerrainType == MountainTerrainType.SnowyPeak)
+                        return 14;
                     return 2;
                 default:
                     return 0;

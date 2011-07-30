@@ -515,6 +515,7 @@ namespace WorldGeneration.Terrain
                         terrain5 = generationOLD[xVal, yVal - 1];  
 
                         avg = (terrain2 + rainPropigation * (terrain1 + terrain3) + rainPropigation * 0.5f * (terrain4 + terrain5)) / 5f;
+                        
                         val = rainMultiplier * waterContrib * wg_WorldTerrainMap[x, y].Temperature;
                         avg2 = (avg + val) / 2f;
 
@@ -632,10 +633,25 @@ namespace WorldGeneration.Terrain
                     }//check if base type is mountain
                     else if (terrain.BaseTerrainType == BaseTerrainType.Mountain)
                     {
-                        //terrain.
+                        
                         if (terrain.Height < 0.5 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
                         {
                             terrain.MountainTerrainType = MountainTerrainType.Foothill;
+                            continue;
+                        }
+                        else if (terrain.Height < 0.7 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.15)
+                        {
+                            terrain.MountainTerrainType = MountainTerrainType.Steppes;
+                            continue;
+                        }
+                        else if (terrain.Height >= 0.7 && terrain.Rainfall < 0.15)
+                        {
+                            terrain.MountainTerrainType = MountainTerrainType.Cascade;
+                            continue;
+                        }
+                        else if (terrain.Height >= 0.7 && terrain.Rainfall > 0.15)
+                        {
+                            terrain.MountainTerrainType = MountainTerrainType.SnowyPeak;
                             continue;
                         }
                         else
