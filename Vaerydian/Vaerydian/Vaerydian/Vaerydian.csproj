@@ -122,13 +122,13 @@
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenManager.cs" />
-    <Compile Include="Screens\TestScreen1.cs" />
-    <Compile Include="Screens\TestScreen2.cs" />
+    <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
+    <Compile Include="Windows\TextMenuWindow.cs" />
     <Compile Include="Windows\TimedDialogWindow.cs" />
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />

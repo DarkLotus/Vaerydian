@@ -66,7 +66,7 @@ namespace Vaerydian
             //a test screen
             
             //screenManager.addScreen(new WorldScreen());
-            LoadingScreen.Load(screenManager, true, new WorldScreen());
+            LoadingScreen.Load(screenManager, false, new StartScreen());
 
 
             base.Initialize();
