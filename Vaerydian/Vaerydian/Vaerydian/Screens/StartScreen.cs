@@ -27,7 +27,7 @@ namespace Vaerydian.Screens
             ss_MenuItems.Add("Options");
             ss_MenuItems.Add("Exit");
 
-            ss_TextMenu = new TextMenuWindow(new Point(450, 250), new Point(100, 100), ss_MenuItems);
+            ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
 
             this.ScreenManager.WindowManager.addWindow(ss_TextMenu);
 

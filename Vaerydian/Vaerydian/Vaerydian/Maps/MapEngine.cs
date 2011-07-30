@@ -218,6 +218,7 @@ namespace Vaerydian.Maps
             textures.Add(me_contentManager.Load<Texture2D>("desert"));//8
             textures.Add(me_contentManager.Load<Texture2D>("swamp"));//9
             textures.Add(me_contentManager.Load<Texture2D>("tundra"));//10
+            textures.Add(me_contentManager.Load<Texture2D>("foothills"));//11
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -344,6 +345,10 @@ namespace Vaerydian.Maps
                 case BaseTerrainType.Ocean:
                     return 1;
                 case BaseTerrainType.Mountain:
+                    if (terrain.MountainTerrainType == MountainTerrainType.Foothill)
+                        return 11;
+                    if(terrain.MountainTerrainType == MountainTerrainType.Cascade)
+                        return 2;
                     return 2;
                 default:
                     return 0;

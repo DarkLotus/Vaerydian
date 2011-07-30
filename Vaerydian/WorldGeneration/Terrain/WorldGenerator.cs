@@ -632,6 +632,19 @@ namespace WorldGeneration.Terrain
                     }//check if base type is mountain
                     else if (terrain.BaseTerrainType == BaseTerrainType.Mountain)
                     {
+                        //terrain.
+                        if (terrain.Height < 0.5 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
+                        {
+                            terrain.MountainTerrainType = MountainTerrainType.Foothill;
+                            continue;
+                        }
+                        else
+                        {
+                            terrain.MountainTerrainType = MountainTerrainType.Cascade;
+                            continue;
+                        }
+
+
                     }
                 }
             }
