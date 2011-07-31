@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Vaerydian.Windows;
@@ -26,6 +25,7 @@ namespace Vaerydian.Screens
             ss_MenuItems.Add("Load Game");
             ss_MenuItems.Add("Options");
             ss_MenuItems.Add("Exit");
+            ss_MenuItems.Add("Combat Test");
 
             ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
 
@@ -83,6 +83,15 @@ namespace Vaerydian.Screens
                 {
                     //tell the input manager that the player wants to quit
                     InputManager.yesExit = true;
+                }
+                else if (ss_TextMenu.MenuIndex == 4)//test combat
+                {
+                    //dispose of this screen
+                    this.ScreenManager.removeScreen(this);
+                    //dispose of the menu
+                    this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
+                    //load the world screen
+                    LoadingScreen.Load(this.ScreenManager, true, new CombatScreen());
                 }
 
             }
