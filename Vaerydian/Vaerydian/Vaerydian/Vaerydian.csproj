@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\Ability.cs" />
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\EnemyCharacter.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
+    <Compile Include="Skills\Skill.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
@@ -177,9 +179,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Abilities\" />
     <Folder Include="Items\" />
-    <Folder Include="Skills\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

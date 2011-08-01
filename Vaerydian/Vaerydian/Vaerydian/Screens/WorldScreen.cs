@@ -173,11 +173,13 @@ namespace Vaerydian.Screens
 
             ws_MapEngine.DrawMap(gameTime, ws_SpriteBatch);
 
+            /*
             ws_SpriteBatch.Begin();
 
             ws_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], "WorldScreen", Vector2.Zero, Color.Red);
 
             ws_SpriteBatch.End();
+             */
         }
 
 

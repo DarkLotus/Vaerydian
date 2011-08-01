@@ -278,7 +278,7 @@ namespace Vaerydian.Maps
                 }
             }
 
-            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "MaxVal: " + maxVal, new Vector2(0, 28), Color.Blue);
+            //spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "MaxVal: " + maxVal, new Vector2(0, 28), Color.Blue);
 
             spriteBatch.End();
 

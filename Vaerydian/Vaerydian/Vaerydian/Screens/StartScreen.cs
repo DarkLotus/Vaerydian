@@ -16,19 +16,23 @@ namespace Vaerydian.Screens
 
         private List<String> ss_MenuItems = new List<String>();
 
+        private Texture2D ss_TitleTexture;
+
+        private SpriteBatch ss_SpriteBatch;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            //create the menu items
             ss_MenuItems.Add("New Game");
             ss_MenuItems.Add("Load Game");
             ss_MenuItems.Add("Options");
             ss_MenuItems.Add("Exit");
             ss_MenuItems.Add("Combat Test");
-
+            //create the menu
             ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
-
+            //register the menu
             this.ScreenManager.WindowManager.addWindow(ss_TextMenu);
 
         }
@@ -36,6 +40,9 @@ namespace Vaerydian.Screens
         public override void LoadContent()
         {
             base.LoadContent();
+
+            //load title texture
+            ss_TitleTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
         }
 
         public override void UnloadContent()
@@ -106,6 +113,15 @@ namespace Vaerydian.Screens
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
+            ss_SpriteBatch = this.ScreenManager.SpriteBatch;
+
+            ss_SpriteBatch.Begin();
+
+            //display title texture
+            ss_SpriteBatch.Draw(ss_TitleTexture, Vector2.Zero, Color.White);
+
+            ss_SpriteBatch.End();
         }
 
         

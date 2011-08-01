@@ -5,7 +5,13 @@ using System.Text;
 
 namespace Vaerydian.Characters
 {
-    class PlayerCharacter
+    class PlayerCharacter : Character
     {
+
+        public PlayerCharacter() 
+        {
+            
+        }
+
     }
 }

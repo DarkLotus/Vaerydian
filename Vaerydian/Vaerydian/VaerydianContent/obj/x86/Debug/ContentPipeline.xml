@@ -226,6 +226,15 @@
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\peak.xnb</Output>
       <Time>2011-07-30T19:00:58.5985411-04:00</Time>
     </Item>
+    <Item>
+      <Source>Title.png</Source>
+      <Name>Title</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Title.xnb</Output>
+      <Time>2011-07-31T14:49:46.8917891-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
