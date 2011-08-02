@@ -20,6 +20,24 @@ namespace WorldGeneration
             for(int i=0; i<512; i++) perm[i]=p[i & 255];
         }
 
+        /// <summary>
+        /// sorts perm randomly
+        /// </summary>
+        public void randomSort()
+        {
+            int j = 0;
+            int val;
+
+            for (int i = 0; i < 512; i++)
+            {
+                j = pn_Random.Next(512);
+                val = perm[j];
+                perm[j] = perm[i];
+                perm[i] = val;
+            }
+        }
+
+
         private static int[,] grad3 = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
                                        {1,0,1},{-1,0,1},{1,0,-1},{-1,0,-1},
                                        {0,1,1},{0,-1,1},{0,1,-1},{0,-1,-1}};

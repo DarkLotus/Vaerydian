@@ -82,14 +82,27 @@ namespace WorldGeneration.Terrain
         /// <summary>
         /// seeding value for world
         /// </summary>
-        private float wg_Seed;
+        private int wg_Seed;
         /// <summary>
         /// seeding value for world
         /// </summary>
-        public float Seed
+        public int Seed
         {
             get { return wg_Seed; }
             set { wg_Seed = value; }
+        }
+
+        /// <summary>
+        /// z dimension of world
+        /// </summary>
+        private float wg_ZSlice;
+        /// <summary>
+        /// z dimension of world
+        /// </summary>
+        public float ZSlice
+        {
+            get { return wg_ZSlice; }
+            set { wg_ZSlice = value; }
         }
 
         /// <summary>
@@ -147,16 +160,20 @@ namespace WorldGeneration.Terrain
         /// <param name="xDimension"></param>
         /// <param name="yDimension"></param>
         /// <param name="seed"></param>
-        public void generateNewWorld(int xDimension, int yDimension, int tileSize, float seed)
+        public void generateNewWorld(int xDimension, int yDimension, float zSlice, int tileSize, int seed)
         {
 
             wg_XDimension = xDimension;
             wg_YDimension = yDimension;
+            wg_ZSlice = zSlice;
             wg_Seed = seed;
 
             //generate world
             wg_WorldTerrainMap = new Terrain[xDimension, yDimension];
 
+            //set seed
+            perlinNoise.Random = new Random(wg_Seed);
+            perlinNoise.randomSort();
             
             //update status message
             wg_StatusMessage = "Creating Base Terrain, Height, Temperature, and Wind Maps: ";
@@ -260,7 +277,7 @@ namespace WorldGeneration.Terrain
         private void generateHeight(int x, int y, Terrain terrain)
         {
             //set its height
-            terrain.Height = perlinNoise.perlin((double)x / wg_XDimension, (double)y / wg_YDimension, wg_Seed, 5, 4, 0.9, 0.7);
+            terrain.Height = perlinNoise.perlin((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice, 5, 4, 0.9, 0.7);
 
             //figure out its base terrain type
             terrain.BaseTerrainType = BaseTerrainType.Land;

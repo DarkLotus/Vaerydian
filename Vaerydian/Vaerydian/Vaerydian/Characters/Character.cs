@@ -141,7 +141,6 @@ namespace Vaerydian.Characters
         }
 
 
-
         /// <summary>
         /// Alighnment of character
         /// </summary>

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Vaerydian.Windows;
 
 namespace Vaerydian.Screens
@@ -20,16 +21,19 @@ namespace Vaerydian.Screens
 
         private SpriteBatch ss_SpriteBatch;
 
+        private AudioEngine ss_AudioEngine;
+
         public override void Initialize()
         {
             base.Initialize();
 
             //create the menu items
-            ss_MenuItems.Add("New Game");
-            ss_MenuItems.Add("Load Game");
-            ss_MenuItems.Add("Options");
-            ss_MenuItems.Add("Exit");
-            ss_MenuItems.Add("Combat Test");
+            ss_MenuItems.Add("New Game");//0
+            ss_MenuItems.Add("Load Game");//1
+            ss_MenuItems.Add("Options");//2
+            ss_MenuItems.Add("Exit");//3
+            ss_MenuItems.Add("Instructions");//4
+            ss_MenuItems.Add("Combat Test");//5
             //create the menu
             ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
             //register the menu
@@ -43,11 +47,14 @@ namespace Vaerydian.Screens
 
             //load title texture
             ss_TitleTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
+
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
+
+
         }
 
         public override void handleInput(GameTime gameTime)
@@ -91,7 +98,10 @@ namespace Vaerydian.Screens
                     //tell the input manager that the player wants to quit
                     InputManager.yesExit = true;
                 }
-                else if (ss_TextMenu.MenuIndex == 4)//test combat
+                else if (ss_TextMenu.MenuIndex == 4)
+                {
+                }
+                else if (ss_TextMenu.MenuIndex == 5)//test combat
                 {
                     //dispose of this screen
                     this.ScreenManager.removeScreen(this);
