@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WorldGeneration.Terrain;
+using Vaerydian.Characters;
 
 namespace Vaerydian.Combat
 {
@@ -51,8 +53,15 @@ namespace Vaerydian.Combat
             set { ce_CombatState = value; }
         }
 
-
-
+        /// <summary>
+        /// create a new combat event and initialize for combat to begin
+        /// </summary>
+        /// <param name="terrain">3x3 Terrain that combat will take place on</param>
+        /// <param name="player">Current Player Character</param>
+        /// <param name="enemies">Enemies player will be fighting</param>
+        public void newCombatEvent(Terrain[][] terrain, PlayerCharacter player, EnemyCharacter[] enemies)
+        {
+        }
 
 
     }

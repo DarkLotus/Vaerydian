@@ -222,6 +222,10 @@ namespace Vaerydian.Maps
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\steppes"));//12
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\cascade"));//13
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\peak"));//14
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\littoral"));//15
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\abyssal"));//16
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\ice"));//17
+            textures.Add(me_contentManager.Load<Texture2D>("terrain\\sublittoral"));//18
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -346,6 +350,14 @@ namespace Vaerydian.Maps
                         return 10;
                     return 0;
                 case BaseTerrainType.Ocean:
+                    if (terrain.OceanTerrainType == OceanTerrainType.Littoral)
+                        return 15;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Abyssal)
+                        return 16;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Ice)
+                        return 17;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Sublittoral)
+                        return 18;
                     return 1;
                 case BaseTerrainType.Mountain:
                     if (terrain.MountainTerrainType == MountainTerrainType.Foothill)

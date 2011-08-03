@@ -15,13 +15,6 @@ namespace Vaerydian.Skills
         Enviromental
     }
 
-    public enum SkillFocus
-    {
-        Primary,
-        Secondary,
-        Notfocused
-    }
-
     public abstract class Skill
     {
         /// <summary>
@@ -63,17 +56,5 @@ namespace Vaerydian.Skills
             set { s_SkillType = value; }
         }
 
-        /// <summary>
-        /// the character's focus of this skill
-        /// </summary>
-        private SkillFocus s_SkillFous;
-        /// <summary>
-        /// the character's focus of this skill
-        /// </summary>
-        public SkillFocus SkillFous
-        {
-            get { return s_SkillFous; }
-            set { s_SkillFous = value; }
-        }
     }
 }

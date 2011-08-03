@@ -21,8 +21,6 @@ namespace Vaerydian.Screens
 
         private SpriteBatch ss_SpriteBatch;
 
-        private AudioEngine ss_AudioEngine;
-
         public override void Initialize()
         {
             base.Initialize();

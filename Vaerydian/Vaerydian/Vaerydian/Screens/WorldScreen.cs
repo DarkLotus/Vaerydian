@@ -42,9 +42,9 @@ namespace Vaerydian.Screens
 
             ws_MapEngine.YTiles = 512;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 41);
+            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 12345);
 
-            ws_MapEngine.ViewPort.Dimensions = new Point(1024, 720);
+            ws_MapEngine.ViewPort.Dimensions = new Point(1080, 675);
 
             ws_MapEngine.ViewPort.Origin = new Point(0, 0);
 

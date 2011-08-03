@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
+using LibNoise;
+using LibNoise.Modifiers;
 
 namespace WorldGeneration.Terrain
 {
@@ -27,6 +29,13 @@ namespace WorldGeneration.Terrain
 
         //perlin noise generator
         private PerlinNoise perlinNoise = new PerlinNoise();
+
+        private Perlin perlin = new Perlin();
+        private RidgedMultifractal rmf = new RidgedMultifractal();
+
+        Add add;
+        Multiply mult;
+        AbsoluteOutput ao;
 
         /// <summary>
         /// terrain map for the world
@@ -174,7 +183,24 @@ namespace WorldGeneration.Terrain
             //set seed
             perlinNoise.Random = new Random(wg_Seed);
             perlinNoise.randomSort();
+
             
+            perlin.Seed = wg_Seed;
+            perlin.Persistence = 0.5;
+            perlin.OctaveCount = 10;
+            perlin.NoiseQuality = NoiseQuality.High;
+            perlin.Frequency = 4;
+
+            rmf.Seed = wg_Seed/2;
+            rmf.OctaveCount = 10;
+            rmf.Lacunarity = 2;
+            rmf.NoiseQuality = NoiseQuality.High;
+            rmf.Frequency = 4;
+
+            add = new Add(perlin, rmf);
+            //mult = new Multiply(perlin, rmf);
+            //ao = new AbsoluteOutput(perlin);
+
             //update status message
             wg_StatusMessage = "Creating Base Terrain, Height, Temperature, and Wind Maps: ";
 
@@ -209,8 +235,8 @@ namespace WorldGeneration.Terrain
             //generate rainfall map using temperature map, wind bands, and height map
             wg_StatusMessage = "Creating Rain Map: ";
             //generateRainfall(60 , 2.3f);
-            generateRainfall();
-
+            //generateRainfall();
+            generateRainfallNew();
 
             //generateRainfall(10);
 
@@ -276,15 +302,14 @@ namespace WorldGeneration.Terrain
         /// <param name="terrain">terrain cell</param>
         private void generateHeight(int x, int y, Terrain terrain)
         {
-            //set its height
-            terrain.Height = perlinNoise.perlin((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice, 5, 4, 0.9, 0.7);
+
+            terrain.Height = perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
 
             //figure out its base terrain type
             terrain.BaseTerrainType = BaseTerrainType.Land;
             terrain.Rainfall = 0.0f;//base rainfall on land
             if (terrain.Height <= 0.1) 
             {
-                terrain.Height = 0.0;
                 terrain.BaseTerrainType = BaseTerrainType.Ocean; 
                 //since its an ocean, also set its rainfall to 100%
                 terrain.Rainfall = 1f;
@@ -322,12 +347,13 @@ namespace WorldGeneration.Terrain
             if (wg_WorldTerrainMap[x, y].Height < 0.1)
             {
                 //if it is water, reduce it down so the water is at most a temp of 0.4
-                wg_WorldTerrainMap[x, y].Temperature = wg_WorldTempBand * 0.4f;
+                //wg_WorldTerrainMap[x, y].Temperature = wg_WorldTempBand * 0.4f;
+                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.5f + (float)wg_WorldTerrainMap[x, y].Height) / 2.1f)*0.75f;
             }
             else if (wg_WorldTerrainMap[x, y].Height > 0.1)
             {
                 //if it is above 0.3 in height, start to reduce its temperature by how far away it is from max height
-                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.0f - (float)wg_WorldTerrainMap[x, y].Height) / 0.7f);
+                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.0f - (float)wg_WorldTerrainMap[x, y].Height) / 0.9f);
             }
             else
             {
@@ -550,16 +576,50 @@ namespace WorldGeneration.Terrain
             {
                 for (int y = 0; y < (wg_YDimension); y++)
                 {
+
                     //values appear to be exponential, so we'll need to do a logarithmic normalization based on the max rain
-                    wg_WorldTerrainMap[x, y].Rainfall = (float)(Math.Log((double)generationNEW[x, y]) / (double)Math.Log(maxRainDetected));
+                    wg_WorldTerrainMap[x, y].Rainfall = (float)(System.Math.Log((double)generationNEW[x, y]) / (double)System.Math.Log(maxRainDetected));
                     //wg_WorldTerrainMap[x, y].Rainfall = generationNEW[x, y];// / maxRainDetected;
                 }
             }
 
         }
 
+        private void generateRainfallNew()
+        {
 
-        
+            rmf.Seed = wg_Seed;///2;
+            perlin.Seed = wg_Seed;
+
+            float maxRainDetected = 0f;
+
+            for (int x = 0; x < (wg_XDimension); x++)
+            {
+                for (int y = 0; y < (wg_YDimension); y++)
+                {
+                    wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_XDimension) * (wg_YDimension))) * 100f) + "%";
+
+                    wg_WorldTerrainMap[x, y].Rainfall = ((float)(rmf.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f)*
+                        (((float)(perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f));
+
+                    if (wg_WorldTerrainMap[x, y].Rainfall > maxRainDetected)
+                        maxRainDetected = wg_WorldTerrainMap[x, y].Rainfall;
+                }
+            }
+
+            //normalize all values and set the rainfall
+            for (int x = 0; x < (wg_XDimension); x++)
+            {
+                for (int y = 0; y < (wg_YDimension); y++)
+                {
+
+                    //values appear to be exponential, so we'll need to do a logarithmic normalization based on the max rain
+                    //wg_WorldTerrainMap[x, y].Rainfall = (float)(System.Math.Log((double)wg_WorldTerrainMap[x, y].Rainfall) / (double)System.Math.Log(maxRainDetected));
+                    wg_WorldTerrainMap[x, y].Rainfall = wg_WorldTerrainMap[x, y].Rainfall / maxRainDetected;
+                }
+            }
+        }
+
 
         /// <summary>
         /// generates the biomes for the world
@@ -582,6 +642,24 @@ namespace WorldGeneration.Terrain
                     //check if base type is ocean
                     if (terrain.BaseTerrainType == BaseTerrainType.Ocean)
                     {
+                        if (terrain.Temperature <= 0.05)// && terrain.Height > -0.25)// && terrain.Rainfall > 0.65)
+                        {
+                            terrain.OceanTerrainType = OceanTerrainType.Ice;
+                            continue;
+                        }else if(terrain.Height > 0.05)
+                        {
+                            terrain.OceanTerrainType = OceanTerrainType.Littoral;
+                            continue;
+                        }
+                        else if (terrain.Height > -0.15)
+                        {
+                            terrain.OceanTerrainType = OceanTerrainType.Sublittoral;
+                        }
+                        else
+                        {
+                            terrain.OceanTerrainType = OceanTerrainType.Abyssal;
+                        }
+
                     }//check if base type is land
                     else if (terrain.BaseTerrainType == BaseTerrainType.Land)
                     {
@@ -596,27 +674,30 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Tundra;
                             continue;
                         }
-                        else if (terrain.Rainfall <= 0.05 && terrain.Temperature >.45)
-                        {
-                            terrain.LandTerrainType = LandTerrainType.Desert;
-                            continue;
-                        }
-                        else if (terrain.Height > 0.1 && terrain.Height <= 0.15)
-                        {
-                            terrain.LandTerrainType = LandTerrainType.Beach;
-                            continue;
-                        }
-                        else if (terrain.Temperature > 0.55f && terrain.Rainfall > 0.45f)
-                        {
-                            terrain.LandTerrainType = LandTerrainType.Jungle;
-                            continue;
-                        }
-                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f && terrain.Height <=0.25)
+
+                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f && terrain.Height <= 0.25)
                         {
                             terrain.LandTerrainType = LandTerrainType.Swamp;
                             continue;
                         }
-                        else if (terrain.Temperature > 0.25f && terrain.Rainfall <= 0.45f)
+                        else if (terrain.Height > 0.1 && terrain.Height <= 0.125)
+                        {
+                            terrain.LandTerrainType = LandTerrainType.Beach;
+                            continue;
+                        }
+                        else if (terrain.Rainfall <= 0.15)// && terrain.Temperature >.45)
+                        {
+                            terrain.LandTerrainType = LandTerrainType.Desert;
+                            continue;
+                        }
+
+                        else if (terrain.Temperature > 0.7f && terrain.Rainfall > 0.45f)
+                        {
+                            terrain.LandTerrainType = LandTerrainType.Jungle;
+                            continue;
+                        }
+
+                        else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.25f)
                         {
                             terrain.LandTerrainType = LandTerrainType.Forest;
                             continue;
@@ -631,7 +712,7 @@ namespace WorldGeneration.Terrain
                     }//check if base type is mountain
                     else if (terrain.BaseTerrainType == BaseTerrainType.Mountain)
                     {
-                        
+
                         if (terrain.Height < 0.5 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
                         {
                             terrain.MountainTerrainType = MountainTerrainType.Foothill;
@@ -642,12 +723,7 @@ namespace WorldGeneration.Terrain
                             terrain.MountainTerrainType = MountainTerrainType.Steppes;
                             continue;
                         }
-                        else if (terrain.Height >= 0.7 && terrain.Rainfall < 0.15)
-                        {
-                            terrain.MountainTerrainType = MountainTerrainType.Cascade;
-                            continue;
-                        }
-                        else if (terrain.Height >= 0.7 && terrain.Rainfall > 0.15)
+                        else if (terrain.Height >= 0.7 || terrain.Temperature < 0.1)// && terrain.Rainfall > 0.15)
                         {
                             terrain.MountainTerrainType = MountainTerrainType.SnowyPeak;
                             continue;
@@ -664,6 +740,8 @@ namespace WorldGeneration.Terrain
             }
 
         }
+
+
 
 
         /// <summary>

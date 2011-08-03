@@ -235,6 +235,42 @@
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\Title.xnb</Output>
       <Time>2011-07-31T14:49:46.8917891-04:00</Time>
     </Item>
+    <Item>
+      <Source>terrain\littoral.png</Source>
+      <Name>terrain\littoral</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\littoral.xnb</Output>
+      <Time>2011-08-02T19:48:48.3671394-04:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\abyssal.png</Source>
+      <Name>terrain\abyssal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\abyssal.xnb</Output>
+      <Time>2011-08-02T20:54:58.6033901-04:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\ice.png</Source>
+      <Name>terrain\ice</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\ice.xnb</Output>
+      <Time>2011-08-02T20:54:58.6033901-04:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\sublittoral.png</Source>
+      <Name>terrain\sublittoral</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\sublittoral.xnb</Output>
+      <Time>2011-08-02T20:54:58.6133901-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
