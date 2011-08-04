@@ -36,13 +36,13 @@ namespace Vaerydian.Screens
 
             ws_SpriteBatch = ScreenManager.SpriteBatch;
 
-            ws_MapEngine.TileSize = 25;
+            ws_MapEngine.TileSize = 1;
             
             ws_MapEngine.XTiles = 512;
 
             ws_MapEngine.YTiles = 512;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 12345);
+            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 17);
 
             ws_MapEngine.ViewPort.Dimensions = new Point(1080, 675);
 

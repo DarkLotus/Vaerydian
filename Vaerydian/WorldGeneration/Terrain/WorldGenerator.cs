@@ -690,7 +690,11 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Desert;
                             continue;
                         }
-
+                        else if (terrain.Rainfall > 0.15 && terrain.Rainfall <= 0.25)
+                        {
+                            terrain.LandTerrainType = LandTerrainType.Grassland;
+                            continue;
+                        }
                         else if (terrain.Temperature > 0.7f && terrain.Rainfall > 0.45f)
                         {
                             terrain.LandTerrainType = LandTerrainType.Jungle;

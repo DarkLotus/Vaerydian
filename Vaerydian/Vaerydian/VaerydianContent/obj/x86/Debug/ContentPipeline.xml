@@ -20,6 +20,15 @@
       <Time>2011-07-25T16:49:41.9466461-04:00</Time>
     </Item>
     <Item>
+      <Source>StartScreen.spritefont</Source>
+      <Name>StartScreen</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\StartScreen.xnb</Output>
+      <Time>2011-07-30T07:26:46.5607911-04:00</Time>
+    </Item>
+    <Item>
       <Source>frame.bmp</Source>
       <Name>frame</Name>
       <Importer>TextureImporter</Importer>
@@ -65,33 +74,6 @@
       <Time>2011-07-16T15:37:05.7803797-04:00</Time>
     </Item>
     <Item>
-      <Source>temperature.bmp</Source>
-      <Name>temperature</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\temperature.xnb</Output>
-      <Time>2011-07-23T07:07:39.249631-04:00</Time>
-    </Item>
-    <Item>
-      <Source>export.bmp</Source>
-      <Name>export</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\export.xnb</Output>
-      <Time>2011-07-23T20:25:24.0235044-04:00</Time>
-    </Item>
-    <Item>
-      <Source>StartScreen.spritefont</Source>
-      <Name>StartScreen</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\StartScreen.xnb</Output>
-      <Time>2011-07-30T07:26:46.5607911-04:00</Time>
-    </Item>
-    <Item>
       <Source>terrain\grass.png</Source>
       <Name>terrain\grass</Name>
       <Importer>TextureImporter</Importer>
@@ -117,6 +99,24 @@
       <Options>None</Options>
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\terrain\ocean.xnb</Output>
       <Time>2011-07-21T21:36:06.8483678-04:00</Time>
+    </Item>
+    <Item>
+      <Source>temperature.bmp</Source>
+      <Name>temperature</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\temperature.xnb</Output>
+      <Time>2011-07-23T07:07:39.249631-04:00</Time>
+    </Item>
+    <Item>
+      <Source>export.bmp</Source>
+      <Name>export</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Debug\Content\export.xnb</Output>
+      <Time>2011-07-23T20:25:24.0235044-04:00</Time>
     </Item>
     <Item>
       <Source>terrain\arctic.png</Source>

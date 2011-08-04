@@ -6,8 +6,8 @@ G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.dll
 G:\workspace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.pdb
 C:\workplace\Vaerydian\WorldGeneration\bin\x86\Debug\WorldGeneration.dll
 C:\workplace\Vaerydian\WorldGeneration\bin\x86\Debug\WorldGeneration.pdb
+C:\workplace\Vaerydian\WorldGeneration\bin\x86\Debug\LibNoise.dll
 C:\workplace\Vaerydian\WorldGeneration\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\workplace\Vaerydian\WorldGeneration\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\workplace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.dll
 C:\workplace\Vaerydian\WorldGeneration\obj\x86\Debug\WorldGeneration.pdb
-C:\workplace\Vaerydian\WorldGeneration\bin\x86\Debug\LibNoise.dll

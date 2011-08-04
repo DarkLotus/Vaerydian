@@ -140,6 +140,32 @@ namespace Vaerydian.Characters
             set { c_Quickness = value; }
         }
 
+        /// <summary>
+        /// how strong a character's will is
+        /// </summary>
+        private int c_Willpower;
+        /// <summary>
+        /// how strong a character's will is
+        /// </summary>
+        public int Willpower
+        {
+            get { return c_Willpower; }
+            set { c_Willpower = value; }
+        }
+
+        /// <summary>
+        /// how much attention a character pays to their surroundings
+        /// </summary>
+        private int c_Perception;
+
+        /// <summary>
+        /// how much attention a character pays to their surroundings
+        /// </summary>
+        public int Perception
+        {
+            get { return c_Perception; }
+            set { c_Perception = value; }
+        }
 
         /// <summary>
         /// Alighnment of character

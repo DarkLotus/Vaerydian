@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Vaerydian.Characters;
 
 namespace Vaerydian.Sessions
 {
@@ -21,7 +22,21 @@ namespace Vaerydian.Sessions
         /// <summary>
         /// singleton access variable
         /// </summary>
-        public GameSession Instance { get { return gs_Instance; } }
+        public static GameSession Instance { get { return gs_Instance; } }
+
+        /// <summary>
+        /// player's character
+        /// </summary>
+        private PlayerCharacter gs_PlayerCharacter;
+
+        /// <summary>
+        /// player's character
+        /// </summary>
+        internal PlayerCharacter PlayerCharacter
+        {
+            get { return gs_PlayerCharacter; }
+            set { gs_PlayerCharacter = value; }
+        }
 
     }
 }

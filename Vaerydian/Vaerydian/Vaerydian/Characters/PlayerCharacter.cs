@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vaerydian.Characters
 {
-    class PlayerCharacter : Character
+    public class PlayerCharacter : Character
     {
 
         public PlayerCharacter() 
