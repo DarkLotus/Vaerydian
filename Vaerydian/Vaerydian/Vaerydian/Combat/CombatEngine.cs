@@ -9,21 +9,30 @@ using Vaerydian.Combat;
 namespace Vaerydian.Combat
 {
 
+    #region enums
+    
+    /// <summary>
+    /// represents the current state of the Combat Engine
+    /// </summary>
     public enum CombatState
     {
         CombatInitializing,
         CombatReady,
         CombatFinished,
         CombatExit,
-        PlayerTurn,
+        CombatAssessTurn,
+        PlayerChooseAction,
         PlayerActing,
-        EnemyTurn,
-        EnemyActing,
-        NPCTurn,
-        NPCActing,
+        NpcChooseAction,
+        NpcActing,
         Dialog
     }
+    
+    #endregion
 
+    /// <summary>
+    /// engine that controls all combat behavior
+    /// </summary>
     public class CombatEngine
     {
 
@@ -40,6 +49,8 @@ namespace Vaerydian.Combat
         /// singleton instance access
         /// </summary>
         public static CombatEngine Instance { get { return me_Instance; } }
+
+        #region Variables
 
         /// <summary>
         /// random number generator for classs
@@ -102,7 +113,42 @@ namespace Vaerydian.Combat
             set { ce_TurnList = value; }
         }
 
+        /// <summary>
+        /// index of current TurnList position
+        /// </summary>
+        private int ce_TurnIndex = 0;
+        /// <summary>
+        /// index of current TurnList position
+        /// </summary>
+        public int TurnIndex
+        {
+            get { return ce_TurnIndex; }
+            set { ce_TurnIndex = value; }
+        }
 
+        /// <summary>
+        /// current character
+        /// </summary>
+        private Character ce_CurrentCharacter;
+
+        /// <summary>
+        /// is the player now considered dead
+        /// </summary>
+        private bool ce_IsPlayerDead = false;
+
+        /// <summary>
+        /// is the player now considered dead
+        /// </summary>
+        public bool IsPlayerDead
+        {
+            get { return ce_IsPlayerDead; }
+            set { ce_IsPlayerDead = value; }
+        }
+
+        
+
+
+        #endregion
 
         /// <summary>
         /// create a new combat event and initialize for combat to begin
@@ -176,11 +222,14 @@ namespace Vaerydian.Combat
                 count++;
             }
 
+            //ensure it is set to 0
+            ce_TurnIndex = 0;
+
             //make the determination
-            if(ce_TurnList[0].GetType() == typeof(EnemyCharacter))
-                ce_CombatState = CombatState.EnemyTurn;
+            if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
+                ce_CombatState = CombatState.NpcChooseAction;
             else
-                ce_CombatState = CombatState.PlayerTurn;
+                ce_CombatState = CombatState.PlayerChooseAction;
         }
 
         /// <summary>
@@ -188,15 +237,53 @@ namespace Vaerydian.Combat
         /// </summary>
         public void updateTurnState()
         {
+            ce_TurnIndex++;
 
+            //make the determination
+            if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
+                ce_CombatState = CombatState.NpcChooseAction;
+            else
+                ce_CombatState = CombatState.PlayerChooseAction;
         }
 
         /// <summary>
         /// updates the turn queue for a new round
         /// </summary>
-        public void updateTurnQueueForRound()
+        public void newRound()
         {
+
         }
 
+        /// <summary>
+        /// access the NPC's Combat AI routines to plan their combat action
+        /// </summary>
+        public void npcPlanAction()
+        {
+
+
+            //set the NPC to act
+            ce_CombatState = CombatState.NpcActing;
+        }
+
+        /// <summary>
+        /// performs the NPC's chosen action
+        /// </summary>
+        public void npcPerformAction()
+        {
+
+
+            //NPC turn is complete
+            ce_CombatState = CombatState.CombatAssessTurn;
+        }
+
+        /// <summary>
+        /// assesses this turn to see if NPCs or the Player died or if other things occured
+        /// </summary>
+        public void assessCombatTurn()
+        {
+            
+        }
+
+        
     }
 }

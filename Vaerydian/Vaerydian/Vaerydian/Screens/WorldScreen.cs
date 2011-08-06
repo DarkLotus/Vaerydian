@@ -108,7 +108,7 @@ namespace Vaerydian.Screens
             }
             if (InputManager.isKeyToggled(Keys.W))
             {
-                ws_DialogWindow = new DialogWindow("This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text", 50, new Point(200, 200), new Point(400, 150));
+                ws_DialogWindow = new DialogWindow("This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text", 50, 6, new Point(200, 200), new Point(400, 150));
                 this.ScreenManager.WindowManager.addWindow(ws_DialogWindow);
             }
             if (InputManager.isKeyToggled(Keys.E))

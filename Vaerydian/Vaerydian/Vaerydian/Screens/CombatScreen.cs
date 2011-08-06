@@ -14,11 +14,37 @@ using Vaerydian.Characters;
 
 namespace Vaerydian.Screens
 {
+    #region Enums
+    
+    public enum PlayerAction
+    {
+        Move,
+        Attack,
+        Ability,
+        Defend,
+        Item,
+        Flee,
+        None
+    }
+
+    public enum PlayerMoveDirection
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        None
+    }
+
+    #endregion
+
     /// <summary>
     /// handles combat sessions
     /// </summary>
     class CombatScreen : Screen
     {
+        #region Variables
+
         private SpriteBatch cs_SpriteBatch;
         
         /// <summary>
@@ -39,6 +65,14 @@ namespace Vaerydian.Screens
         private DialogWindow cs_BattleLog;
 
         private List<Texture2D> textures = new List<Texture2D>();
+
+        private PlayerAction cs_PlayerAction = PlayerAction.None;
+
+        private PlayerMoveDirection cs_PlayerMoveDirection = PlayerMoveDirection.None;
+
+        #endregion
+
+        #region Initialization & Loading
 
         /// <summary>
         /// performs any needed screen initialization
@@ -61,9 +95,9 @@ namespace Vaerydian.Screens
             //register the window
             this.ScreenManager.WindowManager.addWindow(cs_ActionWindow);
 
-            cs_BattleLog = new DialogWindow("You Enter Combat!", 70,
-                new Point(this.ScreenManager.GraphicsDevice.Viewport.Width / 2 - 300, this.ScreenManager.GraphicsDevice.Viewport.Height - 200),
-                new Point(600, 190));
+            cs_BattleLog = new DialogWindow("You Enter Combat!", 70, 9,
+                new Point(this.ScreenManager.GraphicsDevice.Viewport.Width / 2 - 300, this.ScreenManager.GraphicsDevice.Viewport.Height - 210),
+                new Point(600, 200));
 
             this.ScreenManager.WindowManager.addWindow(cs_BattleLog);
 
@@ -95,7 +129,14 @@ namespace Vaerydian.Screens
         public override void UnloadContent()
         {
             base.UnloadContent();
+
+            //free all textures
+            textures.Clear();
         }
+
+        #endregion
+
+        #region INPUT
 
         /// <summary>
         /// handles all screen related input
@@ -106,29 +147,189 @@ namespace Vaerydian.Screens
             base.handleInput(gameTime);
 
             //see if it is the players turn
-            if (cs_CombatEngine.CombatState == CombatState.PlayerTurn)
+            if (cs_CombatEngine.CombatState == CombatState.PlayerChooseAction)
             {
-                if(InputManager.isKeyToggled(Keys.Up))//move selection up
-                {
-                    if (cs_ActionWindow.MenuIndex > 0)
-                    {
-                        cs_ActionWindow.MenuIndex -= 1;
-                    }
-                }
-                else if(InputManager.isKeyToggled(Keys.Down))//move selection down
-                {
-                    if (cs_ActionWindow.MenuIndex < cs_ActionWindowItems.Count - 1)
-                    {
-                        cs_ActionWindow.MenuIndex += 1;
-                    }
-                }
+                //handle any action choices
+                handleChooseAction(gameTime);
             }
 
+            //if player has chosen an action, and it is to move
+            if (cs_CombatEngine.CombatState == CombatState.PlayerActing &&
+                cs_PlayerAction == PlayerAction.Move)
+            {
+                //handle any player movement decisions
+                handlePlayerMovement();
+            }
 
             //player wants to exit
             if (InputManager.isKeyToggled(Keys.Escape))
                 InputManager.yesExit = true;
         }
+
+        /// <summary>
+        /// allows the player to choose an action
+        /// </summary>
+        /// <param name="gameTime">current game time</param>
+        private void handleChooseAction(GameTime gameTime)
+        {
+            //move selection up
+            if (InputManager.isKeyToggled(Keys.Up))
+            {
+                if (cs_ActionWindow.MenuIndex > 0)
+                {
+                    cs_ActionWindow.MenuIndex -= 1;
+                }
+            }//move selection down
+            else if (InputManager.isKeyToggled(Keys.Down))
+            {
+                if (cs_ActionWindow.MenuIndex < cs_ActionWindowItems.Count - 1)
+                {
+                    cs_ActionWindow.MenuIndex += 1;
+                }
+            }
+
+            //did player push enter
+            if (InputManager.isKeyToggled(Keys.Enter))
+            {
+                //player chose to move
+                if (cs_ActionWindow.MenuIndex == 0)
+                {
+                    cs_BattleLog.addDialog("Choose a direction to move.");
+                    cs_PlayerAction = PlayerAction.Move;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+                else if (cs_ActionWindow.MenuIndex == 1)
+                {
+                    cs_PlayerAction = PlayerAction.Attack;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+                else if (cs_ActionWindow.MenuIndex == 2)
+                {
+                    cs_PlayerAction = PlayerAction.Ability;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+                else if (cs_ActionWindow.MenuIndex == 3)
+                {
+                    cs_PlayerAction = PlayerAction.Defend;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+                else if (cs_ActionWindow.MenuIndex == 4)
+                {
+                    cs_PlayerAction = PlayerAction.Item;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+                else if (cs_ActionWindow.MenuIndex == 4)
+                {
+                    cs_PlayerAction = PlayerAction.Flee;
+                    cs_CombatEngine.CombatState = CombatState.PlayerActing;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// handles moving the player
+        /// </summary>
+        private void handlePlayerMovement()
+        {
+            //select square up
+            if (InputManager.isKeyToggled(Keys.Up))
+            {
+                cs_PlayerMoveDirection = PlayerMoveDirection.Up;
+
+            }//select square right
+            else if (InputManager.isKeyToggled(Keys.Right))
+            {
+                cs_PlayerMoveDirection = PlayerMoveDirection.Right;
+            }//select square left
+            else if (InputManager.isKeyToggled(Keys.Left))
+            {
+                cs_PlayerMoveDirection = PlayerMoveDirection.Left;
+            }//select square down
+            else if (InputManager.isKeyToggled(Keys.Down))
+            {
+                cs_PlayerMoveDirection = PlayerMoveDirection.Down;
+            }//accept movement
+            else if (InputManager.isKeyToggled(Keys.Enter))
+            {
+                if (cs_PlayerMoveDirection == PlayerMoveDirection.Up)
+                {
+                    if (isDirectionMovable())
+                    {
+                        cs_BattleLog.addDialog("You move up.");
+
+                        //reset move direction
+                        cs_PlayerMoveDirection = PlayerMoveDirection.None;
+                    }
+                    else
+                    {
+                        cs_BattleLog.addDialog("You cannot move up.");
+                    }
+                }
+                else if (cs_PlayerMoveDirection == PlayerMoveDirection.Down)
+                {
+                    if (isDirectionMovable())
+                    {
+                        cs_BattleLog.addDialog("You move down.");
+
+                        //reset move direction
+                        cs_PlayerMoveDirection = PlayerMoveDirection.None;
+                    }
+                    else
+                    {
+                        cs_BattleLog.addDialog("You cannot move down.");
+                    }
+                }
+                else if (cs_PlayerMoveDirection == PlayerMoveDirection.Left)
+                {
+                    if (isDirectionMovable())
+                    {
+                        cs_BattleLog.addDialog("You move left.");
+
+                        //reset move direction
+                        cs_PlayerMoveDirection = PlayerMoveDirection.None;
+                    }
+                    else
+                    {
+                        cs_BattleLog.addDialog("You cannot move left");
+                    }
+                }
+                else if (cs_PlayerMoveDirection == PlayerMoveDirection.Right)
+                {
+                    if (isDirectionMovable())
+                    {
+                        cs_BattleLog.addDialog("You move right.");
+
+                        //reset move direction
+                        cs_PlayerMoveDirection = PlayerMoveDirection.None;
+                    }
+                    else
+                    {
+                        cs_BattleLog.addDialog("You cannot move right");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// change the current player location
+        /// </summary>
+        private void changePlayerLocation()
+        {
+
+        }
+
+        /// <summary>
+        /// is it possible to move in the chosen direction
+        /// </summary>
+        private bool isDirectionMovable()
+        {
+            return false;
+        }
+
+        #endregion
+
+        #region UPDATE
 
         /// <summary>
         /// performs all screen related updates
@@ -143,15 +344,58 @@ namespace Vaerydian.Screens
             {
                 //figure out who goes first
                 cs_CombatEngine.determineInitiative();
-            }
-            else if (cs_CombatEngine.CombatState == CombatState.PlayerTurn)
+                
+                //anounce who's turn it is
+                cs_BattleLog.addDialog(cs_CombatEngine.TurnList[0].Name + "'s Turn!");
+            }//has a turn concluded?
+            else if (cs_CombatEngine.CombatState == CombatState.CombatAssessTurn)
             {
-            }
-            else if (cs_CombatEngine.CombatState == CombatState.EnemyTurn)
+                //assess the turn
+                cs_CombatEngine.assessCombatTurn();
+
+                //check to see if the character is alive
+                if (cs_CombatEngine.IsPlayerDead)
+                {
+                    cs_CombatEngine.CombatState = CombatState.CombatFinished;
+                }
+                else
+                {
+                    //update the turn and continue
+                    cs_CombatEngine.updateTurnState();
+                    //anounce who's turn it is
+                    cs_BattleLog.addDialog(cs_CombatEngine.TurnList[cs_CombatEngine.TurnIndex].Name + "'s Turn!");
+                }
+
+            }//is it time for the player to choose an action?
+            else if (cs_CombatEngine.CombatState == CombatState.PlayerChooseAction)
             {
-                cs_CombatEngine.CombatState = CombatState.PlayerTurn;
+            }//has the player chosen an action?
+            else if (cs_CombatEngine.CombatState == CombatState.PlayerActing)
+            {
+                //figure out what the player picked to do, and do it
+                handlePlayerAction(gameTime);
+            }// is it time for an NPC to choose an action?
+            else if (cs_CombatEngine.CombatState == CombatState.NpcChooseAction)
+            {
+                //have the next NPC plan their action
+                cs_CombatEngine.npcPlanAction();
+            }//has the NPC chosen an action and ready to act on it?
+            else if (cs_CombatEngine.CombatState == CombatState.NpcActing)
+            {
+                //NPC acts
+                cs_CombatEngine.npcPerformAction();
             }
         }
+
+        private void handlePlayerAction(GameTime gameTime)
+        {
+
+        }
+
+
+        #endregion
+
+        #region DRAWING
 
         /// <summary>
         /// performs all screen related drawing
@@ -214,6 +458,10 @@ namespace Vaerydian.Screens
 
         }
 
+        #endregion
+
+
+        #region Testing 
 
         /// <summary>
         /// generates the 3x3 terrain tiles
@@ -245,8 +493,10 @@ namespace Vaerydian.Screens
         private PlayerCharacter getTestPlayer()
         {
             PlayerCharacter player = new PlayerCharacter();
+            player.Name = "Alberez";
             player.Quickness = 50;
-
+            player.Agility = 25;
+            player.Perception = 30;
 
             return player;
         }
@@ -259,12 +509,16 @@ namespace Vaerydian.Screens
         {
             EnemyCharacter[] enemies = new EnemyCharacter[1];
             EnemyCharacter enemy = new EnemyCharacter();
+            enemy.Name = "Rawrizor The Dread Beast";
             enemy.Quickness = 50;
-
+            enemy.Agility = 25;
+            enemy.Perception = 30;
 
             enemies[0] = enemy;
 
             return enemies;
         }
+
+        #endregion
     }
 }
