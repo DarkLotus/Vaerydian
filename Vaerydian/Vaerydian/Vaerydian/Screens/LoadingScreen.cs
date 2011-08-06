@@ -16,8 +16,9 @@ namespace Vaerydian.Screens
         Thread backgroundThread;  
         EventWaitHandle backgroundThreadExit;  
         bool loadingIsSlow;  
-        bool otherScreensAreGone;  
+        bool otherScreensAreGone;
 
+        private Texture2D ls_LoadingTexture;
  
         Screen[] screensToLoad;  
         GameTime loadStartTime;  
@@ -27,6 +28,14 @@ namespace Vaerydian.Screens
         #region Initialization  
  
  
+        public override void LoadContent()
+        {
+            base.LoadContent();
+
+            ls_LoadingTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
+        }
+
+
         /// <summary>  
         /// The constructor is private: loading screens should  
         /// be activated via the static Load method instead.  
@@ -219,7 +228,9 @@ namespace Vaerydian.Screens
  
                 // Draw the text.  
                 spriteBatch.Begin();
-                
+
+                spriteBatch.Draw(ls_LoadingTexture, Vector2.Zero, Color.DimGray);
+
                 //show the base message
                 spriteBatch.DrawString(font, message, textPosition, Color.White);
 

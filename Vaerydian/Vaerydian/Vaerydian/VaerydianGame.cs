@@ -29,8 +29,8 @@ namespace Vaerydian
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 675;
-            graphics.PreferredBackBufferWidth = 1080;
+            graphics.PreferredBackBufferHeight = 640;
+            graphics.PreferredBackBufferWidth = 1024;
 
             
 
@@ -85,7 +85,6 @@ namespace Vaerydian
             screenManager.SpriteBatch = spriteBatch;
             windowManager.SpriteBatch = spriteBatch;
             fontManager.LoadContent();
-            mapEngine.LoadContent();
         }
 
         /// <summary>

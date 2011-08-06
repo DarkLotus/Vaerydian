@@ -36,15 +36,15 @@ namespace Vaerydian.Screens
 
             ws_SpriteBatch = ScreenManager.SpriteBatch;
 
-            ws_MapEngine.TileSize = 1;
+            ws_MapEngine.TileSize = 5;
             
-            ws_MapEngine.XTiles = 512;
+            ws_MapEngine.XTiles = 256;
 
-            ws_MapEngine.YTiles = 512;
+            ws_MapEngine.YTiles = 256;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 17);
+            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 53);
 
-            ws_MapEngine.ViewPort.Dimensions = new Point(1080, 675);
+            ws_MapEngine.ViewPort.Dimensions = new Point(1024, 640);
 
             ws_MapEngine.ViewPort.Origin = new Point(0, 0);
 
@@ -108,7 +108,7 @@ namespace Vaerydian.Screens
             }
             if (InputManager.isKeyToggled(Keys.W))
             {
-                ws_DialogWindow = new DialogWindow("This is a Dialog Box\nThis Box Stays Here Permanently", new Point(200, 200), new Point(400, 150));
+                ws_DialogWindow = new DialogWindow("This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text", 50, new Point(200, 200), new Point(400, 150));
                 this.ScreenManager.WindowManager.addWindow(ws_DialogWindow);
             }
             if (InputManager.isKeyToggled(Keys.E))

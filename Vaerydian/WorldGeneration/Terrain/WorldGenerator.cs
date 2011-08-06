@@ -187,12 +187,12 @@ namespace WorldGeneration.Terrain
             
             perlin.Seed = wg_Seed;
             perlin.Persistence = 0.5;
-            perlin.OctaveCount = 10;
+            perlin.OctaveCount = 16;
             perlin.NoiseQuality = NoiseQuality.High;
             perlin.Frequency = 4;
 
             rmf.Seed = wg_Seed/2;
-            rmf.OctaveCount = 10;
+            rmf.OctaveCount = 16;
             rmf.Lacunarity = 2;
             rmf.NoiseQuality = NoiseQuality.High;
             rmf.Frequency = 4;
@@ -310,6 +310,7 @@ namespace WorldGeneration.Terrain
             terrain.Rainfall = 0.0f;//base rainfall on land
             if (terrain.Height <= 0.1) 
             {
+                //terrain.Height = 0f;
                 terrain.BaseTerrainType = BaseTerrainType.Ocean; 
                 //since its an ocean, also set its rainfall to 100%
                 terrain.Rainfall = 1f;
@@ -562,7 +563,14 @@ namespace WorldGeneration.Terrain
                         val = rainMultiplier * waterContrib * wg_WorldTerrainMap[x, y].Temperature;
                         avg2 = (avg + val) / 2f;
 
-                        generationNEW[x, y] = avg2 * (1f - (float)wg_WorldTerrainMap[x, y].Height);
+                        if (wg_WorldTerrainMap[x, y].Height <= 0.1)
+                        {
+                            generationNEW[x, y] = avg2;
+                        }
+                        else
+                        {
+                            generationNEW[x, y] = avg2 * (1f - (float)wg_WorldTerrainMap[x, y].Height);
+                        }
 
                         if (generationNEW[x, y] > maxRainDetected)
                             maxRainDetected = generationNEW[x, y];
@@ -588,7 +596,7 @@ namespace WorldGeneration.Terrain
         private void generateRainfallNew()
         {
 
-            rmf.Seed = wg_Seed;///2;
+            rmf.Seed = wg_Seed/2;///2;
             perlin.Seed = wg_Seed;
 
             float maxRainDetected = 0f;
@@ -675,7 +683,7 @@ namespace WorldGeneration.Terrain
                             continue;
                         }
 
-                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f && terrain.Height <= 0.25)
+                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.85f && terrain.Height <= 0.25)
                         {
                             terrain.LandTerrainType = LandTerrainType.Swamp;
                             continue;
@@ -690,7 +698,7 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Desert;
                             continue;
                         }
-                        else if (terrain.Rainfall > 0.15 && terrain.Rainfall <= 0.25)
+                        else if (terrain.Rainfall > 0.15 && terrain.Rainfall <= 0.35)
                         {
                             terrain.LandTerrainType = LandTerrainType.Grassland;
                             continue;
@@ -700,8 +708,7 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Jungle;
                             continue;
                         }
-
-                        else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.25f)
+                        else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.35f)
                         {
                             terrain.LandTerrainType = LandTerrainType.Forest;
                             continue;

@@ -12,6 +12,8 @@ namespace Vaerydian.Windows
 
         private String dw_Dialog;
 
+        private List<String> dw_DialogList = new List<String>();
+
         private Texture2D dw_FrameBackground;
 
         private Texture2D dw_FrameHorizontal;
@@ -28,6 +30,8 @@ namespace Vaerydian.Windows
 
         private int dw_Offset = 10;
 
+        private int dw_LineLength;
+
         /// <summary>
         /// create a dialog window with the following attributes
         /// </summary>
@@ -36,11 +40,12 @@ namespace Vaerydian.Windows
         /// <param name="size">size of the window</param>
         /// <param name="startTime">time window is called</param>
         /// <param name="duration">time window is to be alive</param>
-        public DialogWindow(String dialog, Point origin, Point size)
+        public DialogWindow(String dialog, int lineLengh, Point origin, Point size)
         {
             dw_Dialog = dialog;
             dw_Origin = origin;
             dw_Size = size;
+            dw_LineLength = lineLengh;
         }
 
         /// <summary>
@@ -48,6 +53,40 @@ namespace Vaerydian.Windows
         /// </summary>
         public override void Initialize()
         {
+            //figure out the offset
+            dw_Offset = (int) FontManager.Instance.Fonts["General"].LineSpacing;
+            
+            //create some placeholders
+            String temp = "";
+            String[] tempArray;
+            
+            //split the diaglog into tokens
+            tempArray = dw_Dialog.Split(' ');
+
+            //sum tokens together until they are greater than the designated line length,
+            //then add them to the dialog list
+            for (int i = 0; i < tempArray.Length; i++)
+            {   //check the length of the temp string and the next token
+                if((temp.Length + tempArray[i].Length) > dw_LineLength)
+                {
+                    //its too long, so add the existing temp to the list
+                    dw_DialogList.Add(temp.Trim());
+                    //make temp equal to the next token
+                    temp = tempArray[i];
+                }
+                else
+                {   //add to temp the next token and place a space between them
+                    temp += " " + tempArray[i] ;
+                }
+            }
+            //some tokens may have been forgotten, so check for them and add them
+            if (temp != "")
+            {
+                if (dw_DialogList.Count == 0)
+                    dw_DialogList.Add(temp);
+                if (temp != dw_DialogList[dw_DialogList.Count - 1])
+                    dw_DialogList.Add(temp.Trim());
+            }
         }
 
 
@@ -130,8 +169,10 @@ namespace Vaerydian.Windows
                                          new Vector2(1, 1), SpriteEffects.None, 0);
 
             //draw the text
-            spritebatch.DrawString(FontManager.Instance.Fonts["General"], dw_Dialog, new Vector2(dw_Origin.X + dw_Offset, dw_Origin.Y + dw_Offset), Color.White);
-
+            for (int i = 0; i < dw_DialogList.Count; i++)
+            {
+                spritebatch.DrawString(FontManager.Instance.Fonts["General"], dw_DialogList[i], new Vector2(dw_Origin.X + dw_Offset, dw_Origin.Y + dw_Offset * (i + 1)), Color.White);
+            }
 
             spritebatch.End();
 

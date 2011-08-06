@@ -29,12 +29,14 @@ namespace Vaerydian.Screens
         /// <summary>
         /// menu to display actions in combat
         /// </summary>
-        private TextMenuWindow cc_ActionWindow;
+        private TextMenuWindow cs_ActionWindow;
 
         /// <summary>
         /// contains list of current ActionWindow menu items
         /// </summary>
-        private List<String> cc_ActionWindowItems = new List<String>();
+        private List<String> cs_ActionWindowItems = new List<String>();
+
+        private DialogWindow cs_BattleLog;
 
         private List<Texture2D> textures = new List<Texture2D>();
 
@@ -46,17 +48,24 @@ namespace Vaerydian.Screens
             base.Initialize();
 
             //create menu items
-            cc_ActionWindowItems.Add("Attack");//0
-            cc_ActionWindowItems.Add("Abilities");//1
-            cc_ActionWindowItems.Add("Items");//2
-            cc_ActionWindowItems.Add("Defend");//3
-            cc_ActionWindowItems.Add("Flee");//4
+            cs_ActionWindowItems.Add("Move");//0
+            cs_ActionWindowItems.Add("Attack");//1
+            cs_ActionWindowItems.Add("Abilities");//2
+            cs_ActionWindowItems.Add("Defend");//3
+            cs_ActionWindowItems.Add("Items");//4
+            cs_ActionWindowItems.Add("Flee");//5
             
             //create the new window
-            cc_ActionWindow = new TextMenuWindow(new Point(0, 400), cc_ActionWindowItems, "General");
+            cs_ActionWindow = new TextMenuWindow(new Point(0, 400), cs_ActionWindowItems, "General");
             
             //register the window
-            this.ScreenManager.WindowManager.addWindow(cc_ActionWindow);
+            this.ScreenManager.WindowManager.addWindow(cs_ActionWindow);
+
+            cs_BattleLog = new DialogWindow("You Enter Combat!", 70,
+                new Point(this.ScreenManager.GraphicsDevice.Viewport.Width / 2 - 300, this.ScreenManager.GraphicsDevice.Viewport.Height - 200),
+                new Point(600, 190));
+
+            this.ScreenManager.WindowManager.addWindow(cs_BattleLog);
 
             //initiate combat event
             //
@@ -101,16 +110,16 @@ namespace Vaerydian.Screens
             {
                 if(InputManager.isKeyToggled(Keys.Up))//move selection up
                 {
-                    if (cc_ActionWindow.MenuIndex > 0)
+                    if (cs_ActionWindow.MenuIndex > 0)
                     {
-                        cc_ActionWindow.MenuIndex -= 1;
+                        cs_ActionWindow.MenuIndex -= 1;
                     }
                 }
                 else if(InputManager.isKeyToggled(Keys.Down))//move selection down
                 {
-                    if (cc_ActionWindow.MenuIndex < cc_ActionWindowItems.Count - 1)
+                    if (cs_ActionWindow.MenuIndex < cs_ActionWindowItems.Count - 1)
                     {
-                        cc_ActionWindow.MenuIndex += 1;
+                        cs_ActionWindow.MenuIndex += 1;
                     }
                 }
             }
@@ -135,7 +144,13 @@ namespace Vaerydian.Screens
                 //figure out who goes first
                 cs_CombatEngine.determineInitiative();
             }
-
+            else if (cs_CombatEngine.CombatState == CombatState.PlayerTurn)
+            {
+            }
+            else if (cs_CombatEngine.CombatState == CombatState.EnemyTurn)
+            {
+                cs_CombatEngine.CombatState = CombatState.PlayerTurn;
+            }
         }
 
         /// <summary>

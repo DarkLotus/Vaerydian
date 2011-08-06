@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WorldGeneration.Terrain;
 using Vaerydian.Characters;
+using Vaerydian.Combat;
 
 namespace Vaerydian.Combat
 {
@@ -91,6 +92,19 @@ namespace Vaerydian.Combat
         private PlayerCharacter ce_Player;
 
         /// <summary>
+        /// each character's turn
+        /// </summary>
+        private List<Character> ce_TurnList = new List<Character>();
+
+        public List<Character> TurnList
+        {
+            get { return ce_TurnList; }
+            set { ce_TurnList = value; }
+        }
+
+
+
+        /// <summary>
         /// create a new combat event and initialize for combat to begin
         /// </summary>
         /// <param name="terrain">3x3 Terrain that combat will take place on</param>
@@ -117,8 +131,56 @@ namespace Vaerydian.Combat
         /// </summary>
         public void determineInitiative()
         {
-            //creating combat list
+            //creating combat initiative list
+            int[] vals = new int[1 + ce_Enemies.Length];
+            int maxVal = 0;
+            int index = 0;
+            int count = 0;
+
+            //Initiative is calculated by a players Quickness, Perception, and Agility + Random number from 1-100
+            //first val is ALWAYS the player's initiative
+            vals[0] = ce_Player.Agility + ce_Player.Quickness + ce_Player.Perception + random.Next(1, 100);
             
+            //get enemies values
+            for (int i = 0; i < ce_Enemies.Length; i++)
+            {
+                vals[i + 1] = ce_Enemies[i].Agility + ce_Enemies[i].Quickness + ce_Enemies[i].Perception + random.Next(1, 100);
+            }
+
+            //Next, figure out which which should go next and place them in the Character Turn List
+            while (count < vals.Length)
+            {
+                //loop through all the values
+                for (int i = 0; i < vals.Length; i++)
+                {
+                    //check to see if this is the largest so far
+                    if (vals[i] > maxVal)
+                    {
+                        //its the largest so far, so capture it and its index
+                        maxVal = vals[i];
+                        index = i;
+                    }
+                }
+
+                //based on the index of the largest, add it to the turn list
+                if (index != 0)//enemies are added to the array, so subtract one from their index
+                    ce_TurnList.Add(ce_Enemies[index-1]);
+                else
+                    ce_TurnList.Add(ce_Player);
+
+                //set this val to 0 so its not counted again
+                vals[index] = 0;
+                //reset maxVal for next round
+                maxVal = 0;
+                //update the counter
+                count++;
+            }
+
+            //make the determination
+            if(ce_TurnList[0].GetType() == typeof(EnemyCharacter))
+                ce_CombatState = CombatState.EnemyTurn;
+            else
+                ce_CombatState = CombatState.PlayerTurn;
         }
 
         /// <summary>
