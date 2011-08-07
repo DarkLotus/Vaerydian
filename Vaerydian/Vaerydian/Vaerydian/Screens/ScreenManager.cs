@@ -159,6 +159,7 @@ namespace Vaerydian.Screens
         {
             screen.UnloadContent();
             sm_Screens.Remove(screen);
+            GC.Collect();
         }
     }
 }

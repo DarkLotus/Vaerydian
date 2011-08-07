@@ -70,6 +70,12 @@ namespace Vaerydian.Screens
 
         private PlayerMoveDirection cs_PlayerMoveDirection = PlayerMoveDirection.None;
 
+        private Vector2 cs_PlayerIntendedPosition;
+
+        private PlayerCharacter cs_Player;
+
+        private EnemyCharacter[] cs_Enemies;
+
         #endregion
 
         #region Initialization & Loading
@@ -80,6 +86,13 @@ namespace Vaerydian.Screens
         public override void Initialize()
         {
             base.Initialize();
+
+            //cs_Player = GameSession.Instance.PlayerCharacter;
+            cs_Player = getTestPlayer();
+            cs_Enemies = getTestEnemies();
+
+            //update player intented positon
+            cs_PlayerIntendedPosition = cs_Player.BattlePosition;
 
             //create menu items
             cs_ActionWindowItems.Add("Move");//0
@@ -105,7 +118,7 @@ namespace Vaerydian.Screens
             //
             //THIS IS WITH TEST VALUES
             //
-            cs_CombatEngine.newCombatEvent(getTestTerrainArray(), getTestPlayer(), getTestEnemies());
+            cs_CombatEngine.newCombatEvent(getTestTerrainArray(), cs_Player, cs_Enemies);
             //
             //THIS IS WITH TEST VALUES
             //
@@ -121,6 +134,8 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\forest"));
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("characters\\player"));
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("characters\\enemy"));
         }
 
         /// <summary>
@@ -132,6 +147,10 @@ namespace Vaerydian.Screens
 
             //free all textures
             textures.Clear();
+
+            //remove all windows
+            this.ScreenManager.WindowManager.removeWindow(cs_ActionWindow);
+            this.ScreenManager.WindowManager.removeWindow(cs_BattleLog);
         }
 
         #endregion
@@ -163,7 +182,13 @@ namespace Vaerydian.Screens
 
             //player wants to exit
             if (InputManager.isKeyToggled(Keys.Escape))
-                InputManager.yesExit = true;
+            {
+                //remove yourself
+                this.ScreenManager.removeScreen(this);
+                
+                //load the start screen
+                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+            }
         }
 
         /// <summary>
@@ -236,24 +261,33 @@ namespace Vaerydian.Screens
             if (InputManager.isKeyToggled(Keys.Up))
             {
                 cs_PlayerMoveDirection = PlayerMoveDirection.Up;
+                //set 1 above character
+                cs_PlayerIntendedPosition = cs_Player.BattlePosition + new Vector2(0, -1);
 
             }//select square right
             else if (InputManager.isKeyToggled(Keys.Right))
             {
                 cs_PlayerMoveDirection = PlayerMoveDirection.Right;
+                //set 1 above character
+                cs_PlayerIntendedPosition = cs_Player.BattlePosition + new Vector2(1, 0);
             }//select square left
             else if (InputManager.isKeyToggled(Keys.Left))
             {
                 cs_PlayerMoveDirection = PlayerMoveDirection.Left;
+                //set 1 above character
+                cs_PlayerIntendedPosition = cs_Player.BattlePosition + new Vector2(-1, 0);
             }//select square down
             else if (InputManager.isKeyToggled(Keys.Down))
             {
                 cs_PlayerMoveDirection = PlayerMoveDirection.Down;
+                //set 1 above character
+                cs_PlayerIntendedPosition = cs_Player.BattlePosition + new Vector2(0, +1);
             }//accept movement
             else if (InputManager.isKeyToggled(Keys.Enter))
             {
                 if (cs_PlayerMoveDirection == PlayerMoveDirection.Up)
                 {
+
                     if (isDirectionMovable())
                     {
                         cs_BattleLog.addDialog("You move up.");
@@ -436,12 +470,20 @@ namespace Vaerydian.Screens
         private void drawCombatField()
         {
             
-
+            //draw each combat square
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    cs_SpriteBatch.Draw(textures[0], new Vector2(i * 200+240, j * 200 + 37), null, Color.White, 0f, Vector2.Zero, 8.0f, SpriteEffects.None, 0f);
+                    //check to see if you should color the square for player movement choices
+                    if (i == cs_PlayerIntendedPosition.X && j == cs_PlayerIntendedPosition.Y && cs_PlayerAction == PlayerAction.Move)
+                    {
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 100 + 362, j * 100 + 100), null, Color.Red, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+                    }
+                    else
+                    {
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 100 + 362, j * 100 + 100), null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+                    }
                 }
             }
             
@@ -453,9 +495,15 @@ namespace Vaerydian.Screens
         private void drawCombatants()
         {
             //draw player
-
+            cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 100 + 362 + 50, cs_Player.BattlePosition.Y * 100 + 100 + 50),
+                null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+            
             //draw enemies
-
+            foreach (EnemyCharacter enemy in cs_CombatEngine.Enemies)
+            {
+                cs_SpriteBatch.Draw(textures[2], new Vector2(enemy.BattlePosition.X * 100 + 362 + 50, enemy.BattlePosition.Y * 100 + 100 + 50),
+                    null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+            }
         }
 
         #endregion
@@ -497,6 +545,9 @@ namespace Vaerydian.Screens
             player.Quickness = 50;
             player.Agility = 25;
             player.Perception = 30;
+            player.Health = 50;
+
+            player.BattlePosition = new Vector2(1, 1);
 
             return player;
         }
@@ -513,6 +564,8 @@ namespace Vaerydian.Screens
             enemy.Quickness = 50;
             enemy.Agility = 25;
             enemy.Perception = 30;
+            enemy.Health = 50;
+            enemy.BattlePosition = new Vector2(1, 0);
 
             enemies[0] = enemy;
 

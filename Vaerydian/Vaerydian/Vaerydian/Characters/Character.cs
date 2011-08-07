@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Vaerydian.Skills;
 using Vaerydian.Abilities;
+using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Characters
 {
@@ -200,7 +201,7 @@ namespace Vaerydian.Characters
         /// <summary>
         /// Character's available skills
         /// </summary>
-        internal List<Skill> Skills
+        public List<Skill> Skills
         {
             get { return c_Skills; }
             set { c_Skills = value; }
@@ -213,11 +214,40 @@ namespace Vaerydian.Characters
         /// <summary>
         /// Characer's available Abilities
         /// </summary>
-        internal List<Ability> Abilities
+        public List<Ability> Abilities
         {
             get { return c_Abilities; }
             set { c_Abilities = value; }
         }
+
+        
+        /// <summary>
+        /// Character's current battle position
+        /// </summary>
+        private Vector2 c_BattlePosition;
+
+        /// <summary>
+        /// Character's current battle position
+        /// </summary>
+        public Vector2 BattlePosition
+        {
+            get { return c_BattlePosition; }
+            set { c_BattlePosition = value; }
+        }
+
+        /// <summary>
+        /// Character's current world position
+        /// </summary>
+        private Vector2 c_WorldPosition;
+
+        /// <summary>
+        /// Character's current world position
+        /// </summary>
+        public Vector2 WorldPosition
+        {
+            get { return c_WorldPosition; }
+            set { c_WorldPosition = value; }
+        } 
         
     }
 }

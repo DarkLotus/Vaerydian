@@ -33,9 +33,7 @@ namespace WorldGeneration.Terrain
         private Perlin perlin = new Perlin();
         private RidgedMultifractal rmf = new RidgedMultifractal();
 
-        Add add;
-        Multiply mult;
-        AbsoluteOutput ao;
+        private Add add;
 
         /// <summary>
         /// terrain map for the world
@@ -683,7 +681,7 @@ namespace WorldGeneration.Terrain
                             continue;
                         }
 
-                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.85f && terrain.Height <= 0.25)
+                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f && terrain.Height <= 0.25)
                         {
                             terrain.LandTerrainType = LandTerrainType.Swamp;
                             continue;

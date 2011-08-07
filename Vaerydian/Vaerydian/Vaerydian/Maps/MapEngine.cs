@@ -231,6 +231,11 @@ namespace Vaerydian.Maps
 
         }
 
+        public void UnloadContent()
+        {
+            textures.Clear();
+        }
+
         /// <summary>
         /// performs any needed initialization
         /// </summary>

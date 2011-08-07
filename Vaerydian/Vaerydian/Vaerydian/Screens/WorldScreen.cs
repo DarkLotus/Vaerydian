@@ -38,11 +38,11 @@ namespace Vaerydian.Screens
 
             ws_MapEngine.TileSize = 5;
             
-            ws_MapEngine.XTiles = 256;
+            ws_MapEngine.XTiles = 512;
 
-            ws_MapEngine.YTiles = 256;
+            ws_MapEngine.YTiles = 512;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 1f, ws_MapEngine.TileSize, 53);
+            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 4f, ws_MapEngine.TileSize, new Random().Next());
 
             ws_MapEngine.ViewPort.Dimensions = new Point(1024, 640);
 
@@ -69,6 +69,7 @@ namespace Vaerydian.Screens
         public override void UnloadContent()
         {
             base.UnloadContent();
+            ws_MapEngine.UnloadContent();
         }
 
         /// <summary>
@@ -80,8 +81,10 @@ namespace Vaerydian.Screens
 
             //check to see if escape was recently pressed
             if (InputManager.isKeyToggled(Keys.Escape))
-                InputManager.yesExit = true;
-
+            {
+                this.ScreenManager.removeScreen(this);
+                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+            }
             if (InputManager.isKeyPressed(Keys.Up))
             {
                 ws_MapEngine.ViewPort.Origin.Y -= 25;

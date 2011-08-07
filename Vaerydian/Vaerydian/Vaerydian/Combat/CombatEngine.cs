@@ -158,6 +158,9 @@ namespace Vaerydian.Combat
         /// <param name="enemies">Enemies player will be fighting</param>
         public void newCombatEvent(Terrain[,] terrain, PlayerCharacter player, EnemyCharacter[] enemies)
         {
+            //clear old info
+            resetValues();
+
             //do combat setup here
             //
             ce_Terrain = terrain;
@@ -230,6 +233,16 @@ namespace Vaerydian.Combat
                 ce_CombatState = CombatState.NpcChooseAction;
             else
                 ce_CombatState = CombatState.PlayerChooseAction;
+        }
+
+        /// <summary>
+        /// resets values that should not be carried over between combat events
+        /// </summary>
+        public void resetValues()
+        {
+            ce_TurnList.Clear();
+            ce_TurnIndex = 0;
+            ce_IsPlayerDead = false;
         }
 
         /// <summary>

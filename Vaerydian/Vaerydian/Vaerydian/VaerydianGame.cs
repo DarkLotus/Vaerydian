@@ -94,6 +94,10 @@ namespace Vaerydian
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            screenManager.Screens.Clear();
+            windowManager.Windows.Clear();
+            fontManager.Fonts.Clear();
+            GC.Collect();
         }
 
         /// <summary>
