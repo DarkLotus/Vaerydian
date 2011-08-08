@@ -495,13 +495,13 @@ namespace Vaerydian.Screens
         private void drawCombatants()
         {
             //draw player
-            cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 100 + 362 + 50, cs_Player.BattlePosition.Y * 100 + 100 + 50),
+            cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 100 + 362, cs_Player.BattlePosition.Y * 100 + 100),
                 null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
             
             //draw enemies
             foreach (EnemyCharacter enemy in cs_CombatEngine.Enemies)
             {
-                cs_SpriteBatch.Draw(textures[2], new Vector2(enemy.BattlePosition.X * 100 + 362 + 50, enemy.BattlePosition.Y * 100 + 100 + 50),
+                cs_SpriteBatch.Draw(textures[2], new Vector2(enemy.BattlePosition.X * 100 + 362, enemy.BattlePosition.Y * 100 + 100 ),
                     null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
             }
         }

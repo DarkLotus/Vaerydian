@@ -19,8 +19,8 @@ namespace WorldGeneration.Terrain
     /// </summary>
     public class WorldGenerator
     {
-        //purely private variables
-        
+        #region Variables
+
         //testing value for wind
         private float wg_WindTestValue;
 
@@ -160,6 +160,7 @@ namespace WorldGeneration.Terrain
 
         private int counter = 0;
 
+        #endregion
 
         /// <summary>
         /// generates a new xDimension by yDimension world with the given seed
@@ -244,17 +245,13 @@ namespace WorldGeneration.Terrain
             counter = 0;
 
 
-            /*
-             * [NOT CURRENTLY ACTIVE]
             
             //generate rivers
             wg_StatusMessage = "Creating Rivers: ";
+            generateRivers(100);
 
             //reset progress message
             wg_ProgressMessage = "";
-            */
-
-
 
             //generate terrain Biomes
             wg_StatusMessage = "Creating Biomes: ";
@@ -313,7 +310,7 @@ namespace WorldGeneration.Terrain
                 //since its an ocean, also set its rainfall to 100%
                 terrain.Rainfall = 1f;
             }
-            if (terrain.Height >= 0.4) 
+            if (terrain.Height >= 0.5) 
             { 
                 terrain.BaseTerrainType = BaseTerrainType.Mountain;
                 terrain.Rainfall = 0f; //base rainfall on mountains
@@ -594,7 +591,7 @@ namespace WorldGeneration.Terrain
         private void generateRainfallNew()
         {
 
-            rmf.Seed = wg_Seed/2;///2;
+            rmf.Seed = wg_Seed+1;///2;
             perlin.Seed = wg_Seed;
 
             float maxRainDetected = 0f;
@@ -680,8 +677,7 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Tundra;
                             continue;
                         }
-
-                        else if (terrain.Temperature <= 0.75f && terrain.Rainfall > 0.75f && terrain.Height <= 0.25)
+                        else if (terrain.Temperature > 0.35f && terrain.Rainfall > 0.85f && terrain.Height < 0.2)
                         {
                             terrain.LandTerrainType = LandTerrainType.Swamp;
                             continue;
@@ -722,7 +718,7 @@ namespace WorldGeneration.Terrain
                     else if (terrain.BaseTerrainType == BaseTerrainType.Mountain)
                     {
 
-                        if (terrain.Height < 0.5 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
+                        if (terrain.Height < 0.6 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
                         {
                             terrain.MountainTerrainType = MountainTerrainType.Foothill;
                             continue;
@@ -754,8 +750,6 @@ namespace WorldGeneration.Terrain
 
 
         /// <summary>
-        /// [NOT CURRENTLY ACTIVE]
-        /// 
         /// generates rivers on the terrains
         /// </summary>
         /// <param name="riverCount">number of rivers to generate</param>
@@ -773,11 +767,24 @@ namespace WorldGeneration.Terrain
             {
                 wg_ProgressMessage = i + " / " + 100;
 
+
+                yVal = wg_YDimension - 2;
+
                 //choose x position
                 xVal = rand.Next(wg_XDimension);
 
                 //choose y position
                 yVal = rand.Next(wg_YDimension);
+
+                //ensure they are not on a map edge
+                if (xVal == 0)
+                    xVal = 1;
+                if (xVal == wg_XDimension - 1)
+                    xVal = wg_XDimension - 2;
+                if (yVal == 0)
+                    yVal = 1;
+                if (yVal == wg_YDimension - 1)
+                    yVal = wg_YDimension - 2;
 
                 //test position as viable candidate
                 if (viableRiverCandidate(xVal, yVal))
@@ -786,40 +793,85 @@ namespace WorldGeneration.Terrain
                     buildRiver(xVal, yVal);
                 }
             }
-
-            for (int x = 0; x < wg_XDimension; x++)
-            {
-                for (int y = 0; y < wg_YDimension; y++)
-                {
-
-                    
-
-
-
-
-                }
-            }
-
-
-
-
         }
 
 
         
         /// <summary>
-        /// [NOT CURRENTLY ACTIVE]
-        /// 
         /// constructs a river until it reaches water
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        private void buildRiver(int x, int y)
+        /// <param name="x">x coord start</param>
+        /// <param name="y">y coord start</param>
+        private void buildRiver(int xStart, int yStart)
         {
             bool stillHasPaths = true;
 
+            int x = xStart;
+            int y = yStart;
+            int xVal = 0;
+            int yVal = 0;
+
+            double minHeight = wg_WorldTerrainMap[x, y].Height;
+
             while (stillHasPaths)
             {
+                //check each of this cell's neighbors
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+
+                        if (wg_WorldTerrainMap[x + i, y + j].Height < minHeight)
+                        {
+                            //skip this cell
+                            if (i == 0 && j == 0)
+                               continue;
+
+                            //capture the lowest point seen
+                            minHeight = wg_WorldTerrainMap[x + i, y + j].Height;
+                            xVal = i;
+                            yVal = j;
+                        }
+                    }
+                }
+
+                //check to see if a low point was found
+                if (xVal == 0 && yVal == 0)
+                {
+                    //no low points were reduce parameters
+                    wg_WorldTerrainMap[x, y].Height += 0.01;
+                    minHeight = wg_WorldTerrainMap[x, y].Height;
+                    continue;
+                }
+                else
+                {
+                    //if the lowest tile found was an ocean or another River tile, the river is done
+                    if (wg_WorldTerrainMap[x + xVal, y + yVal].BaseTerrainType == BaseTerrainType.Ocean)// || wg_WorldTerrainMap[x + xVal, y + yVal].BaseTerrainType == BaseTerrainType.River)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        //create the river
+                        wg_WorldTerrainMap[x + xVal, y + yVal].BaseTerrainType = BaseTerrainType.River;
+                        
+                        //setup variables for next pass
+                        x += xVal;
+                        y += yVal;
+                        minHeight = wg_WorldTerrainMap[x, y].Height;
+                        xVal = 0;
+                        yVal = 0;
+
+                        if (x == 0)
+                            break;
+                        if (x == wg_XDimension - 1)
+                            break;
+                        if (y == 0)
+                            break;
+                        if (y == wg_YDimension - 1)
+                            break;
+                    }
+                }
 
             }
 
@@ -827,12 +879,7 @@ namespace WorldGeneration.Terrain
         }
 
 
-        
-
-
         /// <summary>
-        /// [NOT CURRENTLY ACTIVE]
-        /// 
         /// returns true if the given coordinate is a viable river spawning location
         /// </summary>
         /// <param name="x">x coordinate</param>
@@ -843,16 +890,10 @@ namespace WorldGeneration.Terrain
             //grab a terrain copy
             Terrain terrain = wg_WorldTerrainMap[x,y];
 
-            //must be within the specified hieghtrange
-            if ((terrain.Height > 0.3) && (terrain.Height < 0.6))
+            //must be within the specified parameters
+            if ((terrain.Height > 0.4) && (terrain.Height < 0.6) && (terrain.Rainfall > 0.15) && (terrain.Temperature > 0.25))
             {
-                //must receive adequate rainfall
-                if (terrain.Rainfall > 0.5)
-                {
-                    return true;
-                }
-
-                return false;
+                return true;
             }
 
             return false;

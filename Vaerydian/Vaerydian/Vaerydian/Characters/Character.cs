@@ -211,10 +211,8 @@ namespace Vaerydian.Characters
         /// Characer's available Abilities
         /// </summary>
         private List<Ability> c_Abilities;
-        /// <summary>
-        /// Characer's available Abilities
-        /// </summary>
-        public List<Ability> Abilities
+
+        internal List<Ability> Abilities
         {
             get { return c_Abilities; }
             set { c_Abilities = value; }

@@ -12,7 +12,8 @@ namespace WorldGeneration.Terrain
     {
         Land, 
         Ocean,        
-        Mountain
+        Mountain,
+        River
     }
 
     /// <summary>

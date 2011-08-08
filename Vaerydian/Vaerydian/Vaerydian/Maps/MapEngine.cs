@@ -374,6 +374,8 @@ namespace Vaerydian.Maps
                     if (terrain.MountainTerrainType == MountainTerrainType.SnowyPeak)
                         return 14;
                     return 2;
+                case BaseTerrainType.River:
+                    return 18;
                 default:
                     return 0;
             }
