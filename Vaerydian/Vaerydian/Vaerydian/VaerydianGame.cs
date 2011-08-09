@@ -62,6 +62,8 @@ namespace Vaerydian
         /// </summary>
         protected override void Initialize()
         {
+            base.Initialize();
+            
             // TODO: Add your initialization logic here
             //a test screen
             
@@ -69,7 +71,7 @@ namespace Vaerydian
             LoadingScreen.Load(screenManager, false, new StartScreen());
 
 
-            base.Initialize();
+            
         }
 
         /// <summary>

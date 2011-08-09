@@ -28,3 +28,5 @@ Content\terrain\littoral.xnb
 Content\terrain\abyssal.xnb
 Content\terrain\ice.xnb
 Content\terrain\sublittoral.xnb
+Content\characters\player.xnb
+Content\characters\enemy.xnb

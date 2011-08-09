@@ -190,11 +190,18 @@ namespace WorldGeneration.Terrain
             perlin.NoiseQuality = NoiseQuality.High;
             perlin.Frequency = 4;
 
+            /*
             rmf.Seed = wg_Seed/2;
             rmf.OctaveCount = 16;
             rmf.Lacunarity = 2;
             rmf.NoiseQuality = NoiseQuality.High;
             rmf.Frequency = 4;
+             */
+            rmf.Seed = wg_Seed;///3;
+            rmf.OctaveCount = 4;
+            rmf.Frequency = 4;
+            rmf.Lacunarity = 4;
+            rmf.NoiseQuality = NoiseQuality.High;
 
             add = new Add(perlin, rmf);
             //mult = new Multiply(perlin, rmf);
@@ -243,15 +250,14 @@ namespace WorldGeneration.Terrain
             //reset progress message
             wg_ProgressMessage = "";
             counter = 0;
-
-
-            
+  
             //generate rivers
             wg_StatusMessage = "Creating Rivers: ";
             generateRivers(100);
 
             //reset progress message
             wg_ProgressMessage = "";
+            counter = 0;
 
             //generate terrain Biomes
             wg_StatusMessage = "Creating Biomes: ";
@@ -298,7 +304,7 @@ namespace WorldGeneration.Terrain
         private void generateHeight(int x, int y, Terrain terrain)
         {
 
-            terrain.Height = perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
+            terrain.Height = perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) ;
 
             //figure out its base terrain type
             terrain.BaseTerrainType = BaseTerrainType.Land;
@@ -591,7 +597,7 @@ namespace WorldGeneration.Terrain
         private void generateRainfallNew()
         {
 
-            rmf.Seed = wg_Seed+1;///2;
+            rmf.Seed = wg_Seed/2;///2;
             perlin.Seed = wg_Seed;
 
             float maxRainDetected = 0f;
@@ -746,16 +752,13 @@ namespace WorldGeneration.Terrain
 
         }
 
-
-
-
         /// <summary>
         /// generates rivers on the terrains
         /// </summary>
         /// <param name="riverCount">number of rivers to generate</param>
         private void generateRivers(int riverCount)
         {
-            Random rand = new Random((int)wg_Seed);
+            Random rand = new Random(wg_Seed);
             int xVal;
             int yVal;
             int i = 0;
@@ -795,8 +798,6 @@ namespace WorldGeneration.Terrain
             }
         }
 
-
-        
         /// <summary>
         /// constructs a river until it reaches water
         /// </summary>
@@ -838,7 +839,7 @@ namespace WorldGeneration.Terrain
                 //check to see if a low point was found
                 if (xVal == 0 && yVal == 0)
                 {
-                    //no low points were reduce parameters
+                    //no low points were found reduce parameters
                     wg_WorldTerrainMap[x, y].Height += 0.01;
                     minHeight = wg_WorldTerrainMap[x, y].Height;
                     continue;
@@ -878,7 +879,6 @@ namespace WorldGeneration.Terrain
 
         }
 
-
         /// <summary>
         /// returns true if the given coordinate is a viable river spawning location
         /// </summary>
@@ -891,7 +891,9 @@ namespace WorldGeneration.Terrain
             Terrain terrain = wg_WorldTerrainMap[x,y];
 
             //must be within the specified parameters
-            if ((terrain.Height > 0.4) && (terrain.Height < 0.6) && (terrain.Rainfall > 0.15) && (terrain.Temperature > 0.25))
+            if ((terrain.Height > 0.4) && (terrain.Height < 0.6) &&
+                (terrain.Rainfall > 0.15) && (terrain.Temperature > 0.25) &&
+                (terrain.BaseTerrainType != BaseTerrainType.River))
             {
                 return true;
             }

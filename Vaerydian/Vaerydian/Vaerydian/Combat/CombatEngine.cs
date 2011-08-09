@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using WorldGeneration.Terrain;
 using Vaerydian.Characters;
-using Vaerydian.Combat;
+using Microsoft.Xna.Framework;
+//using Vaerydian.Combat;
 
 namespace Vaerydian.Combat
 {
@@ -60,15 +61,15 @@ namespace Vaerydian.Combat
         /// <summary>
         /// current state of the combat engine
         /// </summary>
-        private CombatState ce_CombatState = CombatState.CombatInitializing;
+        private CombatState ce_CurrentCombatState = CombatState.CombatInitializing;
 
         /// <summary>
         /// current state of the combat engine
         /// </summary>
-        public CombatState CombatState
+        public CombatState CurrentCombatState
         {
-            get { return ce_CombatState; }
-            set { ce_CombatState = value; }
+            get { return ce_CurrentCombatState; }
+            set { ce_CurrentCombatState = value; }
         }
 
         /// <summary>
@@ -145,7 +146,21 @@ namespace Vaerydian.Combat
             set { ce_IsPlayerDead = value; }
         }
 
-        
+        /// <summary>
+        /// current round
+        /// </summary>
+        private int ce_RoundCounter = 1;
+
+        /// <summary>
+        /// current round
+        /// </summary>
+        public int RoundCounter
+        {
+            get { return ce_RoundCounter; }
+            set { ce_RoundCounter = value; }
+        }
+
+
 
 
         #endregion
@@ -172,7 +187,7 @@ namespace Vaerydian.Combat
             ce_Enemies = enemies;
 
             //set state to ready
-            ce_CombatState = CombatState.CombatReady;
+            ce_CurrentCombatState = CombatState.CombatReady;
         }
 
         /// <summary>
@@ -230,9 +245,9 @@ namespace Vaerydian.Combat
 
             //make the determination
             if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
-                ce_CombatState = CombatState.NpcChooseAction;
+                ce_CurrentCombatState = CombatState.NpcChooseAction;
             else
-                ce_CombatState = CombatState.PlayerChooseAction;
+                ce_CurrentCombatState = CombatState.PlayerChooseAction;
         }
 
         /// <summary>
@@ -243,6 +258,7 @@ namespace Vaerydian.Combat
             ce_TurnList.Clear();
             ce_TurnIndex = 0;
             ce_IsPlayerDead = false;
+            ce_RoundCounter = 1;
         }
 
         /// <summary>
@@ -254,9 +270,9 @@ namespace Vaerydian.Combat
 
             //make the determination
             if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
-                ce_CombatState = CombatState.NpcChooseAction;
+                ce_CurrentCombatState = CombatState.NpcChooseAction;
             else
-                ce_CombatState = CombatState.PlayerChooseAction;
+                ce_CurrentCombatState = CombatState.PlayerChooseAction;
         }
 
         /// <summary>
@@ -264,7 +280,11 @@ namespace Vaerydian.Combat
         /// </summary>
         public void newRound()
         {
-
+            //clear the turn list and reset the index
+            ce_TurnList.Clear();
+            ce_TurnIndex = 0;
+            ce_RoundCounter++;
+            ce_CurrentCombatState = CombatState.CombatReady;
         }
 
         /// <summary>
@@ -275,7 +295,7 @@ namespace Vaerydian.Combat
 
 
             //set the NPC to act
-            ce_CombatState = CombatState.NpcActing;
+            ce_CurrentCombatState = CombatState.NpcActing;
         }
 
         /// <summary>
@@ -286,7 +306,7 @@ namespace Vaerydian.Combat
 
 
             //NPC turn is complete
-            ce_CombatState = CombatState.CombatAssessTurn;
+            ce_CurrentCombatState = CombatState.CombatAssessTurn;
         }
 
         /// <summary>
@@ -297,6 +317,62 @@ namespace Vaerydian.Combat
             
         }
 
-        
+        /// <summary>
+        /// is it possible to move in the chosen direction
+        /// </summary>
+        /// <returns>true if possible, false if not</returns>
+        public bool isDirectionMovable(Vector2 target)
+        {
+            //is the move legal
+            if (target.X >= 0 &&
+                target.X < 3 &&
+                target.Y >= 0 &&
+                target.Y < 3)
+            {
+                //is the square occupied
+                foreach (EnemyCharacter enemy in ce_Enemies)
+                {
+                    if (enemy.BattlePosition == target)
+                        return false;
+                }
+
+                //its a good move
+                return true;
+            }
+            else
+            {
+                //not a good move
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// does the cell have a valid target
+        /// </summary>
+        /// <returns>true if yes, otherwise no</returns>
+        public bool isCellAttackable(Vector2 target)
+        {
+            //does the cell have a valid target
+            if (target.X >= 0 &&
+                target.X < 3 &&
+                target.Y >= 0 &&
+                target.Y < 3)
+            {
+                //check if an enemy is there
+                foreach (EnemyCharacter enemy in ce_Enemies)
+                {   //attackable
+                    if (enemy.BattlePosition == target)
+                        return true;
+                }
+
+                //nothing to attack
+                return false;
+            }
+            else
+            {
+                //nothing to attack
+                return false;
+            }
+        }
     }
 }

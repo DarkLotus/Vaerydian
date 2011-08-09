@@ -271,6 +271,24 @@
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\sublittoral.xnb</Output>
       <Time>2011-08-02T20:54:58.6133901-04:00</Time>
     </Item>
+    <Item>
+      <Source>characters\player.bmp</Source>
+      <Name>characters\player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\player.xnb</Output>
+      <Time>2011-08-07T16:41:21.5936865-04:00</Time>
+    </Item>
+    <Item>
+      <Source>characters\enemy.bmp</Source>
+      <Name>characters\enemy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\enemy.xnb</Output>
+      <Time>2011-08-07T16:42:59.5342883-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
