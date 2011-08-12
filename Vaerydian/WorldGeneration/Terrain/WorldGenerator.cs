@@ -28,12 +28,15 @@ namespace WorldGeneration.Terrain
         private float wg_WorldTempBand = 0.0f;
 
         //perlin noise generator
-        private PerlinNoise perlinNoise = new PerlinNoise();
+        //private PerlinNoise perlinNoise = new PerlinNoise();
 
-        private Perlin perlin = new Perlin();
-        private RidgedMultifractal rmf = new RidgedMultifractal();
+        private Perlin land = new Perlin();
+        private Perlin landBias = new Perlin();
+        private RidgedMultifractal mountains = new RidgedMultifractal();
+        private RidgedMultifractal clouds = new RidgedMultifractal();
+        private Select landSelect;
 
-        private Add add;
+        //private Add add;
 
         /// <summary>
         /// terrain map for the world
@@ -180,32 +183,26 @@ namespace WorldGeneration.Terrain
             wg_WorldTerrainMap = new Terrain[xDimension, yDimension];
 
             //set seed
-            perlinNoise.Random = new Random(wg_Seed);
-            perlinNoise.randomSort();
+            //perlinNoise.Random = new Random(wg_Seed);
+            //perlinNoise.randomSort();
 
-            
-            perlin.Seed = wg_Seed;
-            perlin.Persistence = 0.5;
-            perlin.OctaveCount = 16;
-            perlin.NoiseQuality = NoiseQuality.High;
-            perlin.Frequency = 4;
+            land.Seed = wg_Seed;
+            land.Persistence = 0.5;
+            land.OctaveCount = 16;
+            land.NoiseQuality = NoiseQuality.High;
+            land.Frequency = 4;
 
-            /*
-            rmf.Seed = wg_Seed/2;
-            rmf.OctaveCount = 16;
-            rmf.Lacunarity = 2;
-            rmf.NoiseQuality = NoiseQuality.High;
-            rmf.Frequency = 4;
-             */
-            rmf.Seed = wg_Seed;///3;
-            rmf.OctaveCount = 4;
-            rmf.Frequency = 4;
-            rmf.Lacunarity = 4;
-            rmf.NoiseQuality = NoiseQuality.High;
+            mountains.Seed = wg_Seed;///3;
+            mountains.OctaveCount = 4;
+            mountains.Frequency = 4;
+            mountains.Lacunarity = 4;
+            mountains.NoiseQuality = NoiseQuality.High;
 
-            add = new Add(perlin, rmf);
-            //mult = new Multiply(perlin, rmf);
-            //ao = new AbsoluteOutput(perlin);
+            clouds.Seed = wg_Seed;
+            clouds.OctaveCount = 4;
+            clouds.Frequency = 4;
+            clouds.Lacunarity = 4;
+            clouds.NoiseQuality = NoiseQuality.High;
 
             //update status message
             wg_StatusMessage = "Creating Base Terrain, Height, Temperature, and Wind Maps: ";
@@ -303,8 +300,10 @@ namespace WorldGeneration.Terrain
         /// <param name="terrain">terrain cell</param>
         private void generateHeight(int x, int y, Terrain terrain)
         {
+            double m = mountains.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
+            double l = land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
 
-            terrain.Height = perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) ;
+            terrain.Height = (m + l);
 
             //figure out its base terrain type
             terrain.BaseTerrainType = BaseTerrainType.Land;
@@ -372,7 +371,7 @@ namespace WorldGeneration.Terrain
         /// <param name="terrain">terrain cell</param>
         private void generateWind(int x, int y, Terrain terrain)
         {
-            wg_WindTestValue = (float)perlinNoise.perlin(wg_WorldTerrainMap[x, y].Height, wg_WorldTerrainMap[x, y].Height, wg_Seed, 5, 4, 0.9, 0.7);
+            wg_WindTestValue = 0.25f;
 
 
             if (wg_WindTestValue <= 1.0f && wg_WindTestValue > 0.5)
@@ -597,8 +596,8 @@ namespace WorldGeneration.Terrain
         private void generateRainfallNew()
         {
 
-            rmf.Seed = wg_Seed/2;///2;
-            perlin.Seed = wg_Seed;
+            clouds.Seed = wg_Seed / 2;///2;
+            land.Seed = wg_Seed;
 
             float maxRainDetected = 0f;
 
@@ -608,8 +607,8 @@ namespace WorldGeneration.Terrain
                 {
                     wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_XDimension) * (wg_YDimension))) * 100f) + "%";
 
-                    wg_WorldTerrainMap[x, y].Rainfall = ((float)(rmf.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f)*
-                        (((float)(perlin.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f));
+                    wg_WorldTerrainMap[x, y].Rainfall = (((float)(land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f)) *
+                        (1.0f-((float)(clouds.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f));
 
                     if (wg_WorldTerrainMap[x, y].Rainfall > maxRainDetected)
                         maxRainDetected = wg_WorldTerrainMap[x, y].Rainfall;
@@ -628,7 +627,6 @@ namespace WorldGeneration.Terrain
                 }
             }
         }
-
 
         /// <summary>
         /// generates the biomes for the world

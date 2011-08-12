@@ -234,6 +234,7 @@ namespace Vaerydian.Maps
         public void UnloadContent()
         {
             textures.Clear();
+            
         }
 
         /// <summary>

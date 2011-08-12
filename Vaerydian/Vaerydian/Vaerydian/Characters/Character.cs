@@ -197,11 +197,11 @@ namespace Vaerydian.Characters
         /// <summary>
         /// Character's available skills
         /// </summary>
-        private List<Skill> c_Skills;
+        private Dictionary<String, Skill> c_Skills = new Dictionary<String, Skill>();
         /// <summary>
         /// Character's available skills
         /// </summary>
-        public List<Skill> Skills
+        public Dictionary<String, Skill> Skills
         {
             get { return c_Skills; }
             set { c_Skills = value; }
@@ -210,9 +210,9 @@ namespace Vaerydian.Characters
         /// <summary>
         /// Characer's available Abilities
         /// </summary>
-        private List<Ability> c_Abilities;
+        private Dictionary<String, Ability> c_Abilities = new Dictionary<String, Ability>();
 
-        internal List<Ability> Abilities
+        internal Dictionary<String, Ability> Abilities
         {
             get { return c_Abilities; }
             set { c_Abilities = value; }

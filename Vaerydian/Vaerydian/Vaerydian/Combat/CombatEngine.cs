@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using WorldGeneration.Terrain;
 using Vaerydian.Characters;
-using Microsoft.Xna.Framework;
-//using Vaerydian.Combat;
+using Vaerydian.Items;
+using Vaerydian.Skills;
+using Vaerydian.Abilities;
 
 namespace Vaerydian.Combat
 {
@@ -374,5 +376,18 @@ namespace Vaerydian.Combat
                 return false;
             }
         }
+
+        /// <summary>
+        /// have the attacker attack the target
+        /// </summary>
+        /// <param name="attacker">character performing the attack</param>
+        /// <param name="target">character being attacked</param>
+        public void attackTarget(Character attacker, Character target)
+        {
+            int probVal;
+            
+            //float hitProbability = 0.25f * (
+        }
+
     }
 }
