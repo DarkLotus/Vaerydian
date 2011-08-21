@@ -129,6 +129,8 @@ namespace Vaerydian.Screens
             //display title texture
             ss_SpriteBatch.Draw(ss_TitleTexture, Vector2.Zero, Color.White);
 
+            ss_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], "Alpha 0.0.1", Vector2.Zero, Color.White);
+
             ss_SpriteBatch.End();
         }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vaerydian.Characters
+namespace Vaerydian.Characters.BehaviorIntelligence
 {
-    public class EnemyCharacter : Character
+    public abstract class BehaviorAI
     {
     }
 }

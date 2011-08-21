@@ -1,5 +1,6 @@
 using System;
 
+
 namespace Vaerydian
 {
 #if WINDOWS || XBOX
@@ -10,9 +11,16 @@ namespace Vaerydian
         /// </summary>
         static void Main(string[] args)
         {
-            using (VaerydianGame game = new VaerydianGame())
+            try
             {
-                game.Run();
+                using (VaerydianGame game = new VaerydianGame())
+                {
+                    game.Run();
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.ToString());
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vaerydian.Items
 {
-    class Item
+    public class Item
     {
         /// <summary>
         /// Name of item

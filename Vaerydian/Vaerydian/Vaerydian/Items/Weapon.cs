@@ -25,8 +25,43 @@ namespace Vaerydian.Items
         Crossbow,
     }
 
-    class Weapon : Item
+    public enum DamageType
     {
+        Common,
+        Fire,
+        Ice,
+        Poison,
+        Disease,
+        Order,
+        Chaos,
+        Light,
+        Dark,
+        Arcane,
+    }
+
+    public class Weapon : Item
+    {
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public Weapon() { }
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="lethality"></param>
+        /// <param name="speed"></param>
+        /// <param name="range"></param>
+        /// <param name="damageType"></param>
+        public Weapon(int lethality, int speed, int range, DamageType damageType)
+        {
+            w_Lethality = lethality;
+            w_Speed = speed;
+            w_Range = range;
+            w_DamageType = damageType;
+        }
+
+
         /// <summary>
         /// how lethal the weapon is
         /// </summary>
@@ -69,7 +104,19 @@ namespace Vaerydian.Items
             set { w_Speed = value; }
         }
 
-        
+        /// <summary>
+        /// damage type of weapon
+        /// </summary>
+        private DamageType w_DamageType;
+
+        /// <summary>
+        /// damage type of weapon
+        /// </summary>
+        public DamageType DamageType
+        {
+            get { return w_DamageType; }
+            set { w_DamageType = value; }
+        }
 
     }
 }

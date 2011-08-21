@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vaerydian.Skills
+namespace Vaerydian.Characters.Skills
 {
 
     public enum SkillType
@@ -15,8 +15,23 @@ namespace Vaerydian.Skills
         Enviromental
     }
 
-    public abstract class Skill
+    public class Skill
     {
+        public Skill() { }
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="name">name fo the skill</param>
+        /// <param name="value">value of the skill</param>
+        /// <param name="skillType">type of skill</param>
+        public Skill(String name, int value, SkillType skillType)
+        {
+            s_Name = name;
+            s_Value = value;
+            s_SkillType = skillType;
+        }
+
         /// <summary>
         /// name of the skill
         /// </summary>

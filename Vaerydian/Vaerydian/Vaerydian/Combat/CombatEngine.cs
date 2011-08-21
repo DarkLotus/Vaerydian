@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using WorldGeneration.Terrain;
 using Vaerydian.Characters;
 using Vaerydian.Items;
-using Vaerydian.Skills;
-using Vaerydian.Abilities;
+using Vaerydian.Characters.Skills;
+using Vaerydian.Characters.Abilities;
+
 
 namespace Vaerydian.Combat
 {
@@ -22,6 +23,7 @@ namespace Vaerydian.Combat
         CombatInitializing,
         CombatReady,
         CombatFinished,
+        CombatLost,
         CombatExit,
         CombatAssessTurn,
         PlayerChooseAction,
@@ -90,20 +92,20 @@ namespace Vaerydian.Combat
         /// <summary>
         /// enemies in this combat event
         /// </summary>
-        private EnemyCharacter[] ce_Enemies;
+        private List<Character> ce_Combatants = new List<Character>();
         /// <summary>
         /// enemies in this combat event
         /// </summary>
-        public EnemyCharacter[] Enemies
+        public List<Character> Combatants
         {
-            get { return ce_Enemies; }
-            set { ce_Enemies = value; }
+            get { return ce_Combatants; }
+            set { ce_Combatants = value; }
         }
 
         /// <summary>
         /// player character reference
         /// </summary>
-        private PlayerCharacter ce_Player;
+        private Character ce_Player;
 
         /// <summary>
         /// each character's turn
@@ -128,11 +130,6 @@ namespace Vaerydian.Combat
             get { return ce_TurnIndex; }
             set { ce_TurnIndex = value; }
         }
-
-        /// <summary>
-        /// current character
-        /// </summary>
-        private Character ce_CurrentCharacter;
 
         /// <summary>
         /// is the player now considered dead
@@ -162,8 +159,44 @@ namespace Vaerydian.Combat
             set { ce_RoundCounter = value; }
         }
 
+        /// <summary>
+        /// text updated from battle actions
+        /// </summary>
+        private StringBuilder ce_BattleText = new StringBuilder();
+        /// <summary>
+        /// text updated from battle actions
+        /// </summary>
+        public StringBuilder BattleText
+        {
+            get { return ce_BattleText; }
+            set { ce_BattleText = value; }
+        }
 
+        /// <summary>
+        /// lets the combat screen know there is assessment dialog to post
+        /// </summary>
+        private bool ce_AssementDialog = false;
+        /// <summary>
+        /// lets the combat screen know there is assessment dialog to post
+        /// </summary>
+        public bool AssementDialog
+        {
+            get { return ce_AssementDialog; }
+            set { ce_AssementDialog = value; }
+        }
 
+        /// <summary>
+        /// dimensions of the combat field
+        /// </summary>
+        private int ce_Dimensions;
+        /// <summary>
+        /// dimensions of the combat field
+        /// </summary>
+        public int Dimensions
+        {
+            get { return ce_Dimensions; }
+            set { ce_Dimensions = value; }
+        }
 
         #endregion
 
@@ -172,21 +205,23 @@ namespace Vaerydian.Combat
         /// </summary>
         /// <param name="terrain">3x3 Terrain that combat will take place on</param>
         /// <param name="player">Current Player Character</param>
-        /// <param name="enemies">Enemies player will be fighting</param>
-        public void newCombatEvent(Terrain[,] terrain, PlayerCharacter player, EnemyCharacter[] enemies)
+        /// <param name="combatants">Enemies player will be fighting</param>
+        public void newCombatEvent(Terrain[,] terrain, int dimensions, Character player, List<Character> combatants)
         {
             //clear old info
             resetValues();
 
             //do combat setup here
-            //
             ce_Terrain = terrain;
+
+            //combat terrain dimensions
+            ce_Dimensions = dimensions;
 
             //set current player reference
             ce_Player = player;
 
             //setup enemy array
-            ce_Enemies = enemies;
+            ce_Combatants = combatants;
 
             //set state to ready
             ce_CurrentCombatState = CombatState.CombatReady;
@@ -198,19 +233,20 @@ namespace Vaerydian.Combat
         public void determineInitiative()
         {
             //creating combat initiative list
-            int[] vals = new int[1 + ce_Enemies.Length];
+            int[] vals = new int[ce_Combatants.Count];
             int maxVal = 0;
             int index = 0;
             int count = 0;
 
             //Initiative is calculated by a players Quickness, Perception, and Agility + Random number from 1-100
             //first val is ALWAYS the player's initiative
-            vals[0] = ce_Player.Agility + ce_Player.Quickness + ce_Player.Perception + random.Next(1, 100);
+            //vals[0] = ce_Player.Stats["Agility"].Value + ce_Player.Stats["Quickness"].Value + ce_Player.Stats["Perception"].Value + random.Next(1, 100);
             
             //get enemies values
-            for (int i = 0; i < ce_Enemies.Length; i++)
+            for (int i = 0; i < ce_Combatants.Count; i++)
             {
-                vals[i + 1] = ce_Enemies[i].Agility + ce_Enemies[i].Quickness + ce_Enemies[i].Perception + random.Next(1, 100);
+                //vals[i + 1] = ce_Combatants[i].Stats["Agility"].Value + ce_Combatants[i].Stats["Quickness"].Value + ce_Combatants[i].Stats["Perception"].Value + random.Next(1, 100);
+                vals[i] = ce_Combatants[i].Stats["Agility"].Value + ce_Combatants[i].Stats["Quickness"].Value + ce_Combatants[i].Stats["Perception"].Value + random.Next(1, 100);
             }
 
             //Next, figure out which which should go next and place them in the Character Turn List
@@ -228,11 +264,16 @@ namespace Vaerydian.Combat
                     }
                 }
 
+                /*
                 //based on the index of the largest, add it to the turn list
                 if (index != 0)//enemies are added to the array, so subtract one from their index
-                    ce_TurnList.Add(ce_Enemies[index-1]);
+                    ce_TurnList.Add(ce_Combatants[index-1]);
                 else
                     ce_TurnList.Add(ce_Player);
+                 */
+
+                //based on the index of the largest, add it to the turn list
+                ce_TurnList.Add(ce_Combatants[index]);
 
                 //set this val to 0 so its not counted again
                 vals[index] = 0;
@@ -246,7 +287,7 @@ namespace Vaerydian.Combat
             ce_TurnIndex = 0;
 
             //make the determination
-            if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
+            if (ce_TurnList[ce_TurnIndex].CharacterType == CharacterType.NPC)
                 ce_CurrentCombatState = CombatState.NpcChooseAction;
             else
                 ce_CurrentCombatState = CombatState.PlayerChooseAction;
@@ -271,7 +312,7 @@ namespace Vaerydian.Combat
             ce_TurnIndex++;
 
             //make the determination
-            if (ce_TurnList[ce_TurnIndex].GetType() == typeof(EnemyCharacter))
+            if (ce_TurnList[ce_TurnIndex].CharacterType == CharacterType.NPC)
                 ce_CurrentCombatState = CombatState.NpcChooseAction;
             else
                 ce_CurrentCombatState = CombatState.PlayerChooseAction;
@@ -294,7 +335,7 @@ namespace Vaerydian.Combat
         /// </summary>
         public void npcPlanAction()
         {
-
+            ce_TurnList[ce_TurnIndex].CombatAI.planAction(ce_TurnList[ce_TurnIndex]);
 
             //set the NPC to act
             ce_CurrentCombatState = CombatState.NpcActing;
@@ -305,7 +346,7 @@ namespace Vaerydian.Combat
         /// </summary>
         public void npcPerformAction()
         {
-
+            ce_TurnList[ce_TurnIndex].CombatAI.performAction(ce_TurnList[ce_TurnIndex]);
 
             //NPC turn is complete
             ce_CurrentCombatState = CombatState.CombatAssessTurn;
@@ -316,7 +357,36 @@ namespace Vaerydian.Combat
         /// </summary>
         public void assessCombatTurn()
         {
-            
+            //clear battle text
+            ce_BattleText.Clear();
+
+            /*
+            //see if the player is dead
+            if (ce_Player.Health <= 0)
+            {
+                ce_IsPlayerDead = true;
+                ce_BattleText.Append("You have died!");
+                ce_AssementDialog = true;
+            }
+            */
+
+            //see if an enemy has been killed
+            foreach (Character combatant in ce_Combatants)
+            {
+                if (combatant.Health <= 0)
+                {
+                    TurnList.Remove(combatant);
+                    ce_BattleText.Append(combatant.Name + " has been killed!");
+
+                    if (combatant.CharacterType == CharacterType.Player)
+                    {
+                        ce_IsPlayerDead = true;
+                        ce_BattleText.Append("You have died!");
+                    }
+                    
+                    ce_AssementDialog = true;
+                }
+            }
         }
 
         /// <summary>
@@ -327,14 +397,14 @@ namespace Vaerydian.Combat
         {
             //is the move legal
             if (target.X >= 0 &&
-                target.X < 3 &&
+                target.X < ce_Dimensions &&
                 target.Y >= 0 &&
-                target.Y < 3)
+                target.Y < ce_Dimensions)
             {
                 //is the square occupied
-                foreach (EnemyCharacter enemy in ce_Enemies)
+                foreach (Character combatant in ce_Combatants)
                 {
-                    if (enemy.BattlePosition == target)
+                    if (combatant.BattlePosition == target)
                         return false;
                 }
 
@@ -356,14 +426,14 @@ namespace Vaerydian.Combat
         {
             //does the cell have a valid target
             if (target.X >= 0 &&
-                target.X < 3 &&
+                target.X < ce_Dimensions &&
                 target.Y >= 0 &&
-                target.Y < 3)
+                target.Y < ce_Dimensions)
             {
                 //check if an enemy is there
-                foreach (EnemyCharacter enemy in ce_Enemies)
+                foreach (Character combatant in ce_Combatants)
                 {   //attackable
-                    if (enemy.BattlePosition == target)
+                    if (combatant.BattlePosition == target)
                         return true;
                 }
 
@@ -378,15 +448,101 @@ namespace Vaerydian.Combat
         }
 
         /// <summary>
+        /// gets the character at the given location
+        /// </summary>
+        /// <param name="targetLocation">location to check</param>
+        /// <returns>a character if found or null if not</returns>
+        public Character getTarget(Vector2 targetLocation)
+        {
+            foreach (Character combatant in ce_Combatants)
+            {
+                if (combatant.BattlePosition == targetLocation)
+                    return combatant;
+            }
+            //no character found
+            return null;
+        }
+
+        /// <summary>
         /// have the attacker attack the target
         /// </summary>
         /// <param name="attacker">character performing the attack</param>
         /// <param name="target">character being attacked</param>
         public void attackTarget(Character attacker, Character target)
         {
-            int probVal;
+            //clear the battle text
+            ce_BattleText.Clear();
             
-            //float hitProbability = 0.25f * (
+            //figure out attackers hit value
+            double probHitAttacker = attacker.Stats["Agility"].Value * 2 + getWeaponSkillValue(attacker) + //base attack skill
+                attacker.Stats["Quickness"].Value * attacker.Equipment.Weapon.Speed + //equipment attack enhancements
+                getAttackBonuses(attacker); //special attack bonuses
+
+            //figure out target's avoidance
+            double probHitTarget = target.Stats["Agility"].Value * 2 + target.Skills["Dodge"].Value + //base avoidance skill
+                target.Stats["Quickness"].Value * target.Equipment.ArmorChest.Mobility + //equipment avoidance enhancements
+                getAvoidanceBonuses(target); //special avoidance bonuses
+            
+            //define thresholds
+            double lowPercent = 0.0;
+            double highPercent = 1.9;
+
+            //find hit probability
+            double hitProbability = lowPercent * (probHitAttacker / (probHitAttacker + probHitTarget)) + //probability of attacker to hit
+                                    highPercent * (probHitTarget / (probHitAttacker + probHitTarget)); //probability of target to avoid
+            
+            //Roll hit probability
+            double hitAttempt = random.NextDouble() * hitProbability;
+
+            if (hitAttempt <= hitProbability)
+            {
+                double overHit = 0.0;
+                
+                //check for overhit bonus
+                if(hitAttempt > 1.0)
+                {
+                    overHit = hitAttempt - 1.0;
+                }
+
+                //hit determine dmg
+                int damageMax = (int)((overHit + 1.0) * (((double)attacker.Stats["Strength"].Value / 4.0) + ((double)getWeaponSkillValue(attacker) / 5.0) +
+                                              ((double)attacker.Equipment.Weapon.Lethality - (double)target.Equipment.ArmorChest.Defense)));
+
+                int damage = random.Next(damageMax / 2, damageMax);
+
+                //make sure you're doing 0 or greater dmg
+                if (damage < 0)
+                   damage = 0;
+
+                target.Health -= damage;
+
+                ce_BattleText.Append(attacker.Name + " hits " + target.Name + " for " + damage + " " + attacker.Equipment.Weapon.DamageType.ToString() + " damage!");
+
+                if (target.CharacterType != CharacterType.Player)
+                {
+                    target.CombatAI.HostileList.Add(attacker);
+                }
+            }
+            else
+            {
+                //did not hit
+                ce_BattleText.Append(attacker.Name + " misses " + target.Name + " as they avoid the attack!");
+            }
+        }
+
+        private int getWeaponSkillValue(Character character)
+        {
+            return character.Skills["WeaponSkill"].Value;
+        }
+
+        private int getAttackBonuses(Character character)
+        {
+            return 0;
+        }
+
+        private int getAvoidanceBonuses(Character cahracter)
+        {
+            return 0;
         }
 
     }

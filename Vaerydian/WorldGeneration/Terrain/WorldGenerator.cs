@@ -303,7 +303,10 @@ namespace WorldGeneration.Terrain
             double m = mountains.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
             double l = land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
 
-            terrain.Height = (m + l);
+            terrain.Height = (m + 2*l)/3f;
+
+            if (terrain.Height > 0.0)
+                terrain.Height = terrain.Height / 0.5f;
 
             //figure out its base terrain type
             terrain.BaseTerrainType = BaseTerrainType.Land;
@@ -348,8 +351,8 @@ namespace WorldGeneration.Terrain
             if (wg_WorldTerrainMap[x, y].Height < 0.1)
             {
                 //if it is water, reduce it down so the water is at most a temp of 0.4
-                //wg_WorldTerrainMap[x, y].Temperature = wg_WorldTempBand * 0.4f;
-                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.5f + (float)wg_WorldTerrainMap[x, y].Height) / 2.1f)*0.75f;
+                //wg_WorldTerrainMap[x, y].Temperature = wg_WorldTempBand * 0.8f + (float)wg_WorldTerrainMap[x,y].Height * 0.2f;
+                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.5f + (float)wg_WorldTerrainMap[x, y].Height) / 2f)*0.75f;
             }
             else if (wg_WorldTerrainMap[x, y].Height > 0.1)
             {
@@ -595,8 +598,9 @@ namespace WorldGeneration.Terrain
 
         private void generateRainfallNew()
         {
-
-            clouds.Seed = wg_Seed / 2;///2;
+            float c;
+            float l;
+            clouds.Seed = wg_Seed;
             land.Seed = wg_Seed;
 
             float maxRainDetected = 0f;
@@ -607,8 +611,11 @@ namespace WorldGeneration.Terrain
                 {
                     wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_XDimension) * (wg_YDimension))) * 100f) + "%";
 
-                    wg_WorldTerrainMap[x, y].Rainfall = (((float)(land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f)) *
-                        (1.0f-((float)(clouds.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f));
+                    c = (float)((clouds.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f);
+                    l = (float)((land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f);
+
+                    wg_WorldTerrainMap[x, y].Rainfall = (1f-l) * c;//(1.5f - (float) wg_WorldTerrainMap[x,y].Height);
+                        
 
                     if (wg_WorldTerrainMap[x, y].Rainfall > maxRainDetected)
                         maxRainDetected = wg_WorldTerrainMap[x, y].Rainfall;
@@ -661,10 +668,12 @@ namespace WorldGeneration.Terrain
                         else if (terrain.Height > -0.15)
                         {
                             terrain.OceanTerrainType = OceanTerrainType.Sublittoral;
+                            continue;
                         }
                         else
                         {
                             terrain.OceanTerrainType = OceanTerrainType.Abyssal;
+                            continue;
                         }
 
                     }//check if base type is land
@@ -681,7 +690,7 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Tundra;
                             continue;
                         }
-                        else if (terrain.Temperature > 0.35f && terrain.Rainfall > 0.85f && terrain.Height < 0.2)
+                        else if (terrain.Temperature > 0.35f && terrain.Rainfall > 0.65f && terrain.Height < 0.2)
                         {
                             terrain.LandTerrainType = LandTerrainType.Swamp;
                             continue;
@@ -854,6 +863,54 @@ namespace WorldGeneration.Terrain
                         //create the river
                         wg_WorldTerrainMap[x + xVal, y + yVal].BaseTerrainType = BaseTerrainType.River;
                         
+                        //see if this one was UL corner
+                        if (xVal == 1 && yVal == 1 )
+                        {
+                            //see which adjacent should also be filled
+                            if (wg_WorldTerrainMap[x, y + 1].Height < wg_WorldTerrainMap[x + 1, y].Height)
+                            {
+                                wg_WorldTerrainMap[x, y + 1].BaseTerrainType = BaseTerrainType.River;
+                            }
+                            else
+                            {
+                                wg_WorldTerrainMap[x + 1, y].BaseTerrainType = BaseTerrainType.River;
+                            }
+                        }
+                        else if (xVal == -1 && yVal == -1)
+                        {
+                            if (wg_WorldTerrainMap[x, y-1].Height < wg_WorldTerrainMap[x-1, y].Height)
+                            {
+                                wg_WorldTerrainMap[x, y-1].BaseTerrainType = BaseTerrainType.River;
+                            }
+                            else
+                            {
+                                wg_WorldTerrainMap[x - 1, y].BaseTerrainType = BaseTerrainType.River;
+                            }
+                        }
+                        else if(xVal == 1 && yVal == -1)
+                        {
+                            if (wg_WorldTerrainMap[x, y-1].Height < wg_WorldTerrainMap[x+1, y].Height)
+                            {
+                                wg_WorldTerrainMap[x, y-1].BaseTerrainType = BaseTerrainType.River;
+                            }
+                            else
+                            {
+                                wg_WorldTerrainMap[x + 1, y].BaseTerrainType = BaseTerrainType.River;
+                            }
+                        }
+                        else if(xVal == -1 && yVal == 1)
+                        {
+                            if (wg_WorldTerrainMap[x-1, y].Height < wg_WorldTerrainMap[x, y+1].Height)
+                            {
+                                wg_WorldTerrainMap[x - 1, y].BaseTerrainType = BaseTerrainType.River;
+                            }
+                            else
+                            {
+                                wg_WorldTerrainMap[x , y+1].BaseTerrainType = BaseTerrainType.River;
+                            }
+                        }
+
+
                         //setup variables for next pass
                         x += xVal;
                         y += yVal;
@@ -889,8 +946,8 @@ namespace WorldGeneration.Terrain
             Terrain terrain = wg_WorldTerrainMap[x,y];
 
             //must be within the specified parameters
-            if ((terrain.Height > 0.4) && (terrain.Height < 0.6) &&
-                (terrain.Rainfall > 0.15) && (terrain.Temperature > 0.25) &&
+            if ((terrain.Height > 0.5) && (terrain.Height < 0.7) &&
+                (terrain.Rainfall > 0.15) && (terrain.Temperature > 0.15) &&
                 (terrain.BaseTerrainType != BaseTerrainType.River))
             {
                 return true;

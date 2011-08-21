@@ -268,21 +268,21 @@ namespace Vaerydian.Maps
                     {
                         //draw temperature texture
                         spriteBatch.Draw(temperatureTexture, new Vector2((x * me_TileSize), (y * me_TileSize)),
-                            null, shadingValue(terrain.Temperature), 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1, 1),
+                            null, shadingValue(terrain.Temperature), 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1f),
                             SpriteEffects.None, 0);
                     }
                     else if (me_ShowPrecipitation)
                     {
                         //draw rainfall textures
                         spriteBatch.Draw(temperatureTexture, new Vector2((x * me_TileSize), (y * me_TileSize)),
-                            null, shadingValue(terrain.Rainfall), 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1, 1),
+                            null, shadingValue(terrain.Rainfall), 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1f),
                             SpriteEffects.None, 0);
                     }
                     else
                     {
                         //draw terrain texture
                         spriteBatch.Draw(textures[getBaseTexture(terrain)], new Vector2((x * me_TileSize), (y * me_TileSize)),
-                            null, Color.White, 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1, 1),
+                            null, Color.White, 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1f),
                             SpriteEffects.None, 0);
                     }
                 }

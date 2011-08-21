@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Vaerydian.Skills;
-using Vaerydian.Abilities;
 using Microsoft.Xna.Framework;
+using Vaerydian.Characters.Skills;
+using Vaerydian.Characters.Abilities;
+using Vaerydian.Characters.Stats;
+using Vaerydian.Characters.BehaviorIntelligence;
+using Vaerydian.Combat.CombatIntelligence;
+using Vaerydian.Items;
+
 
 namespace Vaerydian.Characters
 {
@@ -21,9 +26,56 @@ namespace Vaerydian.Characters
         Introvert
     }
 
-
-    public abstract class Character
+    public enum CharacterType
     {
+        Player,
+        NPC
+    }
+
+
+    public class Character
+    {
+        /// <summary>
+        /// type of character
+        /// </summary>
+        private CharacterType c_CharacterType;
+
+        /// <summary>
+        /// type of character
+        /// </summary>
+        public CharacterType CharacterType
+        {
+            get { return c_CharacterType; }
+            set { c_CharacterType = value; }
+        }
+
+        /// <summary>
+        /// the artificial intelligence behavior for the character
+        /// </summary>
+        private BehaviorAI c_BehaviorAI;
+        /// <summary>
+        /// the artificial intelligence behavior for the character
+        /// </summary>
+        public BehaviorAI BehaviorAI
+        {
+            get { return c_BehaviorAI; }
+            set { c_BehaviorAI = value; }
+        }
+
+        /// <summary>
+        /// the artificial intelligence for combat for the character
+        /// </summary>
+        private CombatAI c_CombatAI;
+
+        /// <summary>
+        /// the artificial intelligence for combat for the character
+        /// </summary>
+        public CombatAI CombatAI
+        {
+            get { return c_CombatAI; }
+            set { c_CombatAI = value; }
+        }
+        
         /// <summary>
         /// name of character
         /// </summary>
@@ -51,121 +103,17 @@ namespace Vaerydian.Characters
         }
 
         /// <summary>
-        /// how strong and mighty a character is
+        /// characters current stats
         /// </summary>
-        private int c_Strength;
-        /// <summary>
-        /// how strong and mighty a character is
-        /// </summary>
-        public int Strength
-        {
-            get { return c_Strength; }
-            set { c_Strength = value; }
-        }
-        
-        /// <summary>
-        /// how dexterous and agile a character is
-        /// </summary>
-        private int c_Agility;
-        /// <summary>
-        /// how dexterous and agile a character is
-        /// </summary>
-        public int Agility
-        {
-            get { return c_Agility; }
-            set { c_Agility = value; }
-        }
+        private Dictionary<String, Stat> c_Stats = new Dictionary<String, Stat>();
 
         /// <summary>
-        /// how stout and enduring a character is
+        /// characters current stats
         /// </summary>
-        private int c_Endurance;
-        /// <summary>
-        /// how stout and enduring a character is
-        /// </summary>
-        public int Endurance
+        public Dictionary<String, Stat> Stats
         {
-            get { return c_Endurance; }
-            set { c_Endurance = value; }
-        }
-
-        /// <summary>
-        /// how learned and studious a character is
-        /// </summary>
-        private int c_Intelligence;
-        /// <summary>
-        /// how learned and studious a character is
-        /// </summary>
-        public int Intelligence
-        {
-            get { return c_Intelligence; }
-            set { c_Intelligence = value; }
-        }
-
-        /// <summary>
-        /// how wise and insightful characer is
-        /// </summary>
-        private int c_Wisdom;
-        /// <summary>
-        /// how wise and insightful characer is
-        /// </summary>
-        public int Wisdom
-        {
-            get { return c_Wisdom; }
-            set { c_Wisdom = value; }
-        }
-
-        /// <summary>
-        /// How commanding a character's presence is
-        /// </summary>
-        private int c_Presence;
-        /// <summary>
-        /// How commanding a character's presence is
-        /// </summary>
-        public int Presence
-        {
-            get { return c_Presence; }
-            set { c_Presence = value; }
-        }
-
-        /// <summary>
-        /// how quick a character is
-        /// </summary>
-        private int c_Quickness;
-        /// <summary>
-        /// how quick a character is
-        /// </summary>
-        public int Quickness
-        {
-            get { return c_Quickness; }
-            set { c_Quickness = value; }
-        }
-
-        /// <summary>
-        /// how strong a character's will is
-        /// </summary>
-        private int c_Willpower;
-        /// <summary>
-        /// how strong a character's will is
-        /// </summary>
-        public int Willpower
-        {
-            get { return c_Willpower; }
-            set { c_Willpower = value; }
-        }
-
-        /// <summary>
-        /// how much attention a character pays to their surroundings
-        /// </summary>
-        private int c_Perception;
-
-        /// <summary>
-        /// how much attention a character pays to their surroundings
-        /// </summary>
-        public int Perception
-        {
-            get { return c_Perception; }
-            set { c_Perception = value; }
+            get { return c_Stats; }
+            set { c_Stats = value; }
         }
 
         /// <summary>
@@ -217,7 +165,6 @@ namespace Vaerydian.Characters
             get { return c_Abilities; }
             set { c_Abilities = value; }
         }
-
         
         /// <summary>
         /// Character's current battle position
@@ -245,7 +192,35 @@ namespace Vaerydian.Characters
         {
             get { return c_WorldPosition; }
             set { c_WorldPosition = value; }
-        } 
-        
+        }
+
+        /// <summary>
+        /// characer's Inventory
+        /// </summary>
+        private Dictionary<String, Item> c_Inventory = new Dictionary<string, Item>();
+
+        /// <summary>
+        /// characer's Inventory
+        /// </summary>
+        public Dictionary<String, Item> Inventory
+        {
+            get { return c_Inventory; }
+            set { c_Inventory = value; }
+        }
+
+        /// <summary>
+        /// characer's equipment
+        /// </summary>
+        private Equipment c_Equipment;
+
+        public Equipment Equipment
+        {
+            get { return c_Equipment; }
+            set { c_Equipment = value; }
+        }
+
+
+
+
     }
 }

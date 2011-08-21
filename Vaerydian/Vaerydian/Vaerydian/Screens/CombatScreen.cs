@@ -6,10 +6,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Vaerydian.Combat;
+using Vaerydian.Combat.CombatIntelligence;
 using Vaerydian.Windows;
 using Vaerydian.Sessions;
 using WorldGeneration.Terrain;
 using Vaerydian.Characters;
+using Vaerydian.Characters.Abilities;
+using Vaerydian.Characters.Skills;
+using Vaerydian.Characters.Stats;
+using Vaerydian.Items;
+
+
 
 
 namespace Vaerydian.Screens
@@ -75,9 +82,9 @@ namespace Vaerydian.Screens
 
         private Vector2 cs_PlayerIntendedTarget;
 
-        private PlayerCharacter cs_Player;
+        private Character cs_Player;
 
-        private EnemyCharacter[] cs_Enemies;
+        private List<Character> cs_Combatants;
 
         #endregion
 
@@ -92,7 +99,8 @@ namespace Vaerydian.Screens
 
             //cs_Player = GameSession.Instance.PlayerCharacter;
             cs_Player = getTestPlayer();
-            cs_Enemies = getTestEnemies();
+            cs_Combatants = getTestEnemies();
+            cs_Combatants.Add(cs_Player);
 
             //update player intented positon
             cs_PlayerIntendedPosition = cs_Player.BattlePosition;
@@ -122,7 +130,7 @@ namespace Vaerydian.Screens
             //
             //THIS IS WITH TEST VALUES
             //
-            cs_CombatEngine.newCombatEvent(getTestTerrainArray(), cs_Player, cs_Enemies);
+            cs_CombatEngine.newCombatEvent(getTestTerrainArray(5), 5, cs_Player, cs_Combatants);
             //
             //THIS IS WITH TEST VALUES
             //
@@ -304,8 +312,9 @@ namespace Vaerydian.Screens
 
                         cs_Player.BattlePosition = cs_PlayerIntendedPosition;
 
-                        //reset move direction, player action, and combat state
+                        //reset move direction, intended target, player action, and combat state
                         cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
                         cs_PlayerAction = PlayerAction.None;
                         cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
@@ -322,8 +331,9 @@ namespace Vaerydian.Screens
 
                         cs_Player.BattlePosition = cs_PlayerIntendedPosition;
 
-                        //reset move direction, player action, and combat state
+                        //reset move direction, intended target, player action, and combat state
                         cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
                         cs_PlayerAction = PlayerAction.None;
                         cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
@@ -340,8 +350,9 @@ namespace Vaerydian.Screens
 
                         cs_Player.BattlePosition = cs_PlayerIntendedPosition;
 
-                        //reset move direction, player action, and combat state
+                        //reset move direction, intended target, player action, and combat state
                         cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
                         cs_PlayerAction = PlayerAction.None;
                         cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
@@ -358,8 +369,9 @@ namespace Vaerydian.Screens
 
                         cs_Player.BattlePosition = cs_PlayerIntendedPosition;
 
-                        //reset move direction, player action, and combat state
+                        //reset move direction, intended target, player action, and combat state
                         cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
                         cs_PlayerAction = PlayerAction.None;
                         cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
@@ -415,9 +427,18 @@ namespace Vaerydian.Screens
 
                     if (cs_CombatEngine.isCellAttackable(cs_PlayerIntendedTarget))
                     {
-                        cs_BattleLog.addDialog("You Target up");
+                        //attack the target
+                        cs_CombatEngine.attackTarget(cs_Player, cs_CombatEngine.getTarget(cs_PlayerIntendedTarget));
+                        
+                        //tell the player the outcome
+                        if(cs_CombatEngine.BattleText.Length > 0)
+                            cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
 
-
+                        //reset move direction, intended target, player action, and combat state
+                        cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
+                        cs_PlayerAction = PlayerAction.None;
+                        cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
                     else
                     {
@@ -428,9 +449,18 @@ namespace Vaerydian.Screens
                 {
                     if (cs_CombatEngine.isCellAttackable(cs_PlayerIntendedTarget))
                     {
-                        cs_BattleLog.addDialog("You Target down");
+                        //attack the target
+                        cs_CombatEngine.attackTarget(cs_Player, cs_CombatEngine.getTarget(cs_PlayerIntendedTarget));
 
+                        //tell the player the outcome
+                        if (cs_CombatEngine.BattleText.Length > 0)
+                            cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
 
+                        //reset move direction, player action, and combat state
+                        cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
+                        cs_PlayerAction = PlayerAction.None;
+                        cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
                     else
                     {
@@ -441,8 +471,18 @@ namespace Vaerydian.Screens
                 {
                     if (cs_CombatEngine.isCellAttackable(cs_PlayerIntendedTarget))
                     {
-                        cs_BattleLog.addDialog("You Target left");
+                        //attack the target
+                        cs_CombatEngine.attackTarget(cs_Player, cs_CombatEngine.getTarget(cs_PlayerIntendedTarget));
 
+                        //tell the player the outcome
+                        if (cs_CombatEngine.BattleText.Length > 0)
+                            cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
+
+                        //reset move direction, player action, and combat state
+                        cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
+                        cs_PlayerAction = PlayerAction.None;
+                        cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
                     else
                     {
@@ -453,8 +493,18 @@ namespace Vaerydian.Screens
                 {
                     if (cs_CombatEngine.isCellAttackable(cs_PlayerIntendedTarget))
                     {
-                        cs_BattleLog.addDialog("You Target right.");
+                        //attack the target
+                        cs_CombatEngine.attackTarget(cs_Player, cs_CombatEngine.getTarget(cs_PlayerIntendedTarget));
 
+                        //tell the player the outcome
+                        if (cs_CombatEngine.BattleText.Length > 0)
+                            cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
+
+                        //reset move direction, player action, and combat state
+                        cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                        cs_PlayerIntendedTarget = cs_Player.BattlePosition;
+                        cs_PlayerAction = PlayerAction.None;
+                        cs_CombatEngine.CurrentCombatState = CombatState.CombatAssessTurn;
                     }
                     else
                     {
@@ -493,10 +543,33 @@ namespace Vaerydian.Screens
                 //assess the turn
                 cs_CombatEngine.assessCombatTurn();
 
+                /*
+                if (cs_CombatEngine.AssementDialog)
+                {
+                    //add any assessment dialog
+                    cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
+                    cs_CombatEngine.AssementDialog = false;
+                }*/
+
+                //add any assessment dialog
+                if(cs_CombatEngine.BattleText.Length > 0)
+                    cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
+
                 //check to see if the character is alive
                 if (cs_CombatEngine.IsPlayerDead)
                 {
-                    cs_CombatEngine.CurrentCombatState = CombatState.CombatFinished;
+
+                    cs_CombatEngine.CurrentCombatState = CombatState.CombatLost;
+                    return;
+                }
+                else if(cs_CombatEngine.TurnList.Count == 1)
+                {
+                    if (cs_CombatEngine.TurnList[0].Name == cs_Player.Name)
+                    {
+                        //player has won
+                        cs_BattleLog.addDialog(cs_Player.Name + " has won the battle!");
+                        cs_CombatEngine.CurrentCombatState = CombatState.CombatFinished;
+                    }
                 }
                 else
                 {
@@ -515,6 +588,17 @@ namespace Vaerydian.Screens
                     }
                 }
 
+            }//combat has been lost
+            else if (cs_CombatEngine.CurrentCombatState == CombatState.CombatLost)
+            {
+            }//combat has been finished
+            else if (cs_CombatEngine.CurrentCombatState == CombatState.CombatFinished)
+            {
+            }//combat time to exit
+            else if (cs_CombatEngine.CurrentCombatState == CombatState.CombatExit)
+            {
+
+
             }//is it time for the player to choose an action?
             else if (cs_CombatEngine.CurrentCombatState == CombatState.PlayerChooseAction)
             {
@@ -528,11 +612,14 @@ namespace Vaerydian.Screens
             {
                 //have the next NPC plan their action
                 cs_CombatEngine.npcPlanAction();
+                //cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
             }//has the NPC chosen an action and ready to act on it?
             else if (cs_CombatEngine.CurrentCombatState == CombatState.NpcActing)
             {
                 //NPC acts
                 cs_CombatEngine.npcPerformAction();
+                if(cs_CombatEngine.BattleText.Length > 0)
+                    cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
             }
         }
 
@@ -586,19 +673,19 @@ namespace Vaerydian.Screens
         {
             
             //draw each combat square
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < cs_CombatEngine.Dimensions; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < cs_CombatEngine.Dimensions; j++)
                 {
                     //check to see if you should color the square for player movement choices
                     if ((i == cs_PlayerIntendedPosition.X && j == cs_PlayerIntendedPosition.Y && cs_PlayerAction == PlayerAction.Move) ||
                         (i == cs_PlayerIntendedTarget.X && j == cs_PlayerIntendedTarget.Y && cs_PlayerAction == PlayerAction.Attack))
                     {
-                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 100 + 362, j * 100 + 100), null, Color.Red, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 50 + 362, j * 50 + 100), null, Color.Red, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
                     }
                     else
                     {
-                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 100 + 362, j * 100 + 100), null, Color.White, 0f, Vector2.Zero, 4.0f, SpriteEffects.None, 0f);
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 50 + 362, j * 50 + 100), null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
                     }
                 }
             }
@@ -610,20 +697,24 @@ namespace Vaerydian.Screens
         /// </summary>
         private void drawCombatants()
         {
-            //draw player
-            cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 100 + 362 + 25, cs_Player.BattlePosition.Y * 100 + 100 + 25),
-                null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
-            
-            //draw enemies
-            foreach (EnemyCharacter enemy in cs_CombatEngine.Enemies)
+            //draw combatants
+            foreach (Character combatant in cs_CombatEngine.TurnList)
             {
-                cs_SpriteBatch.Draw(textures[2], new Vector2(enemy.BattlePosition.X * 100 + 362 + 25, enemy.BattlePosition.Y * 100 + 100 + 25),
-                    null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+                //draw player different
+                if (combatant.CharacterType == CharacterType.Player)
+                {
+                    cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 50 + 362 + 12.5f, cs_Player.BattlePosition.Y * 50 + 100 + 12.5f),
+                        null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    cs_SpriteBatch.Draw(textures[2], new Vector2(combatant.BattlePosition.X * 50 + 362 + 12.5f, combatant.BattlePosition.Y * 50 + 100 + 12.5f),
+                        null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                }
             }
         }
 
         #endregion
-
 
         #region Testing 
 
@@ -631,14 +722,14 @@ namespace Vaerydian.Screens
         /// generates the 3x3 terrain tiles
         /// </summary>
         /// <returns></returns>
-        private Terrain[,] getTestTerrainArray()
+        private Terrain[,] getTestTerrainArray(int size)
         {
-            Terrain[,] terrain = new Terrain[3, 3];
+            Terrain[,] terrain = new Terrain[size, size];
             Terrain tempTerrain = new Terrain();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < size; j++)
                 {
                     tempTerrain.BaseTerrainType = BaseTerrainType.Land;
                     tempTerrain.LandTerrainType = LandTerrainType.Grassland;
@@ -654,16 +745,28 @@ namespace Vaerydian.Screens
         /// generates a test player
         /// </summary>
         /// <returns></returns>
-        private PlayerCharacter getTestPlayer()
+        private Character getTestPlayer()
         {
-            PlayerCharacter player = new PlayerCharacter();
-            player.Name = "Alberez";
-            player.Quickness = 50;
-            player.Agility = 25;
-            player.Perception = 30;
+            Character player = new Character();
+            player.CharacterType = CharacterType.Player;
+            player.Name = "Player";
             player.Health = 50;
-
+            player.Stats.Add("Quickness", new Stat("Quickness", 50));
+            player.Stats.Add("Agility", new Stat("Agility", 50));
+            player.Stats.Add("Strength", new Stat("Strength", 50));
+            player.Stats.Add("Perception", new Stat("Perception", 50));
             player.BattlePosition = new Vector2(1, 1);
+
+            //setup skills
+            player.Skills.Add("Dodge", new Skill("Dodge", 50, SkillType.Defensive));
+            player.Skills.Add("WeaponSkill", new Skill("WeaponSkill", 50, SkillType.Offensive));
+
+            //setup equipment
+            Equipment equipment = new Equipment();
+            equipment.ArmorChest = new Armor(10, 3);
+            equipment.Weapon = new Weapon(5, 3, 1, DamageType.Common);
+            player.Equipment = equipment;
+
 
             return player;
         }
@@ -672,18 +775,32 @@ namespace Vaerydian.Screens
         /// generate a test enemy
         /// </summary>
         /// <returns></returns>
-        private EnemyCharacter[] getTestEnemies()
+        private List<Character> getTestEnemies()
         {
-            EnemyCharacter[] enemies = new EnemyCharacter[1];
-            EnemyCharacter enemy = new EnemyCharacter();
-            enemy.Name = "Rawrizor The Dread Beast";
-            enemy.Quickness = 50;
-            enemy.Agility = 25;
-            enemy.Perception = 30;
+            List<Character> enemies = new List<Character>();
+            Character enemy = new Character();
+            enemy.CharacterType = CharacterType.NPC;
+            enemy.Name = "Test Enemy";
             enemy.Health = 50;
+            enemy.Stats.Add("Quickness", new Stat("Quickness", 50));
+            enemy.Stats.Add("Agility", new Stat("Agility", 50));
+            enemy.Stats.Add("Strength", new Stat("Strength", 50));
+            enemy.Stats.Add("Perception", new Stat("Perception", 50));
             enemy.BattlePosition = new Vector2(1, 0);
+            
+            //setup skills
+            enemy.Skills.Add("Dodge", new Skill("Dodge",50,SkillType.Defensive));
+            enemy.Skills.Add("WeaponSkill", new Skill("WeaponSkill",50,SkillType.Offensive));
 
-            enemies[0] = enemy;
+            //setup equipment
+            Equipment equipment = new Equipment();
+            equipment.ArmorChest = new Armor(10,3);
+            equipment.Weapon = new Weapon(5,3,1,DamageType.Common);
+            enemy.Equipment = equipment;
+
+            enemy.CombatAI = new BasicCombatAI(enemy);
+
+            enemies.Add(enemy);
 
             return enemies;
         }

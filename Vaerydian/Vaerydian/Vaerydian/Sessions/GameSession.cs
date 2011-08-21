@@ -27,12 +27,12 @@ namespace Vaerydian.Sessions
         /// <summary>
         /// player's character
         /// </summary>
-        private PlayerCharacter gs_PlayerCharacter;
+        private Character gs_PlayerCharacter;
 
         /// <summary>
         /// player's character
         /// </summary>
-        internal PlayerCharacter PlayerCharacter
+        public Character PlayerCharacter
         {
             get { return gs_PlayerCharacter; }
             set { gs_PlayerCharacter = value; }
