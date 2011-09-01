@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorldGeneration.Terrain
+namespace WorldGeneration.World
 {
     /// <summary>
     /// base terrain: ocean, land, mountain

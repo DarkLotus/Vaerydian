@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using WorldGeneration.Terrain;
+using WorldGeneration.World;
 using Vaerydian.Characters;
 using Vaerydian.Items;
 using Vaerydian.Characters.Skills;

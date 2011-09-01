@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using WorldGeneration;
-using WorldGeneration.Terrain;
+using WorldGeneration.World;
 using Vaerydian.Screens;
 
 namespace Vaerydian.Maps
@@ -44,8 +44,8 @@ namespace Vaerydian.Maps
 
         public static MapEngine Instance { get { return me_Instance; } }
 
-        
 
+        Random rand = new Random();
 
         /// <summary>
         /// private reference to the current map
@@ -199,6 +199,7 @@ namespace Vaerydian.Maps
 
         //texture for showing temperature
         private Texture2D temperatureTexture;
+        
         //texture for making screenshots
         private Texture2D exportTexture;
 
@@ -298,8 +299,6 @@ namespace Vaerydian.Maps
                 saveScreenShot(spriteBatch.GraphicsDevice);
                 me_YesScreenshot = false;
             }
-
-
 
             maxVal = 0f;
         }
@@ -461,10 +460,7 @@ namespace Vaerydian.Maps
         {
             return a * (1 - x) + b * x;
         }
-
-
-
-
+        
         /// <summary>
         /// captures and saves the screen of the current graphics device
         /// </summary>

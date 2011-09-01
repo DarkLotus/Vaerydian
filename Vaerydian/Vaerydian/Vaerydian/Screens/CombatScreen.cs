@@ -9,7 +9,7 @@ using Vaerydian.Combat;
 using Vaerydian.Combat.CombatIntelligence;
 using Vaerydian.Windows;
 using Vaerydian.Sessions;
-using WorldGeneration.Terrain;
+using WorldGeneration.World;
 using Vaerydian.Characters;
 using Vaerydian.Characters.Abilities;
 using Vaerydian.Characters.Skills;

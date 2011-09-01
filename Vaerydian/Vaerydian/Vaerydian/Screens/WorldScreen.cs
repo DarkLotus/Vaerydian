@@ -7,25 +7,60 @@ using Vaerydian.Windows;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using WorldGeneration.World;
 
 namespace Vaerydian.Screens
 {
-    class WorldScreen : Screen
+
+    public class ViewPort
+    {
+        public Point Origin = new Point();
+        public Point Dimensions = new Point();
+    }
+
+
+    public class WorldScreen : Screen
     {
 
-        private MapEngine ws_MapEngine = MapEngine.Instance;
+        //private MapEngine ws_MapEngine = MapEngine.Instance;
 
-        private DialogWindow ws_DialogWindow;
+        /// <summary>
+        /// world engine reference
+        /// </summary>
+        private WorldEngine ws_WorldEngine = WorldEngine.Instance;
 
+        private Terrain ws_Terrain;
+
+        /// <summary>
+        /// local SpriteBatch copy
+        /// </summary>
         private SpriteBatch ws_SpriteBatch;
 
         public override string LoadingMessage
         {
             get
             {
-                return ws_MapEngine.WorldGeneratorStatusMessage;
+                return ws_WorldEngine.WorldGeneratorStatusMessage;
             }
         }
+
+        private int xStart = 0;
+
+        private int yStart = 0;
+
+        private int xFinish = 1024;
+
+        private int yFinish = 640;
+
+        private ViewPort ws_ViewPort = new ViewPort();
+
+        private int ws_TileSize = 25;
+
+        /// <summary>
+        /// list of usuable textures
+        /// </summary>
+        private List<Texture2D> textures = new List<Texture2D>();
+
 
         /// <summary>
         /// perform any needed initialization
@@ -36,19 +71,31 @@ namespace Vaerydian.Screens
 
             ws_SpriteBatch = ScreenManager.SpriteBatch;
 
-            ws_MapEngine.TileSize = 25;
+            ws_ViewPort.Dimensions = new Point(1024, 640);
+
+            ws_ViewPort.Origin = new Point(0, 0);
+
+            //ws_WorldEngine.createNewWorld();
+
+            ws_WorldEngine.Initialize();
+
+            UpdateView();
+
+            /*
+            ws_MapEngine.TileSize = 5;
             
-            ws_MapEngine.XTiles = 256;
+            ws_MapEngine.XTiles = 1024;
 
-            ws_MapEngine.YTiles = 256;
+            ws_MapEngine.YTiles = 1024;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(ws_MapEngine.XTiles, ws_MapEngine.YTiles, 5f, ws_MapEngine.TileSize, new Random().Next());
+            ws_MapEngine.WorldGenerator.generateNewWorld(0, 0, ws_MapEngine.XTiles, ws_MapEngine.YTiles, 5f, 1024, new Random().Next());
 
             ws_MapEngine.ViewPort.Dimensions = new Point(1024, 640);
 
             ws_MapEngine.ViewPort.Origin = new Point(0, 0);
 
             ws_MapEngine.Initialize();
+            */
         }
 
         /// <summary>
@@ -59,8 +106,27 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             //load map engine content
-            ws_MapEngine.LoadContent();
-
+            //ws_MapEngine.LoadContent();
+            
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\grass"));//0
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\ocean"));//1
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\mountains"));//2
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\arctic"));//3
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\beach"));//4
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\forest"));//5
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\grasslands"));//6
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\jungle"));//7
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\desert"));//8
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\swamp"));//9
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\tundra"));//10
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\foothills"));//11
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\steppes"));//12
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\cascade"));//13
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\peak"));//14
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\littoral"));//15
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\abyssal"));//16
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\ice"));//17
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\sublittoral"));//18
         }
 
         /// <summary>
@@ -69,7 +135,10 @@ namespace Vaerydian.Screens
         public override void UnloadContent()
         {
             base.UnloadContent();
-            ws_MapEngine.UnloadContent();
+            //ws_MapEngine.UnloadContent();
+
+            textures.Clear();
+            
         }
 
         /// <summary>
@@ -85,43 +154,28 @@ namespace Vaerydian.Screens
                 this.ScreenManager.removeScreen(this);
                 LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
             }
+
+            
             if (InputManager.isKeyPressed(Keys.Up))
             {
-                ws_MapEngine.ViewPort.Origin.Y -= 25;
-                ws_MapEngine.UpdateView();
+                ws_ViewPort.Origin.Y -= 25;
+                UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Down))
             {
-                ws_MapEngine.ViewPort.Origin.Y += 25;
-                ws_MapEngine.UpdateView();
+                ws_ViewPort.Origin.Y += 25;
+                UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Left))
             {
-                ws_MapEngine.ViewPort.Origin.X -= 25;
-                ws_MapEngine.UpdateView();
+                ws_ViewPort.Origin.X -= 25;
+                UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Right))
             {
-                ws_MapEngine.ViewPort.Origin.X += 25;
-                ws_MapEngine.UpdateView();
-            }
-            if (InputManager.isKeyToggled(Keys.Q))
-            {
-                this.ScreenManager.WindowManager.addWindow(new TimedDialogWindow("This Is A Timed Dialog Box\nThis Box Stays Here 3 seconds", new Point(100, 100), new Point(400, 150), gameTime.TotalGameTime.Seconds, 3));
-            }
-            if (InputManager.isKeyToggled(Keys.W))
-            {
-                ws_DialogWindow = new DialogWindow("This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text This is a bunch of test text", 50, 6, new Point(200, 200), new Point(400, 150));
-                this.ScreenManager.WindowManager.addWindow(ws_DialogWindow);
-            }
-            if (InputManager.isKeyToggled(Keys.E))
-            {
-                ws_DialogWindow.killWindow();
-            }
-            if (InputManager.isKeyToggled(Keys.R))
-            {
-                this.ScreenManager.WindowManager.Windows.Clear();
-            }
+                ws_ViewPort.Origin.X += 25;
+                UpdateView();
+            }/*
             if (InputManager.isKeyToggled(Keys.T))
             {
                 if (!ws_MapEngine.ShowTemperature)
@@ -150,7 +204,7 @@ namespace Vaerydian.Screens
             {
                 ws_MapEngine.YesScreenshot = true;
             }
-
+            */
 
         }
 
@@ -162,9 +216,34 @@ namespace Vaerydian.Screens
         {
             base.Update(gameTime);
 
-            ws_MapEngine.UpdateView();
+            //ws_MapEngine.UpdateView();
         }
 
+        /// <summary>
+        /// updates the tile indexes based on current viewport for the draw loop
+        /// </summary>
+        public void UpdateView()
+        {
+            xStart = ws_ViewPort.Origin.X / ws_TileSize;
+            if (xStart <= 0)
+                xStart = 0;
+
+            xFinish = (ws_ViewPort.Origin.X + ws_ViewPort.Dimensions.X) / ws_TileSize;
+            if (xFinish >= 1024 - 1)
+                xFinish = 1024 - 1;
+
+            yStart = ws_ViewPort.Origin.Y / ws_TileSize;
+            if (yStart <= 0)
+                yStart = 0;
+
+            yFinish = (ws_ViewPort.Origin.Y + ws_ViewPort.Dimensions.Y) / ws_TileSize;
+            if (yFinish >= 1024 - 1)
+                yFinish = 1024 - 1;
+
+            //ws_WorldEngine.updateSegments(new Point(xFinish - (xFinish-xStart)/2, yFinish - (yFinish - yStart)/2));
+        }
+
+        #region drawing
 
         /// <summary>
         /// draw the screen
@@ -174,18 +253,84 @@ namespace Vaerydian.Screens
         {
             base.Draw(gameTime);
 
-            ws_MapEngine.DrawMap(gameTime, ws_SpriteBatch);
+            //ws_MapEngine.DrawMap(gameTime, ws_SpriteBatch);
 
-            /*
             ws_SpriteBatch.Begin();
 
-            ws_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], "WorldScreen", Vector2.Zero, Color.Red);
+            for (int x = xStart; x <= xFinish; x++)
+            {
+                for (int y = yStart; y <= yFinish; y++)
+                {
+                    ws_Terrain = ws_WorldEngine.getTerrain(x, y);
+
+                    if (ws_Terrain == null)
+                        continue;
+
+                    ws_SpriteBatch.Draw(textures[getBaseTexture(ws_Terrain)], new Vector2((x * ws_TileSize), (y * ws_TileSize)),
+                            null, Color.White, 0.0f, new Vector2(ws_ViewPort.Origin.X, ws_ViewPort.Origin.Y), new Vector2(1f),
+                            SpriteEffects.None, 0);
+                }
+            }
 
             ws_SpriteBatch.End();
-             */
+        }
+
+        /// <summary>
+        /// returns the texture id for the given terrain
+        /// </summary>
+        /// <param name="terrain">terrain to get the texture for</param>
+        /// <returns></returns>
+        private int getBaseTexture(Terrain terrain)
+        {
+            switch (terrain.BaseTerrainType)
+            {
+                case BaseTerrainType.Land:
+                    if (terrain.LandTerrainType == LandTerrainType.Arctic)
+                        return 3;
+                    if (terrain.LandTerrainType == LandTerrainType.Beach)
+                        return 4;
+                    if (terrain.LandTerrainType == LandTerrainType.Desert)
+                        return 8;
+                    if (terrain.LandTerrainType == LandTerrainType.Forest)
+                        return 5;
+                    if (terrain.LandTerrainType == LandTerrainType.Grassland)
+                        return 6;
+                    if (terrain.LandTerrainType == LandTerrainType.Jungle)
+                        return 7;
+                    if (terrain.LandTerrainType == LandTerrainType.Swamp)
+                        return 9;
+                    if (terrain.LandTerrainType == LandTerrainType.Tundra)
+                        return 10;
+                    return 0;
+                case BaseTerrainType.Ocean:
+                    if (terrain.OceanTerrainType == OceanTerrainType.Littoral)
+                        return 15;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Abyssal)
+                        return 16;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Ice)
+                        return 17;
+                    if (terrain.OceanTerrainType == OceanTerrainType.Sublittoral)
+                        return 18;
+                    return 1;
+                case BaseTerrainType.Mountain:
+                    if (terrain.MountainTerrainType == MountainTerrainType.Foothill)
+                        return 11;
+                    if (terrain.MountainTerrainType == MountainTerrainType.Steppes)
+                        return 12;
+                    if (terrain.MountainTerrainType == MountainTerrainType.Cascade)
+                        return 13;
+                    if (terrain.MountainTerrainType == MountainTerrainType.SnowyPeak)
+                        return 14;
+                    return 2;
+                case BaseTerrainType.River:
+                    return 18;
+                default:
+                    return 0;
+            }
         }
 
 
+        #endregion
 
     }
 }

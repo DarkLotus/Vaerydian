@@ -12,7 +12,7 @@ using System.Threading;
 using LibNoise;
 using LibNoise.Modifiers;
 
-namespace WorldGeneration.Terrain
+namespace WorldGeneration.World
 {
     /// <summary>
     /// generates all new terrain
@@ -27,16 +27,18 @@ namespace WorldGeneration.Terrain
         //world temperature band placeholder
         private float wg_WorldTempBand = 0.0f;
 
-        //perlin noise generator
-        //private PerlinNoise perlinNoise = new PerlinNoise();
-
+        /// <summary>
+        /// perlin noise generator for land
+        /// </summary>
         private Perlin land = new Perlin();
-        private Perlin landBias = new Perlin();
+        /// <summary>
+        /// ridged multi-fractal generator for mountains
+        /// </summary>
         private RidgedMultifractal mountains = new RidgedMultifractal();
+        /// <summary>
+        /// ridge multi-fractal generator for clouds
+        /// </summary>
         private RidgedMultifractal clouds = new RidgedMultifractal();
-        private Select landSelect;
-
-        //private Add add;
 
         /// <summary>
         /// terrain map for the world
@@ -67,27 +69,31 @@ namespace WorldGeneration.Terrain
         /// <summary>
         /// x dimension of world
         /// </summary>
-        private int wg_XDimension;
+        private int wg_xFinish;
         /// <summary>
         /// x dimension of world
         /// </summary>
-        public int XDimension
+        public int xFinish
         {
-            get { return wg_XDimension; }
-            set { wg_XDimension = value; }
+            get { return wg_xFinish; }
+            set { wg_xFinish = value; }
         }
         /// <summary>
         /// y dimension of world
         /// </summary>
-        private int wg_YDimension;
+        private int wg_yFinish;
         /// <summary>
         /// y dimension of world
         /// </summary>
-        public int YDimension
+        public int yFinish
         {
-            get { return wg_YDimension; }
-            set { wg_YDimension = value; }
+            get { return wg_yFinish; }
+            set { wg_yFinish = value; }
         }
+
+        private int wg_xStart;
+
+        private int wg_yStart;
 
         /// <summary>
         /// seeding value for world
@@ -118,19 +124,25 @@ namespace WorldGeneration.Terrain
         /// <summary>
         /// size of the tiles
         /// </summary>
-        private int wg_TileSize;
+        private int wg_TerrainSize;
 
         /// <summary>
         /// size of the tiles
         /// </summary>
-        public int TileSize
+        public int TerrainSize
         {
-            get { return wg_TileSize; }
-            set { wg_TileSize = value; }
+            get { return wg_TerrainSize; }
+            set { wg_TerrainSize = value; }
         }
 
+        /// <summary>
+        /// locking variable
+        /// </summary>
         private ReaderWriterLock rwl = new ReaderWriterLock();
         
+        /// <summary>
+        /// holds the progress message, which gets updated throughout the generation process
+        /// </summary>
         private String wg_ProgressMessage = "";
 
         /// <summary>
@@ -144,15 +156,16 @@ namespace WorldGeneration.Terrain
         public String StatusMessage
         {
             get {
-
+                //get a lock on the variable
                 rwl.AcquireReaderLock(Timeout.Infinite);
 
+                //attempt to return the message
                 try
                 {
                     return wg_StatusMessage + wg_ProgressMessage;
                 }
                 finally 
-                {
+                {   //ensure that the rwl is released
                     rwl.ReleaseLock();
                 }
             
@@ -161,6 +174,9 @@ namespace WorldGeneration.Terrain
             set { wg_StatusMessage = value; }
         }
 
+        /// <summary>
+        /// counter for use in status messages
+        /// </summary>
         private int counter = 0;
 
         #endregion
@@ -171,16 +187,17 @@ namespace WorldGeneration.Terrain
         /// <param name="xDimension"></param>
         /// <param name="yDimension"></param>
         /// <param name="seed"></param>
-        public void generateNewWorld(int xDimension, int yDimension, float zSlice, int tileSize, int seed)
+        public void generateNewWorld(int xStart, int yStart,int xFinish, int yFinish, float zSlice, int size, int seed)
         {
-
-            wg_XDimension = xDimension;
-            wg_YDimension = yDimension;
+            wg_xStart = xStart;
+            wg_yStart = yStart;
+            wg_xFinish = xFinish;
+            wg_yFinish = yFinish;
             wg_ZSlice = zSlice;
             wg_Seed = seed;
 
-            //generate world
-            wg_WorldTerrainMap = new Terrain[xDimension, yDimension];
+            //generate world  
+            wg_WorldTerrainMap = new Terrain[size, size];
 
             //set seed
             //perlinNoise.Random = new Random(wg_Seed);
@@ -198,23 +215,17 @@ namespace WorldGeneration.Terrain
             mountains.Lacunarity = 4;
             mountains.NoiseQuality = NoiseQuality.High;
 
-            clouds.Seed = wg_Seed;
-            clouds.OctaveCount = 4;
-            clouds.Frequency = 4;
-            clouds.Lacunarity = 4;
-            clouds.NoiseQuality = NoiseQuality.High;
-
             //update status message
             wg_StatusMessage = "Creating Base Terrain, Height, Temperature, and Wind Maps: ";
 
             Terrain terrain;
 
             //populate the world terrain Map
-            for (int x = 0; x < wg_XDimension; x++)
+            for (int x = wg_xStart; x < wg_xFinish; x++)
             {
-                for (int y = 0; y < wg_YDimension; y++)
+                for (int y = wg_yStart; y < wg_yFinish; y++)
                 {
-                    wg_ProgressMessage =  (int)((float)((float)(counter++ ) / (float)(wg_XDimension * wg_YDimension)) * 100f) + "%";
+                    wg_ProgressMessage =  (int)((float)((float)(counter++ ) / (float)(wg_xFinish * wg_yFinish)) * 100f) + "%";
 
                     //create new temp terrain
                     terrain = new Terrain();
@@ -237,13 +248,8 @@ namespace WorldGeneration.Terrain
 
             //generate rainfall map using temperature map, wind bands, and height map
             wg_StatusMessage = "Creating Rain Map: ";
-            //generateRainfall(60 , 2.3f);
-            //generateRainfall();
-            generateRainfallNew();
+            generateRainfall();
 
-            //generateRainfall(10);
-
-            
             //reset progress message
             wg_ProgressMessage = "";
             counter = 0;
@@ -300,8 +306,8 @@ namespace WorldGeneration.Terrain
         /// <param name="terrain">terrain cell</param>
         private void generateHeight(int x, int y, Terrain terrain)
         {
-            double m = mountains.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
-            double l = land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice);
+            double m = mountains.GetValue((double)x / wg_xFinish, (double)y / wg_yFinish, wg_ZSlice);
+            double l = land.GetValue((double)x / wg_xFinish, (double)y / wg_yFinish, wg_ZSlice);
 
             terrain.Height = (m + 2*l)/3f;
 
@@ -337,14 +343,14 @@ namespace WorldGeneration.Terrain
         private void generateTemperature(int x, int y, Terrain terrain)
         {
             //currently in souther or northern hemisphere
-            if (y <= wg_YDimension / 2)
+            if (y <= wg_yFinish / 2)
             {
                 //find out what the current temp in northern hemisphere
-                wg_WorldTempBand = lerp(0.0f, 1.0f, (float)y / ((float)wg_YDimension / 2));
+                wg_WorldTempBand = lerp(0.0f, 1.0f, (float)y / ((float)wg_yFinish / 2));
             }
             else
             {   //find out current temp in southern hemisphere
-                wg_WorldTempBand = lerp(1.0f, 0.0f, ((float)y - ((float)wg_YDimension / 2)) / ((float)wg_YDimension / 2));
+                wg_WorldTempBand = lerp(1.0f, 0.0f, ((float)y - ((float)wg_yFinish / 2)) / ((float)wg_yFinish / 2));
             }
 
             //determine the temperature of the terrain cell
@@ -352,7 +358,7 @@ namespace WorldGeneration.Terrain
             {
                 //if it is water, reduce it down so the water is at most a temp of 0.4
                 //wg_WorldTerrainMap[x, y].Temperature = wg_WorldTempBand * 0.8f + (float)wg_WorldTerrainMap[x,y].Height * 0.2f;
-                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.5f + (float)wg_WorldTerrainMap[x, y].Height) / 2f)*0.75f;
+                wg_WorldTerrainMap[x, y].Temperature = lerp(0f, wg_WorldTempBand, (1.6f + (float)wg_WorldTerrainMap[x, y].Height) / 2f)*0.75f;
             }
             else if (wg_WorldTerrainMap[x, y].Height > 0.1)
             {
@@ -449,187 +455,47 @@ namespace WorldGeneration.Terrain
 
             wg_WorldTerrainMap[x, y].WindDirection = WindDirection.FromWest;*/
         }
-
+       
+        /// <summary>
+        /// generates rainfall information for entire world
+        /// </summary>
         private void generateRainfall()
-        {
-
-            float terrain1;
-            float terrain2;
-            float terrain3;
-            float terrain4;
-            float terrain5;
-            float avg;
-            float val;
-            float avg2;
-            float maxRainDetected = 0f;
-            float[,] generationOLD = new float[wg_XDimension, wg_YDimension];
-            float[,] generationNEW = new float[wg_XDimension, wg_YDimension];
-            float waterContrib = 0f ;
-            int xVal;
-            int yVal;
-
-            int generations = 50;
-            float rainPropigation = 3.5f;
-            float rainMultiplier = 300f;
-
-            //populate generation NEW
-            for (int x = 1; x < (wg_XDimension - 1); x++)
-            {
-                for (int y = 1; y < (wg_YDimension - 1); y++)
-                {
-                    generationNEW[x,y] = wg_WorldTerrainMap[x, y].Rainfall;
-                }
-            }
-
-            //run each calculation several generations to allow values to equalize
-            for (int i = 0; i <= generations; i++)
-            {
-
-                //make the last gen the OLD gen
-                generationOLD = generationNEW;
-                maxRainDetected = 0f;//reset for next gen round.
-
-                for (int x = 0; x < (wg_XDimension); x++)
-                {
-                    for (int y = 0; y < (wg_YDimension); y++)
-                    {
-                        //update progress message
-                        wg_ProgressMessage =  (int)(((float)(counter++)/(float)(generations * (wg_XDimension-1) * (wg_YDimension-1)))*100f) + "%";
-
-                        //copy coordinates into safe values
-                        xVal = x;
-                        yVal = y;
-
-                        //adjust values if on an edge of the map
-                        if (x == 0)
-                            xVal = 1;
-                        if (x == wg_XDimension - 1)
-                            xVal = wg_XDimension - 2;
-                        if (y == 0)
-                            yVal = 1;
-                        if (y == wg_YDimension - 1)
-                            yVal = wg_YDimension - 2;
-
-                        //set whether or not water is a contributor for this coordinate
-                        if (wg_WorldTerrainMap[x, y].Height <= 0.1)
-                        {   //water exists here
-                            waterContrib = 1f;
-                        }
-                        else
-                        {   //no water exists here
-                            waterContrib = 0f;
-                        }
-
-                        //figure out where the wind is coming from
-                        /*if (wg_WorldTerrainMap[x, y].WindDirection == WindDirection.FromWest)
-                        {
-                            terrain1 = generationOLD[xVal - 1, yVal + 1];
-                            terrain2 = generationOLD[xVal - 1, yVal];
-                            terrain3 = generationOLD[xVal - 1, yVal - 1];
-                            terrain4 = generationOLD[xVal, yVal + 1];
-                            terrain5 = generationOLD[xVal, yVal - 1];  
-                        }
-                        else if (wg_WorldTerrainMap[x, y].WindDirection == WindDirection.FromEast)
-                        {
-                            terrain1 = generationOLD[xVal + 1, yVal + 1];
-                            terrain2 = generationOLD[xVal + 1, yVal];
-                            terrain3 = generationOLD[xVal + 1, yVal - 1];
-                            terrain4 = generationOLD[xVal, yVal + 1];
-                            terrain5 = generationOLD[xVal, yVal - 1];
-                        }
-                        else if (wg_WorldTerrainMap[x, y].WindDirection == WindDirection.FromNorth)
-                        {
-                            terrain1 = generationOLD[xVal + 1, yVal + 1];
-                            terrain2 = generationOLD[xVal, yVal + 1];
-                            terrain3 = generationOLD[xVal - 1, yVal + 1];
-                            terrain4 = generationOLD[xVal - 1, yVal];
-                            terrain5 = generationOLD[xVal + 1, yVal];
-                            
-                        }
-                        else//from south
-                        {
-                            terrain1 = generationOLD[xVal + 1, yVal - 1];
-                            terrain2 = generationOLD[xVal, yVal - 1];
-                            terrain3 = generationOLD[xVal - 1, yVal - 1];
-                            terrain4 = generationOLD[xVal - 1, yVal];
-                            terrain5 = generationOLD[xVal + 1, yVal];
-                        }*/
-
-                        terrain1 = generationOLD[xVal - 1, yVal + 1];
-                        terrain2 = generationOLD[xVal - 1, yVal];
-                        terrain3 = generationOLD[xVal - 1, yVal - 1];
-                        terrain4 = generationOLD[xVal, yVal + 1];
-                        terrain5 = generationOLD[xVal, yVal - 1];  
-
-                        avg = (terrain2 + rainPropigation * (terrain1 + terrain3) + rainPropigation * 0.5f * (terrain4 + terrain5)) / 5f;
-                        
-                        val = rainMultiplier * waterContrib * wg_WorldTerrainMap[x, y].Temperature;
-                        avg2 = (avg + val) / 2f;
-
-                        if (wg_WorldTerrainMap[x, y].Height <= 0.1)
-                        {
-                            generationNEW[x, y] = avg2;
-                        }
-                        else
-                        {
-                            generationNEW[x, y] = avg2 * (1f - (float)wg_WorldTerrainMap[x, y].Height);
-                        }
-
-                        if (generationNEW[x, y] > maxRainDetected)
-                            maxRainDetected = generationNEW[x, y];
-                    }
-                }
-            }
-
-
-            //normalize all values and set the rainfall
-            for (int x = 0; x < (wg_XDimension); x++)
-            {
-                for (int y = 0; y < (wg_YDimension); y++)
-                {
-
-                    //values appear to be exponential, so we'll need to do a logarithmic normalization based on the max rain
-                    wg_WorldTerrainMap[x, y].Rainfall = (float)(System.Math.Log((double)generationNEW[x, y]) / (double)System.Math.Log(maxRainDetected));
-                    //wg_WorldTerrainMap[x, y].Rainfall = generationNEW[x, y];// / maxRainDetected;
-                }
-            }
-
-        }
-
-        private void generateRainfallNew()
         {
             float c;
             float l;
+            float maxRainDetected = 0f;
+            
             clouds.Seed = wg_Seed;
+            clouds.OctaveCount = 4;
+            clouds.Frequency = 4;
+            clouds.Lacunarity = 4;
+            clouds.NoiseQuality = NoiseQuality.High;
+            
             land.Seed = wg_Seed;
 
-            float maxRainDetected = 0f;
-
-            for (int x = 0; x < (wg_XDimension); x++)
+            //determine rainfall for each
+            for (int x = wg_xStart; x < (wg_xFinish); x++)
             {
-                for (int y = 0; y < (wg_YDimension); y++)
+                for (int y = wg_yStart; y < (wg_yFinish); y++)
                 {
-                    wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_XDimension) * (wg_YDimension))) * 100f) + "%";
+                    wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_xFinish) * (wg_yFinish))) * 100f) + "%";
 
-                    c = (float)((clouds.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f);
-                    l = (float)((land.GetValue((double)x / wg_XDimension, (double)y / wg_YDimension, wg_ZSlice) + 1f) / 2f);
+                    c = (float)((clouds.GetValue((double)x / wg_xFinish, (double)y / wg_yFinish, wg_ZSlice) + 1f) / 2f);
+                    l = (float)((land.GetValue((double)x / wg_xFinish, (double)y / wg_yFinish, wg_ZSlice) + 1f) / 2f);
 
                     wg_WorldTerrainMap[x, y].Rainfall = (1f-l) * c;//(1.5f - (float) wg_WorldTerrainMap[x,y].Height);
                         
-
+                    
                     if (wg_WorldTerrainMap[x, y].Rainfall > maxRainDetected)
                         maxRainDetected = wg_WorldTerrainMap[x, y].Rainfall;
                 }
             }
-
+            
             //normalize all values and set the rainfall
-            for (int x = 0; x < (wg_XDimension); x++)
+            for (int x = wg_xStart; x < (wg_xFinish); x++)
             {
-                for (int y = 0; y < (wg_YDimension); y++)
+                for (int y = wg_yStart; y < (wg_yFinish); y++)
                 {
-
-                    //values appear to be exponential, so we'll need to do a logarithmic normalization based on the max rain
-                    //wg_WorldTerrainMap[x, y].Rainfall = (float)(System.Math.Log((double)wg_WorldTerrainMap[x, y].Rainfall) / (double)System.Math.Log(maxRainDetected));
                     wg_WorldTerrainMap[x, y].Rainfall = wg_WorldTerrainMap[x, y].Rainfall / maxRainDetected;
                 }
             }
@@ -643,12 +509,12 @@ namespace WorldGeneration.Terrain
             Terrain terrain;
 
             //loop through all of them
-            for (int x = 0; x < (wg_XDimension); x++)
+            for (int x = wg_xStart; x < (wg_xFinish); x++)
             {
-                for (int y = 0; y < (wg_YDimension); y++)
+                for (int y = wg_yStart; y < (wg_yFinish); y++)
                 {
                     //update progress message
-                    wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_XDimension - 1) * (wg_YDimension - 1))) * 100f) + "%";
+                    wg_ProgressMessage = (int)(((float)(counter++) / (float)((wg_xFinish - 1) * (wg_yFinish - 1))) * 100f) + "%";
 
                     //get a terrain copy
                     terrain = wg_WorldTerrainMap[x, y];
@@ -656,7 +522,7 @@ namespace WorldGeneration.Terrain
                     //check if base type is ocean
                     if (terrain.BaseTerrainType == BaseTerrainType.Ocean)
                     {
-                        if (terrain.Temperature <= 0.05)// && terrain.Height > -0.25)// && terrain.Rainfall > 0.65)
+                        if (terrain.Temperature <= 0.10)// && terrain.Height > -0.25)// && terrain.Rainfall > 0.65)
                         {
                             terrain.OceanTerrainType = OceanTerrainType.Ice;
                             continue;
@@ -700,22 +566,22 @@ namespace WorldGeneration.Terrain
                             terrain.LandTerrainType = LandTerrainType.Beach;
                             continue;
                         }
-                        else if (terrain.Rainfall <= 0.15)// && terrain.Temperature >.45)
+                        else if (terrain.Rainfall <= 0.10)// && terrain.Temperature >.45)
                         {
                             terrain.LandTerrainType = LandTerrainType.Desert;
                             continue;
                         }
-                        else if (terrain.Rainfall > 0.15 && terrain.Rainfall <= 0.35)
+                        else if (terrain.Rainfall > 0.10 && terrain.Rainfall <= 0.25)
                         {
                             terrain.LandTerrainType = LandTerrainType.Grassland;
                             continue;
                         }
-                        else if (terrain.Temperature > 0.7f && terrain.Rainfall > 0.45f)
+                        else if (terrain.Temperature > 0.7f && terrain.Rainfall > 0.35f)
                         {
                             terrain.LandTerrainType = LandTerrainType.Jungle;
                             continue;
                         }
-                        else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.35f)
+                        else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.25f)
                         {
                             terrain.LandTerrainType = LandTerrainType.Forest;
                             continue;
@@ -769,7 +635,7 @@ namespace WorldGeneration.Terrain
             int xVal;
             int yVal;
             int i = 0;
-            wg_RiverMap = new bool[wg_XDimension, wg_YDimension];
+            wg_RiverMap = new bool[wg_xFinish, wg_yFinish];
 
 
             //create
@@ -778,23 +644,23 @@ namespace WorldGeneration.Terrain
                 wg_ProgressMessage = i + " / " + 100;
 
 
-                yVal = wg_YDimension - 2;
+                yVal = wg_yFinish - 2;
 
                 //choose x position
-                xVal = rand.Next(wg_XDimension);
+                xVal = rand.Next(wg_xFinish);
 
                 //choose y position
-                yVal = rand.Next(wg_YDimension);
+                yVal = rand.Next(wg_yFinish);
 
                 //ensure they are not on a map edge
                 if (xVal == 0)
                     xVal = 1;
-                if (xVal == wg_XDimension - 1)
-                    xVal = wg_XDimension - 2;
+                if (xVal == wg_xFinish - 1)
+                    xVal = wg_xFinish - 2;
                 if (yVal == 0)
                     yVal = 1;
-                if (yVal == wg_YDimension - 1)
-                    yVal = wg_YDimension - 2;
+                if (yVal == wg_yFinish - 1)
+                    yVal = wg_yFinish - 2;
 
                 //test position as viable candidate
                 if (viableRiverCandidate(xVal, yVal))
@@ -920,11 +786,11 @@ namespace WorldGeneration.Terrain
 
                         if (x == 0)
                             break;
-                        if (x == wg_XDimension - 1)
+                        if (x == wg_xFinish - 1)
                             break;
                         if (y == 0)
                             break;
-                        if (y == wg_YDimension - 1)
+                        if (y == wg_yFinish - 1)
                             break;
                     }
                 }
