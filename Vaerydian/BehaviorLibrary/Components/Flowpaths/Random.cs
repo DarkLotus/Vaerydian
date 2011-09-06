@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vaerydian.Characters.BehaviorIntelligence
+namespace BehaviorLibrary.Components.Flowpaths
 {
-    public abstract class BehaviorAI
+    class Random
     {
     }
 }

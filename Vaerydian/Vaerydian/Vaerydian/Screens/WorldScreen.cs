@@ -127,6 +127,7 @@ namespace Vaerydian.Screens
             textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\abyssal"));//16
             textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\ice"));//17
             textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\sublittoral"));//18
+            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("characters\\player"));//19player texture
         }
 
         /// <summary>
@@ -240,7 +241,9 @@ namespace Vaerydian.Screens
             if (yFinish >= 1024 - 1)
                 yFinish = 1024 - 1;
 
-            //ws_WorldEngine.updateSegments(new Point(xFinish - (xFinish-xStart)/2, yFinish - (yFinish - yStart)/2));
+            //Point p = ws_WorldEngine.updateSegments(new Point(xStart + (xFinish-xStart)/2, yStart + (yFinish - yStart)/2));
+            //ws_ViewPort.Origin.X += p.X * 128;
+            //ws_ViewPort.Origin.Y += p.Y * 128;
         }
 
         #region drawing
@@ -272,7 +275,17 @@ namespace Vaerydian.Screens
                 }
             }
 
+
+            drawPlayer();
+
             ws_SpriteBatch.End();
+        }
+
+        private void drawPlayer()
+        {
+            ws_SpriteBatch.Draw(textures[19], new Vector2(ws_ViewPort.Origin.X + ws_ViewPort.Dimensions.X / 2, ws_ViewPort.Origin.Y + ws_ViewPort.Dimensions.Y / 2),
+                            null, Color.White, 0.0f, new Vector2(ws_ViewPort.Origin.X, ws_ViewPort.Origin.Y), new Vector2(1f),
+                            SpriteEffects.None, 0);
         }
 
         /// <summary>

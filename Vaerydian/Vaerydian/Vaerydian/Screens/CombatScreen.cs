@@ -15,6 +15,7 @@ using Vaerydian.Characters.Abilities;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Stats;
 using Vaerydian.Items;
+using Vaerydian.Characters.Behaviors;
 
 
 
@@ -798,7 +799,7 @@ namespace Vaerydian.Screens
             equipment.Weapon = new Weapon(5,3,1,DamageType.Common);
             enemy.Equipment = equipment;
 
-            enemy.CombatAI = new BasicCombatAI(enemy);
+            enemy.Behavior = new Behavior(enemy);
 
             enemies.Add(enemy);
 

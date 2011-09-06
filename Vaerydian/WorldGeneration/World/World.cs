@@ -57,11 +57,11 @@ namespace WorldGeneration.World
         /// <summary>
         /// files associated with each segment
         /// </summary>
-        private String[,] w_SegmentFiles = new String[8, 8];
+        private String[] w_SegmentFiles = new String[64];
         /// <summary>
         /// files associated with each segment
         /// </summary>
-        public String[,] SegmentFiles
+        public String[] SegmentFiles
         {
             get { return w_SegmentFiles; }
             set { w_SegmentFiles = value; }

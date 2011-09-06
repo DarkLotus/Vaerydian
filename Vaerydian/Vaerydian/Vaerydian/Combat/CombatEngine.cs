@@ -238,7 +238,7 @@ namespace Vaerydian.Combat
             int index = 0;
             int count = 0;
 
-            //Initiative is calculated by a players Quickness, Perception, and Agility + Random number from 1-100
+            //Initiative is calculated by a characters Quickness, Perception, and Agility + Random number from 1-100
             //first val is ALWAYS the player's initiative
             //vals[0] = ce_Player.Stats["Agility"].Value + ce_Player.Stats["Quickness"].Value + ce_Player.Stats["Perception"].Value + random.Next(1, 100);
             
@@ -335,7 +335,7 @@ namespace Vaerydian.Combat
         /// </summary>
         public void npcPlanAction()
         {
-            ce_TurnList[ce_TurnIndex].CombatAI.planAction(ce_TurnList[ce_TurnIndex]);
+            ce_TurnList[ce_TurnIndex].Behavior.planAction(ce_TurnList[ce_TurnIndex]);
 
             //set the NPC to act
             ce_CurrentCombatState = CombatState.NpcActing;
@@ -346,7 +346,7 @@ namespace Vaerydian.Combat
         /// </summary>
         public void npcPerformAction()
         {
-            ce_TurnList[ce_TurnIndex].CombatAI.performAction(ce_TurnList[ce_TurnIndex]);
+            ce_TurnList[ce_TurnIndex].Behavior.performAction(ce_TurnList[ce_TurnIndex]);
 
             //NPC turn is complete
             ce_CurrentCombatState = CombatState.CombatAssessTurn;
@@ -520,7 +520,7 @@ namespace Vaerydian.Combat
 
                 if (target.CharacterType != CharacterType.Player)
                 {
-                    target.CombatAI.HostileList.Add(attacker);
+                    target.Behavior.HostileList.Add(attacker);
                 }
             }
             else

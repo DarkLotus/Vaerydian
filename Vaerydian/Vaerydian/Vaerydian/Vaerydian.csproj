@@ -126,7 +126,7 @@
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Characters\Stats\Stat.cs" />
-    <Compile Include="Characters\BehaviorIntelligence\BehaviorAI.cs" />
+    <Compile Include="Characters\Behaviors\Behavior.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />

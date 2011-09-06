@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Abilities;
 using Vaerydian.Characters.Stats;
-using Vaerydian.Characters.BehaviorIntelligence;
+using Vaerydian.Characters.Behaviors;
 using Vaerydian.Combat.CombatIntelligence;
 using Vaerydian.Items;
 
@@ -50,30 +50,17 @@ namespace Vaerydian.Characters
         }
 
         /// <summary>
-        /// the artificial intelligence behavior for the character
+        /// the artificial intelligence for combat for the character
         /// </summary>
-        private BehaviorAI c_BehaviorAI;
-        /// <summary>
-        /// the artificial intelligence behavior for the character
-        /// </summary>
-        public BehaviorAI BehaviorAI
-        {
-            get { return c_BehaviorAI; }
-            set { c_BehaviorAI = value; }
-        }
+        private Behavior c_Behavior;
 
         /// <summary>
         /// the artificial intelligence for combat for the character
         /// </summary>
-        private CombatAI c_CombatAI;
-
-        /// <summary>
-        /// the artificial intelligence for combat for the character
-        /// </summary>
-        public CombatAI CombatAI
+        public Behavior Behavior
         {
-            get { return c_CombatAI; }
-            set { c_CombatAI = value; }
+            get { return c_Behavior; }
+            set { c_Behavior = value; }
         }
         
         /// <summary>

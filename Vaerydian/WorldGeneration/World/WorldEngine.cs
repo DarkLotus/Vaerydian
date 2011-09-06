@@ -50,7 +50,7 @@ namespace WorldGeneration.World
             {
                 if (we_isLoading)
                 {
-                    return we_LoadingMessage;
+                    return "Loading World Segment " + count + " / " + we_segmentSize * we_segmentSize;
                 }
                 else
                 {
@@ -64,14 +64,16 @@ namespace WorldGeneration.World
         /// </summary>
         private WorldSegment we_CurrentSegment;
 
+        private const int we_segmentSize = 8;
+
         /// <summary>
         /// segements currently active
         /// </summary>
-        private WorldSegment[,] we_ActiveSegments = new WorldSegment[8, 8];
+        private WorldSegment[] we_ActiveSegments = new WorldSegment[we_segmentSize * we_segmentSize];
         /// <summary>
         /// segments currently active
         /// </summary>
-        public WorldSegment[,] ActiveSegments
+        public WorldSegment[] ActiveSegments
         {
             get { return we_ActiveSegments; }
             set { we_ActiveSegments = value; }
@@ -82,6 +84,8 @@ namespace WorldGeneration.World
         private bool we_isLoading = false;
 
         private String we_LoadingMessage = "Loading...";
+
+        private int count = 0;
 
         #endregion 
 
@@ -97,22 +101,17 @@ namespace WorldGeneration.World
             //load the world
             we_World = (World) loadFile("The_World" + ".wrld");
 
-            
+            count = 0;
 
-            //load the active segments
-            for(int i = 0; i < 8; i ++)
+            Parallel.For(0, we_segmentSize * we_segmentSize, i =>
             {
-                for (int j = 0; j < 8; j++)
-                {
-                    we_LoadingMessage = "Loading World Segment " + ((i * 8)+j) + " / 64";
-
-                    we_ActiveSegments[i, j] = (WorldSegment)loadFile(we_World.SegmentFiles[i, j]);
-                    GC.Collect();
-                }
-            }
+                we_ActiveSegments[i] = (WorldSegment)loadFile(we_World.SegmentFiles[i]);
+                count++;
+                GC.Collect();
+            });
                         
             //issue a collection
-            GC.Collect();
+            GC.Collect(); 
         }
 
         #endregion
@@ -128,12 +127,14 @@ namespace WorldGeneration.World
         /// <returns>terrain at given coordinate</returns>
         public Terrain getTerrain(int x, int y)
         {
-            int xOffset = (x) / 128 - we_ActiveSegmentsOffset.X;
-            int yOffset = (y) / 128 - we_ActiveSegmentsOffset.Y;
+            int xOffset = x / 128;
+            int yOffset = y / 128;
+            //int xOffset = (x - we_ActiveSegmentsOffset.X * 128) / 128;
+            //int yOffset = (y - we_ActiveSegmentsOffset.Y * 128) / 128;
 
-            if ((xOffset < 8) && (yOffset < 8))
+            if ((xOffset < we_segmentSize) && (yOffset < we_segmentSize))
             {
-                return we_ActiveSegments[xOffset, yOffset].Terrain[x - (xOffset * 128), y - (yOffset * 128)];
+                return we_ActiveSegments[xOffset * we_segmentSize + yOffset].Terrain[x - (xOffset * 128), y - (yOffset * 128)];
             }
             else
             {
@@ -141,7 +142,101 @@ namespace WorldGeneration.World
             }
         }
 
+
+        /// <summary>
+        /// update the active segments with new ones based on given position
+        /// </summary>
+        /// <param name="position">given position</param>
+        /// <returns>the updated active segment offset</returns>
+        public Point updateSegments(Point position)
+        {
+            int xOffset = (position.X - we_ActiveSegmentsOffset.X * 128) / 128;
+            int yOffset = (position.Y - we_ActiveSegmentsOffset.Y * 128) / 128;
+
+            /*
+            if ((xOffset < 3) && (xOffset > 0) &&
+                (yOffset < 3) && (xOffset > 0))
+            {
+                if (we_CurrentSegment == we_ActiveSegments[xOffset, yOffset])
+                    return we_ActiveSegmentsOffset;
+                else
+                {
+                    shiftSegments(position, xOffset, yOffset);
+                }
+            }
+            */
+
+            if (we_CurrentSegment == we_ActiveSegments[xOffset * we_segmentSize + yOffset])
+            {
+                return we_ActiveSegmentsOffset;
+            }
+            else
+            {
+                //calculate the difference between previous and new position to create a difference offset 
+                Point diff = new Point(position.X / 128 - (we_ActiveSegmentsOffset.X + 1), position.Y / 128 - (we_ActiveSegmentsOffset.Y + 1));
+
+                shiftSegments(diff);
+
+                //update current segment and active segment offset
+                we_CurrentSegment = we_ActiveSegments[1 * we_segmentSize + 1];
+                we_ActiveSegmentsOffset.X += diff.X;
+                we_ActiveSegmentsOffset.Y += diff.Y;
+            }
+
+
+
+            if (we_ActiveSegmentsOffset.X < 0)
+                we_ActiveSegmentsOffset.X = 0;
+            if (we_ActiveSegmentsOffset.X > we_segmentSize-1)
+                we_ActiveSegmentsOffset.X = we_segmentSize-1;
+            if (we_ActiveSegmentsOffset.Y < 0)
+                we_ActiveSegmentsOffset.Y = 0;
+            if (we_ActiveSegmentsOffset.Y > we_segmentSize-1)
+                we_ActiveSegmentsOffset.Y = we_segmentSize-1;
+
+            return we_ActiveSegmentsOffset;
+
+        }
        
+        private void shiftSegments(Point diff)
+        {
+            WorldSegment[] newSegments = new WorldSegment[we_segmentSize * we_segmentSize];
+
+            //loop through all
+            for (int x = 0; x < we_segmentSize; x++)
+            {
+                for (int y = 0; y < we_segmentSize; y++)
+                {
+                    //is the source segment within the current active segments
+                    if ((x + diff.X) < we_segmentSize && (x + diff.X) > 0 &&
+                        (y + diff.Y) < we_segmentSize && (y + diff.Y) > 0)
+                    {
+                        //yes, so copy it
+                        newSegments[x * 3 + y] = we_ActiveSegments[(x + diff.X) * we_segmentSize + (y + diff.Y)];
+                    }
+                    else
+                    {
+                        //no, so we'll need to load it, so check to see if it is in the master list
+                        if ((x + diff.X) < 8 && (x + diff.X) > 0 &&
+                            (y + diff.Y) < 8 && (y + diff.Y) > 0)
+                        {
+                            newSegments[x * we_segmentSize + y] = (WorldSegment)loadFile(we_World.SegmentFiles[(x + diff.X) * 8 + (y + diff.Y)]);
+                        }
+                        else
+                        {
+                            //not in the master list, so create a fill-in
+                            newSegments[x * we_segmentSize + y] = new WorldSegment();
+                        }
+
+                    }
+                }
+            }
+
+            //perform swap
+            we_ActiveSegments = newSegments;
+
+
+        }
 
         #endregion
 
@@ -166,7 +261,7 @@ namespace WorldGeneration.World
                     //create the segment
                     we_CurrentSegment = createSegment(x, y);
                     //capture the file name
-                    we_World.SegmentFiles[x, y] = we_CurrentSegment.FileName;
+                    we_World.SegmentFiles[x*8+y] = we_CurrentSegment.FileName;
                     //save the segment
                     saveFile(we_CurrentSegment, we_CurrentSegment.FileName);
                 }
@@ -216,7 +311,7 @@ namespace WorldGeneration.World
 
             try
             {
-                fs = File.Open(filename, FileMode.Open);
+                fs = new FileStream(filename, FileMode.Open);
                 return new BinaryFormatter().Deserialize(fs);
             }
             catch (Exception e)
@@ -237,11 +332,9 @@ namespace WorldGeneration.World
         /// <param name="filename">file to store object in</param>
         private void saveFile(Object obj, String filename)
         {
-            FileStream fs = null;
-
+            FileStream fs = new FileStream(filename, FileMode.Create);
             try
             {
-                fs = File.Open(filename, FileMode.Create);
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(fs, obj);
             }
