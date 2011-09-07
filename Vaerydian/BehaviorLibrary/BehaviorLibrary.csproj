@@ -94,12 +94,12 @@
   <ItemGroup>
     <Compile Include="Behavior.cs" />
     <Compile Include="Components\BehaviorComponent.cs" />
-    <Compile Include="Components\Flowpaths\Random.cs" />
-    <Compile Include="Components\Flowpaths\RootSelector.cs" />
-    <Compile Include="Components\Flowpaths\Selector.cs" />
-    <Compile Include="Components\Flowpaths\Sequence.cs" />
-    <Compile Include="Components\RootSelector.cs" />
-    <Compile Include="Components\Tasks\Task.cs" />
+    <Compile Include="Components\Composites\RandomSelector.cs" />
+    <Compile Include="Components\Composites\RootSelector.cs" />
+    <Compile Include="Components\Composites\Selector.cs" />
+    <Compile Include="Components\Composites\Sequence.cs" />
+    <Compile Include="Components\Actions\Action.cs" />
+    <Compile Include="Components\Decorators\Decorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

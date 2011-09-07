@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using BehaviorLibrary.Components;
+using BehaviorLibrary.Components.Composites;
 
 namespace BehaviorLibrary
 {
@@ -25,7 +26,7 @@ namespace BehaviorLibrary
     public class Behavior
     {
 
-        private BehaviorComponent b_BehaviorComponent;
+        private RootSelector b_Root;
 
         private BehaviorReturnCode b_ReturnCode;
 
@@ -35,20 +36,43 @@ namespace BehaviorLibrary
             set { b_ReturnCode = value; }
         }
 
-        public Behavior(BehaviorComponent behaviorComponent)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="root"></param>
+        public Behavior(RootSelector root)
         {
-            b_BehaviorComponent = behaviorComponent;
+            b_Root = root;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void run()
         {
             try
             {
-                b_ReturnCode = b_BehaviorComponent.Behave();
+                switch (b_Root.Behave())
+                {
+                    case BehaviorReturnCode.Failure:
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return;
+                    case BehaviorReturnCode.Success:
+                        ReturnCode = BehaviorReturnCode.Success;
+                        return;
+                    case BehaviorReturnCode.Running:
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return;
+                }
             }
             catch (Exception)
             {
+                ReturnCode = BehaviorReturnCode.Failure;
+                return;
             }
+
+            ReturnCode = BehaviorReturnCode.Running;
+            return;
         }
 
     }

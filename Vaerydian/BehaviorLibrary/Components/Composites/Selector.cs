@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BehaviorLibrary.Components.Flowpaths
+namespace BehaviorLibrary.Components.Composites
 {
     public class Selector : BehaviorComponent
     {
@@ -18,7 +18,7 @@ namespace BehaviorLibrary.Components.Flowpaths
         /// Selects among the given behavior components
         /// Performs an OR-Like behavior and will "fail-over" to each successive component until Success is reached or Failure is certain
         /// -Returns Success if a behavior component returns Success
-        /// -Returns Running if a behavior component returns Failure or Running
+        /// -Returns Running if a behavior component returns Failure or Running or an error occurs
         /// -Returns Failure if all behavior components returned Failure
         /// </summary>
         /// <param name="behaviors">one to many behavior components</param>
@@ -31,24 +31,33 @@ namespace BehaviorLibrary.Components.Flowpaths
         /// <summary>
         /// performs the given behavior
         /// </summary>
-        /// <returns>a </returns>
+        /// <returns>the behaviors return code</returns>
         public BehaviorReturnCode Behave()
         {
             while (selections < selLength)
             {
-                switch (s_Behaviors[selections].Behave())
+                try
                 {
-                    case BehaviorReturnCode.Failure:
-                        selections++;
-                        this.ReturnCode = BehaviorReturnCode.Running;
-                        return BehaviorReturnCode.Running;
-                    case BehaviorReturnCode.Success:
-                        selections = 0;
-                        this.ReturnCode = BehaviorReturnCode.Success;
-                        return BehaviorReturnCode.Success;
-                    case BehaviorReturnCode.Running:
-                        this.ReturnCode = BehaviorReturnCode.Running;
-                        return BehaviorReturnCode.Running;
+                    switch (s_Behaviors[selections].Behave())
+                    {
+                        case BehaviorReturnCode.Failure:
+                            selections++;
+                            this.ReturnCode = BehaviorReturnCode.Running;
+                            return BehaviorReturnCode.Running;
+                        case BehaviorReturnCode.Success:
+                            selections = 0;
+                            this.ReturnCode = BehaviorReturnCode.Success;
+                            return BehaviorReturnCode.Success;
+                        case BehaviorReturnCode.Running:
+                            this.ReturnCode = BehaviorReturnCode.Running;
+                            return BehaviorReturnCode.Running;
+                    }
+                }
+                catch (Exception)
+                {
+                    selections++;
+                    this.ReturnCode = BehaviorReturnCode.Running;
+                    return BehaviorReturnCode.Running;
                 }
 
                 selections = 0;
