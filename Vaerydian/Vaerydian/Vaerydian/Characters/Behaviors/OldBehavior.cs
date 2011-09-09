@@ -13,10 +13,10 @@ namespace Vaerydian.Characters.Behaviors
         Move
     }
 
-    public class Behavior
+    public class OldBehavior
     {
 
-        public Behavior(Character character) 
+        public OldBehavior(Character character) 
         {
             b_ThisCharacter = character;
         }

@@ -1,0 +1,6 @@
+C:\workplace\Vaerydian\BehaviorLibrary\bin\x86\Debug\BehaviorLibrary.dll
+C:\workplace\Vaerydian\BehaviorLibrary\bin\x86\Debug\BehaviorLibrary.pdb
+C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Debug\BehaviorLibrary.dll
+C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Debug\BehaviorLibrary.pdb

@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace BehaviorLibrary.Components.Composites
+{
+    public class Parallel : BehaviorComponent
+    {
+
+        private BehaviorComponent[] p_Behaviors;
+
+        /// <summary>
+        /// attempts to run the behaviors all in one cycle
+        /// -Returns Success when all are successful
+        /// -Returns Failure if one behavior fails or an error occurs
+        /// -Does not Return Running
+        /// </summary>
+        /// <param name="behaviors"></param>
+        public Parallel(params BehaviorComponent[] behaviors)
+        {
+            p_Behaviors = behaviors;
+        }
+
+        /// <summary>
+        /// performs the given behavior
+        /// </summary>
+        /// <returns>the behaviors return code</returns>
+        public override BehaviorReturnCode Behave()
+        {
+
+            foreach(BehaviorComponent bc in p_Behaviors)
+            {
+                try
+                {
+                    switch (bc.Behave())
+                    {
+                        case BehaviorReturnCode.Failure:
+                            this.ReturnCode = BehaviorReturnCode.Failure;
+                            return ReturnCode;
+                        case BehaviorReturnCode.Success:
+                            continue;
+                        case BehaviorReturnCode.Running:
+                            continue;
+                    }
+                }
+                catch (Exception)
+                {
+                    this.ReturnCode = BehaviorReturnCode.Failure;
+                    return BehaviorReturnCode.Failure;
+                }
+            }
+
+            this.ReturnCode = BehaviorReturnCode.Success;
+            return ReturnCode;
+        }
+
+
+    }
+}

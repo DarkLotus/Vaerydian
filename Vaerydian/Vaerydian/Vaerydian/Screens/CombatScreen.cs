@@ -618,8 +618,7 @@ namespace Vaerydian.Screens
             else if (cs_CombatEngine.CurrentCombatState == CombatState.NpcActing)
             {
                 //NPC acts
-                cs_CombatEngine.npcPerformAction();
-                if(cs_CombatEngine.BattleText.Length > 0)
+                if(cs_CombatEngine.npcPerformAction() && cs_CombatEngine.BattleText.Length > 0)
                     cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
             }
         }
@@ -799,7 +798,11 @@ namespace Vaerydian.Screens
             equipment.Weapon = new Weapon(5,3,1,DamageType.Common);
             enemy.Equipment = equipment;
 
-            enemy.Behavior = new Behavior(enemy);
+            //enemy.OldBehavior = new OldBehavior(enemy);
+            enemy.Behavior = new SimpleEnemyBehavior(enemy);
+            enemy.Behavior.EnemyState = SimpleEnemyState.Combat;
+            enemy.Behavior.CombatState = SimpleCombatState.Thinking;
+
 
             enemies.Add(enemy);
 

@@ -125,8 +125,10 @@
   <ItemGroup>
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Characters\Behaviors\CharacterBehavior.cs" />
+    <Compile Include="Characters\Behaviors\SimpleEnemyBehavior.cs" />
     <Compile Include="Characters\Stats\Stat.cs" />
-    <Compile Include="Characters\Behaviors\Behavior.cs" />
+    <Compile Include="Characters\Behaviors\OldBehavior.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
@@ -163,6 +165,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BehaviorLibrary\BehaviorLibrary.csproj">
+      <Project>{0C4366EE-5D58-422A-9D34-09019B4D61CC}</Project>
+      <Name>BehaviorLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\WorldGeneration\WorldGeneration.csproj">
       <Project>{B0586C88-ED71-40F5-9FB5-98F549311A72}</Project>
       <Name>WorldGeneration</Name>
@@ -201,6 +207,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Vaerydian_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Characters\Behaviors\Actions\" />
+    <Folder Include="Characters\Behaviors\Conditionals\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

@@ -32,7 +32,7 @@ namespace BehaviorLibrary.Components.Composites
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public BehaviorReturnCode Behave()
+        public override BehaviorReturnCode Behave()
         {
             while (selections < selLength)
             {

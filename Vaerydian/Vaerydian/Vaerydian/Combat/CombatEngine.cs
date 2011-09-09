@@ -8,6 +8,8 @@ using Vaerydian.Characters;
 using Vaerydian.Items;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Abilities;
+using BehaviorLibrary;
+using Vaerydian.Characters.Behaviors;
 
 
 namespace Vaerydian.Combat
@@ -106,6 +108,14 @@ namespace Vaerydian.Combat
         /// player character reference
         /// </summary>
         private Character ce_Player;
+        /// <summary>
+        /// player character reference
+        /// </summary>
+        public Character Player
+        {
+            get { return ce_Player; }
+            set { ce_Player = value; }
+        }
 
         /// <summary>
         /// each character's turn
@@ -239,14 +249,11 @@ namespace Vaerydian.Combat
             int count = 0;
 
             //Initiative is calculated by a characters Quickness, Perception, and Agility + Random number from 1-100
-            //first val is ALWAYS the player's initiative
-            //vals[0] = ce_Player.Stats["Agility"].Value + ce_Player.Stats["Quickness"].Value + ce_Player.Stats["Perception"].Value + random.Next(1, 100);
-            
-            //get enemies values
+              
+            //get character values
             for (int i = 0; i < ce_Combatants.Count; i++)
             {
-                //vals[i + 1] = ce_Combatants[i].Stats["Agility"].Value + ce_Combatants[i].Stats["Quickness"].Value + ce_Combatants[i].Stats["Perception"].Value + random.Next(1, 100);
-                vals[i] = ce_Combatants[i].Stats["Agility"].Value + ce_Combatants[i].Stats["Quickness"].Value + ce_Combatants[i].Stats["Perception"].Value + random.Next(1, 100);
+                vals[i] = ce_Combatants[i].Stats["Agility"].Value / 4 + ce_Combatants[i].Stats["Quickness"].Value / 3 + ce_Combatants[i].Stats["Perception"].Value / 5 + ce_Combatants[i].Equipment.Weapon.Speed;
             }
 
             //Next, figure out which which should go next and place them in the Character Turn List
@@ -263,14 +270,6 @@ namespace Vaerydian.Combat
                         index = i;
                     }
                 }
-
-                /*
-                //based on the index of the largest, add it to the turn list
-                if (index != 0)//enemies are added to the array, so subtract one from their index
-                    ce_TurnList.Add(ce_Combatants[index-1]);
-                else
-                    ce_TurnList.Add(ce_Player);
-                 */
 
                 //based on the index of the largest, add it to the turn list
                 ce_TurnList.Add(ce_Combatants[index]);
@@ -335,21 +334,31 @@ namespace Vaerydian.Combat
         /// </summary>
         public void npcPlanAction()
         {
-            ce_TurnList[ce_TurnIndex].Behavior.planAction(ce_TurnList[ce_TurnIndex]);
+            //ce_TurnList[ce_TurnIndex].OldBehavior.planAction(ce_TurnList[ce_TurnIndex]);
 
             //set the NPC to act
             ce_CurrentCombatState = CombatState.NpcActing;
+            
         }
 
         /// <summary>
         /// performs the NPC's chosen action
         /// </summary>
-        public void npcPerformAction()
+        public bool npcPerformAction()
         {
-            ce_TurnList[ce_TurnIndex].Behavior.performAction(ce_TurnList[ce_TurnIndex]);
+            //ce_TurnList[ce_TurnIndex].OldBehavior.performAction(ce_TurnList[ce_TurnIndex]);
 
-            //NPC turn is complete
-            ce_CurrentCombatState = CombatState.CombatAssessTurn;
+            if (ce_TurnList[ce_TurnIndex].Behavior.Behave() == BehaviorReturnCode.Success &&
+                ce_TurnList[ce_TurnIndex].Behavior.CombatState == SimpleCombatState.Acted)
+            {
+                ce_TurnList[ce_TurnIndex].Behavior.CombatState = SimpleCombatState.Thinking;
+
+                //NPC turn is complete
+                ce_CurrentCombatState = CombatState.CombatAssessTurn;
+                return true;
+            }
+            else
+                return false;
         }
 
         /// <summary>
@@ -359,16 +368,6 @@ namespace Vaerydian.Combat
         {
             //clear battle text
             ce_BattleText.Clear();
-
-            /*
-            //see if the player is dead
-            if (ce_Player.Health <= 0)
-            {
-                ce_IsPlayerDead = true;
-                ce_BattleText.Append("You have died!");
-                ce_AssementDialog = true;
-            }
-            */
 
             //see if an enemy has been killed
             foreach (Character combatant in ce_Combatants)
@@ -381,7 +380,7 @@ namespace Vaerydian.Combat
                     if (combatant.CharacterType == CharacterType.Player)
                     {
                         ce_IsPlayerDead = true;
-                        ce_BattleText.Append("You have died!");
+                        ce_BattleText.Append(" You have died!");
                     }
                     
                     ce_AssementDialog = true;
@@ -520,6 +519,7 @@ namespace Vaerydian.Combat
 
                 if (target.CharacterType != CharacterType.Player)
                 {
+                    //target.OldBehavior.HostileList.Add(attacker);
                     target.Behavior.HostileList.Add(attacker);
                 }
             }

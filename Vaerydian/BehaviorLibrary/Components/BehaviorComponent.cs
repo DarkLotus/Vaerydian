@@ -7,7 +7,7 @@ namespace BehaviorLibrary.Components
 {
     public abstract class  BehaviorComponent
     {
-        protected virtual BehaviorReturnCode ReturnCode;
+        protected BehaviorReturnCode ReturnCode;
 
         public BehaviorComponent() { }
 

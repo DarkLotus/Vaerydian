@@ -46,9 +46,9 @@ namespace BehaviorLibrary
         }
 
         /// <summary>
-        /// 
+        /// perform the behavior
         /// </summary>
-        public void run()
+        public BehaviorReturnCode Behave()
         {
             try
             {
@@ -56,23 +56,23 @@ namespace BehaviorLibrary
                 {
                     case BehaviorReturnCode.Failure:
                         ReturnCode = BehaviorReturnCode.Failure;
-                        return;
+                        return ReturnCode;
                     case BehaviorReturnCode.Success:
                         ReturnCode = BehaviorReturnCode.Success;
-                        return;
+                        return ReturnCode;
                     case BehaviorReturnCode.Running:
                         ReturnCode = BehaviorReturnCode.Running;
-                        return;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
                 ReturnCode = BehaviorReturnCode.Failure;
-                return;
+                return ReturnCode;
             }
 
             ReturnCode = BehaviorReturnCode.Running;
-            return;
+            return ReturnCode;
         }
 
     }

@@ -52,12 +52,25 @@ namespace Vaerydian.Characters
         /// <summary>
         /// the artificial intelligence for combat for the character
         /// </summary>
-        private Behavior c_Behavior;
+        private OldBehavior c_OldBehavior;
 
         /// <summary>
         /// the artificial intelligence for combat for the character
         /// </summary>
-        public Behavior Behavior
+        public OldBehavior OldBehavior
+        {
+            get { return c_OldBehavior; }
+            set { c_OldBehavior = value; }
+        }
+
+        /// <summary>
+        /// the artificial intelligence for the character
+        /// </summary>
+        private SimpleEnemyBehavior c_Behavior;
+        /// <summary>
+        /// the artificial intelligence for the character
+        /// </summary>
+        public SimpleEnemyBehavior Behavior
         {
             get { return c_Behavior; }
             set { c_Behavior = value; }

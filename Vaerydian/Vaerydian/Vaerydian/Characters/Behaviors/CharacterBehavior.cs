@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BehaviorLibrary;
 
-namespace BehaviorLibrary.Components.Actions
+namespace Vaerydian.Characters.Behaviors
 {
-    public abstract class Action
+    public abstract class CharacterBehavior
     {
-
-        public Action() { }
-
+        public CharacterBehavior() { }
         public abstract BehaviorReturnCode Behave();
-
     }
 }

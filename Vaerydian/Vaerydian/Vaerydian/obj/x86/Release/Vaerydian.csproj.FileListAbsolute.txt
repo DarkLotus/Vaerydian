@@ -1,3 +1,5 @@
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\ResolveAssemblyReference.cache
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\General.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\Loading.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\StartScreen.xnb
@@ -34,11 +36,11 @@ C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe.manifes
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.application
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.pdb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\BehaviorLibrary.dll
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\WorldGeneration.dll
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\LibNoise.dll
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\BehaviorLibrary.pdb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\WorldGeneration.pdb
-C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\ResolveAssemblyReference.cache
-C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.exe.manifest
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.application
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.exe
