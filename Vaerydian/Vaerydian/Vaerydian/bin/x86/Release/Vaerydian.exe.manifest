@@ -100,7 +100,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>jUpeca0AjIKOZPiuphIFF+sisus=</dsig:DigestValue>
+        <dsig:DigestValue>RTXeoBa73v+d24H8rVCc7fo0+Rs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -117,14 +117,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="61952">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="64000">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>t0JuyPKcSzc1tavO4s+X5vpg9gg=</dsig:DigestValue>
+        <dsig:DigestValue>bXo0ZbHPKGV8OkI2zfgKkNsZOYg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -136,7 +136,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>tL4o6NfYnOyTWJaAKF9Fp8K+iw0=</dsig:DigestValue>
+        <dsig:DigestValue>TaxKFzIAfvr3WylQBiAtbl94UDo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

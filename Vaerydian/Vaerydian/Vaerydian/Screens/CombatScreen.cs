@@ -100,7 +100,7 @@ namespace Vaerydian.Screens
 
             //cs_Player = GameSession.Instance.PlayerCharacter;
             cs_Player = getTestPlayer();
-            cs_Combatants = getTestEnemies();
+            cs_Combatants = getTestCombatants();
             cs_Combatants.Add(cs_Player);
 
             //update player intented positon
@@ -131,7 +131,7 @@ namespace Vaerydian.Screens
             //
             //THIS IS WITH TEST VALUES
             //
-            cs_CombatEngine.newCombatEvent(getTestTerrainArray(5), 5, cs_Player, cs_Combatants);
+            cs_CombatEngine.newCombatEvent(getTestTerrainArray(10), 10, cs_Player, cs_Combatants);
             //
             //THIS IS WITH TEST VALUES
             //
@@ -202,11 +202,23 @@ namespace Vaerydian.Screens
             //player wants to exit
             if (InputManager.isKeyToggled(Keys.Escape))
             {
-                //remove yourself
-                this.ScreenManager.removeScreen(this);
-                
-                //load the start screen
-                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+                if (cs_CombatEngine.CurrentCombatState == CombatState.PlayerActing)
+                {
+                    cs_CombatEngine.CurrentCombatState = CombatState.PlayerChooseAction;
+                    
+                    cs_PlayerDirectionChoice = PlayerDirectionChoice.None;
+                    cs_PlayerIntendedTarget = cs_Player.BattlePosition;
+                    cs_PlayerAction = PlayerAction.None;
+                }
+                else
+                {
+
+                    //remove yourself
+                    this.ScreenManager.removeScreen(this);
+
+                    //load the start screen
+                    LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+                }
             }
         }
 
@@ -544,14 +556,6 @@ namespace Vaerydian.Screens
                 //assess the turn
                 cs_CombatEngine.assessCombatTurn();
 
-                /*
-                if (cs_CombatEngine.AssementDialog)
-                {
-                    //add any assessment dialog
-                    cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
-                    cs_CombatEngine.AssementDialog = false;
-                }*/
-
                 //add any assessment dialog
                 if(cs_CombatEngine.BattleText.Length > 0)
                     cs_BattleLog.addDialog(cs_CombatEngine.BattleText.ToString());
@@ -681,11 +685,11 @@ namespace Vaerydian.Screens
                     if ((i == cs_PlayerIntendedPosition.X && j == cs_PlayerIntendedPosition.Y && cs_PlayerAction == PlayerAction.Move) ||
                         (i == cs_PlayerIntendedTarget.X && j == cs_PlayerIntendedTarget.Y && cs_PlayerAction == PlayerAction.Attack))
                     {
-                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 50 + 362, j * 50 + 100), null, Color.Red, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 25 + 362, j * 25 + 100), null, Color.Red, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                     }
                     else
                     {
-                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 50 + 362, j * 50 + 100), null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+                        cs_SpriteBatch.Draw(textures[0], new Vector2(i * 25 + 362, j * 25 + 100), null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                     }
                 }
             }
@@ -703,13 +707,13 @@ namespace Vaerydian.Screens
                 //draw player different
                 if (combatant.CharacterType == CharacterType.Player)
                 {
-                    cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 50 + 362 + 12.5f, cs_Player.BattlePosition.Y * 50 + 100 + 12.5f),
-                        null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    cs_SpriteBatch.Draw(textures[1], new Vector2(cs_Player.BattlePosition.X * 25 + 362 + 6.25f, cs_Player.BattlePosition.Y * 25 + 100 + 6.25f),
+                        null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
                 }
                 else
                 {
-                    cs_SpriteBatch.Draw(textures[2], new Vector2(combatant.BattlePosition.X * 50 + 362 + 12.5f, combatant.BattlePosition.Y * 50 + 100 + 12.5f),
-                        null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    cs_SpriteBatch.Draw(textures[2], new Vector2(combatant.BattlePosition.X * 25 + 362 + 6.25f, combatant.BattlePosition.Y * 25 + 100 + 6.25f),
+                        null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
                 }
             }
         }
@@ -750,21 +754,21 @@ namespace Vaerydian.Screens
             Character player = new Character();
             player.CharacterType = CharacterType.Player;
             player.Name = "Player";
-            player.Health = 50;
-            player.Stats.Add("Quickness", new Stat("Quickness", 50));
-            player.Stats.Add("Agility", new Stat("Agility", 50));
-            player.Stats.Add("Strength", new Stat("Strength", 50));
-            player.Stats.Add("Perception", new Stat("Perception", 50));
-            player.BattlePosition = new Vector2(1, 1);
+            player.Health = 100;
+            player.Stats.Add("Quickness", new Stat("Quickness", 55));
+            player.Stats.Add("Agility", new Stat("Agility", 55));
+            player.Stats.Add("Strength", new Stat("Strength", 55));
+            player.Stats.Add("Perception", new Stat("Perception", 55));
+            player.BattlePosition = new Vector2(0, 9);
 
             //setup skills
-            player.Skills.Add("Dodge", new Skill("Dodge", 50, SkillType.Defensive));
-            player.Skills.Add("WeaponSkill", new Skill("WeaponSkill", 50, SkillType.Offensive));
+            player.Skills.Add("Dodge", new Skill("Dodge", 55, SkillType.Defensive));
+            player.Skills.Add("WeaponSkill", new Skill("WeaponSkill", 55, SkillType.Offensive));
 
             //setup equipment
             Equipment equipment = new Equipment();
-            equipment.ArmorChest = new Armor(10, 3);
-            equipment.Weapon = new Weapon(5, 3, 1, DamageType.Common);
+            equipment.ArmorChest = new Armor(10, 4);
+            equipment.Weapon = new Weapon(5, 4, 1, 1, DamageType.Common);
             player.Equipment = equipment;
 
 
@@ -775,18 +779,19 @@ namespace Vaerydian.Screens
         /// generate a test enemy
         /// </summary>
         /// <returns></returns>
-        private List<Character> getTestEnemies()
+        private List<Character> getTestCombatants()
         {
-            List<Character> enemies = new List<Character>();
+            List<Character> combatants = new List<Character>();
+
             Character enemy = new Character();
             enemy.CharacterType = CharacterType.NPC;
             enemy.Name = "Test Enemy";
-            enemy.Health = 50;
+            enemy.Health = 100;
             enemy.Stats.Add("Quickness", new Stat("Quickness", 50));
             enemy.Stats.Add("Agility", new Stat("Agility", 50));
             enemy.Stats.Add("Strength", new Stat("Strength", 50));
             enemy.Stats.Add("Perception", new Stat("Perception", 50));
-            enemy.BattlePosition = new Vector2(1, 0);
+            enemy.BattlePosition = new Vector2(9, 0);
             
             //setup skills
             enemy.Skills.Add("Dodge", new Skill("Dodge",50,SkillType.Defensive));
@@ -794,8 +799,8 @@ namespace Vaerydian.Screens
 
             //setup equipment
             Equipment equipment = new Equipment();
-            equipment.ArmorChest = new Armor(10,3);
-            equipment.Weapon = new Weapon(5,3,1,DamageType.Common);
+            equipment.ArmorChest = new Armor(5,3);
+            equipment.Weapon = new Weapon(1,3,1,1f,DamageType.Common);
             enemy.Equipment = equipment;
 
             //enemy.OldBehavior = new OldBehavior(enemy);
@@ -803,10 +808,36 @@ namespace Vaerydian.Screens
             enemy.Behavior.EnemyState = SimpleEnemyState.Combat;
             enemy.Behavior.CombatState = SimpleCombatState.Thinking;
 
+            Character enemy2 = new Character();
+            enemy2.CharacterType = CharacterType.NPC;
+            enemy2.Name = "Cooperating Enemy";
+            enemy2.Health = 50;
+            enemy2.Stats.Add("Quickness", new Stat("Quickness", 50));
+            enemy2.Stats.Add("Agility", new Stat("Agility", 50));
+            enemy2.Stats.Add("Strength", new Stat("Strength", 50));
+            enemy2.Stats.Add("Perception", new Stat("Perception", 50));
+            enemy2.BattlePosition = new Vector2(0, 0);
 
-            enemies.Add(enemy);
+            //setup skills
+            enemy2.Skills.Add("Dodge", new Skill("Dodge", 50, SkillType.Defensive));
+            enemy2.Skills.Add("WeaponSkill", new Skill("WeaponSkill", 50, SkillType.Offensive));
 
-            return enemies;
+            //setup equipment
+            Equipment equipmentEnemy2 = new Equipment();
+            equipmentEnemy2.ArmorChest = new Armor(5, 3);
+            equipmentEnemy2.Weapon = new Weapon(1, 3, 3f, 5f, DamageType.Common);
+            enemy2.Equipment = equipmentEnemy2;
+
+            //enemy.OldBehavior = new OldBehavior(enemy);
+            enemy2.Behavior = new SimpleEnemyBehavior(enemy2);
+            enemy2.Behavior.EnemyState = SimpleEnemyState.Combat;
+            enemy2.Behavior.CombatState = SimpleCombatState.Thinking;
+            enemy2.Behavior.HostileList.Add(enemy);
+
+            combatants.Add(enemy);
+            combatants.Add(enemy2);
+
+            return combatants;
         }
 
         #endregion

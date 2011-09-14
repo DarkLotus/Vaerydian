@@ -128,7 +128,7 @@ namespace Vaerydian.Characters.Behaviors
                 return false;
 
             // distance should be less than or equal to the weapon range
-            if (Vector2.Distance(b_ThisCharacter.BattlePosition, character.BattlePosition) <= b_ThisCharacter.Equipment.Weapon.Range)
+            if (Vector2.Distance(b_ThisCharacter.BattlePosition, character.BattlePosition) <= b_ThisCharacter.Equipment.Weapon.RangeMin)
             {
                 targetCell = character.BattlePosition;
                 return true;

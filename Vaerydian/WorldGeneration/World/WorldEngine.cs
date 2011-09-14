@@ -103,10 +103,13 @@ namespace WorldGeneration.World
 
             count = 0;
 
-            Parallel.For(0, we_segmentSize * we_segmentSize, i =>
+            Parallel.For(0, we_segmentSize, i =>
             {
-                we_ActiveSegments[i] = (WorldSegment)loadFile(we_World.SegmentFiles[i]);
-                count++;
+                for (int j = 0; j < we_segmentSize; j++)
+                {
+                    we_ActiveSegments[i*we_segmentSize+j] = (WorldSegment)loadFile(we_World.SegmentFiles[i*8+j]);
+                    count++;
+                }
                 GC.Collect();
             });
                         
@@ -150,21 +153,21 @@ namespace WorldGeneration.World
         /// <returns>the updated active segment offset</returns>
         public Point updateSegments(Point position)
         {
-            int xOffset = (position.X - we_ActiveSegmentsOffset.X * 128) / 128;
-            int yOffset = (position.Y - we_ActiveSegmentsOffset.Y * 128) / 128;
+            int xOffset = ((position.X) - (we_ActiveSegmentsOffset.X+1)*128)/128;
+            int yOffset = ((position.Y) - (we_ActiveSegmentsOffset.Y+1)*128)/128;
 
             /*
-            if ((xOffset < 3) && (xOffset > 0) &&
-                (yOffset < 3) && (xOffset > 0))
+            if ((xOffset < we_segmentSize) && (xOffset >= 0) &&
+                (yOffset < we_segmentSize) && (xOffset >= 0))
             {
-                if (we_CurrentSegment == we_ActiveSegments[xOffset, yOffset])
+                if (we_CurrentSegment == we_ActiveSegments[xOffset * we_segmentSize + yOffset])
                     return we_ActiveSegmentsOffset;
                 else
                 {
                     shiftSegments(position, xOffset, yOffset);
                 }
-            }
-            */
+            }*/
+            
 
             if (we_CurrentSegment == we_ActiveSegments[xOffset * we_segmentSize + yOffset])
             {
@@ -173,17 +176,21 @@ namespace WorldGeneration.World
             else
             {
                 //calculate the difference between previous and new position to create a difference offset 
-                Point diff = new Point(position.X / 128 - (we_ActiveSegmentsOffset.X + 1), position.Y / 128 - (we_ActiveSegmentsOffset.Y + 1));
+                Point diff = new Point((we_ActiveSegmentsOffset.X+1) - position.X/128, (we_ActiveSegmentsOffset.Y+1) - position.Y/128);
 
-                shiftSegments(diff);
+                try
+                {
+                    shiftSegments(diff, we_ActiveSegmentsOffset.X, we_ActiveSegmentsOffset.Y);
+                }
+                catch (Exception)
+                {
 
+                }
                 //update current segment and active segment offset
                 we_CurrentSegment = we_ActiveSegments[1 * we_segmentSize + 1];
                 we_ActiveSegmentsOffset.X += diff.X;
                 we_ActiveSegmentsOffset.Y += diff.Y;
             }
-
-
 
             if (we_ActiveSegmentsOffset.X < 0)
                 we_ActiveSegmentsOffset.X = 0;
@@ -198,7 +205,7 @@ namespace WorldGeneration.World
 
         }
        
-        private void shiftSegments(Point diff)
+        private void shiftSegments(Point diff, int xOffset, int yOffset)
         {
             WorldSegment[] newSegments = new WorldSegment[we_segmentSize * we_segmentSize];
 
@@ -208,19 +215,19 @@ namespace WorldGeneration.World
                 for (int y = 0; y < we_segmentSize; y++)
                 {
                     //is the source segment within the current active segments
-                    if ((x + diff.X) < we_segmentSize && (x + diff.X) > 0 &&
-                        (y + diff.Y) < we_segmentSize && (y + diff.Y) > 0)
+                    if ((x + diff.X) < we_segmentSize && (x + diff.X) >= 0 &&
+                        (y + diff.Y) < we_segmentSize && (y + diff.Y) >= 0)
                     {
                         //yes, so copy it
-                        newSegments[x * 3 + y] = we_ActiveSegments[(x + diff.X) * we_segmentSize + (y + diff.Y)];
+                        newSegments[x * we_segmentSize + y] = we_ActiveSegments[(x + diff.X) * we_segmentSize + (y + diff.Y)];
                     }
                     else
                     {
                         //no, so we'll need to load it, so check to see if it is in the master list
-                        if ((x + diff.X) < 8 && (x + diff.X) > 0 &&
-                            (y + diff.Y) < 8 && (y + diff.Y) > 0)
+                        if ((x + diff.X) < 8 && (x + diff.X) >= 0 &&
+                            (y + diff.Y) < 8 && (y + diff.Y) >= 0)
                         {
-                            newSegments[x * we_segmentSize + y] = (WorldSegment)loadFile(we_World.SegmentFiles[(x + diff.X) * 8 + (y + diff.Y)]);
+                            newSegments[x * we_segmentSize + y] = (WorldSegment)loadFile(we_World.SegmentFiles[(x + diff.X) * we_segmentSize + (y + diff.Y)]);
                         }
                         else
                         {

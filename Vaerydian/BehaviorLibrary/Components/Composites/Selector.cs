@@ -18,8 +18,8 @@ namespace BehaviorLibrary.Components.Composites
         /// Selects among the given behavior components
         /// Performs an OR-Like behavior and will "fail-over" to each successive component until Success is reached or Failure is certain
         /// -Returns Success if a behavior component returns Success
-        /// -Returns Running if a behavior component returns Failure or Running or an error occurs
-        /// -Returns Failure if all behavior components returned Failure
+        /// -Returns Running if a behavior component returns Failure or Running
+        /// -Returns Failure if all behavior components returned Failure or an error has occured
         /// </summary>
         /// <param name="behaviors">one to many behavior components</param>
         public Selector(params BehaviorComponent[] behaviors)
@@ -51,21 +51,23 @@ namespace BehaviorLibrary.Components.Composites
                         case BehaviorReturnCode.Running:
                             this.ReturnCode = BehaviorReturnCode.Running;
                             return BehaviorReturnCode.Running;
+                        default:
+                            selections++;
+                            this.ReturnCode = BehaviorReturnCode.Failure;
+                            return BehaviorReturnCode.Failure;
                     }
                 }
                 catch (Exception)
                 {
                     selections++;
-                    this.ReturnCode = BehaviorReturnCode.Running;
-                    return BehaviorReturnCode.Running;
+                    this.ReturnCode = BehaviorReturnCode.Failure;
+                    return BehaviorReturnCode.Failure;
                 }
-
-                selections = 0;
-                return BehaviorReturnCode.Failure;
             }
 
-
-            return BehaviorReturnCode.Success;
+            selections = 0;
+            this.ReturnCode = BehaviorReturnCode.Failure;
+            return BehaviorReturnCode.Failure;
         }
 
 

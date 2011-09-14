@@ -53,11 +53,12 @@ namespace Vaerydian.Items
         /// <param name="speed"></param>
         /// <param name="range"></param>
         /// <param name="damageType"></param>
-        public Weapon(int lethality, int speed, int range, DamageType damageType)
+        public Weapon(int lethality, int speed, float minRange, float maxRange, DamageType damageType)
         {
             w_Lethality = lethality;
             w_Speed = speed;
-            w_Range = range;
+            w_RangeMin = minRange;
+            w_RangeMax = maxRange;
             w_DamageType = damageType;
         }
 
@@ -77,17 +78,31 @@ namespace Vaerydian.Items
         }
 
         /// <summary>
-        /// range of the weapon
+        /// Min range of the weapon
         /// </summary>
-        private int w_Range;
+        private float w_RangeMin;
 
         /// <summary>
-        /// range of the weapon
+        /// Min range of the weapon
         /// </summary>
-        public int Range
+        public float RangeMin
         {
-            get { return w_Range; }
-            set { w_Range = value; }
+            get { return w_RangeMin; }
+            set { w_RangeMin = value; }
+        }
+
+        /// <summary>
+        /// Max range of the weapon
+        /// </summary>
+        private float w_RangeMax;
+
+        /// <summary>
+        /// Max range of the weapon
+        /// </summary>
+        public float RangeMax
+        {
+            get { return w_RangeMax; }
+            set { w_RangeMax = value; }
         }
 
         /// <summary>

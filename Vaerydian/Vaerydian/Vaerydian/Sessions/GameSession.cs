@@ -38,5 +38,15 @@ namespace Vaerydian.Sessions
             set { gs_PlayerCharacter = value; }
         }
 
+        private String gs_GameVersion = "Alpha 0.0.1";
+
+        public String GameVersion
+        {
+            get { return gs_GameVersion; }
+            set { gs_GameVersion = value; }
+        }
+
+
+
     }
 }

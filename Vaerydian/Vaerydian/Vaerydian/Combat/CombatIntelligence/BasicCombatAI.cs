@@ -120,7 +120,7 @@ namespace Vaerydian.Combat.CombatIntelligence
                 return false;
 
             // distance should be less than or equal to the weapon range
-            if (Vector2.Distance(bcai_ThisCharacter.BattlePosition, character.BattlePosition) <= bcai_ThisCharacter.Equipment.Weapon.Range)
+            if (Vector2.Distance(bcai_ThisCharacter.BattlePosition, character.BattlePosition) <= bcai_ThisCharacter.Equipment.Weapon.RangeMin)
             {
                 targetCell = character.BattlePosition;
                 return true;

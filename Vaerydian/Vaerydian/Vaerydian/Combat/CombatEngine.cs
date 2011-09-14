@@ -104,6 +104,8 @@ namespace Vaerydian.Combat
             set { ce_Combatants = value; }
         }
 
+        private List<Character> ce_DefeatedCombatants = new List<Character>();
+
         /// <summary>
         /// player character reference
         /// </summary>
@@ -374,7 +376,9 @@ namespace Vaerydian.Combat
             {
                 if (combatant.Health <= 0)
                 {
-                    TurnList.Remove(combatant);
+                    ce_TurnList.Remove(combatant);
+                    ce_DefeatedCombatants.Add(combatant);
+
                     ce_BattleText.Append(combatant.Name + " has been killed!");
 
                     if (combatant.CharacterType == CharacterType.Player)
@@ -385,6 +389,13 @@ namespace Vaerydian.Combat
                     
                     ce_AssementDialog = true;
                 }
+            }
+
+            //remove the character from the combatants list
+            foreach (Character defeated in ce_DefeatedCombatants)
+            {
+                if (ce_Combatants.Contains(defeated))
+                    ce_Combatants.Remove(defeated);
             }
         }
 
@@ -473,39 +484,39 @@ namespace Vaerydian.Combat
             ce_BattleText.Clear();
             
             //figure out attackers hit value
-            double probHitAttacker = attacker.Stats["Agility"].Value * 2 + getWeaponSkillValue(attacker) + //base attack skill
-                attacker.Stats["Quickness"].Value * attacker.Equipment.Weapon.Speed + //equipment attack enhancements
+            double probHitAttacker = attacker.Stats["Agility"].Value / 4.0 + getWeaponSkillValue(attacker) / 2.0 + //base attack skill
+                (attacker.Stats["Quickness"].Value / 5.0) * attacker.Equipment.Weapon.Speed + //equipment attack enhancements
                 getAttackBonuses(attacker); //special attack bonuses
 
             //figure out target's avoidance
-            double probHitTarget = target.Stats["Agility"].Value * 2 + target.Skills["Dodge"].Value + //base avoidance skill
-                target.Stats["Quickness"].Value * target.Equipment.ArmorChest.Mobility + //equipment avoidance enhancements
+            double probDefendTarget = target.Stats["Agility"].Value / 4.0 + target.Skills["Dodge"].Value / 2.0 + //base avoidance skill
+                (target.Stats["Quickness"].Value / 5.0) * target.Equipment.ArmorChest.Mobility + //equipment avoidance enhancements
                 getAvoidanceBonuses(target); //special avoidance bonuses
             
             //define thresholds
-            double lowPercent = 0.0;
-            double highPercent = 1.9;
+            double lowPercent = 0.15;
+            double highPercent = 1.75;
 
             //find hit probability
-            double hitProbability = lowPercent * (probHitAttacker / (probHitAttacker + probHitTarget)) + //probability of attacker to hit
-                                    highPercent * (probHitTarget / (probHitAttacker + probHitTarget)); //probability of target to avoid
+            double hitProbability = highPercent * (probHitAttacker / (probHitAttacker + probDefendTarget)) + //probability of attacker to hit
+                                    lowPercent * (probDefendTarget / (probHitAttacker + probDefendTarget)); //probability of target to avoid
             
             //Roll hit probability
-            double hitAttempt = random.NextDouble() * hitProbability;
+            double hitAttempt = random.NextDouble();// *hitProbability;
 
             if (hitAttempt <= hitProbability)
             {
                 double overHit = 0.0;
                 
                 //check for overhit bonus
-                if(hitAttempt > 1.0)
+                if (hitProbability > 1.0)
                 {
-                    overHit = hitAttempt - 1.0;
+                    overHit = hitProbability - 1.0;
                 }
 
                 //hit determine dmg
-                int damageMax = (int)((overHit + 1.0) * (((double)attacker.Stats["Strength"].Value / 4.0) + ((double)getWeaponSkillValue(attacker) / 5.0) +
-                                              ((double)attacker.Equipment.Weapon.Lethality - (double)target.Equipment.ArmorChest.Defense)));
+                int damageMax = (int)((overHit + 1.0) * (((float)attacker.Stats["Strength"].Value / 4.0f) + ((float)getWeaponSkillValue(attacker) / 5.0f) +
+                                              ((float)attacker.Equipment.Weapon.Lethality - (float)target.Equipment.ArmorChest.Defense)));
 
                 int damage = random.Next(damageMax / 2, damageMax);
 

@@ -10,7 +10,7 @@ namespace Vaerydian.Items
 
         private Weapon e_Weapon;
 
-        internal Weapon Weapon
+        public Weapon Weapon
         {
             get { return e_Weapon; }
             set { e_Weapon = value; }
