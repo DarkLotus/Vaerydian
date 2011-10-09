@@ -33,24 +33,24 @@ namespace BehaviorLibrary.Components.Decorators
                 switch (d_Behavior.Behave())
                 {
                     case BehaviorReturnCode.Failure:
-                        this.ReturnCode = BehaviorReturnCode.Success;
-                        return BehaviorReturnCode.Success;
+                        ReturnCode = BehaviorReturnCode.Success;
+                        return ReturnCode;
                     case BehaviorReturnCode.Success:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return BehaviorReturnCode.Failure;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                     case BehaviorReturnCode.Running:
-                        this.ReturnCode = BehaviorReturnCode.Running;
-                        return BehaviorReturnCode.Running;
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
-                this.ReturnCode = BehaviorReturnCode.Success;
-                return BehaviorReturnCode.Success;
+                ReturnCode = BehaviorReturnCode.Success;
+                return ReturnCode;
             }
 
-            this.ReturnCode = BehaviorReturnCode.Success;
-            return BehaviorReturnCode.Success;
+            ReturnCode = BehaviorReturnCode.Success;
+            return ReturnCode;
 
         }
 

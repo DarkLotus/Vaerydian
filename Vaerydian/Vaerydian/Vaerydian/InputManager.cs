@@ -21,6 +21,14 @@ namespace Vaerydian
         /// </summary>
         public static bool yesExit { get { return im_yesExit; } set { im_yesExit = value; } }
 
+        private static bool im_YesScreenshot = false;
+
+        public static bool YesScreenshot
+        {
+            get { return InputManager.im_YesScreenshot; }
+            set { InputManager.im_YesScreenshot = value; }
+        }
+
         public static void Update()
         {
             // update the keyboard state

@@ -23,23 +23,23 @@ namespace BehaviorLibrary.Components.Actions
                 switch (ba_Action.Invoke())
                 {
                     case BehaviorReturnCode.Success:
-                        this.ReturnCode = BehaviorReturnCode.Success;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Success;
+                        return ReturnCode;
                     case BehaviorReturnCode.Failure:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                     case BehaviorReturnCode.Running:
-                        this.ReturnCode = BehaviorReturnCode.Running;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return ReturnCode;
                     default:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
-                this.ReturnCode = BehaviorReturnCode.Failure;
-                return this.ReturnCode;
+                ReturnCode = BehaviorReturnCode.Failure;
+                return ReturnCode;
             }
         }
 

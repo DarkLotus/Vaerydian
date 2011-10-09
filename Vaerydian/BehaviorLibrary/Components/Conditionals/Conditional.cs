@@ -33,20 +33,20 @@ namespace BehaviorLibrary.Components.Conditionals
                 switch (c_Bool.Invoke())
                 {
                     case true:
-                        this.ReturnCode = BehaviorReturnCode.Success;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Success;
+                        return ReturnCode;
                     case false:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                     default:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return this.ReturnCode;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
-                this.ReturnCode = BehaviorReturnCode.Failure;
-                return this.ReturnCode;
+                ReturnCode = BehaviorReturnCode.Failure;
+                return ReturnCode;
             }
         }
     }

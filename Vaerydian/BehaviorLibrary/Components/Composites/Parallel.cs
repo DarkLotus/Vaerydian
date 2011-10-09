@@ -36,22 +36,25 @@ namespace BehaviorLibrary.Components.Composites
                     switch (bc.Behave())
                     {
                         case BehaviorReturnCode.Failure:
-                            this.ReturnCode = BehaviorReturnCode.Failure;
+                            ReturnCode = BehaviorReturnCode.Failure;
                             return ReturnCode;
                         case BehaviorReturnCode.Success:
                             continue;
                         case BehaviorReturnCode.Running:
                             continue;
+                        default:
+                            ReturnCode = BehaviorReturnCode.Success;
+                            return ReturnCode;
                     }
                 }
                 catch (Exception)
                 {
-                    this.ReturnCode = BehaviorReturnCode.Failure;
-                    return BehaviorReturnCode.Failure;
+                    ReturnCode = BehaviorReturnCode.Failure;
+                    return ReturnCode;
                 }
             }
 
-            this.ReturnCode = BehaviorReturnCode.Success;
+            ReturnCode = BehaviorReturnCode.Success;
             return ReturnCode;
         }
 

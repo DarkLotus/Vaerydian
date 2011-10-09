@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cave\Cave.cs" />
+    <Compile Include="Cave\CaveTerrain.cs" />
     <Compile Include="Cave\CaveEngine.cs" />
     <Compile Include="MyPerlin.cs" />
     <Compile Include="World\WorldGenerator.cs" />

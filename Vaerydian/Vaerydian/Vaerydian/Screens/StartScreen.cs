@@ -33,6 +33,7 @@ namespace Vaerydian.Screens
             ss_MenuItems.Add("Exit");//3
             ss_MenuItems.Add("Instructions");//4
             ss_MenuItems.Add("Combat Test");//5
+            ss_MenuItems.Add("Cave Test");//6
             //create the menu
             ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
             //register the menu
@@ -108,6 +109,15 @@ namespace Vaerydian.Screens
                     this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
                     //load the world screen
                     LoadingScreen.Load(this.ScreenManager, true, new CombatScreen());
+                }
+                else if (ss_TextMenu.MenuIndex == 6)
+                {
+                    //dispose of this screen
+                    this.ScreenManager.removeScreen(this);
+                    //dispose of the menu
+                    this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
+                    //load the cave screen
+                    LoadingScreen.Load(this.ScreenManager, true, new CaveScreen());
                 }
 
             }

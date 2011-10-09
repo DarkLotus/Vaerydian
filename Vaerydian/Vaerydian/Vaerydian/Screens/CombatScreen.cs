@@ -16,6 +16,7 @@ using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Stats;
 using Vaerydian.Items;
 using Vaerydian.Characters.Behaviors;
+using System.IO;
 
 
 
@@ -219,6 +220,11 @@ namespace Vaerydian.Screens
                     //load the start screen
                     LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
                 }
+            }
+
+            if (InputManager.isKeyToggled(Keys.PrintScreen))
+            {
+                InputManager.YesScreenshot = true;
             }
         }
 
@@ -668,6 +674,12 @@ namespace Vaerydian.Screens
             }
 
             cs_SpriteBatch.End();
+
+            if (InputManager.YesScreenshot)
+            {
+                InputManager.YesScreenshot = false;
+                saveScreenShot(cs_SpriteBatch.GraphicsDevice);
+            }
         }
 
         /// <summary>
@@ -697,6 +709,7 @@ namespace Vaerydian.Screens
         }
 
         /// <summary>
+        /// 
         /// draws all the combatants
         /// </summary>
         private void drawCombatants()
@@ -716,6 +729,36 @@ namespace Vaerydian.Screens
                         null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
                 }
             }
+        }
+
+        /// <summary>
+        /// captures and saves the screen of the current graphics device
+        /// </summary>
+        /// <param name="graphicsDevice"></param>
+        public void saveScreenShot(GraphicsDevice graphicsDevice)
+        {
+            //setup a color buffer to get the back Buffer's data
+            Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
+
+            //place the back bugger data into the color buffer
+            graphicsDevice.GetBackBufferData<Color>(colors);
+
+            //setup the filestream for the screenshot
+            FileStream fs = new FileStream("screenshot.png", FileMode.Create);
+
+            //setup the texture that will be saved
+            Texture2D picTex = new Texture2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+
+            //set the texture's color data to that of the color buffer
+            picTex.SetData<Color>(colors);
+
+            //save the texture to a png image file
+            picTex.SaveAsPng(fs, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+
+            //close the file stream
+            fs.Close();
+
+            GC.Collect();
         }
 
         #endregion

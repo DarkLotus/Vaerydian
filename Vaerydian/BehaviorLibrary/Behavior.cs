@@ -63,6 +63,9 @@ namespace BehaviorLibrary
                     case BehaviorReturnCode.Running:
                         ReturnCode = BehaviorReturnCode.Running;
                         return ReturnCode;
+                    default:
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
@@ -70,10 +73,6 @@ namespace BehaviorLibrary
                 ReturnCode = BehaviorReturnCode.Failure;
                 return ReturnCode;
             }
-
-            ReturnCode = BehaviorReturnCode.Running;
-            return ReturnCode;
         }
-
     }
 }

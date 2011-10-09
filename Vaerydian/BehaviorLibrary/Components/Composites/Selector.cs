@@ -42,32 +42,32 @@ namespace BehaviorLibrary.Components.Composites
                     {
                         case BehaviorReturnCode.Failure:
                             selections++;
-                            this.ReturnCode = BehaviorReturnCode.Running;
-                            return BehaviorReturnCode.Running;
+                            ReturnCode = BehaviorReturnCode.Running;
+                            return ReturnCode;
                         case BehaviorReturnCode.Success:
                             selections = 0;
-                            this.ReturnCode = BehaviorReturnCode.Success;
-                            return BehaviorReturnCode.Success;
+                            ReturnCode = BehaviorReturnCode.Success;
+                            return ReturnCode;
                         case BehaviorReturnCode.Running:
-                            this.ReturnCode = BehaviorReturnCode.Running;
-                            return BehaviorReturnCode.Running;
+                            ReturnCode = BehaviorReturnCode.Running;
+                            return ReturnCode;
                         default:
                             selections++;
-                            this.ReturnCode = BehaviorReturnCode.Failure;
-                            return BehaviorReturnCode.Failure;
+                            ReturnCode = BehaviorReturnCode.Failure;
+                            return ReturnCode;
                     }
                 }
                 catch (Exception)
                 {
                     selections++;
-                    this.ReturnCode = BehaviorReturnCode.Failure;
-                    return BehaviorReturnCode.Failure;
+                    ReturnCode = BehaviorReturnCode.Failure;
+                    return ReturnCode;
                 }
             }
 
             selections = 0;
-            this.ReturnCode = BehaviorReturnCode.Failure;
-            return BehaviorReturnCode.Failure;
+            ReturnCode = BehaviorReturnCode.Failure;
+            return ReturnCode;
         }
 
 

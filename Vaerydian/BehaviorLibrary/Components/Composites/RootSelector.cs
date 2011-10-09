@@ -35,24 +35,23 @@ namespace BehaviorLibrary.Components.Composites
                 {
                     case BehaviorReturnCode.Failure:
                         ReturnCode = BehaviorReturnCode.Failure;
-                        return BehaviorReturnCode.Failure;
+                        return ReturnCode;
                     case BehaviorReturnCode.Success:
                         ReturnCode = BehaviorReturnCode.Success;
-                        return BehaviorReturnCode.Success;
+                        return ReturnCode;
                     case BehaviorReturnCode.Running:
                         ReturnCode = BehaviorReturnCode.Running;
-                        return BehaviorReturnCode.Running;
+                        return ReturnCode;
+                    default:
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
                 ReturnCode = BehaviorReturnCode.Failure;
-                return BehaviorReturnCode.Failure;
+                return ReturnCode;
             }
-
-            ReturnCode = BehaviorReturnCode.Running;
-            return BehaviorReturnCode.Running;
         }
-
     }
 }

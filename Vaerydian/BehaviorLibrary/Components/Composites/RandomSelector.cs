@@ -35,25 +35,24 @@ namespace BehaviorLibrary.Components.Composites
                 switch (r_Behaviors[r_Random.Next(0, r_Behaviors.Length - 1)].Behave())
                 {
                     case BehaviorReturnCode.Failure:
-                        this.ReturnCode = BehaviorReturnCode.Failure;
-                        return BehaviorReturnCode.Failure;
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                     case BehaviorReturnCode.Success:
-                        this.ReturnCode = BehaviorReturnCode.Success;
-                        return BehaviorReturnCode.Success;
+                        ReturnCode = BehaviorReturnCode.Success;
+                        return ReturnCode;
                     case BehaviorReturnCode.Running:
-                        this.ReturnCode = BehaviorReturnCode.Running;
-                        return BehaviorReturnCode.Running;
+                        ReturnCode = BehaviorReturnCode.Running;
+                        return ReturnCode;
+                    default:
+                        ReturnCode = BehaviorReturnCode.Failure;
+                        return ReturnCode;
                 }
             }
             catch (Exception)
             {
-                this.ReturnCode = BehaviorReturnCode.Failure;
-                return BehaviorReturnCode.Failure;
+                ReturnCode = BehaviorReturnCode.Failure;
+                return ReturnCode;
             }
-
-            this.ReturnCode = BehaviorReturnCode.Failure;
-            return BehaviorReturnCode.Failure;
         }
-
     }
 }
