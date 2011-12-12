@@ -146,6 +146,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Screens\CaveScreen.cs" />
     <Compile Include="Screens\CombatScreen.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenManager.cs" />

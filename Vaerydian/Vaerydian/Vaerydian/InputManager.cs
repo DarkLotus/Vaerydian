@@ -13,6 +13,8 @@ namespace Vaerydian
 
         private static KeyboardState im_currentKeyboardState;
         private static KeyboardState im_previousKeyboardState;
+        private static MouseState im_currentMouseState;
+        private static MouseState im_previousMouseState;
 
         private static bool im_yesExit = false;
 
@@ -34,6 +36,11 @@ namespace Vaerydian
             // update the keyboard state
             im_previousKeyboardState = im_currentKeyboardState;
             im_currentKeyboardState = Keyboard.GetState();
+
+            //update the mouse state
+            im_previousMouseState = im_currentMouseState;
+            im_currentMouseState = Mouse.GetState();
+
         }
 
         /// <summary>

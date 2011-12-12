@@ -85,7 +85,7 @@ namespace Vaerydian.Screens
                     //dispose of the menu
                     this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
                     //load the world screen
-                    LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
+                    LoadingScreen.Load(this.ScreenManager, true, new GameScreen());
                 }
                 else if (ss_TextMenu.MenuIndex == 1)//player wants to load a game
                 {

@@ -116,16 +116,18 @@ namespace Vaerydian.Screens
             cs_ActionWindowItems.Add("Items");//4
             cs_ActionWindowItems.Add("Flee");//5
             
-            //create the new window
+            //create the new Action window
             cs_ActionWindow = new TextMenuWindow(new Point(0, 400), cs_ActionWindowItems, "General");
             
-            //register the window
+            //register the Action window
             this.ScreenManager.WindowManager.addWindow(cs_ActionWindow);
 
+            //create the Battle Log Window
             cs_BattleLog = new DialogWindow("You Enter Combat!", 70, 9,
                 new Point(this.ScreenManager.GraphicsDevice.Viewport.Width / 2 - 300, this.ScreenManager.GraphicsDevice.Viewport.Height - 210),
                 new Point(600, 200));
 
+            //register the battle log
             this.ScreenManager.WindowManager.addWindow(cs_BattleLog);
 
             //initiate combat event

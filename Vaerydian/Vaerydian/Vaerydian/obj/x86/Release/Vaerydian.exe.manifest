@@ -117,14 +117,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="66560">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="67072">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>yh8F7eOQY9QQeNhaXPrnqnL//3o=</dsig:DigestValue>
+        <dsig:DigestValue>ehRHZC2cfO1xnf7DYPVZQSqbVEo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
