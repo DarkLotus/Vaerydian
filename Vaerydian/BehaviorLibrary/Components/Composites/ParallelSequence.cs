@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BehaviorLibrary.Components.Composites
 {
-    public class Parallel : BehaviorComponent
+    public class ParallelSequence : BehaviorComponent
     {
 
         private BehaviorComponent[] p_Behaviors;
@@ -17,7 +17,7 @@ namespace BehaviorLibrary.Components.Composites
         /// -Does not Return Running
         /// </summary>
         /// <param name="behaviors"></param>
-        public Parallel(params BehaviorComponent[] behaviors)
+        public ParallelSequence(params BehaviorComponent[] behaviors)
         {
             p_Behaviors = behaviors;
         }

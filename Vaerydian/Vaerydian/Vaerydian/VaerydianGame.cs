@@ -112,6 +112,8 @@ namespace Vaerydian
             // TODO: Add your update logic here
             InputManager.Update();
 
+            
+
             if (InputManager.yesExit)
                 this.Exit();
 
