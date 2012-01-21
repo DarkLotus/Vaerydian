@@ -1,7 +1,0 @@
-C:\workplace\Vaerydian\WorldGeneration\bin\x86\Release\WorldGeneration.dll
-C:\workplace\Vaerydian\WorldGeneration\bin\x86\Release\WorldGeneration.pdb
-C:\workplace\Vaerydian\WorldGeneration\bin\x86\Release\LibNoise.dll
-C:\workplace\Vaerydian\WorldGeneration\obj\x86\Release\ResolveAssemblyReference.cache
-C:\workplace\Vaerydian\WorldGeneration\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\workplace\Vaerydian\WorldGeneration\obj\x86\Release\WorldGeneration.dll
-C:\workplace\Vaerydian\WorldGeneration\obj\x86\Release\WorldGeneration.pdb

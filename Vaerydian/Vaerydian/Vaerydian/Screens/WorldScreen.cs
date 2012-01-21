@@ -28,7 +28,7 @@ namespace Vaerydian.Screens
         /// <summary>
         /// world engine reference
         /// </summary>
-        private WorldEngine ws_WorldEngine = WorldEngine.Instance;
+        //private WorldEngine ws_WorldEngine = WorldEngine.Instance;
 
         private Terrain ws_Terrain;
 
@@ -41,7 +41,7 @@ namespace Vaerydian.Screens
         {
             get
             {
-                return ws_WorldEngine.WorldGeneratorStatusMessage;
+                return "";// ws_WorldEngine.WorldGeneratorStatusMessage;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Vaerydian.Screens
 
             //ws_WorldEngine.createNewWorld();
 
-            ws_WorldEngine.Initialize();
+            //ws_WorldEngine.Initialize();
 
             UpdateView();
 
@@ -271,7 +271,7 @@ namespace Vaerydian.Screens
             {
                 for (int y = yStart; y <= yFinish; y++)
                 {
-                    ws_Terrain = ws_WorldEngine.getTerrain(x, y);
+                    //ws_Terrain = ws_WorldEngine.getTerrain(x, y);
 
                     if (ws_Terrain == null)
                         continue;

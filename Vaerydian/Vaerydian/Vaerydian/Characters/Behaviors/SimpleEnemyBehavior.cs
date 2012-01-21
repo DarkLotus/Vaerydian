@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using BehaviorLibrary;
 using BehaviorLibrary.Components.Composites;
 using BehaviorLibrary.Components.Actions;
 using BehaviorLibrary.Components.Conditionals;
 using BehaviorLibrary.Components.Decorators;
+
 using Vaerydian.Combat;
+
 using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Characters.Behaviors

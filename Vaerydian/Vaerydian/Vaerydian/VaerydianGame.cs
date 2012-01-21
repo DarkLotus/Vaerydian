@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -8,10 +10,15 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
 using Vaerydian.Screens;
 using Vaerydian.Windows;
 using Vaerydian.Maps;
-using System.IO;
+using Vaerydian.Systems;
+using Vaerydian.Components;
+using Vaerydian.Factories;
+
+using ECSFramework;
 
 namespace Vaerydian
 {
@@ -22,35 +29,32 @@ namespace Vaerydian
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        ScreenManager screenManager;
         FontManager fontManager = FontManager.Instance;
-        WindowManager windowManager;
-        MapEngine mapEngine = MapEngine.Instance;
+
+        GameContainer gameContainer = new GameContainer();
+
+        ECSInstance ecsInstance;
+
+        EntitySystem playerMovementSystem;
+        EntitySystem SpriteRenderSystem;
+
+        EntityFactory entityFactory;
 
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 640;
-            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 675;
+            graphics.PreferredBackBufferWidth = 1080;
 
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
-
-            // create and add the screen manager
-            screenManager = new ScreenManager(this);
-            Components.Add(screenManager);
-
-            //create and add the window manager
-            windowManager = new WindowManager(this);
-            Components.Add(windowManager);
-            screenManager.WindowManager = windowManager;
 
             Content.RootDirectory = "Content";
 
             //give the fontManager a reference to Content
             fontManager.ContentManager = this.Content;
-            //give the mapEngine a reference to content
-            MapEngine.Instance.ContentManager = this.Content;
+
+
         }
 
         /// <summary>
@@ -61,16 +65,23 @@ namespace Vaerydian
         /// </summary>
         protected override void Initialize()
         {
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            ecsInstance = new ECSInstance();
+
+            gameContainer.SpriteBatch = spriteBatch;
+            gameContainer.ContentManager = Content;
+
+            //load systems
+            playerMovementSystem = ecsInstance.SystemManager.setSystem(new PlayerInputSystem(), new Position(), new Velocity(), new Controllable());
+            SpriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
+
+            ecsInstance.SystemManager.initializeSystems();
+
+            entityFactory = new EntityFactory(ecsInstance);
+
             base.Initialize();
-            
-            // TODO: Add your initialization logic here
-            //a test screen
-            
-            //screenManager.addScreen(new WorldScreen());
-            LoadingScreen.Load(screenManager, false, new StartScreen());
-
-
-            
         }
 
         /// <summary>
@@ -80,11 +91,11 @@ namespace Vaerydian
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            //spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            entityFactory.createPlayer();
 
             // TODO: use this.Content to load your game content here
-            screenManager.SpriteBatch = spriteBatch;
-            windowManager.SpriteBatch = spriteBatch;
             fontManager.LoadContent();
         }
 
@@ -95,8 +106,6 @@ namespace Vaerydian
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            screenManager.Screens.Clear();
-            windowManager.Windows.Clear();
             fontManager.Fonts.Clear();
             GC.Collect();
         }
@@ -108,14 +117,15 @@ namespace Vaerydian
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (InputManager.yesExit)
+                this.Exit();
 
             // TODO: Add your update logic here
             InputManager.Update();
 
-            
+            ecsInstance.resolveEntities();
 
-            if (InputManager.yesExit)
-                this.Exit();
+            playerMovementSystem.process();
 
             base.Update(gameTime);
         }
@@ -129,6 +139,12 @@ namespace Vaerydian
             GraphicsDevice.Clear(Color.Gray);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            
+            SpriteRenderSystem.process();
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

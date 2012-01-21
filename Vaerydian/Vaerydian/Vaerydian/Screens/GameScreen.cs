@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Microsoft.Xna.Framework;
+
+using ECSFramework;
 
 namespace Vaerydian.Screens
 {
     class GameScreen : Screen
     {
+        private ECSInstance g_ECSInstance = new ECSInstance();
+        
 
         public override void Initialize()
         {
             base.Initialize();
+
+            //g_ECSInstance.SystemManager.setSystem(
+
+
         }
 
         public override void LoadContent()

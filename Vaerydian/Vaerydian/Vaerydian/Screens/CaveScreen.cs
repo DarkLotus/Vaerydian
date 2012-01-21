@@ -54,7 +54,7 @@ namespace Vaerydian.Screens
 
             cs_SpriteBatch = ScreenManager.SpriteBatch;
 
-            cs_CaveEngine.generateCave(100, 100, 42, 6, 0.5);// new Random().Next(0,1000), 5, 0.45);
+            cs_CaveEngine.generateCave(100, 100, new Random().Next(0,1000), 3, 0.5);
 
             cs_ViewPort.Dimensions = new Point(1024, 640);
 
@@ -88,6 +88,9 @@ namespace Vaerydian.Screens
             else if (InputManager.isKeyToggled(Keys.PrintScreen))
             {
                 InputManager.YesScreenshot = true;
+            }else if(InputManager.isKeyToggled(Keys.G))
+            {
+                cs_CaveEngine.generateCave(100, 100, new Random().Next(0, 1000), 3, 0.5);
             }
 
         }

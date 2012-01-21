@@ -75,6 +75,13 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BehaviorLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\projects\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ECSFramework">
+      <HintPath>..\..\..\..\projects\ECSFramework\ECSFramework\bin\x86\Release\ECSFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -121,6 +128,10 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
+    <Reference Include="WorldGeneration, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\projects\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Characters\Abilities\Ability.cs" />
@@ -133,7 +144,13 @@
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
+    <Compile Include="Components\Controllable.cs" />
+    <Compile Include="Components\Position.cs" />
+    <Compile Include="Components\Sprite.cs" />
+    <Compile Include="Components\Velocity.cs" />
+    <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="FontManager.cs" />
+    <Compile Include="GameContainer.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Items\Armor.cs" />
     <Compile Include="Items\Equipment.cs" />
@@ -154,6 +171,8 @@
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
     <Compile Include="Characters\Skills\Skill.cs" />
+    <Compile Include="Systems\PlayerInputSystem.cs" />
+    <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
@@ -167,14 +186,6 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BehaviorLibrary\BehaviorLibrary.csproj">
-      <Project>{0C4366EE-5D58-422A-9D34-09019B4D61CC}</Project>
-      <Name>BehaviorLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WorldGeneration\WorldGeneration.csproj">
-      <Project>{B0586C88-ED71-40F5-9FB5-98F549311A72}</Project>
-      <Name>WorldGeneration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VaerydianContent\VaerydianContent.contentproj">
       <Name>VaerydianContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

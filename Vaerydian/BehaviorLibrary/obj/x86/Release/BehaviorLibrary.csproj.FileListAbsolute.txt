@@ -1,6 +1,0 @@
-C:\workplace\Vaerydian\BehaviorLibrary\bin\x86\Release\BehaviorLibrary.dll
-C:\workplace\Vaerydian\BehaviorLibrary\bin\x86\Release\BehaviorLibrary.pdb
-C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Release\ResolveAssemblyReference.cache
-C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Release\BehaviorLibrary.dll
-C:\workplace\Vaerydian\BehaviorLibrary\obj\x86\Release\BehaviorLibrary.pdb

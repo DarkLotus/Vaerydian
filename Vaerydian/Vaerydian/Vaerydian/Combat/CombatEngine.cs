@@ -81,15 +81,15 @@ namespace Vaerydian.Combat
         /// <summary>
         /// terrain for this combat event
         /// </summary>
-        private Terrain[,] ce_Terrain = new Terrain[3, 3];
+        //private Terrain[,] ce_Terrain = new Terrain[3, 3];
         /// <summary>
         /// terrain for this combat event
         /// </summary>
-        public Terrain[,] Terrain
+        /*public Terrain[,] Terrain
         {
             get { return ce_Terrain; }
             set { ce_Terrain = value; }
-        }
+        }*/
 
         /// <summary>
         /// enemies in this combat event
@@ -224,7 +224,7 @@ namespace Vaerydian.Combat
             resetValues();
 
             //do combat setup here
-            ce_Terrain = terrain;
+            //ce_Terrain = terrain;
 
             //combat terrain dimensions
             ce_Dimensions = dimensions;
