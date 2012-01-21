@@ -13,7 +13,7 @@ namespace Vaerydian.Components
     {
 
         private static int s_TypeID;
-        private static int s_EntityID;
+        private int s_EntityID;
 
         private String s_TextureName;
 

@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using ECSFramework;
 
 namespace Vaerydian.Components
 {
-    public class Velocity : IComponent
+    class ViewPort : IComponent
     {
+
         private static int v_TypeID;
         private int v_EntityID;
 
-        private float v_Velocity;
+        private Vector2 v_Origin;
+        private Vector2 v_Dimensions;
 
-        public Velocity() { }
+        public ViewPort() { }
 
-        public Velocity(float velocity)
+        public ViewPort(Vector2 origin, Vector2 dimensions) 
         {
-            v_Velocity = velocity;
+            v_Origin = origin;
+            v_Dimensions = dimensions;
         }
 
         public int getEntityId()
@@ -31,9 +36,14 @@ namespace Vaerydian.Components
             return v_TypeID;
         }
 
-        public float getVelocity()
+        public Vector2 getOrigin()
         {
-            return v_Velocity;
+            return v_Origin;
+        }
+
+        public Vector2 getDimensions()
+        {
+            return v_Dimensions;
         }
 
         public void setEntityId(int entityId)
@@ -46,9 +56,14 @@ namespace Vaerydian.Components
             v_TypeID = typeId;
         }
 
-        public void setVelocity(float velocity)
+        public void setOrigin(Vector2 origin)
         {
-            v_Velocity = velocity;
+            v_Origin = origin;
+        }
+
+        public void setDimensions(Vector2 dimensions)
+        {
+            v_Dimensions = dimensions;
         }
     }
 }

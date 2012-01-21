@@ -12,7 +12,7 @@ namespace Vaerydian.Components
     public class Position : IComponent
     {
         private static int p_TypeID;
-        private static int p_EntityID;
+        private int p_EntityID;
 
         private Vector2 p_Position;
 

@@ -11,9 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using Vaerydian.Screens;
 using Vaerydian.Windows;
-using Vaerydian.Maps;
 using Vaerydian.Systems;
 using Vaerydian.Components;
 using Vaerydian.Factories;
@@ -27,24 +25,29 @@ namespace Vaerydian
     /// </summary>
     public class VaerydianGame : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        FontManager fontManager = FontManager.Instance;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private FontManager fontManager = FontManager.Instance;
 
-        GameContainer gameContainer = new GameContainer();
+        private GameContainer gameContainer = new GameContainer();
 
-        ECSInstance ecsInstance;
+        private ECSInstance ecsInstance;
 
-        EntitySystem playerMovementSystem;
-        EntitySystem SpriteRenderSystem;
+        private EntitySystem playerMovementSystem;
+        private EntitySystem spriteRenderSystem;
+        private EntitySystem cameraFocusSystem;
 
-        EntityFactory entityFactory;
+        private EntityFactory entityFactory;
+
+        private int avg, disp, elapsed;
 
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 675;
             graphics.PreferredBackBufferWidth = 1080;
+            graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = true;
 
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
@@ -53,7 +56,6 @@ namespace Vaerydian
 
             //give the fontManager a reference to Content
             fontManager.ContentManager = this.Content;
-
 
         }
 
@@ -75,7 +77,11 @@ namespace Vaerydian
 
             //load systems
             playerMovementSystem = ecsInstance.SystemManager.setSystem(new PlayerInputSystem(), new Position(), new Velocity(), new Controllable());
-            SpriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
+            spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
+            cameraFocusSystem = ecsInstance.SystemManager.setSystem(new CameraFocusSystem(), new CameraFocus(), new Position());
+            
+            //any additional component registration
+            ecsInstance.ComponentManager.registerComponentType(new ViewPort());
 
             ecsInstance.SystemManager.initializeSystems();
 
@@ -93,7 +99,10 @@ namespace Vaerydian
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            entityFactory.createBackground();
             entityFactory.createPlayer();
+            entityFactory.createCamera();
+            
 
             // TODO: use this.Content to load your game content here
             fontManager.LoadContent();
@@ -120,12 +129,26 @@ namespace Vaerydian
             if (InputManager.yesExit)
                 this.Exit();
 
-            // TODO: Add your update logic here
             InputManager.Update();
 
+            //calculate ms/s
+            elapsed += gameTime.ElapsedGameTime.Milliseconds;
+
+            avg = (avg + gameTime.ElapsedGameTime.Milliseconds) / 2;
+
+            if (elapsed > 1000)
+            {
+                disp = avg;
+                avg = 0;
+                elapsed = 0;
+            }
+
+            //update entities as needed
             ecsInstance.resolveEntities();
 
+            //run update systems
             playerMovementSystem.process();
+            cameraFocusSystem.process();
 
             base.Update(gameTime);
         }
@@ -142,7 +165,11 @@ namespace Vaerydian
 
             spriteBatch.Begin();
             
-            SpriteRenderSystem.process();
+            //run draw systems
+            spriteRenderSystem.process();
+
+            //display performance
+            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + disp, new Vector2(0), Color.Red);
 
             spriteBatch.End();
 

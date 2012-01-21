@@ -144,10 +144,12 @@
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
+    <Compile Include="Components\CameraFocus.cs" />
     <Compile Include="Components\Controllable.cs" />
     <Compile Include="Components\Position.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Components\Velocity.cs" />
+    <Compile Include="Components\ViewPort.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="FontManager.cs" />
     <Compile Include="GameContainer.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
     <Compile Include="Characters\Skills\Skill.cs" />
+    <Compile Include="Systems\CameraFocusSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
