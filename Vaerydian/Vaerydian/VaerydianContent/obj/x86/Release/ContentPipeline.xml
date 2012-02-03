@@ -289,6 +289,15 @@
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\enemy.xnb</Output>
       <Time>2011-08-07T16:42:59.5342883-04:00</Time>
     </Item>
+    <Item>
+      <Source>reticle.bmp</Source>
+      <Name>reticle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\reticle.xnb</Output>
+      <Time>2012-01-23T21:52:23.3797303-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -10,6 +10,7 @@ using BehaviorLibrary.Components.Conditionals;
 using BehaviorLibrary.Components.Decorators;
 
 using Vaerydian.Combat;
+using Vaerydian.Behaviors;
 
 using Microsoft.Xna.Framework;
 

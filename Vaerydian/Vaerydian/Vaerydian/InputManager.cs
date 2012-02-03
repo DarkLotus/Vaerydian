@@ -11,17 +11,17 @@ namespace Vaerydian
     {
 
 
-        private static KeyboardState im_currentKeyboardState;
-        private static KeyboardState im_previousKeyboardState;
-        private static MouseState im_currentMouseState;
-        private static MouseState im_previousMouseState;
+        private static KeyboardState i_currentKeyboardState;
+        private static KeyboardState i_previousKeyboardState;
+        private static MouseState i_currentMouseState;
+        private static MouseState i_previousMouseState;
 
-        private static bool im_yesExit = false;
+        private static bool i_yesExit = false;
 
         /// <summary>
         /// checked on next "go around" if true, game will exit
         /// </summary>
-        public static bool yesExit { get { return im_yesExit; } set { im_yesExit = value; } }
+        public static bool YesExit { get { return i_yesExit; } set { i_yesExit = value; } }
 
         private static bool im_YesScreenshot = false;
 
@@ -34,12 +34,12 @@ namespace Vaerydian
         public static void Update()
         {
             // update the keyboard state
-            im_previousKeyboardState = im_currentKeyboardState;
-            im_currentKeyboardState = Keyboard.GetState();
+            i_previousKeyboardState = i_currentKeyboardState;
+            i_currentKeyboardState = Keyboard.GetState();
 
             //update the mouse state
-            im_previousMouseState = im_currentMouseState;
-            im_currentMouseState = Mouse.GetState();
+            i_previousMouseState = i_currentMouseState;
+            i_currentMouseState = Mouse.GetState();
 
         }
 
@@ -50,7 +50,7 @@ namespace Vaerydian
         /// <returns>true if pressed otherwise false</returns>
         public static bool isKeyPressed(Keys key)
         {
-            return im_currentKeyboardState.IsKeyDown(key);
+            return i_currentKeyboardState.IsKeyDown(key);
         }
 
         /// <summary>
@@ -60,9 +60,13 @@ namespace Vaerydian
         /// <returns>true if just toggled otherwise false</returns>
         public static bool isKeyToggled(Keys key)
         {
-            return (im_currentKeyboardState.IsKeyDown(key) && !im_previousKeyboardState.IsKeyDown(key));
+            return (i_currentKeyboardState.IsKeyDown(key) && !i_previousKeyboardState.IsKeyDown(key));
         }
 
+        public static Vector2 getMousePosition()
+        {
+            return new Vector2(i_currentMouseState.X, i_currentMouseState.Y);
+        }
         
     }
 }

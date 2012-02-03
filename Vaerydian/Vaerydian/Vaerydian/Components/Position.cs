@@ -16,9 +16,11 @@ namespace Vaerydian.Components
 
         private Vector2 p_Position;
 
+        private Vector2 p_Offset;
+
         public Position() { }
 
-        public Position(Vector2 position)
+        public Position(Vector2 position, Vector2 offset)
         {
             p_Position = position;
         }
@@ -38,6 +40,11 @@ namespace Vaerydian.Components
             return p_Position;
         }
 
+        public Vector2 getOffset()
+        {
+            return p_Offset;
+        }
+
         public void setEntityId(int entityId)
         {
             p_EntityID = entityId;
@@ -51,6 +58,11 @@ namespace Vaerydian.Components
         public void setPosition(Vector2 position)
         {
             p_Position = position;
+        }
+
+        public void setOffset(Vector2 offset) 
+        {
+            p_Offset = offset;
         }
     }
 }

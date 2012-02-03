@@ -6,7 +6,7 @@ using System.Text;
 
 using BehaviorLibrary;
 
-namespace Vaerydian.Characters.Behaviors
+namespace Vaerydian.Behaviors
 {
     public abstract class CharacterBehavior
     {

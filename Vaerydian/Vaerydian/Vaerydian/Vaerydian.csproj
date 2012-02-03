@@ -134,9 +134,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\SimpleFollowBehavior.cs" />
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Animation\Animation.cs" />
-    <Compile Include="Characters\Behaviors\CharacterBehavior.cs" />
+    <Compile Include="Behaviors\CharacterBehavior.cs" />
     <Compile Include="Characters\Behaviors\SimpleEnemyBehavior.cs" />
     <Compile Include="Characters\Stats\Stat.cs" />
     <Compile Include="Characters\Behaviors\OldBehavior.cs" />
@@ -144,8 +145,13 @@
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
+    <Compile Include="Components\AiBehavior.cs" />
     <Compile Include="Components\CameraFocus.cs" />
+    <Compile Include="Components\CaveMap.cs" />
     <Compile Include="Components\Controllable.cs" />
+    <Compile Include="Components\Heading.cs" />
+    <Compile Include="Components\MapCollidable.cs" />
+    <Compile Include="Components\MousePosition.cs" />
     <Compile Include="Components\Position.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Components\Velocity.cs" />
@@ -173,7 +179,11 @@
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
     <Compile Include="Characters\Skills\Skill.cs" />
+    <Compile Include="Systems\BehaviorSystem.cs" />
     <Compile Include="Systems\CameraFocusSystem.cs" />
+    <Compile Include="Systems\CaveMapSystem.cs" />
+    <Compile Include="Systems\MapCollisionSystem.cs" />
+    <Compile Include="Systems\MousePointerSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />

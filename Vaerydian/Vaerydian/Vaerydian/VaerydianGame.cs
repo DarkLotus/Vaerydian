@@ -33,9 +33,16 @@ namespace Vaerydian
 
         private ECSInstance ecsInstance;
 
+        //update systems
         private EntitySystem playerMovementSystem;
-        private EntitySystem spriteRenderSystem;
         private EntitySystem cameraFocusSystem;
+        private EntitySystem mousePointerSystem;
+        private EntitySystem behaviorSystem;
+        private EntitySystem mapCollisionSystem;
+
+        //draw systems
+        private EntitySystem spriteRenderSystem;
+        private EntitySystem caveMapSystem;
 
         private EntityFactory entityFactory;
 
@@ -75,16 +82,27 @@ namespace Vaerydian
             gameContainer.SpriteBatch = spriteBatch;
             gameContainer.ContentManager = Content;
 
-            //load systems
+            //create & register systems
+            //register update systems
             playerMovementSystem = ecsInstance.SystemManager.setSystem(new PlayerInputSystem(), new Position(), new Velocity(), new Controllable());
-            spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
             cameraFocusSystem = ecsInstance.SystemManager.setSystem(new CameraFocusSystem(), new CameraFocus(), new Position());
+            mousePointerSystem = ecsInstance.SystemManager.setSystem(new MousePointerSystem(), new Position(), new MousePosition());
+            behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
+            mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
+            //register render systems
+            spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
+            caveMapSystem = ecsInstance.SystemManager.setSystem(new CaveMapSystem(gameContainer), new CaveMap());
             
+
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
+            ecsInstance.ComponentManager.registerComponentType(new MousePosition());
+            ecsInstance.ComponentManager.registerComponentType(new Heading());
 
+            //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
 
+            //create the entity factory
             entityFactory = new EntityFactory(ecsInstance);
 
             base.Initialize();
@@ -99,13 +117,28 @@ namespace Vaerydian
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            entityFactory.createBackground();
+            //load early entities
+            //entityFactory.createBackground();
             entityFactory.createPlayer();
             entityFactory.createCamera();
-            
+            entityFactory.createMousePointer();
+            entityFactory.createFollower(new Vector2(50,150), ecsInstance.TagManager.getEntityByTag("PLAYER"),50);
+            entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
+            entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
+            entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
 
-            // TODO: use this.Content to load your game content here
+            //create cave
+            entityFactory.createCave();
+
+            //load fonts
             fontManager.LoadContent();
+            
+            //early entity reslove
+            ecsInstance.resolveEntities();
+
+            //load system content
+            ecsInstance.SystemManager.systemsLoadContent();
+            
         }
 
         /// <summary>
@@ -126,10 +159,14 @@ namespace Vaerydian
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (InputManager.yesExit)
+            //update all input
+            InputManager.Update();
+
+            if (InputManager.YesExit)
                 this.Exit();
 
-            InputManager.Update();
+            if (InputManager.isKeyToggled(Keys.PrintScreen))
+                InputManager.YesScreenshot = true;
 
             //calculate ms/s
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
@@ -143,12 +180,20 @@ namespace Vaerydian
                 elapsed = 0;
             }
 
-            //update entities as needed
+            //update time
+            ecsInstance.TotalTime = gameTime.TotalGameTime.Milliseconds;
+            ecsInstance.ElapsedTime = gameTime.ElapsedGameTime.Milliseconds;
+
+            //resolve any entity updates as needed
             ecsInstance.resolveEntities();
 
-            //run update systems
+            //process systems
             playerMovementSystem.process();
             cameraFocusSystem.process();
+            mousePointerSystem.process();
+            behaviorSystem.process();
+
+            mapCollisionSystem.process();
 
             base.Update(gameTime);
         }
@@ -161,22 +206,57 @@ namespace Vaerydian
         {
             GraphicsDevice.Clear(Color.Gray);
 
-            // TODO: Add your drawing code here
-
+            //begin the sprite batch
             spriteBatch.Begin();
             
             //run draw systems
+            caveMapSystem.process();
             spriteRenderSystem.process();
 
             //display performance
             spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + disp, new Vector2(0), Color.Red);
 
+            //end sprite batch
             spriteBatch.End();
+
+            if (InputManager.YesScreenshot)
+            {
+                saveScreenShot(GraphicsDevice);
+                InputManager.YesScreenshot = false;
+            }
 
             base.Draw(gameTime);
         }
 
 
-        
+        /// <summary>
+        /// captures and saves the screen of the current graphics device
+        /// </summary>
+        /// <param name="graphicsDevice"></param>
+        public void saveScreenShot(GraphicsDevice graphicsDevice)
+        {
+            //setup a color buffer to get the back Buffer's data
+            Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
+
+            //place the back bugger data into the color buffer
+            graphicsDevice.GetBackBufferData<Color>(colors);
+
+            //setup the filestream for the screenshot
+            FileStream fs = new FileStream("screenshot.png", FileMode.Create);
+
+            //setup the texture that will be saved
+            Texture2D picTex = new Texture2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+
+            //set the texture's color data to that of the color buffer
+            picTex.SetData<Color>(colors);
+
+            //save the texture to a png image file
+            picTex.SaveAsPng(fs, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+
+            //close the file stream
+            fs.Close();
+
+            GC.Collect();
+        }
     }
 }

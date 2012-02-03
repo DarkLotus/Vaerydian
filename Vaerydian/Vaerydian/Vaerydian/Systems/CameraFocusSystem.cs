@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 using ECSFramework;
+using ECSFramework.Utils;
 
 using Vaerydian.Components;
 
@@ -16,8 +17,9 @@ namespace Vaerydian.Systems
 
         private ComponentMapper c_PositionMapper;
         private ComponentMapper c_CameraFocusMapper;
-        private ComponentMapper c_VelocityMapper;
         private ComponentMapper c_ViewportMapper;
+
+        private Entity c_Camera;
 
         public CameraFocusSystem() : base() { }
 
@@ -25,19 +27,19 @@ namespace Vaerydian.Systems
         {
             c_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             c_CameraFocusMapper = new ComponentMapper(new CameraFocus(), e_ECSInstance);
-            c_VelocityMapper = new ComponentMapper(new Velocity(), e_ECSInstance);
             c_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
+        }
+
+        protected override void preLoadContent(Bag<Entity> entities)
+        {
+            c_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
 
         protected override void process(Entity entity)
         {
             Position focusPosition = (Position) c_PositionMapper.get(entity);
             CameraFocus focus = (CameraFocus) c_CameraFocusMapper.get(entity);
-            
-            Entity camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
-
-            ViewPort cameraView = (ViewPort) c_ViewportMapper.get(camera);
-            Velocity cameraVelocity = (Velocity) c_VelocityMapper.get(camera);
+            ViewPort cameraView = (ViewPort)c_ViewportMapper.get(c_Camera);
 
             Vector2 cPos = cameraView.getOrigin();
             Vector2 fPos = focusPosition.getPosition();
@@ -47,9 +49,9 @@ namespace Vaerydian.Systems
 
             if (dist > radius)
             {
-                Vector2 vec = new Vector2(fPos.X - cPos.X, fPos.Y - cPos.Y);
+                Vector2 vec = Vector2.Subtract(fPos, cPos);
                 vec.Normalize();
-                //cPos += Vector2.Multiply(vec,cameraVelocity.getVelocity()*1.414f);
+
                 cPos += Vector2.Multiply(vec, dist - radius);
 
                 cameraView.setOrigin(cPos);

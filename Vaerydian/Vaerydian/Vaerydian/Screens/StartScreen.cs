@@ -96,7 +96,7 @@ namespace Vaerydian.Screens
                 else if (ss_TextMenu.MenuIndex == 3)//player wants to quit
                 {
                     //tell the input manager that the player wants to quit
-                    InputManager.yesExit = true;
+                    InputManager.YesExit = true;
                 }
                 else if (ss_TextMenu.MenuIndex == 4)
                 {

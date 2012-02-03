@@ -100,19 +100,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>tp9XSqvweqaqrUh5XNPnRjXSCOQ=</dsig:DigestValue>
+        <dsig:DigestValue>F7A9S5uttYq1KLPTGKxs+4t8R6A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ECSFramework.dll" size="13312">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ECSFramework.dll" size="13824">
       <assemblyIdentity name="ECSFramework" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>80YIyvErb9JBKCwYZNM6SB05M3Y=</dsig:DigestValue>
+        <dsig:DigestValue>jJNzMUzEb1HNTyniez85P2a0qdM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -129,14 +129,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="72704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="82944">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JljucG6bMOBMNX9sB5/xTxL2K2o=</dsig:DigestValue>
+        <dsig:DigestValue>707E9LyAgvKYCrW0rGXJdlCZS3Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -148,7 +148,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>/k7qz63ChSgnpANAqFK7fr8+w9U=</dsig:DigestValue>
+        <dsig:DigestValue>iGdvItncvMNeD1B6UUvu/DhyX1Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -240,6 +240,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>oZipPNWzpFVyubUKE6VtVaK5j4U=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\reticle.xnb" size="292">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>//RBOeyO4lhcu6I2ne1QZZhpLaw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\StartScreen.xnb" size="10082">
