@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+
 using Microsoft.Xna.Framework;
-using WorldGeneration.Cave;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.IO;
+
+using WorldGeneration.Cave;
+using WorldGeneration.Utils;
+
+
 
 namespace Vaerydian.Screens
 {
@@ -29,7 +34,7 @@ namespace Vaerydian.Screens
 
         private CaveEngine cs_CaveEngine = new CaveEngine();
 
-        private CaveTerrain cs_CaveTerrain;
+        private Terrain cs_CaveTerrain;
 
         /// <summary>
         /// list of usuable textures
@@ -138,7 +143,7 @@ namespace Vaerydian.Screens
                     if (cs_CaveTerrain == null)
                         continue;
 
-                    if (cs_CaveTerrain.BaseCaveType == CaveType.Floor)
+                    if (cs_CaveTerrain.TerrainType == TerrainType.CAVE_FLOOR)
                     {
                         cs_SpriteBatch.Draw(textures[0], new Vector2((x * cs_TileSize), (y * cs_TileSize)),
                                 null, Color.White, 0.0f, new Vector2(cs_ViewPort.Origin.X, cs_ViewPort.Origin.Y), new Vector2(1f),

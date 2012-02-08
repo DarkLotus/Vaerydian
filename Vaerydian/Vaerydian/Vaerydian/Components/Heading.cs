@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Components
 {
-    class Heading : IComponent
+    public class Heading : IComponent
     {
         private static int h_TypeID;
         private int h_EntityID;

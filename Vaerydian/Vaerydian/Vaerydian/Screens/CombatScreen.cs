@@ -771,10 +771,10 @@ namespace Vaerydian.Screens
         /// generates the 3x3 terrain tiles
         /// </summary>
         /// <returns></returns>
-        private Terrain[,] getTestTerrainArray(int size)
+        private WorldTerrain[,] getTestTerrainArray(int size)
         {
-            Terrain[,] terrain = new Terrain[size, size];
-            Terrain tempTerrain = new Terrain();
+            WorldTerrain[,] terrain = new WorldTerrain[size, size];
+            WorldTerrain tempTerrain = new WorldTerrain();
 
             for (int i = 0; i < size; i++)
             {

@@ -75,6 +75,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AStarPathFinder">
+      <HintPath>..\..\..\..\projects\AStarPathFinder-source\AStarPathFinder\Core\Bin\Release\AStarPathFinder.dll</HintPath>
+    </Reference>
     <Reference Include="BehaviorLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\projects\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
@@ -134,6 +137,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\Actions\FindPathAction.cs" />
     <Compile Include="Behaviors\SimpleFollowBehavior.cs" />
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Animation\Animation.cs" />
@@ -147,7 +151,8 @@
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
     <Compile Include="Components\AiBehavior.cs" />
     <Compile Include="Components\CameraFocus.cs" />
-    <Compile Include="Components\CaveMap.cs" />
+    <Compile Include="Components\Debug\MapDebug.cs" />
+    <Compile Include="Components\GameMap.cs" />
     <Compile Include="Components\Controllable.cs" />
     <Compile Include="Components\Heading.cs" />
     <Compile Include="Components\MapCollidable.cs" />
@@ -181,12 +186,13 @@
     <Compile Include="Characters\Skills\Skill.cs" />
     <Compile Include="Systems\BehaviorSystem.cs" />
     <Compile Include="Systems\CameraFocusSystem.cs" />
-    <Compile Include="Systems\CaveMapSystem.cs" />
+    <Compile Include="Systems\MapSystem.cs" />
     <Compile Include="Systems\MapCollisionSystem.cs" />
     <Compile Include="Systems\MousePointerSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
+    <Compile Include="Utils\ASharpPathing.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
     <Compile Include="Windows\TextMenuWindow.cs" />

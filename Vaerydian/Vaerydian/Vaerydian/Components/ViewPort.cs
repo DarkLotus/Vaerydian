@@ -9,7 +9,7 @@ using ECSFramework;
 
 namespace Vaerydian.Components
 {
-    class ViewPort : IComponent
+    public class ViewPort : IComponent
     {
 
         private static int v_TypeID;

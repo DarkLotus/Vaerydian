@@ -93,6 +93,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AStarPathFinder.dll" size="19456">
+      <assemblyIdentity name="AStarPathFinder" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>olfa9LUbvaFyW6Qb3aVQ1TtDr0A=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BehaviorLibrary.dll" size="7680">
       <assemblyIdentity name="BehaviorLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -100,7 +112,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>F7A9S5uttYq1KLPTGKxs+4t8R6A=</dsig:DigestValue>
+        <dsig:DigestValue>qfMpI4Fpybvsp8tzTAWGYTwVe6g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -129,26 +141,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="82944">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="92672">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>707E9LyAgvKYCrW0rGXJdlCZS3Q=</dsig:DigestValue>
+        <dsig:DigestValue>FBKv6SLNgRLn7+7eDxQjmMccEgw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WorldGeneration.dll" size="21504">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WorldGeneration.dll" size="22528">
       <assemblyIdentity name="WorldGeneration" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>iGdvItncvMNeD1B6UUvu/DhyX1Y=</dsig:DigestValue>
+        <dsig:DigestValue>iZtAh2Cp64Pwbhxz56evDl6eAW4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -218,7 +218,7 @@ namespace Vaerydian.Combat
         /// <param name="terrain">3x3 Terrain that combat will take place on</param>
         /// <param name="player">Current Player Character</param>
         /// <param name="combatants">Enemies player will be fighting</param>
-        public void newCombatEvent(Terrain[,] terrain, int dimensions, Character player, List<Character> combatants)
+        public void newCombatEvent(WorldTerrain[,] terrain, int dimensions, Character player, List<Character> combatants)
         {
             //clear old info
             resetValues();

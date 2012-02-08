@@ -14,7 +14,9 @@ using Microsoft.Xna.Framework.Media;
 using Vaerydian.Windows;
 using Vaerydian.Systems;
 using Vaerydian.Components;
+using Vaerydian.Components.Debug;
 using Vaerydian.Factories;
+
 
 using ECSFramework;
 
@@ -91,13 +93,14 @@ namespace Vaerydian
             mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
             //register render systems
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
-            caveMapSystem = ecsInstance.SystemManager.setSystem(new CaveMapSystem(gameContainer), new CaveMap());
+            caveMapSystem = ecsInstance.SystemManager.setSystem(new MapSystem(gameContainer), new GameMap());
             
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
             ecsInstance.ComponentManager.registerComponentType(new MousePosition());
             ecsInstance.ComponentManager.registerComponentType(new Heading());
+            ecsInstance.ComponentManager.registerComponentType(new MapDebug());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -122,13 +125,18 @@ namespace Vaerydian
             entityFactory.createPlayer();
             entityFactory.createCamera();
             entityFactory.createMousePointer();
-            entityFactory.createFollower(new Vector2(50,150), ecsInstance.TagManager.getEntityByTag("PLAYER"),50);
-            entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
-            entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
-            entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
+
+            entityFactory.createFollower(new Vector2(500, 370), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
+            //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
+            //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
+            //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
 
             //create cave
-            entityFactory.createCave();
+            //entityFactory.createCave();
+            entityFactory.CreateTestMap();
+
+            //create map debug
+            entityFactory.createMapDebug();
 
             //load fonts
             fontManager.LoadContent();

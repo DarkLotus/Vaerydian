@@ -8,7 +8,7 @@ using ECSFramework.Utils;
 
 using Microsoft.Xna.Framework;
 
-using WorldGeneration.Cave;
+using WorldGeneration.Utils;
 
 using Vaerydian.Components;
 
@@ -20,7 +20,7 @@ namespace Vaerydian.Systems
         private Entity m_Camera;
         private ComponentMapper m_PositionMapper;
         private ComponentMapper m_VelocityMapper;
-        private ComponentMapper m_CaveMapper;
+        private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewPortMapper;
         private ComponentMapper m_HeadingMapper;
         private int m_TileSize = 25;
@@ -33,7 +33,7 @@ namespace Vaerydian.Systems
         {
             m_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             m_VelocityMapper = new ComponentMapper(new Velocity(), e_ECSInstance);
-            m_CaveMapper = new ComponentMapper(new CaveMap(), e_ECSInstance);
+            m_GameMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             m_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
         }
@@ -90,8 +90,8 @@ namespace Vaerydian.Systems
             List<Vector2> tiles = new List<Vector2>();
 
             //get the tile map 
-            CaveMap cave = (CaveMap) m_CaveMapper.get(m_Map);
-            CaveTerrain ct;
+            GameMap map = (GameMap) m_GameMapMapper.get(m_Map);
+            Terrain terrain;
             
             //check each test point on A for a coresponding tile
             for (int i = 0; i < A.TestPoints.Length; i++)
@@ -101,14 +101,14 @@ namespace Vaerydian.Systems
                 y = (int)((A.TestPoints[i].Y + m_Center.Y) / m_TileSize);
 
                 //get a potential colliding tile
-                ct = cave.Cave.getTerrain(x, y);
+                terrain = map.getTerrain(x, y);
 
                 //ensure we have something usefull
-                if (ct == null)
+                if (terrain == null)
                     continue;
 
                 //if tile isnt blocking, then there is no issue, try getting another
-                if (!ct.IsBlocking)
+                if (!terrain.IsBlocking)
                     continue;
 
                 //make sure we didnt get this one already

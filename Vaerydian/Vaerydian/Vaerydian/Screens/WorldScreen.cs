@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+
 using Vaerydian.Maps;
 using Vaerydian.Windows;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+
 using WorldGeneration.World;
-using System.IO;
+
 
 namespace Vaerydian.Screens
 {
@@ -30,7 +34,7 @@ namespace Vaerydian.Screens
         /// </summary>
         //private WorldEngine ws_WorldEngine = WorldEngine.Instance;
 
-        private Terrain ws_Terrain;
+        private WorldTerrain ws_Terrain;
 
         /// <summary>
         /// local SpriteBatch copy
@@ -307,7 +311,7 @@ namespace Vaerydian.Screens
         /// </summary>
         /// <param name="terrain">terrain to get the texture for</param>
         /// <returns></returns>
-        private int getBaseTexture(Terrain terrain)
+        private int getBaseTexture(WorldTerrain terrain)
         {
             switch (terrain.BaseTerrainType)
             {

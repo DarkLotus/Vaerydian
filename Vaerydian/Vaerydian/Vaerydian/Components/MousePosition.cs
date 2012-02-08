@@ -7,7 +7,7 @@ using ECSFramework;
 
 namespace Vaerydian.Components
 {
-    class MousePosition : IComponent
+    public class MousePosition : IComponent
     {
         private static int m_TypeID;
         private int m_EntityID;

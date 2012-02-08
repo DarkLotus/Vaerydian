@@ -255,7 +255,7 @@ namespace Vaerydian.Maps
         {
             spriteBatch.Begin();
 
-            Terrain terrain;
+            WorldTerrain terrain;
 
             //iterate through the viewable indexes and draw the tiles
             for (int x = xStart; x <= xFinish; x++)
@@ -332,7 +332,7 @@ namespace Vaerydian.Maps
         /// </summary>
         /// <param name="terrain">terrain to get the texture for</param>
         /// <returns></returns>
-        private int getBaseTexture(Terrain terrain)
+        private int getBaseTexture(WorldTerrain terrain)
         {
             switch (terrain.BaseTerrainType)
             {
