@@ -154,7 +154,9 @@
     <Compile Include="Components\Debug\MapDebug.cs" />
     <Compile Include="Components\GameMap.cs" />
     <Compile Include="Components\Controllable.cs" />
+    <Compile Include="Components\GeometryMap.cs" />
     <Compile Include="Components\Heading.cs" />
+    <Compile Include="Components\Light.cs" />
     <Compile Include="Components\MapCollidable.cs" />
     <Compile Include="Components\MousePosition.cs" />
     <Compile Include="Components\Position.cs" />
@@ -186,10 +188,14 @@
     <Compile Include="Characters\Skills\Skill.cs" />
     <Compile Include="Systems\BehaviorSystem.cs" />
     <Compile Include="Systems\CameraFocusSystem.cs" />
+    <Compile Include="Systems\DeferredSystem.cs" />
+    <Compile Include="Systems\MapNormalSystem.cs" />
     <Compile Include="Systems\MapSystem.cs" />
     <Compile Include="Systems\MapCollisionSystem.cs" />
     <Compile Include="Systems\MousePointerSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
+    <Compile Include="Systems\ShadingSystem.cs" />
+    <Compile Include="Systems\SpriteNormalSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="Utils\ASharpPathing.cs" />

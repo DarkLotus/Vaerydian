@@ -31,5 +31,14 @@ namespace Vaerydian
             set { g_SpriteBatch = value; }
         }
 
+        private GraphicsDevice g_GraphicsDevice;
+
+        public GraphicsDevice GraphicsDevice
+        {
+            get { return g_GraphicsDevice; }
+            set { g_GraphicsDevice = value; }
+        }
+
+
     }
 }

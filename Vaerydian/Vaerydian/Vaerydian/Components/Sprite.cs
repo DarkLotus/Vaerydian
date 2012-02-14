@@ -19,9 +19,10 @@ namespace Vaerydian.Components
 
         public Sprite() { }
 
-        public Sprite(String textureName)
+        public Sprite(String textureName, String normalName)
         {
             s_TextureName = textureName;
+            s_NormalName = normalName;
         }
 
         public int getEntityId()
@@ -54,5 +55,12 @@ namespace Vaerydian.Components
             s_TextureName = textureName;
         }
 
+        private String s_NormalName;
+
+        public String NormalName
+        {
+            get { return s_NormalName; }
+            set { s_NormalName = value; }
+        }
     }
 }

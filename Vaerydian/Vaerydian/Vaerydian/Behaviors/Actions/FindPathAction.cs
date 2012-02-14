@@ -79,5 +79,10 @@ namespace Vaerydian.Behaviors.Actions
             return f_Pathing.Failed;
         }
 
+        public void reset(Vector2 start, Vector2 finish, GameMap map)
+        {
+            f_Pathing.reset(start, finish, map);
+        }
+
     }
 }

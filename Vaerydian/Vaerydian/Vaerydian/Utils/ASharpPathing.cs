@@ -50,11 +50,9 @@ namespace Vaerydian.Utils
             set { a_BlockingSet = value; }
         }
 
-        
-
         private int linCost = 10;
         private int diaCost = 14;
-        private int a_MaxLoops = 40;
+        private int a_MaxLoops = 60;
 
         private bool a_Failed = false;
 
@@ -343,7 +341,7 @@ namespace Vaerydian.Utils
 
                     //check to see if we already have this one on an open list
                     int pos = contains(newCell, a_OpenSet);
-                    /*if (pos >= 0)
+                    if (pos >= 0)
                     {
                         Cell temp = a_OpenSet[pos];
                         
@@ -364,7 +362,7 @@ namespace Vaerydian.Utils
                         }
                         else
                             continue;
-                    }*/
+                    }
 
                     //add its location to the list as a good candidate
                     goodAdjacents.Add(newCell);
@@ -423,6 +421,48 @@ namespace Vaerydian.Utils
             if (terrain.IsBlocking)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// reset
+        /// </summary>
+        /// <param name="start">starting point</param>
+        /// <param name="finish">ending point</param>
+        /// <param name="map">map to path through</param>
+        public void reset(Vector2 start, Vector2 finish, GameMap map)
+        {
+            reset();
+            
+            a_GameMap = map;
+            a_Start = start;
+            a_Finish = finish;
+            a_StartCell = createCell((int)start.X, (int)start.Y);
+            a_FinishCell = createCell((int)finish.X, (int)finish.Y);
+
+            a_OpenSet.Add(a_StartCell);
+
+            List<Cell> temp = findAdjacentCells(a_StartCell);
+            for (int i = 0; i < temp.Count; i++)
+            {
+                a_OpenSet.Add(temp[i]);
+            }
+
+            a_OpenSet.Remove(a_StartCell);
+            a_ClosedSet.Add(a_StartCell);
+        }
+
+        /// <summary>
+        /// resets all lists and flags
+        /// </summary>
+        private void reset()
+        {
+            a_OpenSet.Clear();
+            a_ClosedSet.Clear();
+            a_BlockingSet.Clear();
+            
+
+            a_Failed = false;
+            a_IsFound = false;
         }
 
     }

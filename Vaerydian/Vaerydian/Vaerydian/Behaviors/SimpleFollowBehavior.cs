@@ -63,6 +63,7 @@ namespace Vaerydian.Behaviors
         private BehaviorAction setPath;
         private BehaviorAction getPath;
         private BehaviorAction updatePosition;
+        private BehaviorAction reset;
 
         private ComponentMapper s_PositionMapper;
         private ComponentMapper s_VelocityMapper;
@@ -97,7 +98,6 @@ namespace Vaerydian.Behaviors
             tooClose = new Conditional(isTooClose);
             targetMoved = new Conditional(hasTargetMoved);
             pathFound = new Conditional(hasPathBeenFound);
-            pathFailed = new Conditional(hasPathFailed);
             reachedCell = new Conditional(hasReachedCell);
             reachedTarget = new Conditional(hasReachedTarget);
             isNewPath = new Conditional(hasNewPath);
@@ -109,19 +109,20 @@ namespace Vaerydian.Behaviors
             setPath = new BehaviorAction(setNewPath);
             getPath = new BehaviorAction(getCurrentPath);
             updatePosition = new BehaviorAction(updateTargetPosision);
+            reset = new BehaviorAction(resetPathfinder);
 
             ParallelSequence pSeqA = new ParallelSequence(initPathfinder, calcPath);
 
-            ParallelSelector pSelA = new ParallelSelector(new Inverter(targetMoved), calcPath);
+            ParallelSelector pSelA = new ParallelSelector(new Inverter(targetMoved), new Inverter(reset), calcPath);
             ParallelSelector pSelB = new ParallelSelector(new Inverter(pathFound), getPath);
             ParallelSelector pSelC = new ParallelSelector(new Inverter(isNewPath), setPath);
             ParallelSelector pSelD = new ParallelSelector(new Inverter(reachedCell), getNextCell);
             ParallelSelector pSelE = new ParallelSelector(reachedTarget, moveToCell);
 
-            ParallelSequence pSeqC = new ParallelSequence(new Inverter(tooClose),updatePosition, pSelA, pSelB, pSelC, pSelD, pSelE);
+            ParallelSequence pSeqB = new ParallelSequence(new Inverter(tooClose), updatePosition, pSelA, pSelB, pSelC, pSelD, pSelE);
 
             //setup root node, choose initialization phase or pathing/movement phase
-            root = new RootSelector(switchBehaviors, pSeqA, pSeqC);
+            root = new RootSelector(switchBehaviors, pSeqA, pSeqB);
 
             s_Behavior = new Behavior(root);
 
@@ -161,10 +162,8 @@ namespace Vaerydian.Behaviors
 
             s_Center = viewport.getDimensions() / 2;
 
-            sVec.X = (int)(start.getPosition().X + s_Center.X ) / s_TileSize;
-            sVec.Y = (int)(start.getPosition().Y + s_Center.Y ) / s_TileSize;
-            fVec.X = (int)(finish.getPosition().X + s_Center.X ) / s_TileSize;
-            fVec.Y = (int)(finish.getPosition().Y + s_Center.Y ) / s_TileSize;
+            sVec = (start.getPosition() + s_Center) / s_TileSize;
+            fVec = (finish.getPosition() + s_Center) / s_TileSize;
 
             s_TargetCell.Position = fVec;
             s_CurrentCell.Position = sVec;
@@ -197,6 +196,10 @@ namespace Vaerydian.Behaviors
             Vector2 pos = mePos.getPosition();// +s_Offset;
 
             Vector2 vec = new Vector2(s_CurrentCell.Position.X * s_TileSize, s_CurrentCell.Position.Y * s_TileSize);
+
+            //check for condition that could cause a not-a-number exception
+            if ((vec - s_Center) == pos)
+                return BehaviorReturnCode.Success;
 
             //create heading from this entityt to targetNode
             vec = Vector2.Subtract(vec - s_Center, pos);
@@ -254,13 +257,10 @@ namespace Vaerydian.Behaviors
         {
             if (s_TargetPreviousPosition != s_TargetCurrentPosition)
             {
-                s_BeginPathingAndMovement = false;
                 return true;
             }
             return false;
         }
-
-        
 
         private bool hasNewPath()
         {
@@ -365,14 +365,6 @@ namespace Vaerydian.Behaviors
             if (dist <= s_Offset.Length())
                 return true;
             return false;
-
-            /*
-            if (s_CurrentCell.Position == s_TargetCell.Position)
-            {
-                return true;
-            }
-            return false;
-            */
         }
 
         /// <summary>
@@ -385,6 +377,26 @@ namespace Vaerydian.Behaviors
             return findPath.Behave();
         }
 
-        
+        private BehaviorReturnCode resetPathfinder()
+        {
+            Position start = (Position)s_PositionMapper.get(s_ThisEntity);
+            Position finish = (Position)s_PositionMapper.get(s_Target);
+            GameMap map = (GameMap)s_GameMapMapper.get(s_Map);
+            ViewPort viewport = (ViewPort)s_ViewPortMapper.get(s_Camera);
+
+            Vector2 sVec, fVec;
+
+            s_Center = viewport.getDimensions() / 2;
+
+            sVec = (start.getPosition() + s_Center) / s_TileSize;
+            fVec = (finish.getPosition() + s_Center) / s_TileSize;
+
+            s_TargetCell.Position = fVec;
+            s_CurrentCell.Position = sVec;
+
+            findPath.reset(sVec, fVec, map);
+
+            return BehaviorReturnCode.Success;
+        }
     }
 }

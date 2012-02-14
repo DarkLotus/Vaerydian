@@ -23,6 +23,7 @@ namespace Vaerydian.Components
         public Position(Vector2 position, Vector2 offset)
         {
             p_Position = position;
+            p_Offset = offset;
         }
 
         public int getEntityId()

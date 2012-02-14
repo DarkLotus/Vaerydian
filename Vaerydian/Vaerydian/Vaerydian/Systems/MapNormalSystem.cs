@@ -17,9 +17,8 @@ using Vaerydian.Components.Debug;
 
 namespace Vaerydian.Systems
 {
-    class MapSystem : EntityProcessingSystem
+    class MapNormalSystem : EntityProcessingSystem
     {
-        private Dictionary<short, Texture2D> m_TextureDict;
         private Dictionary<short, Texture2D> m_NormalDict;
         private ComponentMapper m_CaveMapMapper;
         private ComponentMapper m_ViewportMapper;
@@ -38,7 +37,7 @@ namespace Vaerydian.Systems
 
         private Terrain c_CaveTerrain;
 
-        public MapSystem(GameContainer container)
+        public MapNormalSystem(GameContainer container)
         {
             m_Container = container;
             m_SpriteBatch = m_Container.SpriteBatch;
@@ -46,7 +45,7 @@ namespace Vaerydian.Systems
 
         public override void initialize()
         {
-            m_TextureDict = new Dictionary<short, Texture2D>();
+
             m_NormalDict = new Dictionary<short, Texture2D>();
             m_CaveMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
@@ -61,13 +60,9 @@ namespace Vaerydian.Systems
             m_Player = e_ECSInstance.TagManager.getEntityByTag("PLAYER");
             m_MapDebug = e_ECSInstance.TagManager.getEntityByTag("MAP_DEBUG");
             m_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
-
-            m_TextureDict.Add(TerrainType.CAVE_FLOOR, m_Container.ContentManager.Load<Texture2D>("terrain\\mountains"));
-            m_TextureDict.Add(TerrainType.CAVE_WALL, m_Container.ContentManager.Load<Texture2D>("terrain\\cascade"));
-            m_NormalDict.Add(TerrainType.CAVE_FLOOR, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\mountains_normal"));
-            m_NormalDict.Add(TerrainType.CAVE_WALL, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\cascade_normal"));
-
-            m_TileSize = m_TextureDict[TerrainType.CAVE_WALL].Width;
+            m_NormalDict.Add(TerrainType.CAVE_FLOOR, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\mountains_normal2"));
+            m_NormalDict.Add(TerrainType.CAVE_WALL, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\cascade_normal2"));
+            m_TileSize = m_NormalDict[TerrainType.CAVE_WALL].Width;
         }
 
         protected override void process(Entity entity)
@@ -79,7 +74,7 @@ namespace Vaerydian.Systems
 
             //update for current viewport location/dimensions
             updateView();
-            
+ 
             //grab key viewport info
             Vector2 origin = m_ViewPort.getOrigin();
             Vector2 center = m_ViewPort.getDimensions() / 2;
@@ -100,75 +95,14 @@ namespace Vaerydian.Systems
                         continue;
 
                     //calculate position to place tile
-                    pos = new Vector2(x*m_TileSize,y*m_TileSize);
+                    pos = new Vector2(x * m_TileSize, y * m_TileSize);
 
-                    m_SpriteBatch.Draw(m_TextureDict[c_CaveTerrain.TerrainType], pos, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_NormalDict[c_CaveTerrain.TerrainType], pos, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
-
-            
-            
-            /*
-            try
-            {
-                MapDebug debug = (MapDebug)m_MapDebugMapper.get(m_MapDebug);
-
-
-                if (debug.OpenSet != null)
-                {
-                    for (int i = 0; i < debug.OpenSet.Count; i++)
-                    {
-                        if (debug.OpenSet[i] == null)
-                            continue;
-                        pos = debug.OpenSet[i].Position * m_TileSize;
-
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.Orange, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-                    }
-                }
-
-                if (debug.Blocking != null)
-                {
-                    for (int i = 0; i < debug.Blocking.Count; i++)
-                    {
-                        if (debug.Blocking[i] == null)
-                            continue;
-                        pos = debug.Blocking[i].Position * m_TileSize;
-
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_WALL], pos, null, Color.Red, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-                    }
-                }
-
-                if (debug.ClosedSet != null)
-                {
-                    for (int i = 0; i < debug.ClosedSet.Count; i++)
-                    {
-                        if (debug.ClosedSet[i] == null)
-                            continue;
-                        pos = debug.ClosedSet[i].Position * m_TileSize;
-
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.Yellow, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-                    }
-                }
-
-                if (debug.Path != null)
-                {
-                    for (int i = 0; i < debug.Path.Count; i++)
-                    {
-                        if (debug.Path[i] == null)
-                            continue;
-                        pos = debug.Path[i].Position * m_TileSize;
-
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.YellowGreen, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                
-            }*/
 
             m_SpriteBatch.End();
+
         }
 
         /// <summary>
@@ -192,6 +126,5 @@ namespace Vaerydian.Systems
             if (m_yFinish >= m_ViewPort.getDimensions().X - 1)
                 m_yFinish = (int)m_ViewPort.getDimensions().X - 1;
         }
-
     }
 }

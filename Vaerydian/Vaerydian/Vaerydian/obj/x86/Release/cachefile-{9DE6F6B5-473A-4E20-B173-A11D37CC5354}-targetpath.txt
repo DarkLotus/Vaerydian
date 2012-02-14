@@ -31,3 +31,12 @@ Content\terrain\sublittoral.xnb
 Content\characters\player.xnb
 Content\characters\enemy.xnb
 Content\reticle.xnb
+Content\terrain\normals\mountains_normal.xnb
+Content\terrain\normals\cascade_normal.xnb
+Content\characters\normals\enemy_normal.xnb
+Content\characters\normals\player_normal.xnb
+Content\reticle_normal.xnb
+Content\terrain\normals\mountains_normal2.xnb
+Content\terrain\normals\cascade_normal2.xnb
+Content\effects\Shading.xnb
+Content\effects\DiferredCombine.xnb

@@ -31,6 +31,15 @@ C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\subli
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\player.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\enemy.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\reticle.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\normals\mountains_normal.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\normals\cascade_normal.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\normals\enemy_normal.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\normals\player_normal.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\reticle_normal.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\normals\mountains_normal2.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\normals\cascade_normal2.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\Shading.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\DiferredCombine.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe.manifest
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.application
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe

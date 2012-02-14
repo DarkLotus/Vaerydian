@@ -168,11 +168,11 @@ namespace Vaerydian.Systems
             for (int i = 0; i < B.Normals.Length; i++)
             {
                 //find the projected lengths of B-to-A and their half-widths/heights
-                BtoAlength = project(BtoA, B.Normals[i]).Length();
-                halfWidthA = project(A.HalfWidth, B.Normals[i]).Length();
-                halfHeightA = project(A.HalfHeight, B.Normals[i]).Length();
-                halfWidthB = project(B.HalfWidth, B.Normals[i]).Length();
-                halfHeightB = project(B.HalfHeight, B.Normals[i]).Length();
+                BtoAlength = project(BtoA, B.Normals[i]);
+                halfWidthA = project(A.HalfWidth, B.Normals[i]);
+                halfHeightA = project(A.HalfHeight, B.Normals[i]);
+                halfWidthB = project(B.HalfWidth, B.Normals[i]);
+                halfHeightB = project(B.HalfHeight, B.Normals[i]);
 
                 //determine the overlapping length of the projections for this axis
                 length = halfWidthA + halfHeightA + halfWidthB + halfHeightB - BtoAlength;
@@ -202,9 +202,9 @@ namespace Vaerydian.Systems
         /// <param name="a">vector to project onto b</param>
         /// <param name="b">axis of projection</param>
         /// <returns>projected vector</returns>
-        private Vector2 project(Vector2 a, Vector2 b)
+        private float project(Vector2 a, Vector2 b)
         {
-            return (Vector2.Dot(a, b) / b.LengthSquared()) * b;
+            return Math.Abs(Vector2.Dot(a, b));
         }
 
         /// <summary>

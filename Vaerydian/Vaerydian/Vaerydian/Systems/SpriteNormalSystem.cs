@@ -13,10 +13,9 @@ using Vaerydian.Components;
 
 namespace Vaerydian.Systems
 {
-    class SpriteRenderSystem : EntityProcessingSystem
+    class SpriteNormalSystem : EntityProcessingSystem
     {
-
-        private Dictionary<String,Texture2D> s_Textures = new Dictionary<String,Texture2D>();
+        
         private Dictionary<String, Texture2D> s_Normals = new Dictionary<string, Texture2D>();
         private GameContainer s_Container;
         private SpriteBatch s_SpriteBatch;
@@ -28,7 +27,7 @@ namespace Vaerydian.Systems
 
         private Entity s_Camera;
 
-        public SpriteRenderSystem(GameContainer gameContainer) : base() 
+        public SpriteNormalSystem(GameContainer gameContainer) : base() 
         {
             this.s_Container = gameContainer;
             this.s_SpriteBatch = gameContainer.SpriteBatch;
@@ -51,10 +50,6 @@ namespace Vaerydian.Systems
             for (int i = 0; i < entities.Size(); i++)
             {
                 sprite = (Sprite) s_SpriteMapper.get(entities.Get(i));
-                texName = sprite.getTextureName();
-                if(!s_Textures.ContainsKey(texName))
-                    s_Textures.Add(texName, s_Container.ContentManager.Load<Texture2D>(texName));
-
                 texName = sprite.NormalName;
                 if(!s_Normals.ContainsKey(texName))
                     s_Normals.Add(texName, s_Container.ContentManager.Load<Texture2D>(texName));
@@ -72,14 +67,13 @@ namespace Vaerydian.Systems
             ViewPort viewport = (ViewPort) s_ViewportMapper.get(s_Camera);
             GeometryMap geometry = (GeometryMap)s_GeometryMapper.get(s_Geometry);
 
-
             Vector2 pos = position.getPosition();
             Vector2 origin = viewport.getOrigin();
             Vector2 center = viewport.getDimensions() / 2;
 
             s_SpriteBatch.Begin();
 
-            s_SpriteBatch.Draw(s_Textures[sprite.getTextureName()], pos + center, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None,0f);
+            s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
 
             s_SpriteBatch.End();
         }

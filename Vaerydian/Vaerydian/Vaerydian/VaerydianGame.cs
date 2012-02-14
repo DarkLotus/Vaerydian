@@ -44,20 +44,30 @@ namespace Vaerydian
 
         //draw systems
         private EntitySystem spriteRenderSystem;
-        private EntitySystem caveMapSystem;
+        private EntitySystem spriteNormalSystem;
+        private EntitySystem mapSystem;
+        private EntitySystem mapNormalSystem;
+        private EntitySystem shadingSystem;
+        private EntitySystem deferredSystem;
 
         private EntityFactory entityFactory;
 
         private int avg, disp, elapsed;
 
+        private GeometryMap geometry;
+        private ComponentMapper geometryMapper;
+
+        private Texture2D debugTex;
+        private Random rand = new Random();
+
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 675;
-            graphics.PreferredBackBufferWidth = 1080;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1152;
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = true;
-
+            
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
 
@@ -83,6 +93,7 @@ namespace Vaerydian
 
             gameContainer.SpriteBatch = spriteBatch;
             gameContainer.ContentManager = Content;
+            gameContainer.GraphicsDevice = GraphicsDevice;
 
             //create & register systems
             //register update systems
@@ -91,10 +102,14 @@ namespace Vaerydian
             mousePointerSystem = ecsInstance.SystemManager.setSystem(new MousePointerSystem(), new Position(), new MousePosition());
             behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
             mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
+
             //register render systems
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
-            caveMapSystem = ecsInstance.SystemManager.setSystem(new MapSystem(gameContainer), new GameMap());
-            
+            spriteNormalSystem = ecsInstance.SystemManager.setSystem(new SpriteNormalSystem(gameContainer), new Position(), new Sprite());
+            mapSystem = ecsInstance.SystemManager.setSystem(new MapSystem(gameContainer), new GameMap());
+            mapNormalSystem = ecsInstance.SystemManager.setSystem(new MapNormalSystem(gameContainer), new GameMap());
+            shadingSystem = ecsInstance.SystemManager.setSystem(new ShadingSystem(gameContainer), new Light());
+            deferredSystem = ecsInstance.SystemManager.setSystem(new DeferredSystem(gameContainer), new GeometryMap());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -106,7 +121,10 @@ namespace Vaerydian
             ecsInstance.SystemManager.initializeSystems();
 
             //create the entity factory
-            entityFactory = new EntityFactory(ecsInstance);
+            entityFactory = new EntityFactory(ecsInstance,gameContainer);
+
+            //setup local geometrymapper
+            geometryMapper = new ComponentMapper(new GeometryMap(), ecsInstance);
 
             base.Initialize();
         }
@@ -120,6 +138,8 @@ namespace Vaerydian
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            debugTex = Content.Load<Texture2D>("temperature");
+
             //load early entities
             //entityFactory.createBackground();
             entityFactory.createPlayer();
@@ -127,16 +147,31 @@ namespace Vaerydian
             entityFactory.createMousePointer();
 
             entityFactory.createFollower(new Vector2(500, 370), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
-            //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
-            //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
-            //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
+            entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
+            entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
+            entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
 
             //create cave
-            //entityFactory.createCave();
-            entityFactory.CreateTestMap();
+            entityFactory.createCave();
+            //entityFactory.CreateTestMap();
 
             //create map debug
             entityFactory.createMapDebug();
+
+            //create lights
+            
+            for (int i = -5; i < 5; i++)
+            {
+                for (int j = -5; j < 5; j++)
+                {
+                    //entityFactory.createRandomLight();
+                    entityFactory.createStandaloneLight(true, 500, new Vector3(i * 500, j * 500, 100), 0.3f,
+                        new Vector4((float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble()));
+                }
+            }
+
+            //create GeometryMap
+            entityFactory.createGeometryMap();
 
             //load fonts
             fontManager.LoadContent();
@@ -147,6 +182,9 @@ namespace Vaerydian
             //load system content
             ecsInstance.SystemManager.systemsLoadContent();
             
+            //get geometry map
+            geometry = (GeometryMap)geometryMapper.get(ecsInstance.TagManager.getEntityByTag("GEOMETRY"));
+
         }
 
         /// <summary>
@@ -212,14 +250,39 @@ namespace Vaerydian
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Gray);
+            GraphicsDevice.Clear(Color.Black);
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(geometry.ColorMap);
+            GraphicsDevice.Clear(Color.Transparent);
+            
+            //run color draw systems
+            mapSystem.process();
+            spriteRenderSystem.process();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(geometry.NormalMap);
+            GraphicsDevice.Clear(Color.Transparent);
+
+            //run normal systems
+            mapNormalSystem.process();
+            spriteNormalSystem.process();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(geometry.ShadingMap);
+            GraphicsDevice.Clear(Color.Transparent);
+            
+            //run shading system
+            shadingSystem.process();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+
+            //run differed system
+            deferredSystem.process();
 
             //begin the sprite batch
             spriteBatch.Begin();
-            
-            //run draw systems
-            caveMapSystem.process();
-            spriteRenderSystem.process();
 
             //display performance
             spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + disp, new Vector2(0), Color.Red);
@@ -232,6 +295,8 @@ namespace Vaerydian
                 saveScreenShot(GraphicsDevice);
                 InputManager.YesScreenshot = false;
             }
+
+            //DrawDebugRenderTargets(spriteBatch);
 
             base.Draw(gameTime);
         }
@@ -265,6 +330,52 @@ namespace Vaerydian
             fs.Close();
 
             GC.Collect();
+        }
+
+
+        /// <summary>
+        /// [DEBUG] Draws the debug render targets onto the bottom of the screen.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch.</param>
+        public void DrawDebugRenderTargets(SpriteBatch spriteBatch)
+        {
+            // Draw some debug textures
+            spriteBatch.Begin();
+
+            Rectangle size = new Rectangle(0, 0, geometry.ColorMap.Width / 3, geometry.ColorMap.Height / 3);
+            var position = new Vector2(0, GraphicsDevice.Viewport.Height - size.Height);
+            spriteBatch.Draw(
+                geometry.ColorMap,
+                new Rectangle(
+                    (int)position.X, (int)position.Y,
+                    size.Width,
+                    size.Height),
+                Color.White);
+
+            spriteBatch.Draw(
+                geometry.NormalMap,
+                new Rectangle(
+                    (int)position.X + size.Width, (int)position.Y,
+                    size.Width,
+                    size.Height),
+                Color.White);
+
+            spriteBatch.Draw(
+                debugTex, 
+                new Rectangle(
+                    (int)position.X + size.Width * 2, (int)position.Y,
+                    size.Width,
+                    size.Height), Color.Black);
+
+            spriteBatch.Draw(
+                geometry.ShadingMap,
+                new Rectangle(
+                    (int)position.X + size.Width * 2, (int)position.Y,
+                    size.Width,
+                    size.Height),
+                Color.White);
+
+            spriteBatch.End();
         }
     }
 }

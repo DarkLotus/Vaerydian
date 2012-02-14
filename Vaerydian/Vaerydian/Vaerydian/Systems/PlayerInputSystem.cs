@@ -20,6 +20,7 @@ namespace Vaerydian.Systems
         private ComponentMapper p_VelocityMapper;
         private ComponentMapper p_ViewPortMapper;
         private ComponentMapper p_HeadingMapper;
+        private ComponentMapper p_LightMapper;
 
         private Entity p_Camera;
         private Entity p_Mouse;
@@ -32,6 +33,7 @@ namespace Vaerydian.Systems
             p_VelocityMapper = new ComponentMapper(new Velocity(), e_ECSInstance);
             p_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             p_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
+            p_LightMapper = new ComponentMapper(new Light(), e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -53,6 +55,15 @@ namespace Vaerydian.Systems
             if (InputManager.isKeyPressed(Keys.Escape))
             {
                 InputManager.YesExit = true;
+            }
+
+            if (InputManager.isKeyToggled(Keys.L))
+            {
+                Light light = (Light)p_LightMapper.get(p_Mouse);
+                if (light.IsEnabled)
+                    light.IsEnabled = false;
+                else
+                    light.IsEnabled = true;
             }
 
             //move up?
