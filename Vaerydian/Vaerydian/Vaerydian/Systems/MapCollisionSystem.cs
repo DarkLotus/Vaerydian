@@ -23,7 +23,7 @@ namespace Vaerydian.Systems
         private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewPortMapper;
         private ComponentMapper m_HeadingMapper;
-        private int m_TileSize = 25;
+        private int m_TileSize = 32;
 
         private Vector2 m_Center;
 

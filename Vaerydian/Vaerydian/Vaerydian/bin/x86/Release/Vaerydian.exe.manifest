@@ -141,14 +141,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="104960">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="110592">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>RuyIxDMlXybl8n9eLrMJz8rX5kM=</dsig:DigestValue>
+        <dsig:DigestValue>8PHYGCqSJYSyGV0mG4z2p71gbz4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -173,6 +173,24 @@
       <dsig:DigestValue>PlB592XpDESxDeWlMKr6+JyZYBs=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\characters\herr_von_speck_sheet.xnb" size="8856">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>2UJpE/gvgTWcyuRGWNnPyaFqrsU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\characters\lord_lard_sheet.xnb" size="8826">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>d1DIGVTBYJITsd2JTmsodK0yeD4=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\characters\normals\enemy_normal.xnb" size="430">
     <hash>
       <dsig:Transforms>
@@ -180,6 +198,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>goX2QOzmPGKcmODM+KmjTuNbPvY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\characters\normals\herr_von_speck_sheet_normals.xnb" size="36012">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>SiaY61/f03P8BTLw0WaM5bKJetM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\characters\normals\lord_lard_sheet_normals.xnb" size="32648">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>yd7Rosqmh5YOpdhuDGlNUSyj5bc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\characters\normals\player_normal.xnb" size="448">
@@ -200,6 +236,15 @@
       <dsig:DigestValue>snZxUzDjTBE4h+qSM2hq2RIwsPU=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\depth.xnb" size="216">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>xzExhNK+p17jp5+jY9lXzRJ8Mbs=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\effects\DiferredCombine.xnb" size="828">
     <hash>
       <dsig:Transforms>
@@ -209,13 +254,13 @@
       <dsig:DigestValue>bL6NJNALaze/MQN9liRGSzovpdM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\effects\Shading.xnb" size="1318">
+  <file name="Content\effects\Shading.xnb" size="1406">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>3mbryfLIF1TOuETJ2SB5GGqX3sg=</dsig:DigestValue>
+      <dsig:DigestValue>fQv6xjJ1H9E4LWPtkEfkKLjgERE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\export.xnb" size="191">
@@ -288,6 +333,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>oZipPNWzpFVyubUKE6VtVaK5j4U=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\projectile.xnb" size="384">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>p6M0wu+FITQhHRdGiX4fY51hBV4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\reticle.xnb" size="292">
@@ -524,6 +578,24 @@
       <dsig:DigestValue>xYMeg66XMb5+2ewH6mMMu/WI76U=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\terrain\terrain.xnb" size="14356">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>IXbdUZdDScpwAgxoqzRMTp4LlqI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\terrain\terrain_normals.xnb" size="17648">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>Jz0KrAUR2xDeqeStmFwPfRORG5A=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\terrain\tundra.xnb" size="984">
     <hash>
       <dsig:Transforms>
@@ -531,6 +603,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>sV9sdrXCJK9F7ffRZHPJ6WwATwg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\terrain\various.xnb" size="3714134">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>Md7DXBRHIBqYg/aBTi28JhTf+qA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\terrain\various_normals.xnb" size="2619176">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>kYWNBVXk7F3uTnIriNe6OXzxY38=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Title.xnb" size="91362">

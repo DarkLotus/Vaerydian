@@ -67,6 +67,27 @@ namespace Vaerydian
         {
             return new Vector2(i_currentMouseState.X, i_currentMouseState.Y);
         }
-        
+
+        public static bool isLeftButtonClicked()
+        {
+            return ((i_previousMouseState.LeftButton == ButtonState.Released) &&
+                    (i_currentMouseState.LeftButton == ButtonState.Pressed)) ? true : false;
+        }
+
+        public static bool isLeftButtonDown()
+        {
+            return i_currentMouseState.LeftButton == ButtonState.Pressed ? true : false;
+        }
+
+        public static bool isRightButtonClicked()
+        {
+            return ((i_previousMouseState.RightButton == ButtonState.Released) &&
+                    (i_currentMouseState.RightButton == ButtonState.Pressed)) ? true : false;
+        }
+
+        public static bool isRightButtonDown()
+        {
+            return i_currentMouseState.RightButton == ButtonState.Pressed ? true : false;
+        }
     }
 }

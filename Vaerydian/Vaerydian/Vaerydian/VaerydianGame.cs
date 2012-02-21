@@ -41,12 +41,15 @@ namespace Vaerydian
         private EntitySystem mousePointerSystem;
         private EntitySystem behaviorSystem;
         private EntitySystem mapCollisionSystem;
+        private EntitySystem projectileSystem;
 
         //draw systems
         private EntitySystem spriteRenderSystem;
         private EntitySystem spriteNormalSystem;
+        //private EntitySystem spriteDepthSystem;
         private EntitySystem mapSystem;
         private EntitySystem mapNormalSystem;
+        //private EntitySystem mapDepthSystem;
         private EntitySystem shadingSystem;
         private EntitySystem deferredSystem;
 
@@ -63,9 +66,11 @@ namespace Vaerydian
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 1152;
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 768;
             graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.IsFullScreen = true;
+            graphics.SynchronizeWithVerticalRetrace = true;
             this.IsFixedTimeStep = true;
             
             // add a gamer-services component, which is required for the storage APIs
@@ -102,12 +107,15 @@ namespace Vaerydian
             mousePointerSystem = ecsInstance.SystemManager.setSystem(new MousePointerSystem(), new Position(), new MousePosition());
             behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
             mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
+            projectileSystem = ecsInstance.SystemManager.setSystem(new ProjectileSystem(), new Projectile());
 
             //register render systems
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
             spriteNormalSystem = ecsInstance.SystemManager.setSystem(new SpriteNormalSystem(gameContainer), new Position(), new Sprite());
+            //spriteDepthSystem = ecsInstance.SystemManager.setSystem(new SpriteDepthSystem(gameContainer), new Position(), new Sprite());
             mapSystem = ecsInstance.SystemManager.setSystem(new MapSystem(gameContainer), new GameMap());
             mapNormalSystem = ecsInstance.SystemManager.setSystem(new MapNormalSystem(gameContainer), new GameMap());
+            //mapDepthSystem = ecsInstance.SystemManager.setSystem(new MapDepthSystem(gameContainer), new GameMap());
             shadingSystem = ecsInstance.SystemManager.setSystem(new ShadingSystem(gameContainer), new Light());
             deferredSystem = ecsInstance.SystemManager.setSystem(new DeferredSystem(gameContainer), new GeometryMap());
 
@@ -116,6 +124,7 @@ namespace Vaerydian
             ecsInstance.ComponentManager.registerComponentType(new MousePosition());
             ecsInstance.ComponentManager.registerComponentType(new Heading());
             ecsInstance.ComponentManager.registerComponentType(new MapDebug());
+            ecsInstance.ComponentManager.registerComponentType(new Transform());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -146,10 +155,10 @@ namespace Vaerydian
             entityFactory.createCamera();
             entityFactory.createMousePointer();
 
-            entityFactory.createFollower(new Vector2(500, 370), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
-            entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
-            entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
-            entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
+            //entityFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
+            //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
+            //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
+            //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
 
             //create cave
             entityFactory.createCave();
@@ -165,8 +174,8 @@ namespace Vaerydian
                 for (int j = -5; j < 5; j++)
                 {
                     //entityFactory.createRandomLight();
-                    entityFactory.createStandaloneLight(true, 500, new Vector3(i * 500, j * 500, 100), 0.3f,
-                        new Vector4((float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble()));
+                    entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .2f,
+                        new Vector4(.5f,.5f,.7f, (float)rand.NextDouble()));
                 }
             }
 
@@ -238,6 +247,7 @@ namespace Vaerydian
             cameraFocusSystem.process();
             mousePointerSystem.process();
             behaviorSystem.process();
+            projectileSystem.process();
 
             mapCollisionSystem.process();
 
@@ -267,6 +277,13 @@ namespace Vaerydian
             //run normal systems
             mapNormalSystem.process();
             spriteNormalSystem.process();
+
+            //GraphicsDevice.SetRenderTarget(null);
+            //GraphicsDevice.SetRenderTarget(geometry.DepthMap);
+            //GraphicsDevice.Clear(Color.Transparent);
+            
+            //mapDepthSystem.process();
+            //spriteDepthSystem.process();
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.SetRenderTarget(geometry.ShadingMap);

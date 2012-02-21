@@ -55,6 +55,8 @@ namespace Vaerydian.Systems
                     s_Normals.Add(texName, s_Container.ContentManager.Load<Texture2D>(texName));
             }
 
+            s_Normals.Add("projectile", s_Container.ContentManager.Load<Texture2D>("projectile"));
+
             //pre-load camera entity reference
             s_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
             s_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
@@ -73,7 +75,8 @@ namespace Vaerydian.Systems
 
             s_SpriteBatch.Begin();
 
-            s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+            //s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+            s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
 
             s_SpriteBatch.End();
         }

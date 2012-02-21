@@ -368,7 +368,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\Shading.xnb</Output>
-      <Time>2012-02-14T15:09:34.3014298-05:00</Time>
+      <Time>2012-02-19T20:57:30.435597-05:00</Time>
     </Item>
     <Item>
       <Source>effects\DiferredCombine.fx</Source>
@@ -378,6 +378,96 @@
       <Options>None</Options>
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\DiferredCombine.xnb</Output>
       <Time>2012-02-14T14:58:53.1642441-05:00</Time>
+    </Item>
+    <Item>
+      <Source>depth.png</Source>
+      <Name>depth</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\depth.xnb</Output>
+      <Time>2012-02-16T19:13:37.5745254-05:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\terrain.png</Source>
+      <Name>terrain\terrain</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\terrain.xnb</Output>
+      <Time>2012-02-20T10:02:45.949151-05:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\terrain_normals.png</Source>
+      <Name>terrain\terrain_normals</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\terrain_normals.xnb</Output>
+      <Time>2012-02-20T10:02:45.969151-05:00</Time>
+    </Item>
+    <Item>
+      <Source>characters\herr_von_speck_sheet.png</Source>
+      <Name>characters\herr_von_speck_sheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\herr_von_speck_sheet.xnb</Output>
+      <Time>2012-02-20T10:11:15.0756878-05:00</Time>
+    </Item>
+    <Item>
+      <Source>characters\lord_lard_sheet.png</Source>
+      <Name>characters\lord_lard_sheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\lord_lard_sheet.xnb</Output>
+      <Time>2012-02-20T10:11:15.0756878-05:00</Time>
+    </Item>
+    <Item>
+      <Source>characters\normals\herr_von_speck_sheet_normals.png</Source>
+      <Name>characters\normals\herr_von_speck_sheet_normals</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\normals\herr_von_speck_sheet_normals.xnb</Output>
+      <Time>2012-02-20T10:11:23.0137153-05:00</Time>
+    </Item>
+    <Item>
+      <Source>characters\normals\lord_lard_sheet_normals.png</Source>
+      <Name>characters\normals\lord_lard_sheet_normals</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\characters\normals\lord_lard_sheet_normals.xnb</Output>
+      <Time>2012-02-20T10:11:23.0137153-05:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\various.png</Source>
+      <Name>terrain\various</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\various.xnb</Output>
+      <Time>2012-02-20T13:28:27.1179577-05:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain\various_normals.png</Source>
+      <Name>terrain\various_normals</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\terrain\various_normals.xnb</Output>
+      <Time>2012-02-20T13:28:27.123958-05:00</Time>
+    </Item>
+    <Item>
+      <Source>projectile.png</Source>
+      <Name>projectile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\projectile.xnb</Output>
+      <Time>2012-02-20T17:47:56.9608154-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

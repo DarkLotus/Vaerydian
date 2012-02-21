@@ -37,7 +37,7 @@ namespace Vaerydian.Behaviors
 
         private float s_FollowDistance;
 
-        private int s_TileSize = 25;
+        private int s_TileSize = 32;
         private int s_currentPathCell = 0;
 
         private bool s_BeginPathingAndMovement = false;

@@ -116,12 +116,13 @@ namespace Vaerydian.Systems
             s_ShadingEffect.Parameters["viewOrigin"].SetValue(origin3);
             s_ShadingEffect.Parameters["lightColor"].SetValue(light.Color);
             s_ShadingEffect.Parameters["lightRadius"].SetValue(light.LightRadius);
-            s_ShadingEffect.Parameters["specularStrength"].SetValue(.1f);
-            s_ShadingEffect.Parameters["specularColor"].SetValue(new Vector4(1,1,1,1));//light.Color);
+            s_ShadingEffect.Parameters["specularStrength"].SetValue(.5f);
+            s_ShadingEffect.Parameters["specularColor"].SetValue(light.Color);
             s_ShadingEffect.Parameters["screenWidth"].SetValue(s_GraphicsDevice.Viewport.Width);
             s_ShadingEffect.Parameters["screenHeight"].SetValue(s_GraphicsDevice.Viewport.Height);
             s_ShadingEffect.Parameters["NormalMap"].SetValue(s_Geometry.NormalMap);
             s_ShadingEffect.Parameters["ColorMap"].SetValue(s_Geometry.ColorMap);
+            s_ShadingEffect.Parameters["DepthMap"].SetValue(s_Geometry.DepthMap);
             
             s_ShadingEffect.CurrentTechnique = s_ShadingEffect.Techniques["PointLight"];
             s_ShadingEffect.CurrentTechnique.Passes[0].Apply();

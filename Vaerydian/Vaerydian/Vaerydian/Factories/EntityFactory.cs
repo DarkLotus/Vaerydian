@@ -25,7 +25,7 @@ namespace Vaerydian.Factories
     class EntityFactory
     {
         private ECSInstance e_EcsInstance;
-        private GameContainer e_Container;
+        private static GameContainer e_Container;
         private Random rand = new Random();
 
         public EntityFactory(ECSInstance ecsInstance, GameContainer container)
@@ -34,17 +34,23 @@ namespace Vaerydian.Factories
             e_Container = container;
         }
 
+        public EntityFactory(ECSInstance ecsInstance) 
+        {
+            e_EcsInstance = ecsInstance;
+        }
+
         public void createPlayer()
         {
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Controllable());
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\player", "characters\\normals\\player_normal"));
-            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(150));
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
+            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(100));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
             e_EcsInstance.EntityManager.addComponent(e, createLight(false, 200, new Vector3(576, 360, 80), 0.7f, new Vector4(1f, 1f, 1f, 1f)));
+            e_EcsInstance.EntityManager.addComponent(e, new Transform());
 
             e_EcsInstance.TagManager.tagEntity("PLAYER", e);
 
@@ -56,7 +62,8 @@ namespace Vaerydian.Factories
         {
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
-            e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(576, 360f), new Vector2(1152, 720)));
+            //e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(576, 360f), new Vector2(1152, 720)));
+            e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(0, 0), new Vector2(768, 480)));
 
             e_EcsInstance.TagManager.tagEntity("CAMERA", e);
 
@@ -68,9 +75,10 @@ namespace Vaerydian.Factories
         {
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal"));
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
             e_EcsInstance.EntityManager.addComponent(e, new MousePosition());
-            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 150, new Vector3(576, 360, 100), 0.7f, new Vector4(1f, 1f, 1f, 1f)));
+            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 150, new Vector3(576, 360, 100), 0.9f, new Vector4(1f, 1f, 1f, 1f)));
+            e_EcsInstance.EntityManager.addComponent(e, new Transform());
 
             e_EcsInstance.TagManager.tagEntity("MOUSE", e);
 
@@ -79,14 +87,15 @@ namespace Vaerydian.Factories
 
         public void createFollower(Vector2 position, Entity target, float distance)
         {
-            Entity e = e_EcsInstance.create();
+            Entity e = e_EcsInstance.create(); 
 
             e_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(12.5f)));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\enemy", "characters\\normals\\enemy_normal"));
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals",32,32,0,0));
             e_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new SimpleFollowBehavior(e, target, distance, e_EcsInstance)));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
+            e_EcsInstance.EntityManager.addComponent(e, new Transform());
 
             e_EcsInstance.refresh(e);
 
@@ -174,6 +183,7 @@ namespace Vaerydian.Factories
 
             geometry.ColorMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
             geometry.NormalMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
+            geometry.DepthMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
             geometry.ShadingMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height, false, format, pp.DepthStencilFormat, pp.MultiSampleCount, RenderTargetUsage.DiscardContents);
 
             geometry.AmbientColor = new Vector4(.1f, .1f, .1f, .1f);
@@ -229,5 +239,24 @@ namespace Vaerydian.Factories
             e_EcsInstance.refresh(e);
 
         }
+
+        public void createProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light)
+        {
+            Entity e = e_EcsInstance.create();
+
+            e_EcsInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
+            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+            e_EcsInstance.EntityManager.addComponent(e, new Projectile(duration));
+            //e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+
+            if (light != null)
+                e_EcsInstance.EntityManager.addComponent(e, light);
+
+            e_EcsInstance.refresh(e);
+
+        }
+
     }
 }

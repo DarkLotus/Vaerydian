@@ -17,10 +17,10 @@ using Vaerydian.Components.Debug;
 
 namespace Vaerydian.Systems
 {
-    class MapNormalSystem : EntityProcessingSystem
+    class MapDepthSystem : EntityProcessingSystem
     {
-        private Dictionary<short, Rectangle> m_RectDict;
-        private Texture2D m_Texture;
+        private Texture2D m_DepthTex;
+        private Color[] m_DepthMask = new Color[9];
         private ComponentMapper m_CaveMapMapper;
         private ComponentMapper m_ViewportMapper;
         private ComponentMapper m_PositionMapper;
@@ -38,7 +38,7 @@ namespace Vaerydian.Systems
 
         private Terrain c_CaveTerrain;
 
-        public MapNormalSystem(GameContainer container)
+        public MapDepthSystem(GameContainer container)
         {
             m_Container = container;
             m_SpriteBatch = m_Container.SpriteBatch;
@@ -46,13 +46,21 @@ namespace Vaerydian.Systems
 
         public override void initialize()
         {
-
-            m_RectDict = new Dictionary<short, Rectangle>();
             m_CaveMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             m_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             m_MapDebugMapper = new ComponentMapper(new MapDebug(), e_ECSInstance);
             m_GeometryMapper = new ComponentMapper(new GeometryMap(), e_ECSInstance);
+
+            m_DepthMask[0] = new Color(1f, 1f, 1f, 1f);
+            m_DepthMask[1] = new Color(.9f, .9f, .9f, 1f);
+            m_DepthMask[2] = new Color(.7f, .7f, .7f, 1f);
+            m_DepthMask[3] = new Color(.6f, .6f, .6f, 1f);
+            m_DepthMask[4] = new Color(.5f, .5f, .5f, 1f);
+            m_DepthMask[5] = new Color(.4f, .4f, .4f, 1f);
+            m_DepthMask[6] = new Color(.3f, .3f, .3f, 1f);
+            m_DepthMask[7] = new Color(.1f, .1f, .1f, 1f);
+            m_DepthMask[8] = new Color(0f, 0f, 0f, 1f);
         }
         
         protected override void preLoadContent(Bag<Entity> entities)
@@ -61,13 +69,8 @@ namespace Vaerydian.Systems
             m_Player = e_ECSInstance.TagManager.getEntityByTag("PLAYER");
             m_MapDebug = e_ECSInstance.TagManager.getEntityByTag("MAP_DEBUG");
             m_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
-
-            m_RectDict.Add(TerrainType.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
-            m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
-
-            m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various_normals");
-
-            m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
+            m_DepthTex = m_Container.ContentManager.Load<Texture2D>("depth");
+            m_TileSize = m_DepthTex.Width;
         }
 
         protected override void process(Entity entity)
@@ -102,7 +105,12 @@ namespace Vaerydian.Systems
                     //calculate position to place tile
                     pos = new Vector2(x * m_TileSize, y * m_TileSize);
 
-                    m_SpriteBatch.Draw(m_Texture, pos, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+
+                    if(c_CaveTerrain.TerrainType == TerrainType.CAVE_WALL)
+                        m_SpriteBatch.Draw(m_DepthTex, pos, null, m_DepthMask[countWallNeighbors(x, y, map)], 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    else
+                        m_SpriteBatch.Draw(m_DepthTex, pos, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    
                 }
             }
 
@@ -131,5 +139,33 @@ namespace Vaerydian.Systems
             if (m_yFinish >= m_ViewPort.getDimensions().X - 1)
                 m_yFinish = (int)m_ViewPort.getDimensions().X - 1;
         }
+
+
+        private int countWallNeighbors(int x, int y, GameMap map)
+        {
+            int count = 0;
+            Terrain temp;
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                        continue;
+
+                    temp = map.getTerrain(x + i, y + j);
+
+                    if (temp == null)
+                        continue;
+
+                    if (temp.TerrainType == TerrainType.CAVE_WALL)
+                        count++;
+                }
+            }
+
+            return count;
+        }
+
+
     }
 }

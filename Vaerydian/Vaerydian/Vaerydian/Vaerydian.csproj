@@ -140,7 +140,6 @@
     <Compile Include="Behaviors\Actions\FindPathAction.cs" />
     <Compile Include="Behaviors\SimpleFollowBehavior.cs" />
     <Compile Include="Characters\Abilities\Ability.cs" />
-    <Compile Include="Animation\Animation.cs" />
     <Compile Include="Behaviors\CharacterBehavior.cs" />
     <Compile Include="Characters\Behaviors\SimpleEnemyBehavior.cs" />
     <Compile Include="Characters\Stats\Stat.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
     <Compile Include="Components\AiBehavior.cs" />
+    <Compile Include="Components\Projectile.cs" />
     <Compile Include="Components\CameraFocus.cs" />
     <Compile Include="Components\Debug\MapDebug.cs" />
     <Compile Include="Components\GameMap.cs" />
@@ -161,6 +161,7 @@
     <Compile Include="Components\MousePosition.cs" />
     <Compile Include="Components\Position.cs" />
     <Compile Include="Components\Sprite.cs" />
+    <Compile Include="Components\Transform.cs" />
     <Compile Include="Components\Velocity.cs" />
     <Compile Include="Components\ViewPort.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
@@ -189,15 +190,19 @@
     <Compile Include="Systems\BehaviorSystem.cs" />
     <Compile Include="Systems\CameraFocusSystem.cs" />
     <Compile Include="Systems\DeferredSystem.cs" />
+    <Compile Include="Systems\MapDepthSystem.cs" />
     <Compile Include="Systems\MapNormalSystem.cs" />
     <Compile Include="Systems\MapSystem.cs" />
     <Compile Include="Systems\MapCollisionSystem.cs" />
     <Compile Include="Systems\MousePointerSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
+    <Compile Include="Systems\ProjectileSystem.cs" />
     <Compile Include="Systems\ShadingSystem.cs" />
+    <Compile Include="Systems\SpriteDepthSystem.cs" />
     <Compile Include="Systems\SpriteNormalSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
+    <Compile Include="Utils\Animation.cs" />
     <Compile Include="Utils\ASharpPathing.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />

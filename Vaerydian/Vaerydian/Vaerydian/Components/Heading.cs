@@ -18,6 +18,11 @@ namespace Vaerydian.Components
 
         public Heading() { }
 
+        public Heading(Vector2 heading)
+        {
+            h_Heading = heading;
+        }
+
         public int getEntityId()
         {
             return h_EntityID;

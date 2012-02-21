@@ -19,8 +19,8 @@ namespace Vaerydian.Systems
 {
     class MapSystem : EntityProcessingSystem
     {
-        private Dictionary<short, Texture2D> m_TextureDict;
-        private Dictionary<short, Texture2D> m_NormalDict;
+        private Dictionary<short, Rectangle> m_RectDict;
+        private Texture2D m_Texture;
         private ComponentMapper m_CaveMapMapper;
         private ComponentMapper m_ViewportMapper;
         private ComponentMapper m_PositionMapper;
@@ -46,8 +46,7 @@ namespace Vaerydian.Systems
 
         public override void initialize()
         {
-            m_TextureDict = new Dictionary<short, Texture2D>();
-            m_NormalDict = new Dictionary<short, Texture2D>();
+            m_RectDict = new Dictionary<short, Rectangle>();
             m_CaveMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             m_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
@@ -62,12 +61,12 @@ namespace Vaerydian.Systems
             m_MapDebug = e_ECSInstance.TagManager.getEntityByTag("MAP_DEBUG");
             m_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
 
-            m_TextureDict.Add(TerrainType.CAVE_FLOOR, m_Container.ContentManager.Load<Texture2D>("terrain\\mountains"));
-            m_TextureDict.Add(TerrainType.CAVE_WALL, m_Container.ContentManager.Load<Texture2D>("terrain\\cascade"));
-            m_NormalDict.Add(TerrainType.CAVE_FLOOR, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\mountains_normal"));
-            m_NormalDict.Add(TerrainType.CAVE_WALL, m_Container.ContentManager.Load<Texture2D>("terrain\\normals\\cascade_normal"));
+            m_RectDict.Add(TerrainType.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
+            m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
 
-            m_TileSize = m_TextureDict[TerrainType.CAVE_WALL].Width;
+            m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various");
+
+            m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
         }
 
         protected override void process(Entity entity)
@@ -78,12 +77,15 @@ namespace Vaerydian.Systems
             GeometryMap geometry = (GeometryMap)m_GeometryMapper.get(m_Geometry);
 
             //update for current viewport location/dimensions
-            updateView();
+
             
             //grab key viewport info
             Vector2 origin = m_ViewPort.getOrigin();
             Vector2 center = m_ViewPort.getDimensions() / 2;
             Vector2 pos;
+
+            //updateView(origin, center, m_ViewPort.getDimensions());
+            updateView();
 
             m_SpriteBatch.Begin();
 
@@ -102,7 +104,7 @@ namespace Vaerydian.Systems
                     //calculate position to place tile
                     pos = new Vector2(x*m_TileSize,y*m_TileSize);
 
-                    m_SpriteBatch.Draw(m_TextureDict[c_CaveTerrain.TerrainType], pos, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_Texture, pos, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
 
@@ -182,7 +184,7 @@ namespace Vaerydian.Systems
 
             m_xFinish = (int)(m_ViewPort.getOrigin().X + m_ViewPort.getDimensions().X) / m_TileSize;
             if (m_xFinish >= m_ViewPort.getDimensions().X - 1)
-                m_xFinish = (int) m_ViewPort.getDimensions().X - 1;
+                m_xFinish = (int)m_ViewPort.getDimensions().X - 1;
 
             m_yStart = (int)m_ViewPort.getOrigin().Y / m_TileSize;
             if (m_yStart <= 0)
@@ -191,6 +193,28 @@ namespace Vaerydian.Systems
             m_yFinish = (int)(m_ViewPort.getOrigin().Y + m_ViewPort.getDimensions().Y) / m_TileSize;
             if (m_yFinish >= m_ViewPort.getDimensions().X - 1)
                 m_yFinish = (int)m_ViewPort.getDimensions().X - 1;
+        }
+
+        /// <summary>
+        /// updates the tile indexes based on current viewport for the draw loop
+        /// </summary>
+        private void updateView(Vector2 origin, Vector2 center, Vector2 dimensions)
+        {
+            m_xStart = (int)(origin.X - center.X) / m_TileSize;
+            if (m_xStart <= 0)
+                m_xStart = 0;
+
+            m_xFinish = (int)(origin.X - center.X + dimensions.X) / m_TileSize;
+            if (m_xFinish >= dimensions.X - 1)
+                m_xFinish = (int)dimensions.X - 1;
+
+            m_yStart = (int)(origin.Y - center.Y) / m_TileSize;
+            if (m_yStart <= 0)
+                m_yStart = 0;
+
+            m_yFinish = (int)(origin.Y - center.Y + dimensions.Y) / m_TileSize;
+            if (m_yFinish >= dimensions.X - 1)
+                m_yFinish = (int)dimensions.X - 1;
         }
 
     }

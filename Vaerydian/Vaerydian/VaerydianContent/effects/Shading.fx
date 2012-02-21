@@ -9,6 +9,16 @@ float3 viewCenter;
 float3 viewOrigin;
 float4 specularColor;
 
+Texture DepthMap;
+sampler DepthMapSampler = sampler_state {
+	texture = <DepthMap>;
+	magfilter = LINEAR;
+	minfilter = LINEAR;
+	mipfilter = LINEAR;
+	AddressU = mirror;
+	AddressV = mirror;
+};
+
 Texture NormalMap;
 sampler NormalMapSampler = sampler_state {
 	texture = <NormalMap>;
@@ -58,6 +68,7 @@ PixelToFrame PointLightShader(VertexToPixel PSIn) : COLOR0
 	
 	float4 colorMap = tex2D(ColorMapSampler, PSIn.TexCoord);
 	float3 normal = (2.0f * (tex2D(NormalMapSampler, PSIn.TexCoord))) - 1.0f;
+	//float depth = tex2D(DepthMapSampler, PSIn.TexCoord);
 		
 	float3 pixelPosition;
 	pixelPosition.x = screenWidth * PSIn.TexCoord.x;
@@ -69,17 +80,18 @@ PixelToFrame PointLightShader(VertexToPixel PSIn) : COLOR0
 	float3 lightDir = realLightPos - pixelPosition;
 	float3 lightDirNorm = normalize(lightDir);
 
-	float3 eye = float3(viewCenter.x, viewCenter.y,1000) - pixelPosition;
+	float3 eye = float3(viewCenter.x, viewCenter.y,2000) - pixelPosition;
 	float3 eyeNorm = normalize(eye);
 	
 	float amount = max(dot(normal, lightDirNorm), 0);
+	
 	float coneAttenuation = saturate(1.0f - length(lightDir) / (lightRadius)); 
-				
+			
 	float3 ref = normalize(reflect(-lightDirNorm,normal));
 
 	float specular = min(pow(saturate(dot(ref,eyeNorm)),10),amount) * specularStrength;
 				
-	Output.Color = colorMap * coneAttenuation * lightColor * lightStrength + (specular * coneAttenuation) * specularColor;
+	Output.Color = colorMap * coneAttenuation * lightColor * lightStrength  + (specular * coneAttenuation) * specularColor;
 
 	return Output;
 }

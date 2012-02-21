@@ -40,3 +40,13 @@ Content\terrain\normals\mountains_normal2.xnb
 Content\terrain\normals\cascade_normal2.xnb
 Content\effects\Shading.xnb
 Content\effects\DiferredCombine.xnb
+Content\depth.xnb
+Content\terrain\terrain.xnb
+Content\terrain\terrain_normals.xnb
+Content\characters\herr_von_speck_sheet.xnb
+Content\characters\lord_lard_sheet.xnb
+Content\characters\normals\herr_von_speck_sheet_normals.xnb
+Content\characters\normals\lord_lard_sheet_normals.xnb
+Content\terrain\various.xnb
+Content\terrain\various_normals.xnb
+Content\projectile.xnb
