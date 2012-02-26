@@ -23,6 +23,7 @@ namespace Vaerydian.Systems
         private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewPortMapper;
         private ComponentMapper m_HeadingMapper;
+        private ComponentMapper m_MapCollidableMapper;
         private int m_TileSize = 32;
 
         private Vector2 m_Center;
@@ -36,6 +37,7 @@ namespace Vaerydian.Systems
             m_GameMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             m_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
+            m_MapCollidableMapper = new ComponentMapper(new MapCollidable(), e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -49,7 +51,11 @@ namespace Vaerydian.Systems
             //get colidable entity's position
             Position pos = (Position)m_PositionMapper.get(entity);
             ViewPort camView = (ViewPort)m_ViewPortMapper.get(m_Camera);
+            MapCollidable mapCollide = (MapCollidable)m_MapCollidableMapper.get(entity);
             
+            //reset collision detection
+            mapCollide.Collided = false;
+
             //get the coliding entities position
             Vector2 colPos = pos.getPosition();
             
@@ -66,12 +72,19 @@ namespace Vaerydian.Systems
             if (polys == null)
                 return;
 
+            //collided
+            mapCollide.Collided = true;
+
+            Vector2 response;
+
             //for each tile polygon that we have collided with, find the heading correction vector
             //and update the position with it. The sum of the corrections, will resolve our position
             //to all collisions
             for (int i = 0; i < polys.Count; i++)
             {
-                colPos += correctHeading(colPoly, polys[i]);
+                response = correctHeading(colPoly, polys[i]);
+                mapCollide.ResponseVector += response;
+                colPos += response;
             }
 
             //set the corrected position
@@ -97,8 +110,10 @@ namespace Vaerydian.Systems
             for (int i = 0; i < A.TestPoints.Length; i++)
             {
                 //map the test point back-to the tile matrix
-                x = (int)((A.TestPoints[i].X + m_Center.X) / m_TileSize);
-                y = (int)((A.TestPoints[i].Y + m_Center.Y) / m_TileSize);
+                //x = (int)((A.TestPoints[i].X + m_Center.X) / m_TileSize);
+                //y = (int)((A.TestPoints[i].Y + m_Center.Y) / m_TileSize);
+                x = (int)((A.TestPoints[i].X) / m_TileSize);
+                y = (int)((A.TestPoints[i].Y) / m_TileSize);
 
                 //get a potential colliding tile
                 terrain = map.getTerrain(x, y);
@@ -137,7 +152,7 @@ namespace Vaerydian.Systems
             //for each tile, re-constitute its game-space location and then generate a polygon representing it
             for (int i = 0; i < tiles.Count; i++)
             {
-                temp = new Vector2((tiles[i].X * m_TileSize), tiles[i].Y * m_TileSize) - m_Center;
+                temp = new Vector2((tiles[i].X * m_TileSize), tiles[i].Y * m_TileSize);// -m_Center;
                 polys.Add(createSquarePolygon(temp,m_TileSize,m_TileSize));
             }
 

@@ -149,6 +149,9 @@
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
     <Compile Include="Components\AiBehavior.cs" />
+    <Compile Include="Components\BoundingPolygon.cs" />
+    <Compile Include="Components\Health.cs" />
+    <Compile Include="Components\Interactable.cs" />
     <Compile Include="Components\Projectile.cs" />
     <Compile Include="Components\CameraFocus.cs" />
     <Compile Include="Components\Debug\MapDebug.cs" />
@@ -160,6 +163,7 @@
     <Compile Include="Components\MapCollidable.cs" />
     <Compile Include="Components\MousePosition.cs" />
     <Compile Include="Components\Position.cs" />
+    <Compile Include="Components\SpatialPartition.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Components\Transform.cs" />
     <Compile Include="Components\Velocity.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="Systems\BehaviorSystem.cs" />
     <Compile Include="Systems\CameraFocusSystem.cs" />
     <Compile Include="Systems\DeferredSystem.cs" />
+    <Compile Include="Systems\HealthSystem.cs" />
     <Compile Include="Systems\MapDepthSystem.cs" />
     <Compile Include="Systems\MapNormalSystem.cs" />
     <Compile Include="Systems\MapSystem.cs" />
@@ -201,9 +206,16 @@
     <Compile Include="Systems\SpriteDepthSystem.cs" />
     <Compile Include="Systems\SpriteNormalSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
+    <Compile Include="Systems\HealthBarRenderSystem.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="Utils\Animation.cs" />
     <Compile Include="Utils\ASharpPathing.cs" />
+    <Compile Include="Utils\CollisionDetect.cs" />
+    <Compile Include="Utils\InteractionTypes.cs" />
+    <Compile Include="Utils\Polygon.cs" />
+    <Compile Include="Utils\QuadNode.cs" />
+    <Compile Include="Utils\QuadTree.cs" />
+    <Compile Include="Utils\VectorHelper.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
     <Compile Include="Windows\TextMenuWindow.cs" />
@@ -217,8 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VaerydianContent\VaerydianContent.contentproj">
-      <Name>VaerydianContent</Name>
+      <Name>VaerydianContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{9DE6F6B5-473A-4E20-B173-A11D37CC5354}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

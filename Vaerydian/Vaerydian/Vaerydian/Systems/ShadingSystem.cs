@@ -92,10 +92,16 @@ namespace Vaerydian.Systems
             int radius = light.LightRadius;
 
             //calculate the wide-view rectangle
+            Rectangle view = new Rectangle((int)(origin.X - radius),
+                                           (int)(origin.Y - radius), 
+                                           (int)(viewport.getDimensions().X + 2*radius), 
+                                           (int)(viewport.getDimensions().Y + 2*radius));
+            /*
             Rectangle view = new Rectangle((int)(origin.X - center.X - radius),
                                            (int)(origin.Y - center.Y - radius), 
                                            (int)(viewport.getDimensions().X + 2*radius), 
                                            (int)(viewport.getDimensions().Y + 2*radius));
+            */
 
             //if light is not on the screen, dont process it
             if (!view.Contains((int)(position.X), (int)(position.Y)))
@@ -112,7 +118,7 @@ namespace Vaerydian.Systems
             //get light source parameters
             s_ShadingEffect.Parameters["lightStrength"].SetValue(light.ActualPower);
             s_ShadingEffect.Parameters["lightPosition"].SetValue(position3);
-            s_ShadingEffect.Parameters["viewCenter"].SetValue(center3);
+            s_ShadingEffect.Parameters["viewCenter"].SetValue(new Vector3(0));//center3);
             s_ShadingEffect.Parameters["viewOrigin"].SetValue(origin3);
             s_ShadingEffect.Parameters["lightColor"].SetValue(light.Color);
             s_ShadingEffect.Parameters["lightRadius"].SetValue(light.LightRadius);

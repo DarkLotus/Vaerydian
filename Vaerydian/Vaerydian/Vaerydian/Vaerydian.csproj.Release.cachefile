@@ -38,8 +38,6 @@ Content\characters\normals\player_normal.xnb
 Content\reticle_normal.xnb
 Content\terrain\normals\mountains_normal2.xnb
 Content\terrain\normals\cascade_normal2.xnb
-Content\effects\Shading.xnb
-Content\effects\DiferredCombine.xnb
 Content\depth.xnb
 Content\terrain\terrain.xnb
 Content\terrain\terrain_normals.xnb
@@ -50,3 +48,6 @@ Content\characters\normals\lord_lard_sheet_normals.xnb
 Content\terrain\various.xnb
 Content\terrain\various_normals.xnb
 Content\projectile.xnb
+Content\projectile2.xnb
+Content\effects\Shading.xnb
+Content\effects\DiferredCombine.xnb

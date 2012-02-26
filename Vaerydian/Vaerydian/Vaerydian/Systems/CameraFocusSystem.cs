@@ -42,14 +42,15 @@ namespace Vaerydian.Systems
             ViewPort cameraView = (ViewPort)c_ViewportMapper.get(c_Camera);
 
             Vector2 cPos = cameraView.getOrigin();
+            Vector2 center = cPos + cameraView.getDimensions() / 2;
             Vector2 fPos = focusPosition.getPosition();
             float dist,radius;
-            dist = Vector2.Distance(fPos,cPos);
+            dist = Vector2.Distance(fPos,center);
             radius = focus.getFocusRadius();
 
             if (dist > radius)
             {
-                Vector2 vec = Vector2.Subtract(fPos, cPos);
+                Vector2 vec = Vector2.Subtract(fPos, center);
                 vec.Normalize();
 
                 cPos += Vector2.Multiply(vec, dist - radius);

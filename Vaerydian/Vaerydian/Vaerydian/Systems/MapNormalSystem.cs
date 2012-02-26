@@ -102,7 +102,7 @@ namespace Vaerydian.Systems
                     //calculate position to place tile
                     pos = new Vector2(x * m_TileSize, y * m_TileSize);
 
-                    m_SpriteBatch.Draw(m_Texture, pos, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
 

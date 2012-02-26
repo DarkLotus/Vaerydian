@@ -77,15 +77,14 @@ namespace Vaerydian.Systems
             GeometryMap geometry = (GeometryMap)m_GeometryMapper.get(m_Geometry);
 
             //update for current viewport location/dimensions
-
             
             //grab key viewport info
             Vector2 origin = m_ViewPort.getOrigin();
-            Vector2 center = m_ViewPort.getDimensions() / 2;
+            Vector2 dimensions = m_ViewPort.getDimensions();// / 2;
             Vector2 pos;
 
             //updateView(origin, center, m_ViewPort.getDimensions());
-            updateView();
+            updateView(map.Map,origin,dimensions);
 
             m_SpriteBatch.Begin();
 
@@ -104,7 +103,7 @@ namespace Vaerydian.Systems
                     //calculate position to place tile
                     pos = new Vector2(x*m_TileSize,y*m_TileSize);
 
-                    m_SpriteBatch.Draw(m_Texture, pos, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
 
@@ -176,23 +175,24 @@ namespace Vaerydian.Systems
         /// <summary>
         /// updates the tile indexes based on current viewport for the draw loop
         /// </summary>
-        private void updateView()
+        private void updateView(Map map, Vector2 origin, Vector2 dimensions)
         {
-            m_xStart = (int)m_ViewPort.getOrigin().X / m_TileSize;
+
+            m_xStart = (int)origin.X / m_TileSize;
             if (m_xStart <= 0)
                 m_xStart = 0;
 
-            m_xFinish = (int)(m_ViewPort.getOrigin().X + m_ViewPort.getDimensions().X) / m_TileSize;
-            if (m_xFinish >= m_ViewPort.getDimensions().X - 1)
-                m_xFinish = (int)m_ViewPort.getDimensions().X - 1;
+            m_xFinish = (int)(origin.X + dimensions.X) / m_TileSize;
+            if (m_xFinish >= map.XSize-1)//m_ViewPort.getDimensions().X - 1)
+                m_xFinish = map.XSize-1;// (int)m_ViewPort.getDimensions().X - 1;
 
-            m_yStart = (int)m_ViewPort.getOrigin().Y / m_TileSize;
+            m_yStart = (int)origin.Y / m_TileSize;
             if (m_yStart <= 0)
                 m_yStart = 0;
 
-            m_yFinish = (int)(m_ViewPort.getOrigin().Y + m_ViewPort.getDimensions().Y) / m_TileSize;
-            if (m_yFinish >= m_ViewPort.getDimensions().X - 1)
-                m_yFinish = (int)m_ViewPort.getDimensions().X - 1;
+            m_yFinish = (int)(origin.Y + dimensions.Y) / m_TileSize;
+            if (m_yFinish >= map.YSize-1)//m_ViewPort.getDimensions().X - 1)
+                m_yFinish = map.YSize-1;// (int)m_ViewPort.getDimensions().X - 1;
         }
 
         /// <summary>

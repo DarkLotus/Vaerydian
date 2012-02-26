@@ -141,14 +141,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="110592">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="123904">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>8PHYGCqSJYSyGV0mG4z2p71gbz4=</dsig:DigestValue>
+        <dsig:DigestValue>IHEDWqW+F7inb4msYW1aFUAfE4U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -245,22 +245,22 @@
       <dsig:DigestValue>xzExhNK+p17jp5+jY9lXzRJ8Mbs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\effects\DiferredCombine.xnb" size="828">
+  <file name="Content\effects\DiferredCombine.xnb" size="826">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>bL6NJNALaze/MQN9liRGSzovpdM=</dsig:DigestValue>
+      <dsig:DigestValue>2gMsbVkWhUYEgVfpWG0l31TONiY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\effects\Shading.xnb" size="1406">
+  <file name="Content\effects\Shading.xnb" size="1398">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>fQv6xjJ1H9E4LWPtkEfkKLjgERE=</dsig:DigestValue>
+      <dsig:DigestValue>uuu4lw81VX4niPaiUtaazaU+cf8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\export.xnb" size="191">
@@ -342,6 +342,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>p6M0wu+FITQhHRdGiX4fY51hBV4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\projectile2.xnb" size="298">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>VS/rr9Z53xysbj8FN8UF48vXLdg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\reticle.xnb" size="292">

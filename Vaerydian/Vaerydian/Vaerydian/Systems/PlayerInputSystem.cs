@@ -25,9 +25,11 @@ namespace Vaerydian.Systems
         private ComponentMapper p_LightMapper;
         private ComponentMapper p_TransformMapper;
         private ComponentMapper p_SpriteMapper;
+        private ComponentMapper p_SpatialMapper;
 
         private Entity p_Camera;
         private Entity p_Mouse;
+        private Entity p_Spatial;
 
         private const int MOVE_DOWN = 0;
         private const int MOVE_DOWNLEFT = 1;
@@ -41,6 +43,9 @@ namespace Vaerydian.Systems
         private Animation p_Movement = new Animation(6, 42);
 
         private bool p_Moved = false;
+        private bool p_FirstRun = true;
+
+        private QuadNode<Entity> p_LastNode;
 
         public PlayerInputSystem() : base() { }
 
@@ -53,12 +58,14 @@ namespace Vaerydian.Systems
             p_LightMapper = new ComponentMapper(new Light(), e_ECSInstance);
             p_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
             p_SpriteMapper = new ComponentMapper(new Sprite(), e_ECSInstance);
+            p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
         {
             p_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
             p_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");
+            p_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
         }
 
         protected override void process(Entity entity)
@@ -69,6 +76,14 @@ namespace Vaerydian.Systems
             Position mPosition = (Position)p_PositionMapper.get(p_Mouse);
             Transform transform = (Transform)p_TransformMapper.get(entity);
             Sprite sprite = (Sprite)p_SpriteMapper.get(entity);
+            SpatialPartition spatial = (SpatialPartition)p_SpatialMapper.get(p_Spatial);
+
+            if (p_FirstRun)
+            {
+                spatial.QuadTree.setContentAtLocation(entity, position.getPosition());
+                p_LastNode = spatial.QuadTree.locateNode(position.getPosition());
+                p_FirstRun = false;
+            }
 
             Vector2 pos = position.getPosition();
             float vel = velocity.getVelocity();
@@ -160,20 +175,11 @@ namespace Vaerydian.Systems
             {
                 position.setPosition(pos + head * vel);
             }
-            /*
-            if (head == new Vector2(0, 1)) { sprite.Y = MOVE_DOWN; }
-            else if (head == new Vector2(0, -1)) { sprite.Y = MOVE_UP; }
-            else if (head == new Vector2(1, 0)) { sprite.Y = MOVE_RIGHT; }
-            else if (head == new Vector2(-1, 0)) { sprite.Y = MOVE_LEFT; }
-            else if (head == new Vector2(1, 1)) { sprite.Y = MOVE_DOWNRIGHT; }
-            else if (head == new Vector2(1, -1)) { sprite.Y = MOVE_UPRIGHT; }
-            else if (head == new Vector2(-1, 1)) { sprite.Y = MOVE_DOWNLEFT; }
-            else if (head == new Vector2(-1, -1)) { sprite.Y = MOVE_UPLEFT; }
-            */
+
             Vector2 test = (mPosition.getPosition() + mPosition.getOffset()) - pos;
             test.Normalize();
 
-            float angle = getAngle(new Vector2(1,0), test);
+            float angle = VectorHelper.getAngle(new Vector2(1,0), test);
 
             if (angle >= 0.393f && angle < 1.178f) { sprite.Y = MOVE_UPRIGHT; }
             else if (angle >= 1.178f && angle < 1.963f) { sprite.Y = MOVE_UP; }
@@ -183,7 +189,6 @@ namespace Vaerydian.Systems
             else if (angle >= 4.320f && angle < 5.105f) { sprite.Y = MOVE_DOWN; }
             else if (angle >= 5.105f && angle < 5.890f) { sprite.Y = MOVE_DOWNRIGHT; }
             else if (angle >= 5.890f || angle < .393f) { sprite.Y = MOVE_RIGHT; }
-
 
             if(p_Moved)
                 sprite.X = p_Movement.updateFrame(e_ECSInstance.ElapsedTime);
@@ -236,7 +241,7 @@ namespace Vaerydian.Systems
 
                 //find vector pointing from entity towards reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec = getLeftNormal(vec);
+                vec = VectorHelper.getLeftNormal(vec);
                 vec.Normalize();
 
                 //issue new heading
@@ -255,7 +260,7 @@ namespace Vaerydian.Systems
 
                 //find vector pointing from entity towards reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec = getRightNormal(vec);
+                vec = VectorHelper.getRightNormal(vec);
                 vec.Normalize();
 
                 //issue new heading
@@ -266,13 +271,6 @@ namespace Vaerydian.Systems
                 position.setPosition(pos);
             }
 
-            /*
-            if (InputManager.isRightButtonClicked())
-            {
-                EntityFactory ef = new EntityFactory(e_ECSInstance);
-                ef.createStandaloneLight(true, 50, new Vector3(pos+position.getOffset(),10), 0.5f, Color.Yellow.ToVector4());
-            }*/
-
             if (InputManager.isLeftButtonClicked())
             {
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
@@ -281,7 +279,11 @@ namespace Vaerydian.Systems
 
                 dir.Normalize();
 
-                ef.createProjectile(pos, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Purple.ToVector4()));
+                Transform trans = new Transform();
+                trans.Rotation = 0;
+                //trans.RotationOrigin = new Vector2(16);
+
+                ef.createProjectile(pos + dir*16, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Purple.ToVector4()), trans, entity);
             }
 
             if (InputManager.isRightButtonDown())
@@ -292,12 +294,47 @@ namespace Vaerydian.Systems
 
                 dir.Normalize();
 
-                ef.createProjectile(pos, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.OrangeRed.ToVector4()));
+                Transform trans = new Transform();
+                trans.Rotation = 0;
+                //trans.RotationOrigin = new Vector2(16);
+
+                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+            } 
+
+            if (InputManager.isKeyPressed(Keys.Up))
+            {
+                transform.Rotation += 0.1f;
             }
 
+            if (InputManager.isKeyPressed(Keys.Down))
+            {
+                transform.Rotation -= 0.1f;
+            }
+
+            if (InputManager.isKeyPressed(Keys.Left))
+            {
+                transform.RotationOrigin = new Vector2(16,32);
+            }
+
+            if (InputManager.isKeyPressed(Keys.Right))
+            {
+                transform.RotationOrigin = new Vector2(0);
+            }
 
             if (!p_Moved)
+            {
                 p_Movement.reset();
+            }
+            else
+            {
+                //remove last reference and set new one
+                if(p_LastNode != null)
+                    p_LastNode.Contents.Remove(entity);
+                
+                spatial.QuadTree.setContentAtLocation(entity, pos);
+                p_LastNode = spatial.QuadTree.locateNode(position.getPosition());
+            }
+
 
         }
 
@@ -307,42 +344,6 @@ namespace Vaerydian.Systems
         }
 
 
-        private float getAngle(Vector2 a, Vector2 b)
-        {
-            Vector2 ta = a;
-            Vector2 tb = b;
-            ta.Normalize();
-            tb.Normalize();
-            
-            float dot = Vector2.Dot(ta, tb);
-            
-            if(ta.Y > tb.Y )
-                return (float)Math.Acos(dot);
-            else
-                return 6.283f - (float)Math.Acos(dot);
-        }
-
-        private Vector2 rotateVector(Vector2 vector, float angle)
-        {
-            float x = vector.X * (float)Math.Cos(angle) - vector.Y * (float)Math.Sin(angle);
-            float y = vector.X * (float)Math.Sin(angle) + vector.Y * (float)Math.Cos(angle);
-            return new Vector2(x, y);
-        }
-
-        private Vector2 getRightNormal(Vector2 vector)
-        {
-            Vector2 returnVec;
-            returnVec.X = -vector.Y;
-            returnVec.Y = vector.X;
-            return returnVec;
-        }
-
-        private Vector2 getLeftNormal(Vector2 vector)
-        {
-            Vector2 returnVec;
-            returnVec.X = vector.Y;
-            returnVec.Y = -vector.X;
-            return returnVec;
-        }
+        
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 
 using ECSFramework;
 
+using Microsoft.Xna.Framework;
+
 
 namespace Vaerydian.Components
 {
@@ -41,6 +43,14 @@ namespace Vaerydian.Components
         {
             get { return t_Rotation; }
             set { t_Rotation = value; }
+        }
+
+        private Vector2 t_RotationOrigin = new Vector2(0);
+
+        public Vector2 RotationOrigin
+        {
+            get { return t_RotationOrigin; }
+            set { t_RotationOrigin = value; }
         }
 
     }

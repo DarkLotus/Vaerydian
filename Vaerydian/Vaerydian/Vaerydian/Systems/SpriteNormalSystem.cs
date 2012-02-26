@@ -23,6 +23,7 @@ namespace Vaerydian.Systems
         private ComponentMapper s_ViewportMapper;
         private ComponentMapper s_SpriteMapper;
         private ComponentMapper s_GeometryMapper;
+        private ComponentMapper s_TranformMapper;
         private Entity s_Geometry;
 
         private Entity s_Camera;
@@ -39,6 +40,7 @@ namespace Vaerydian.Systems
             s_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             s_SpriteMapper = new ComponentMapper(new Sprite(), e_ECSInstance);
             s_GeometryMapper = new ComponentMapper(new GeometryMap(), e_ECSInstance);
+            s_TranformMapper = new ComponentMapper(new Transform(), e_ECSInstance); 
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -68,6 +70,7 @@ namespace Vaerydian.Systems
             Sprite sprite = (Sprite) s_SpriteMapper.get(entity);
             ViewPort viewport = (ViewPort) s_ViewportMapper.get(s_Camera);
             GeometryMap geometry = (GeometryMap)s_GeometryMapper.get(s_Geometry);
+            Transform transform = (Transform)s_TranformMapper.get(entity);
 
             Vector2 pos = position.getPosition();
             Vector2 origin = viewport.getOrigin();
@@ -76,8 +79,14 @@ namespace Vaerydian.Systems
             s_SpriteBatch.Begin();
 
             //s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-            s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos + center, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
-
+            if (transform != null)
+            {
+                s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos - origin + transform.RotationOrigin, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, transform.Rotation, transform.RotationOrigin, new Vector2(1), SpriteEffects.None, 0f);
+            }
+            else
+            {
+                s_SpriteBatch.Draw(s_Normals[sprite.NormalName], pos -origin, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+            }
             s_SpriteBatch.End();
         }
     }

@@ -9,8 +9,7 @@ using ECSFramework;
 using ECSFramework.Utils;
 
 using Vaerydian.Components;
-
-
+using Vaerydian.Utils;
 
 namespace Vaerydian.Systems
 {
@@ -20,9 +19,13 @@ namespace Vaerydian.Systems
         private ComponentMapper p_PositionMapper;
         private ComponentMapper p_VelocityMapper;
         private ComponentMapper p_HeadingMapper;
-        private ComponentMapper p_ViewPortMapper;
+        private ComponentMapper p_MapCollidableMapper;
+        private ComponentMapper p_TransformMapper;
+        private ComponentMapper p_SpatialMapper;
+        private ComponentMapper p_InteractionMapper;
+        private ComponentMapper p_HealthMapper;
 
-        private Entity p_Camera;
+        private Entity p_Spatial;
 
         public ProjectileSystem() { }
 
@@ -32,12 +35,17 @@ namespace Vaerydian.Systems
             p_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             p_VelocityMapper = new ComponentMapper(new Velocity(), e_ECSInstance);
             p_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
-            p_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
+            p_MapCollidableMapper = new ComponentMapper(new MapCollidable(), e_ECSInstance);
+            p_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
+            p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
+            p_InteractionMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
+            p_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
         {
-            p_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
+            p_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
+
         }
 
         protected override void process(Entity entity)
@@ -57,14 +65,79 @@ namespace Vaerydian.Systems
             Position position = (Position)p_PositionMapper.get(entity);
             Velocity velocity = (Velocity)p_VelocityMapper.get(entity);
             Heading heading = (Heading)p_HeadingMapper.get(entity);
-            ViewPort viewport = (ViewPort)p_ViewPortMapper.get(p_Camera);
+            SpatialPartition spatial = (SpatialPartition)p_SpatialMapper.get(p_Spatial);
 
-            Vector2 origin = viewport.getOrigin();
-            Vector2 center = viewport.getDimensions() / 2;
             Vector2 pos = position.getPosition();
 
-            pos += heading.getHeading() * velocity.getVelocity();
+            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(pos);
 
+            //anything retrieved?
+            if (locals != null)
+            {   //anyone aruond?
+                if (locals.Count > 0)
+                {
+                    //for all the locals see if we should do anything
+                    for (int i = 0; i < locals.Count; i++)
+                    {
+                        //dont interact with whom fired you
+                        if (locals[i] == projectile.Originator)
+                            continue;
+
+                        //is there an interaction available?
+                        Interactable interaction = (Interactable)p_InteractionMapper.get(locals[i]);
+                        if (interaction != null)
+                        {
+                            //get this local's position
+                            Position localPosition = (Position)p_PositionMapper.get(locals[i]);
+
+                            //are we close to it?
+                            //23 - minimal radial distance for collision to occur
+                            if (Vector2.Distance(pos + position.getOffset(), localPosition.getPosition() + localPosition.getOffset()) < 23)
+                            {
+                                //can we do anything to it?
+                                if (interaction.Interactions.Contains(InteractionTypes.PROJECTILE_COLLIDABLE) &&
+                                    interaction.Interactions.Contains(InteractionTypes.DAMAGEABLE))
+                                {
+                                    Health health = (Health)p_HealthMapper.get(locals[i]);
+
+                                    if (health != null)
+                                    {
+                                        //damage target
+                                        health.CurrentHealth -= 5;
+                                    }
+
+                                    //destory yourself
+                                    e_ECSInstance.deleteEntity(entity);
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            MapCollidable mapCollide = (MapCollidable)p_MapCollidableMapper.get(entity);
+
+            if (mapCollide != null)
+            {
+                if (mapCollide.Collided)
+                {
+                    Vector2 norm = mapCollide.ResponseVector;
+                    norm.Normalize();
+                    Vector2 reflect = Vector2.Reflect(heading.getHeading(), norm);
+                    reflect.Normalize();
+
+                    //Transform trans = (Transform)p_TransformMapper.get(entity);
+
+                    //trans.Rotation = -VectorHelper.getAngle2(new Vector2(1,0), reflect);
+
+                    heading.setHeading(reflect);
+                }
+            }
+            
+            pos += heading.getHeading() * velocity.getVelocity();
+            
             position.setPosition(pos);
         }
     }

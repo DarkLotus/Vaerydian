@@ -362,24 +362,6 @@
       <Time>2012-02-13T18:16:11.0074635-05:00</Time>
     </Item>
     <Item>
-      <Source>effects\Shading.fx</Source>
-      <Name>effects\Shading</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\Shading.xnb</Output>
-      <Time>2012-02-19T20:57:30.435597-05:00</Time>
-    </Item>
-    <Item>
-      <Source>effects\DiferredCombine.fx</Source>
-      <Name>effects\DiferredCombine</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\DiferredCombine.xnb</Output>
-      <Time>2012-02-14T14:58:53.1642441-05:00</Time>
-    </Item>
-    <Item>
       <Source>depth.png</Source>
       <Name>depth</Name>
       <Importer>TextureImporter</Importer>
@@ -468,6 +450,33 @@
       <Options>None</Options>
       <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\projectile.xnb</Output>
       <Time>2012-02-20T17:47:56.9608154-05:00</Time>
+    </Item>
+    <Item>
+      <Source>projectile2.png</Source>
+      <Name>projectile2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\projectile2.xnb</Output>
+      <Time>2012-02-22T16:36:28.6677514-05:00</Time>
+    </Item>
+    <Item>
+      <Source>effects\Shading.fx</Source>
+      <Name>effects\Shading</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\Shading.xnb</Output>
+      <Time>2012-02-19T20:57:30.435597-05:00</Time>
+    </Item>
+    <Item>
+      <Source>effects\DiferredCombine.fx</Source>
+      <Name>effects\DiferredCombine</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\DiferredCombine.xnb</Output>
+      <Time>2012-02-14T14:58:53.1642441-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

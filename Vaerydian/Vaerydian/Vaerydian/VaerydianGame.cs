@@ -42,6 +42,7 @@ namespace Vaerydian
         private EntitySystem behaviorSystem;
         private EntitySystem mapCollisionSystem;
         private EntitySystem projectileSystem;
+        private EntitySystem healthSystem;
 
         //draw systems
         private EntitySystem spriteRenderSystem;
@@ -52,6 +53,7 @@ namespace Vaerydian
         //private EntitySystem mapDepthSystem;
         private EntitySystem shadingSystem;
         private EntitySystem deferredSystem;
+        private EntitySystem healthBarRenderSystem;
 
         private EntityFactory entityFactory;
 
@@ -108,6 +110,7 @@ namespace Vaerydian
             behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
             mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
             projectileSystem = ecsInstance.SystemManager.setSystem(new ProjectileSystem(), new Projectile());
+            healthSystem = ecsInstance.SystemManager.setSystem(new HealthSystem(), new Health());
 
             //register render systems
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
@@ -118,6 +121,7 @@ namespace Vaerydian
             //mapDepthSystem = ecsInstance.SystemManager.setSystem(new MapDepthSystem(gameContainer), new GameMap());
             shadingSystem = ecsInstance.SystemManager.setSystem(new ShadingSystem(gameContainer), new Light());
             deferredSystem = ecsInstance.SystemManager.setSystem(new DeferredSystem(gameContainer), new GeometryMap());
+            healthBarRenderSystem = ecsInstance.SystemManager.setSystem(new HealthBarRenderSystem(gameContainer), new Health());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -125,6 +129,9 @@ namespace Vaerydian
             ecsInstance.ComponentManager.registerComponentType(new Heading());
             ecsInstance.ComponentManager.registerComponentType(new MapDebug());
             ecsInstance.ComponentManager.registerComponentType(new Transform());
+            ecsInstance.ComponentManager.registerComponentType(new SpatialPartition());
+            ecsInstance.ComponentManager.registerComponentType(new Interactable());
+            ecsInstance.ComponentManager.registerComponentType(new BoundingPolygon());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -155,32 +162,35 @@ namespace Vaerydian
             entityFactory.createCamera();
             entityFactory.createMousePointer();
 
-            //entityFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
-            //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
-            //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
-            //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
+            entityFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
+            entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
+            entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
+            entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
 
             //create cave
-            entityFactory.createCave();
-            //entityFactory.CreateTestMap();
-
+            //entityFactory.createCave();
+            entityFactory.CreateTestMap();
+            
             //create map debug
             entityFactory.createMapDebug();
 
             //create lights
             
-            for (int i = -5; i < 5; i++)
+            for (int i = 0; i <= 5; i++)
             {
-                for (int j = -5; j < 5; j++)
+                for (int j = 0; j <= 5; j++)
                 {
-                    //entityFactory.createRandomLight();
-                    entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .2f,
+                    //entityFactory.createRandomLight(;)
+                    entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .5f,
                         new Vector4(.5f,.5f,.7f, (float)rand.NextDouble()));
                 }
             }
 
             //create GeometryMap
             entityFactory.createGeometryMap();
+
+            //create spatialpartition
+            entityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
 
             //load fonts
             fontManager.LoadContent();
@@ -248,6 +258,7 @@ namespace Vaerydian
             mousePointerSystem.process();
             behaviorSystem.process();
             projectileSystem.process();
+            healthSystem.process();
 
             mapCollisionSystem.process();
 
@@ -298,11 +309,14 @@ namespace Vaerydian
             //run differed system
             deferredSystem.process();
 
+            healthBarRenderSystem.process();
+
             //begin the sprite batch
             spriteBatch.Begin();
 
             //display performance
             spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + disp, new Vector2(0), Color.Red);
+            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
 
             //end sprite batch
             spriteBatch.End();
@@ -358,7 +372,7 @@ namespace Vaerydian
         {
             // Draw some debug textures
             spriteBatch.Begin();
-
+            
             Rectangle size = new Rectangle(0, 0, geometry.ColorMap.Width / 3, geometry.ColorMap.Height / 3);
             var position = new Vector2(0, GraphicsDevice.Viewport.Height - size.Height);
             spriteBatch.Draw(

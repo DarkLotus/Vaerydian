@@ -11,7 +11,7 @@ using ECSFramework;
 using Vaerydian.Components;
 using Vaerydian.Components.Debug;
 using Vaerydian.Behaviors;
-
+using Vaerydian.Utils;
 
 using WorldGeneration.Cave;
 using WorldGeneration.World;
@@ -43,6 +43,7 @@ namespace Vaerydian.Factories
         {
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
+            //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Controllable());
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
@@ -90,12 +91,23 @@ namespace Vaerydian.Factories
             Entity e = e_EcsInstance.create(); 
 
             e_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(12.5f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals",32,32,0,0));
             e_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new SimpleFollowBehavior(e, target, distance, e_EcsInstance)));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
             e_EcsInstance.EntityManager.addComponent(e, new Transform());
+
+            Health health = new Health(50);
+            health.RecoveryAmmount = 2;
+            health.RecoveryRate = 500;
+            e_EcsInstance.EntityManager.addComponent(e, health);
+
+            Interactable interact = new Interactable();
+            interact.Interactions.Add(InteractionTypes.PROJECTILE_COLLIDABLE);
+            interact.Interactions.Add(InteractionTypes.DAMAGEABLE);
+            e_EcsInstance.EntityManager.addComponent(e, interact);
+
 
             e_EcsInstance.refresh(e);
 
@@ -240,7 +252,7 @@ namespace Vaerydian.Factories
 
         }
 
-        public void createProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light)
+        public void createCollidingProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
         {
             Entity e = e_EcsInstance.create();
 
@@ -248,7 +260,35 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
-            e_EcsInstance.EntityManager.addComponent(e, new Projectile(duration));
+            
+            Projectile projectile = new Projectile(duration);
+            projectile.Originator = originator;
+            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            
+            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+            e_EcsInstance.EntityManager.addComponent(e, transform);
+
+            if (light != null)
+                e_EcsInstance.EntityManager.addComponent(e, light);
+
+            e_EcsInstance.refresh(e);
+
+        }
+
+        public void createProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
+        {
+            Entity e = e_EcsInstance.create();
+
+            e_EcsInstance.EntityManager.addComponent(e, new Position(start, new Vector2(16)));
+            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+
+            Projectile projectile = new Projectile(duration);
+            projectile.Originator = originator;
+            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            
+            e_EcsInstance.EntityManager.addComponent(e, transform);
             //e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
 
             if (light != null)
@@ -256,6 +296,22 @@ namespace Vaerydian.Factories
 
             e_EcsInstance.refresh(e);
 
+        }
+
+        public void createSpatialPartition(Vector2 ul, Vector2 lr, int tiers)
+        {
+            Entity e = e_EcsInstance.create();
+
+            SpatialPartition spatial = new SpatialPartition();
+
+            spatial.QuadTree = new QuadTree<Entity>(ul, lr);
+            spatial.QuadTree.buildQuadTree(tiers);
+
+            e_EcsInstance.EntityManager.addComponent(e, spatial);
+
+            e_EcsInstance.TagManager.tagEntity("SPATIAL", e);
+
+            e_EcsInstance.refresh(e);
         }
 
     }

@@ -54,5 +54,13 @@ namespace Vaerydian.Components
             get { return p_ElapsedTime; }
             set { p_ElapsedTime = value; }
         }
+
+        private Entity p_Originator;
+
+        public Entity Originator
+        {
+            get { return p_Originator; }
+            set { p_Originator = value; }
+        }
     }
 }
