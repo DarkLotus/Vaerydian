@@ -10,8 +10,10 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 using Vaerydian.Utils;
+using Vaerydian.Factories;
 
-namespace Vaerydian.Systems
+
+namespace Vaerydian.Systems.Update
 {
     class ProjectileSystem : EntityProcessingSystem
     {
@@ -27,6 +29,8 @@ namespace Vaerydian.Systems
 
         private Entity p_Spatial;
 
+        private UtilFactory p_Factory;
+
         public ProjectileSystem() { }
 
         public override void initialize()
@@ -40,6 +44,8 @@ namespace Vaerydian.Systems
             p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
             p_InteractionMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
             p_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
+
+            p_Factory = new UtilFactory(e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -95,16 +101,12 @@ namespace Vaerydian.Systems
                             if (Vector2.Distance(pos + position.getOffset(), localPosition.getPosition() + localPosition.getOffset()) < 23)
                             {
                                 //can we do anything to it?
-                                if (interaction.Interactions.Contains(InteractionTypes.PROJECTILE_COLLIDABLE) &&
-                                    interaction.Interactions.Contains(InteractionTypes.DAMAGEABLE))
+                                if(interaction.SupportedInteractions.PROJECTILE_COLLIDABLE &&
+                                    interaction.SupportedInteractions.ATTACKABLE)
                                 {
-                                    Health health = (Health)p_HealthMapper.get(locals[i]);
 
-                                    if (health != null)
-                                    {
-                                        //damage target
-                                        health.CurrentHealth -= 5;
-                                    }
+                                    p_Factory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
+
 
                                     //destory yourself
                                     e_ECSInstance.deleteEntity(entity);

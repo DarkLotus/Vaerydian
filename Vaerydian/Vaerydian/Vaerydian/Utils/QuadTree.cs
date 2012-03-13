@@ -153,7 +153,7 @@ namespace Vaerydian.Utils
         {
             return locateNode(rootNode, point);
         }
-
+         
         private QuadNode<E> locateNode(QuadNode<E> node, Vector2 point)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)

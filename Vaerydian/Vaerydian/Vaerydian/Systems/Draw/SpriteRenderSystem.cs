@@ -11,7 +11,7 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Draw
 {
     class SpriteRenderSystem : EntityProcessingSystem
     {
@@ -83,11 +83,11 @@ namespace Vaerydian.Systems
             //s_SpriteBatch.Draw(s_Textures[sprite.getTextureName()], pos+center , null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None,0f);
             if (transform != null)
             {
-                s_SpriteBatch.Draw(s_Textures[sprite.TextureName], pos - origin + transform.RotationOrigin, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, transform.Rotation, transform.RotationOrigin, new Vector2(1), SpriteEffects.None, 0f);
+                s_SpriteBatch.Draw(s_Textures[sprite.TextureName], pos - origin + transform.RotationOrigin, new Rectangle(sprite.Column * sprite.Width, sprite.Row * sprite.Height, sprite.Width, sprite.Height), Color.White, transform.Rotation, transform.RotationOrigin, new Vector2(1), SpriteEffects.None, 0f);
             }
             else
             {
-                s_SpriteBatch.Draw(s_Textures[sprite.TextureName], pos - origin, new Rectangle(sprite.X * sprite.Width, sprite.Y * sprite.Height, sprite.Width, sprite.Height), Color.White, 0f, new Vector2(0, 0), new Vector2(1), SpriteEffects.None, 0f);
+                s_SpriteBatch.Draw(s_Textures[sprite.TextureName], pos - origin, new Rectangle(sprite.Column * sprite.Width, sprite.Row * sprite.Height, sprite.Width, sprite.Height), Color.White, 0f, new Vector2(0, 0), new Vector2(1), SpriteEffects.None, 0f);
             }
 
             s_SpriteBatch.End();

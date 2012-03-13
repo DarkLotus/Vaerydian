@@ -11,7 +11,7 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Draw
 {
     class SpriteDepthSystem : EntityProcessingSystem
     {

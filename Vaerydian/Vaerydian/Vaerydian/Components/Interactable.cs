@@ -37,13 +37,15 @@ namespace Vaerydian.Components
             i_TypeID = typeId;
         }
 
-        private List<short> i_Interactions = new List<short>();
+        private SupportedInteractions i_SupportedInteractions = new SupportedInteractions();
 
-        public List<short> Interactions
+        public SupportedInteractions SupportedInteractions
         {
-            get { return i_Interactions; }
-            set { i_Interactions = value; }
+            get { return i_SupportedInteractions; }
+            set { i_SupportedInteractions = value; }
         }
+
+
 
     }
 }

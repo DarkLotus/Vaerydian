@@ -13,7 +13,7 @@ using Vaerydian.Components;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Update
 {
     class PlayerInputSystem : EntityProcessingSystem
     {
@@ -46,6 +46,8 @@ namespace Vaerydian.Systems
         private bool p_FirstRun = true;
 
         private QuadNode<Entity> p_LastNode;
+
+        private Random rand = new Random();
 
         public PlayerInputSystem() : base() { }
 
@@ -93,7 +95,7 @@ namespace Vaerydian.Systems
             int dirCount = 0;
 
             //reset animation
-            sprite.X = 0;
+            sprite.Column = 0;
             p_Moved = false;
 
             //should we exit?
@@ -181,17 +183,17 @@ namespace Vaerydian.Systems
 
             float angle = VectorHelper.getAngle(new Vector2(1,0), test);
 
-            if (angle >= 0.393f && angle < 1.178f) { sprite.Y = MOVE_UPRIGHT; }
-            else if (angle >= 1.178f && angle < 1.963f) { sprite.Y = MOVE_UP; }
-            else if (angle >= 1.963f && angle < 2.749f) { sprite.Y = MOVE_UPLEFT; }
-            else if (angle >= 2.749f && angle < 3.534f) { sprite.Y = MOVE_LEFT; }
-            else if (angle >= 3.534f && angle < 4.320f) { sprite.Y = MOVE_DOWNLEFT; }
-            else if (angle >= 4.320f && angle < 5.105f) { sprite.Y = MOVE_DOWN; }
-            else if (angle >= 5.105f && angle < 5.890f) { sprite.Y = MOVE_DOWNRIGHT; }
-            else if (angle >= 5.890f || angle < .393f) { sprite.Y = MOVE_RIGHT; }
+            if (angle >= 0.393f && angle < 1.178f) { sprite.Row = MOVE_UPRIGHT; }
+            else if (angle >= 1.178f && angle < 1.963f) { sprite.Row = MOVE_UP; }
+            else if (angle >= 1.963f && angle < 2.749f) { sprite.Row = MOVE_UPLEFT; }
+            else if (angle >= 2.749f && angle < 3.534f) { sprite.Row = MOVE_LEFT; }
+            else if (angle >= 3.534f && angle < 4.320f) { sprite.Row = MOVE_DOWNLEFT; }
+            else if (angle >= 4.320f && angle < 5.105f) { sprite.Row = MOVE_DOWN; }
+            else if (angle >= 5.105f && angle < 5.890f) { sprite.Row = MOVE_DOWNRIGHT; }
+            else if (angle >= 5.890f || angle < .393f) { sprite.Row = MOVE_RIGHT; }
 
             if(p_Moved)
-                sprite.X = p_Movement.updateFrame(e_ECSInstance.ElapsedTime);
+                sprite.Column = p_Movement.updateFrame(e_ECSInstance.ElapsedTime);
 
 
             //transform.Rotation = getAngle(pos, mPosition.getPosition());
@@ -275,7 +277,7 @@ namespace Vaerydian.Systems
             {
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() - pos;
+                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
 
                 dir.Normalize();
 
@@ -290,7 +292,7 @@ namespace Vaerydian.Systems
             {
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() - pos;
+                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
 
                 dir.Normalize();
 
@@ -332,18 +334,19 @@ namespace Vaerydian.Systems
                     p_LastNode.Contents.Remove(entity);
                 
                 spatial.QuadTree.setContentAtLocation(entity, pos);
-                p_LastNode = spatial.QuadTree.locateNode(position.getPosition());
+                p_LastNode = spatial.QuadTree.locateNode(position.getPosition()); 
             }
 
+            if(InputManager.isKeyToggled(Keys.P))
+            {
+                
+                EntityFactory ef = new EntityFactory(e_ECSInstance);
+                ef.createFollower(mPosition.getPosition() + mPosition.getOffset() - new Vector2(16), entity, rand.Next(300));
+
+            }
 
         }
 
-        private void adjustRotation(Vector2 me, Vector2 other)
-        {
-            
-        }
-
-
-        
+       
     }
 }

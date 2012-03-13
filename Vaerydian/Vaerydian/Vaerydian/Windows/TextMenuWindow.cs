@@ -21,9 +21,9 @@ namespace Vaerydian.Windows
 
         private Texture2D tmw_FrameCorner2;
 
-        private Point tmw_Origin;
+        private Vector2 tmw_Origin;
 
-        private Point tmw_Size;
+        private Vector2 tmw_Size;
 
         private int tmw_Offset = 10;
 
@@ -58,7 +58,7 @@ namespace Vaerydian.Windows
         /// <param name="size">size of the window</param>
         /// <param name="startTime">time window is called</param>
         /// <param name="duration">time window is to be alive</param>
-        public TextMenuWindow(Point origin, List<String> menuItems, String fontName)
+        public TextMenuWindow(Vector2 origin, List<String> menuItems, String fontName)
         {
             tmw_Origin = origin;
             tmw_MenuItems = menuItems;
@@ -84,7 +84,9 @@ namespace Vaerydian.Windows
             }
 
             //adjust the size of the menu
-            tmw_Size = new Point(max + (2 * tmw_Offset), (tmw_MenuItems.Count+2) * tmw_Offset);
+            tmw_Size = new Vector2(max + (2 * tmw_Offset), (tmw_MenuItems.Count+2) * tmw_Offset);
+
+            tmw_Origin.X -= tmw_Size.X / 2;
         }
 
 
@@ -130,13 +132,17 @@ namespace Vaerydian.Windows
             spritebatch.Begin();
 
             //draw the frame background
-            spritebatch.Draw(tmw_FrameBackground, new Vector2(tmw_Origin.X, tmw_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                             new Vector2(tmw_Size.X, tmw_Size.Y), SpriteEffects.None, 0);
+            //spritebatch.Draw(tmw_FrameBackground, new Vector2(tmw_Origin.X, tmw_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
+                             //new Vector2(tmw_Size.X, tmw_Size.Y), SpriteEffects.None, 0);
+
+            spritebatch.Draw(tmw_FrameBackground, new Rectangle((int)tmw_Origin.X, (int)tmw_Origin.Y, (int)tmw_Size.X, (int)tmw_Size.Y), Color.White *0.7f);
 
             //draw the frame vertical borders
             //draw right border
-            spritebatch.Draw(tmw_FrameVertical, new Vector2(tmw_Origin.X, tmw_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, tmw_Size.Y), SpriteEffects.None, 0);
+            //spritebatch.Draw(tmw_FrameVertical, new Vector2(tmw_Origin.X, tmw_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
+                                         //new Vector2(1, tmw_Size.Y), SpriteEffects.None, 0);
+
+            spritebatch.Draw(tmw_FrameVertical, new Rectangle((int)tmw_Origin.X, (int)tmw_Origin.Y, 5, (int)tmw_Size.Y), Color.White);
 
             //draw left border
             spritebatch.Draw(tmw_FrameVertical, new Vector2(tmw_Origin.X + tmw_Size.X, tmw_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
@@ -167,14 +173,12 @@ namespace Vaerydian.Windows
                                          new Vector2(1, 1), SpriteEffects.None, 0);
 
             //draw the menu items
-
             for(int i = 0; i < tmw_MenuItems.Count; i++)
             {
 
                 //highlight the indexed menu item
                 if (tmw_MenuIndex == i)
                 {
-                    tmw_Offset = FontManager.Instance.Fonts[tmw_FontName].LineSpacing;
                     spritebatch.DrawString(FontManager.Instance.Fonts[tmw_FontName], tmw_MenuItems[i], new Vector2(tmw_Origin.X + tmw_Offset, tmw_Origin.Y + tmw_Offset * (i + 1)), Color.Yellow);
                 }
                 else

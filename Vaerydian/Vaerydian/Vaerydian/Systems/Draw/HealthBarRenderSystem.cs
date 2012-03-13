@@ -12,7 +12,7 @@ using Vaerydian;
 using Vaerydian.Components;
 
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Draw
 {
     class HealthBarRenderSystem : EntityProcessingSystem
     {
@@ -51,21 +51,27 @@ namespace Vaerydian.Systems
 
         protected override void process(Entity entity)
         {
+            //grab components
             Position position = (Position)h_PositionMapper.get(entity);
             ViewPort camera = (ViewPort)h_ViewportMapper.get(h_Camera);
             Health health = (Health)h_HealthMapper.get(entity);
 
+            //get vectors for easy working
             Vector2 pos = position.getPosition();
             Vector2 origin = camera.getOrigin();
 
+            //calculate current HP percentage
             float percentage = (float)health.CurrentHealth / (float)health.MaxHealth;
 
+            //set the maximum x-distance that we have to draw, up to 32 pixels
             int max = (int)(32 * percentage);
-
+            
+            //construct the drawing region rectangle
             Rectangle rect = new Rectangle((int)(pos.X-origin.X),(int)(pos.Y - 10 -origin.Y),max,5);
 
             h_SpriteBatch.Begin();
 
+            //draw the health bar
             h_SpriteBatch.Draw(h_Texture, rect, Color.Red);
 
             h_SpriteBatch.End();

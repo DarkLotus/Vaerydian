@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Vaerydian.Utils;
+
 namespace Vaerydian.Items
 {
     public enum WeaponType
@@ -23,20 +25,6 @@ namespace Vaerydian.Items
     {
         Bow,
         Crossbow,
-    }
-
-    public enum DamageType
-    {
-        Common,
-        Fire,
-        Ice,
-        Poison,
-        Disease,
-        Order,
-        Chaos,
-        Light,
-        Dark,
-        Arcane,
     }
 
     public class Weapon : Item

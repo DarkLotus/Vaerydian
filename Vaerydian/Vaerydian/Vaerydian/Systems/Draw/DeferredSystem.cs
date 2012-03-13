@@ -11,7 +11,7 @@ using ECSFramework;
 using Vaerydian;
 using Vaerydian.Components;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Draw
 {
     class DeferredSystem : EntityProcessingSystem
     {

@@ -14,31 +14,36 @@ namespace Vaerydian.Screens
     class StartScreen : Screen
     {
 
-        private TextMenuWindow ss_TextMenu;
+        private TextMenuWindow s_TextMenu;
 
-        private List<String> ss_MenuItems = new List<String>();
+        private List<String> s_MenuItems = new List<String>();
 
-        private Texture2D ss_TitleTexture;
+        private Texture2D s_TitleTexture;
 
-        private SpriteBatch ss_SpriteBatch;
+        private SpriteBatch s_SpriteBatch;
+
+        private Rectangle s_BackgroundRect;
+
+        private float s_yTextOffset;
 
         public override void Initialize()
         {
             base.Initialize();
 
             //create the menu items
-            ss_MenuItems.Add("New Game");//0
-            ss_MenuItems.Add("Load Game");//1
-            ss_MenuItems.Add("Options");//2
-            ss_MenuItems.Add("Exit");//3
-            ss_MenuItems.Add("Instructions");//4
-            ss_MenuItems.Add("Combat Test");//5
-            ss_MenuItems.Add("Cave Test");//6
+            s_MenuItems.Add("New Game");//0
+            s_MenuItems.Add("Load Game");//1
+            s_MenuItems.Add("Options");//2
+            s_MenuItems.Add("Exit");//3
+            s_MenuItems.Add("Instructions");//4
+            s_MenuItems.Add("Combat Test");//5
+            s_MenuItems.Add("Cave Test");//6
             //create the menu
-            ss_TextMenu = new TextMenuWindow(new Point(400, 300), ss_MenuItems, "StartScreen");
+            s_TextMenu = new TextMenuWindow(new Vector2(384, 240), s_MenuItems, "StartScreen");//"StartScreen");
             //register the menu
-            this.ScreenManager.WindowManager.addWindow(ss_TextMenu);
+            this.ScreenManager.WindowManager.addWindow(s_TextMenu);
 
+            s_BackgroundRect = new Rectangle(0, 0, 768, 480);
         }
 
         public override void LoadContent()
@@ -46,8 +51,8 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             //load title texture
-            ss_TitleTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
-
+            s_TitleTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
+            s_yTextOffset = FontManager.Instance.Fonts["StartScreen"].LineSpacing;
         }
 
         public override void UnloadContent()
@@ -57,67 +62,55 @@ namespace Vaerydian.Screens
 
         }
 
-        public override void handleInput(GameTime gameTime)
+        public override void hasFocusUpdate(GameTime gameTime)
         {
-            base.handleInput(gameTime);
+            base.hasFocusUpdate(gameTime);
 
             if(InputManager.isKeyToggled(Keys.Up))//move selection up
             {
-                if (ss_TextMenu.MenuIndex > 0)
+                if (s_TextMenu.MenuIndex > 0)
                 {
-                    ss_TextMenu.MenuIndex -= 1;
+                    s_TextMenu.MenuIndex -= 1;
                 }
             }
             else if(InputManager.isKeyToggled(Keys.Down))//move selection down
             {
-                if (ss_TextMenu.MenuIndex < ss_MenuItems.Count - 1)
+                if (s_TextMenu.MenuIndex < s_MenuItems.Count - 1)
                 {
-                    ss_TextMenu.MenuIndex += 1;
+                    s_TextMenu.MenuIndex += 1;
                 }
             }
             else if (InputManager.isKeyToggled(Keys.Enter))
             {
                 //perform the selected action
-                if (ss_TextMenu.MenuIndex == 0)//player selected to start a new game
+                if (s_TextMenu.MenuIndex == 0)//player selected to start a new game
                 {
                     //dispose of this screen
                     this.ScreenManager.removeScreen(this);
                     //dispose of the menu
-                    this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
+                    this.ScreenManager.WindowManager.removeWindow(s_TextMenu);
                     //load the world screen
                     LoadingScreen.Load(this.ScreenManager, true, new GameScreen());
                 }
-                else if (ss_TextMenu.MenuIndex == 1)//player wants to load a game
+                else if (s_TextMenu.MenuIndex == 1)//player wants to load a game
                 {
                 }
-                else if (ss_TextMenu.MenuIndex == 2)//player wants to goto options menu
+                else if (s_TextMenu.MenuIndex == 2)//player wants to goto options menu
                 {
                 }
-                else if (ss_TextMenu.MenuIndex == 3)//player wants to quit
+                else if (s_TextMenu.MenuIndex == 3)//player wants to quit
                 {
                     //tell the input manager that the player wants to quit
                     InputManager.YesExit = true;
                 }
-                else if (ss_TextMenu.MenuIndex == 4)
+                else if (s_TextMenu.MenuIndex == 4)
                 {
                 }
-                else if (ss_TextMenu.MenuIndex == 5)//test combat
+                else if (s_TextMenu.MenuIndex == 5)//test combat
                 {
-                    //dispose of this screen
-                    this.ScreenManager.removeScreen(this);
-                    //dispose of the menu
-                    this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
-                    //load the world screen
-                    LoadingScreen.Load(this.ScreenManager, true, new CombatScreen());
                 }
-                else if (ss_TextMenu.MenuIndex == 6)
+                else if (s_TextMenu.MenuIndex == 6)
                 {
-                    //dispose of this screen
-                    this.ScreenManager.removeScreen(this);
-                    //dispose of the menu
-                    this.ScreenManager.WindowManager.removeWindow(ss_TextMenu);
-                    //load the cave screen
-                    LoadingScreen.Load(this.ScreenManager, true, new CaveScreen());
                 }
 
             }
@@ -133,16 +126,16 @@ namespace Vaerydian.Screens
         {
             base.Draw(gameTime);
 
-            ss_SpriteBatch = this.ScreenManager.SpriteBatch;
+            s_SpriteBatch = this.ScreenManager.SpriteBatch;
 
-            ss_SpriteBatch.Begin();
+            s_SpriteBatch.Begin();
 
             //display title texture
-            ss_SpriteBatch.Draw(ss_TitleTexture, Vector2.Zero, Color.White);
+            s_SpriteBatch.Draw(s_TitleTexture, s_BackgroundRect, Color.White);
 
-            ss_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], GameSession.Instance.GameVersion, Vector2.Zero, Color.White);
+            s_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], GameSession.Instance.GameVersion, new Vector2(0,480-s_yTextOffset), Color.White);
 
-            ss_SpriteBatch.End();
+            s_SpriteBatch.End();
         }
 
         

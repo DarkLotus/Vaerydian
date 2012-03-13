@@ -17,7 +17,7 @@ using WorldGeneration.World;
 namespace Vaerydian.Screens
 {
 
-    public class ViewPort
+    public class ScreenViewPort
     {
         public Point Origin = new Point();
         public Point Dimensions = new Point();
@@ -57,7 +57,7 @@ namespace Vaerydian.Screens
 
         private int yFinish = 640;
 
-        private ViewPort ws_ViewPort = new ViewPort();
+        private ScreenViewPort ws_ViewPort = new ScreenViewPort();
 
         private int ws_TileSize = 1;
 
@@ -150,9 +150,9 @@ namespace Vaerydian.Screens
         /// <summary>
         /// handles all screen related input
         /// </summary>
-        public override void handleInput(GameTime gameTime)
+        public override void hasFocusUpdate(GameTime gameTime)
         {
-            base.handleInput(gameTime);
+            base.hasFocusUpdate(gameTime);
 
             //check to see if escape was recently pressed
             if (InputManager.isKeyToggled(Keys.Escape))

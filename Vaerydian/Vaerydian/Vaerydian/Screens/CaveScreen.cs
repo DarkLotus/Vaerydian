@@ -28,7 +28,7 @@ namespace Vaerydian.Screens
 
         private int cs_yFinish = 640;
 
-        private ViewPort cs_ViewPort = new ViewPort();
+        private ScreenViewPort cs_ViewPort = new ScreenViewPort();
 
         private int cs_TileSize = 5;
 
@@ -81,9 +81,9 @@ namespace Vaerydian.Screens
             base.UnloadContent();
         }
 
-        public override void handleInput(GameTime gameTime)
+        public override void hasFocusUpdate(GameTime gameTime)
         {
-            base.handleInput(gameTime);
+            base.hasFocusUpdate(gameTime);
 
             if(InputManager.isKeyToggled(Keys.Escape))
             {

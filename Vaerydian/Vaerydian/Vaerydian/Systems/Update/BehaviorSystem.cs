@@ -13,7 +13,7 @@ using BehaviorLibrary;
 using Vaerydian.Components;
 
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Update
 {
     class BehaviorSystem : EntityProcessingSystem
     {

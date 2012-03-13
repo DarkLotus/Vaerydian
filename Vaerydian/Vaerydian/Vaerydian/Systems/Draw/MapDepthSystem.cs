@@ -15,7 +15,7 @@ using WorldGeneration.Utils;
 using Vaerydian.Components;
 using Vaerydian.Components.Debug;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Draw
 {
     class MapDepthSystem : EntityProcessingSystem
     {

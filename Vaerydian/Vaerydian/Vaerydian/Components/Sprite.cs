@@ -25,8 +25,8 @@ namespace Vaerydian.Components
             s_NormalName = normalName;
             s_Height = height;
             s_Width = width;
-            s_X = xInd;
-            s_Y = yInd;
+            s_Column = xInd;
+            s_Row = yInd;
         }
 
         public int getEntityId()
@@ -91,20 +91,20 @@ namespace Vaerydian.Components
             set { s_Width = value; }
         }
 
-        private int s_X;
+        private int s_Column;
 
-        public int X
+        public int Column
         {
-            get { return s_X; }
-            set { s_X = value; }
+            get { return s_Column; }
+            set { s_Column = value; }
         }
 
-        private int s_Y;
+        private int s_Row;
 
-        public int Y
+        public int Row
         {
-            get { return s_Y; }
-            set { s_Y = value; }
+            get { return s_Row; }
+            set { s_Row = value; }
         }
 
     }

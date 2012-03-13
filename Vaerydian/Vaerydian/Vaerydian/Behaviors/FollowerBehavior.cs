@@ -22,7 +22,7 @@ using Vaerydian.Behaviors.Actions;
 
 namespace Vaerydian.Behaviors
 {
-    class SimpleFollowBehavior : CharacterBehavior
+    class FollowerBehavior : CharacterBehavior
     {
 
         private Behavior s_Behavior;
@@ -104,7 +104,7 @@ namespace Vaerydian.Behaviors
 
         private Animation s_Animation = new Animation(6, 42);
 
-        public SimpleFollowBehavior(Entity entity, Entity target, float followDistance, ECSInstance ecsInstance)
+        public FollowerBehavior(Entity entity, Entity target, float followDistance, ECSInstance ecsInstance)
         {
             //perform all needed setup
             s_ThisEntity = entity;
@@ -263,26 +263,33 @@ namespace Vaerydian.Behaviors
 
         private BehaviorReturnCode updateAnimation()
         {
+            //grab components
             Sprite sprite = (Sprite)s_SpriteMapper.get(s_ThisEntity);
             Heading heading = (Heading)s_HeadingMapper.get(s_ThisEntity);
 
-            sprite.X = 0;
+            //reset animation index
+            sprite.Column = 0;
 
+            //determine angle of heading
             float angle = VectorHelper.getAngle(new Vector2(1, 0), heading.getHeading());
 
-            if (angle >= 0.393f && angle < 1.178f) { sprite.Y = MOVE_UPRIGHT; }
-            else if (angle >= 1.178f && angle < 1.963f) { sprite.Y = MOVE_UP; }
-            else if (angle >= 1.963f && angle < 2.749f) { sprite.Y = MOVE_UPLEFT; }
-            else if (angle >= 2.749f && angle < 3.534f) { sprite.Y = MOVE_LEFT; }
-            else if (angle >= 3.534f && angle < 4.320f) { sprite.Y = MOVE_DOWNLEFT; }
-            else if (angle >= 4.320f && angle < 5.105f) { sprite.Y = MOVE_DOWN; }
-            else if (angle >= 5.105f && angle < 5.890f) { sprite.Y = MOVE_DOWNRIGHT; }
-            else if (angle >= 5.890f || angle < .393f) { sprite.Y = MOVE_RIGHT; }
+            //adjust spritesheet row based on angle
+            if (angle >= 0.393f && angle < 1.178f) { sprite.Row = MOVE_UPRIGHT; }
+            else if (angle >= 1.178f && angle < 1.963f) { sprite.Row = MOVE_UP; }
+            else if (angle >= 1.963f && angle < 2.749f) { sprite.Row = MOVE_UPLEFT; }
+            else if (angle >= 2.749f && angle < 3.534f) { sprite.Row = MOVE_LEFT; }
+            else if (angle >= 3.534f && angle < 4.320f) { sprite.Row = MOVE_DOWNLEFT; }
+            else if (angle >= 4.320f && angle < 5.105f) { sprite.Row = MOVE_DOWN; }
+            else if (angle >= 5.105f && angle < 5.890f) { sprite.Row = MOVE_DOWNRIGHT; }
+            else if (angle >= 5.890f || angle < .393f) { sprite.Row = MOVE_RIGHT; }
             
-            
+            //if you moved this cycle, update your animation frame accordingly, otherwise reset
             if (s_moved)
-                sprite.X = s_Animation.updateFrame(s_EcsInstance.ElapsedTime);
+                sprite.Column = s_Animation.updateFrame(s_EcsInstance.ElapsedTime);
+            else
+                s_Animation.reset();
 
+            //reset movement flag
             s_moved = false;     
 
             return BehaviorReturnCode.Success;

@@ -93,18 +93,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AStarPathFinder.dll" size="19456">
-      <assemblyIdentity name="AStarPathFinder" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>olfa9LUbvaFyW6Qb3aVQ1TtDr0A=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BehaviorLibrary.dll" size="7680">
       <assemblyIdentity name="BehaviorLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -117,14 +105,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ECSFramework.dll" size="13824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ECSFramework.dll" size="14336">
       <assemblyIdentity name="ECSFramework" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>jJNzMUzEb1HNTyniez85P2a0qdM=</dsig:DigestValue>
+        <dsig:DigestValue>Hs4h7X5w6dgR/ZFfgu/1o1W4PAs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -141,14 +129,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="123904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="140288">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>IHEDWqW+F7inb4msYW1aFUAfE4U=</dsig:DigestValue>
+        <dsig:DigestValue>VJRSQGlv3qSwLZzuEgn0S3A18Ws=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -236,6 +224,24 @@
       <dsig:DigestValue>snZxUzDjTBE4h+qSM2hq2RIwsPU=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\Damage.xnb" size="3154">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>ApEVb5ZhJJWkVbUNAc2Cec2Ck64=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\DamageBold.xnb" size="2912">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>vX4nRsN0hb8BkhbmblBwHDitDGk=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\depth.xnb" size="216">
     <hash>
       <dsig:Transforms>
@@ -245,13 +251,13 @@
       <dsig:DigestValue>xzExhNK+p17jp5+jY9lXzRJ8Mbs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\effects\DiferredCombine.xnb" size="826">
+  <file name="Content\effects\DiferredCombine.xnb" size="824">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>2gMsbVkWhUYEgVfpWG0l31TONiY=</dsig:DigestValue>
+      <dsig:DigestValue>e6mSDLR0kSoKd9D9Bg9yvKNIynI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\effects\Shading.xnb" size="1398">
@@ -260,7 +266,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>uuu4lw81VX4niPaiUtaazaU+cf8=</dsig:DigestValue>
+      <dsig:DigestValue>sBXoSLgAm9hhGkRk3rPUiHZbZx4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\export.xnb" size="191">
@@ -371,13 +377,13 @@
       <dsig:DigestValue>Tk2m1gKGVCbo3CtdDMmDA1gkv2c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\StartScreen.xnb" size="10082">
+  <file name="Content\StartScreen.xnb" size="5290">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>mjQZrgHtXwJMe5vnDYhF2Pkub/0=</dsig:DigestValue>
+      <dsig:DigestValue>bqxtEXyWzMqc3BJBL0CDkhvKB98=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\temperature.xnb" size="216">

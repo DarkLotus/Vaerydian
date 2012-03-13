@@ -12,7 +12,7 @@ using WorldGeneration.Utils;
 
 using Vaerydian.Components;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Update
 {
     class MapCollisionSystem : EntityProcessingSystem
     {

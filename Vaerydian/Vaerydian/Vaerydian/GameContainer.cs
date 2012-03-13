@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Vaerydian
 {
-    class GameContainer
+    public class GameContainer
     {
 
         private ContentManager g_ContentManager;

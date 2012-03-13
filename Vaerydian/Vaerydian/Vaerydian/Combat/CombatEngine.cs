@@ -349,7 +349,7 @@ namespace Vaerydian.Combat
         public bool npcPerformAction()
         {
             //ce_TurnList[ce_TurnIndex].OldBehavior.performAction(ce_TurnList[ce_TurnIndex]);
-
+            
             if (ce_TurnList[ce_TurnIndex].Behavior.Behave() == BehaviorReturnCode.Success &&
                 ce_TurnList[ce_TurnIndex].Behavior.CombatState == SimpleCombatState.Acted)
             {

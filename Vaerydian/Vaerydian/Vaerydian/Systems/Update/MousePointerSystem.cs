@@ -10,7 +10,7 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Update
 {
     class MousePointerSystem : EntityProcessingSystem
     {

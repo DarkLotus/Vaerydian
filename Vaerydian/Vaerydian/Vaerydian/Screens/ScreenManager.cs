@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Vaerydian.Windows;
+using Vaerydian;
 
 namespace Vaerydian.Screens
 {
@@ -13,6 +14,14 @@ namespace Vaerydian.Screens
     /// </summary>
     public class ScreenManager : DrawableGameComponent
     {
+
+        private GameContainer s_GameContainer = new GameContainer();
+
+        public GameContainer GameContainer
+        {
+            get { return s_GameContainer; }
+            set { s_GameContainer = value; }
+        }
 
         /// <summary>
         /// screens currently managed by the screen manager
@@ -37,7 +46,10 @@ namespace Vaerydian.Screens
         /// screen manager constructor
         /// </summary>
         /// <param name="game"></param>
-        public ScreenManager(Game game) : base(game) { }
+        public ScreenManager(Game game) : base(game) 
+        {
+            //this.GraphicsDevice = game.GraphicsDevice;
+        }
 
         /// <summary>
         /// the spritebatch for drawing
@@ -64,7 +76,6 @@ namespace Vaerydian.Screens
             get { return sm_WindowManager; }
             set { sm_WindowManager = value; }
         }
-
 
         /// <summary>
         /// initializes the screen manager
@@ -98,22 +109,19 @@ namespace Vaerydian.Screens
         {
             base.Update(gameTime);
 
-            foreach (Screen screen in sm_Screens)
-                sm_UpdatableScreens.Add(screen);
-            
-            foreach (Screen screen in sm_UpdatableScreens)
+            for (int i = 0; i < sm_Screens.Count; i++)
+                sm_UpdatableScreens.Add(sm_Screens[i]);
+
+            for (int i = 0; i < sm_UpdatableScreens.Count; i++)
             {
-                if (screen.ScreenState == ScreenState.Active)
+                if (sm_UpdatableScreens[i].ScreenState == ScreenState.Active)
                 {
-                    //have the screen update itself
-                    screen.Update(gameTime);
+                    sm_UpdatableScreens[i].Update(gameTime);
 
-                    //if this screen is on the top of the list, allow it to handle input
-                    if ((sm_UpdatableScreens.IndexOf(screen) + 1) == sm_UpdatableScreens.Count)
-                        screen.handleInput(gameTime);
+                    //screen has focus, so run the focus update
+                    if ((i + 1) == sm_UpdatableScreens.Count)
+                        sm_UpdatableScreens[i].hasFocusUpdate(gameTime);
                 }
-
-                
             }
 
             //remove it from the list since its been updated
@@ -128,15 +136,15 @@ namespace Vaerydian.Screens
         {
  	        base.Draw(gameTime);
 
-            foreach (Screen screen in sm_Screens)
-            {   //only draw active screens
-                if (screen.ScreenState == ScreenState.Inactive)
+            for (int i = 0; i < sm_Screens.Count; i++)
+            {
+                if (sm_Screens[i].ScreenState == ScreenState.Inactive)
                     continue;
 
-                screen.Draw(gameTime);
+                sm_Screens[i].Draw(gameTime);
             }
-        }
 
+        }
 
         /// <summary>
         /// adds a screen to the screen list
@@ -146,8 +154,8 @@ namespace Vaerydian.Screens
         {
             screen.ScreenState = ScreenState.Active;
             screen.ScreenManager = this;
-            screen.LoadContent();
             screen.Initialize();
+            screen.LoadContent();
             sm_Screens.Add(screen);
         }
 

@@ -98,8 +98,8 @@ namespace Vaerydian.Windows
         {
             window.WindowState = WindowState.Active;
             window.WindowManager = this;
-            window.LoadContent();
             window.Initialize();
+            window.LoadContent();
             wm_Windows.Add(window);
         }
 

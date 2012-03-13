@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+
+using WorldGeneration.World;
+
 using Vaerydian.Combat;
 using Vaerydian.Combat.CombatIntelligence;
 using Vaerydian.Windows;
 using Vaerydian.Sessions;
-using WorldGeneration.World;
 using Vaerydian.Characters;
 using Vaerydian.Characters.Abilities;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Stats;
 using Vaerydian.Items;
 using Vaerydian.Characters.Behaviors;
-using System.IO;
+using Vaerydian.Utils;
 
 
 
@@ -117,7 +121,7 @@ namespace Vaerydian.Screens
             cs_ActionWindowItems.Add("Flee");//5
             
             //create the new Action window
-            cs_ActionWindow = new TextMenuWindow(new Point(0, 400), cs_ActionWindowItems, "General");
+            cs_ActionWindow = new TextMenuWindow(new Vector2(0, 400), cs_ActionWindowItems, "General");
             
             //register the Action window
             this.ScreenManager.WindowManager.addWindow(cs_ActionWindow);
@@ -177,9 +181,9 @@ namespace Vaerydian.Screens
         /// handles all screen related input
         /// </summary>
         /// <param name="gameTime">current game time</param>
-        public override void handleInput(GameTime gameTime)
+        public override void hasFocusUpdate(GameTime gameTime)
         {
-            base.handleInput(gameTime);
+            base.hasFocusUpdate(gameTime);
 
             //see if it is the players turn
             if (cs_CombatEngine.CurrentCombatState == CombatState.PlayerChooseAction)

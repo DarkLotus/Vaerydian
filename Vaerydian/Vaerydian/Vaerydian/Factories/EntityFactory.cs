@@ -8,16 +8,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
 
+using Vaerydian.Characters.Experience;
+using Vaerydian.Characters.Skills;
+using Vaerydian.Characters.Stats;
 using Vaerydian.Components;
 using Vaerydian.Components.Debug;
 using Vaerydian.Behaviors;
 using Vaerydian.Utils;
+using Vaerydian.Factories;
 
 using WorldGeneration.Cave;
 using WorldGeneration.World;
 using WorldGeneration.Utils;
-
-using DeenGames.Utils.AStarPathFinder;
 
 
 namespace Vaerydian.Factories
@@ -52,6 +54,32 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
             e_EcsInstance.EntityManager.addComponent(e, createLight(false, 200, new Vector3(576, 360, 80), 0.7f, new Vector4(1f, 1f, 1f, 1f)));
             e_EcsInstance.EntityManager.addComponent(e, new Transform());
+
+            //create test equipment
+            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
+            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+
+            //setup experiences
+            Experiences experiences = new Experiences();
+            Experience xp = new Experience(0);
+            experiences.GeneralExperience.Add(MobGroup.Test, xp);
+            e_EcsInstance.EntityManager.addComponent(e, experiences);
+
+            //setup attributes
+            Attributes attributes = new Attributes();
+            attributes.Endurance.Value = 50;
+            attributes.Mind.Value = 50;
+            attributes.Muscle.Value = 50;
+            attributes.Perception.Value = 50;
+            attributes.Quickness.Value = 50;
+            e_EcsInstance.EntityManager.addComponent(e, attributes);
+
+            //setup skills
+            Skills skills = new Skills();
+            Skill skill = new Skill("Ranged", 50, SkillType.Offensive);
+            skills.SkillSet.Add(SkillNames.Ranged, skill);
+            e_EcsInstance.EntityManager.addComponent(e, skills);
+
 
             e_EcsInstance.TagManager.tagEntity("PLAYER", e);
 
@@ -93,21 +121,47 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(12.5f)));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals",32,32,0,0));
-            e_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new SimpleFollowBehavior(e, target, distance, e_EcsInstance)));
+            e_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new FollowerBehavior(e, target, distance, e_EcsInstance)));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
             e_EcsInstance.EntityManager.addComponent(e, new Transform());
 
-            Health health = new Health(50);
-            health.RecoveryAmmount = 2;
+            //create health
+            Health health = new Health(200);
+            health.RecoveryAmmount = 20;
             health.RecoveryRate = 500;
             e_EcsInstance.EntityManager.addComponent(e, health);
 
+            //create interactions
             Interactable interact = new Interactable();
-            interact.Interactions.Add(InteractionTypes.PROJECTILE_COLLIDABLE);
-            interact.Interactions.Add(InteractionTypes.DAMAGEABLE);
+            interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
+            interact.SupportedInteractions.ATTACKABLE = true;
             e_EcsInstance.EntityManager.addComponent(e, interact);
 
+            //create test equipment
+            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
+            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+
+            //setup experiences
+            Experiences experiences = new Experiences();
+            Experience xp = new Experience(100);
+            experiences.GeneralExperience.Add(MobGroup.Test, xp);
+            e_EcsInstance.EntityManager.addComponent(e, experiences);
+
+            //setup attributes
+            Attributes attributes = new Attributes();
+            attributes.Endurance.Value = 50;
+            attributes.Mind.Value = 50;
+            attributes.Muscle.Value = 50;
+            attributes.Perception.Value = 50;
+            attributes.Quickness.Value = 50;
+            e_EcsInstance.EntityManager.addComponent(e, attributes);
+
+            //setup skills
+            Skill skill = new Skill("Avoidance", 50, SkillType.Offensive);
+            Skills skills = new Skills();
+            skills.SkillSet.Add(SkillNames.Avoidance, skill);
+            e_EcsInstance.EntityManager.addComponent(e, skills);
 
             e_EcsInstance.refresh(e);
 
@@ -118,9 +172,9 @@ namespace Vaerydian.Factories
             Entity e = e_EcsInstance.create();
             CaveEngine ce = new CaveEngine();
 
-            Random rand = new Random(41);
+            Random rand = new Random();
 
-            ce.generateCave(100, 100, rand.Next(100), 4, 0.5);
+            ce.generateCave(100, 100, rand.Next(100), 100, 0.5);
             e_EcsInstance.EntityManager.addComponent(e, new GameMap(ce.getMap()));
 
             e_EcsInstance.TagManager.tagEntity("MAP", e);
@@ -128,6 +182,153 @@ namespace Vaerydian.Factories
             e_EcsInstance.refresh(e);
         }
 
+
+        /// <summary>
+        /// creates a random map with the following parameters
+        /// </summary>
+        /// <param name="x">width</param>
+        /// <param name="y">height</param>
+        /// <param name="prob">close cell probability (0-100)</param>
+        /// <param name="h">cell operation specifier [h=true, if c>n close else open; h=false if c>n open else close]</param>
+        /// <param name="counter">number of iterations</param>
+        /// <param name="n">number of cells neighbors</param>
+        /// <param name="c">number of cells closed neighbors</param>
+        public void createRandomMap(int x, int y, int prob, bool h, int counter, int n)
+        {
+            Map map = new Map(x, y);
+            Random rand = new Random();
+
+            //fill map
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    Terrain terrain = new Terrain();
+                    terrain.TerrainType = TerrainType.CAVE_WALL;
+                    terrain.IsBlocking = true;
+                    map.Terrain[i, j] = terrain;
+                }
+            }
+
+            for (int i = 1; i < x-1; i++)
+            {
+                for (int j = 1; j < y-1; j++)
+                {
+                    Terrain terrain = new Terrain();
+                    terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                    terrain.IsBlocking = false;
+                    map.Terrain[i, j] = terrain;
+                }
+            }
+
+            
+            //randomize map
+            for (int i = 1; i < x-1; i++)
+            {
+                for (int j = 1; j < y-1; j++)
+                {
+                    Terrain terrain = map.Terrain[i, j];
+
+                    //randomly set it
+                    if (terrain.TerrainType == TerrainType.CAVE_FLOOR &&
+                        rand.Next(100) <= prob)
+                    {
+                        terrain.TerrainType = TerrainType.CAVE_WALL;
+                        terrain.IsBlocking = true;
+                        map.Terrain[i, j] = terrain;
+                    }
+                }
+            }
+
+
+            int rX, rY;
+
+            for (int i = 0; i < counter; i++)
+            {
+                rX = rand.Next(1,x-1);
+                rY = rand.Next(1,y-1);
+
+
+                Terrain terrain = map.Terrain[rX, rY];
+
+                /*//randomly set it
+                if (terrain.TerrainType == TerrainType.CAVE_FLOOR &&
+                    rand.Next(100) <= prob)
+                {
+                    terrain.TerrainType = TerrainType.CAVE_WALL;
+                    terrain.IsBlocking = true;
+                    map.Terrain[rX, rY] = terrain;
+                }*/
+
+                if (h)
+                {
+                    if (closedNeighbors(rX, rY, map) > n)
+                    {
+                        terrain.TerrainType = TerrainType.CAVE_WALL;
+                        terrain.IsBlocking = true;
+                        map.Terrain[rX, rY] = terrain;
+                    }
+                    else
+                    {
+                        terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                        terrain.IsBlocking = false;
+                        map.Terrain[rX, rY] = terrain;
+                    }
+
+
+
+                }
+                else
+                {
+                    if (closedNeighbors(rX, rY, map) > n)
+                    {
+                        terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                        terrain.IsBlocking = false;
+                        map.Terrain[rX, rY] = terrain;
+                    }
+                    else
+                    {
+                        terrain.TerrainType = TerrainType.CAVE_WALL;
+                        terrain.IsBlocking = true;
+                        map.Terrain[rX, rY] = terrain;
+                    }
+                }
+
+
+            }
+
+            GameMap gameMap = new GameMap(map);
+
+            Entity e = e_EcsInstance.create();
+            e_EcsInstance.EntityManager.addComponent(e, gameMap);
+
+            e_EcsInstance.TagManager.tagEntity("MAP", e);
+
+            e_EcsInstance.refresh(e);
+
+        }
+
+        private int closedNeighbors(int x, int y, Map map)
+        {
+            int neighbors = 0;
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                        continue;
+
+                    Terrain terrain = map.Terrain[x + i, y + j];
+
+                    if (terrain.TerrainType == TerrainType.CAVE_WALL)
+                        neighbors++;
+                }
+            }
+
+
+            return neighbors;
+        }
 
         public void CreateTestMap()
         {
@@ -313,6 +514,9 @@ namespace Vaerydian.Factories
 
             e_EcsInstance.refresh(e);
         }
+
+
+
 
     }
 }

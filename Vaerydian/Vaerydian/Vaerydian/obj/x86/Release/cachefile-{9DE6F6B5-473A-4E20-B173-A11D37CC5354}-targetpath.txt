@@ -1,6 +1,8 @@
 Content\General.xnb
 Content\Loading.xnb
 Content\StartScreen.xnb
+Content\Damage.xnb
+Content\DamageBold.xnb
 Content\frame.xnb
 Content\frame_h.xnb
 Content\frame_v.xnb

@@ -58,9 +58,9 @@ namespace Vaerydian.Screens
 
 
         /// <summary>
-        /// handles all user related input
+        /// handles all updates that require the screen to have focus
         /// </summary>
-        public virtual void handleInput(GameTime gameTime)
+        public virtual void hasFocusUpdate(GameTime gameTime)
         {
         }
 

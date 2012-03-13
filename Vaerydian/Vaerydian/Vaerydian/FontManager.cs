@@ -56,6 +56,8 @@ namespace Vaerydian
             fm_fonts.Add("General", fm_contentManager.Load<SpriteFont>("General"));
             fm_fonts.Add("Loading", fm_contentManager.Load<SpriteFont>("Loading"));
             fm_fonts.Add("StartScreen", fm_contentManager.Load<SpriteFont>("StartScreen"));
+            fm_fonts.Add("Damage", fm_contentManager.Load<SpriteFont>("Damage"));
+            fm_fonts.Add("DamageBold", fm_contentManager.Load<SpriteFont>("DamageBold"));
         }
 
         

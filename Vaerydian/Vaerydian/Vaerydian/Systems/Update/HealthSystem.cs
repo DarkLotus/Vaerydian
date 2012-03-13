@@ -6,8 +6,9 @@ using System.Text;
 using ECSFramework;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Items;
 
-namespace Vaerydian.Systems
+namespace Vaerydian.Systems.Update
 {
     class HealthSystem : EntityProcessingSystem
     {
@@ -31,7 +32,11 @@ namespace Vaerydian.Systems
             Health health = (Health)h_HealthMapper.get(entity);
 
             if (health.CurrentHealth <= 0)
+            {
+                
+                
                 e_ECSInstance.deleteEntity(entity);
+            }
 
             health.TimeSinceLastRecover += e_ECSInstance.ElapsedTime;
 

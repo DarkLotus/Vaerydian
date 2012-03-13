@@ -22,7 +22,7 @@ namespace Vaerydian.Characters.Skills
         /// <summary>
         /// constructor
         /// </summary>
-        /// <param name="name">name fo the skill</param>
+        /// <param name="name">name of the skill</param>
         /// <param name="value">value of the skill</param>
         /// <param name="skillType">type of skill</param>
         public Skill(String name, int value, SkillType skillType)
