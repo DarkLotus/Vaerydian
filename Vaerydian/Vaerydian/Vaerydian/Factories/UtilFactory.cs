@@ -7,6 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Utils;
 using Vaerydian.Components;
+using Vaerydian.Components.Audio;
 
 namespace Vaerydian.Factories
 {
@@ -59,6 +60,18 @@ namespace Vaerydian.Factories
             u_EcsInstance.EntityManager.addComponent(e, pos);
 
             u_EcsInstance.refresh(e);
+        }
+
+        public void createSound(String name, bool play, float volume)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Audio audio = new Audio(name,play,volume);
+
+            u_EcsInstance.EntityManager.addComponent(e, audio);
+
+            u_EcsInstance.refresh(e);
+
         }
 
     }

@@ -56,7 +56,7 @@ namespace Vaerydian.Systems.Draw
 
             ViewPort camera = (ViewPort)d_ViewPortMapper.get(d_Camera);
             Vector2 origin = camera.getOrigin();
-            Vector2 pos = position.getPosition() + new Vector2(0, -damage.Lifetime/10);
+            Vector2 pos = position.getPosition() + new Vector2(0, -damage.Lifetime/7);
 
             String dmg;
             Color color = Color.Yellow;
@@ -69,15 +69,22 @@ namespace Vaerydian.Systems.Draw
             else
                 dmg = "" + damage.DamageAmount;
 
+            float fade = 1f;
+            float half = (float)damage.Lifespan / 2f;
+
+            if (damage.Lifetime > half)
+                fade = (1f - (damage.Lifetime - half) / half);
+            
+
             d_SpriteBatch.Begin();
             
             //background
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(1, 0), Color.Black);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(-1, 0), Color.Black);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, 1), Color.Black);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, -1), Color.Black);
+            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(1, 0), Color.Black*fade);
+            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(-1, 0), Color.Black*fade);
+            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, 1), Color.Black*fade);
+            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, -1), Color.Black*fade);
             //foreground
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin, color);
+            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin, color*fade);
 
             d_SpriteBatch.End();
         }

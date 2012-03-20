@@ -165,6 +165,12 @@ namespace Vaerydian.Characters.Behaviors
             }
         }
 
+
+        public override void deathCleanup()
+        {
+            c_IsClean = true;
+        }
+
         /// <summary>
         /// returns current enemy state
         /// </summary>

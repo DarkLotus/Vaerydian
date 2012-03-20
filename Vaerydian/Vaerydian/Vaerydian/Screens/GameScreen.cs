@@ -11,6 +11,8 @@ using ECSFramework;
 
 using Vaerydian;
 using Vaerydian.Components;
+using Vaerydian.Components.Audio;
+using Vaerydian.Components.Characters;
 using Vaerydian.Components.Debug;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;
@@ -18,6 +20,7 @@ using Vaerydian.Systems;
 using Vaerydian.Systems.Draw;
 using Vaerydian.Systems.Update;
 using System.IO;
+
 
 namespace Vaerydian.Screens
 {
@@ -40,7 +43,10 @@ namespace Vaerydian.Screens
         private EntitySystem attackSystem;
         private EntitySystem damageSystem;
         private EntitySystem healthSystem;
+        private EntitySystem lifeSystem;
         
+        //audio
+        private EntitySystem audioSystem;
 
         //draw systems
         private EntitySystem spriteRenderSystem;
@@ -53,9 +59,10 @@ namespace Vaerydian.Screens
         private EntitySystem deferredSystem;
         private EntitySystem healthBarRenderSystem;
         private EntitySystem damageDisplaySystem;
-        //private EntitySystem quadTreeDebugRenderSystem;
+        private EntitySystem quadTreeDebugRenderSystem;
 
         private EntityFactory entityFactory;
+        private NPCFactory npcFactory;
 
         private int avg, disp, elapsed;
 
@@ -90,7 +97,10 @@ namespace Vaerydian.Screens
             attackSystem = ecsInstance.SystemManager.setSystem(new AttackSystem(), new Attack());
             damageSystem = ecsInstance.SystemManager.setSystem(new DamageSystem(), new Damage());
             healthSystem = ecsInstance.SystemManager.setSystem(new HealthSystem(), new Health());
+            lifeSystem = ecsInstance.SystemManager.setSystem(new LifeSystem(), new Life());
             
+            //audio systems
+            audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
 
             //register render systems
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
@@ -103,7 +113,7 @@ namespace Vaerydian.Screens
             deferredSystem = ecsInstance.SystemManager.setSystem(new DeferredSystem(gameContainer), new GeometryMap());
             healthBarRenderSystem = ecsInstance.SystemManager.setSystem(new HealthBarRenderSystem(gameContainer), new Health());
             damageDisplaySystem = ecsInstance.SystemManager.setSystem(new DamageDisplaySystem(gameContainer), new Damage());
-            //quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer));
+            quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer), new Position(),new AiBehavior());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -121,12 +131,14 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Attributes());
             ecsInstance.ComponentManager.registerComponentType(new Skills());
             ecsInstance.ComponentManager.registerComponentType(new Experiences());
+            ecsInstance.ComponentManager.registerComponentType(new Factions());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
 
             //create the entity factory
             entityFactory = new EntityFactory(ecsInstance, gameContainer);
+            npcFactory = new NPCFactory(ecsInstance);
 
             //setup local geometrymapper
             geometryMapper = new ComponentMapper(new GeometryMap(), ecsInstance);
@@ -145,15 +157,20 @@ namespace Vaerydian.Screens
             entityFactory.createCamera();
             entityFactory.createMousePointer();
 
-            entityFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
+            //npcFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
             //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
             //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
             //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
+            //npcFactory.createWanderingEnemy(new Vector2(100, 100));
+            
 
             //create cave
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
-            entityFactory.createRandomMap(100, 100, 85, true, 80000, 5);
+            GameMap map = entityFactory.createRandomMap(100, 100, 75, true, 50000, 5);
+
+            npcFactory.createWanders(100, map);
+            
 
             //create map debug
             entityFactory.createMapDebug();
@@ -165,7 +182,7 @@ namespace Vaerydian.Screens
                 for (int j = 0; j <= 5; j++)
                 {
                     //entityFactory.createRandomLight(;)
-                    entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .5f,
+                    entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .1f,
                         new Vector4(.5f, .5f, .7f, (float)rand.NextDouble()));
                 }
             }
@@ -174,7 +191,7 @@ namespace Vaerydian.Screens
             entityFactory.createGeometryMap();
 
             //create spatialpartition
-            entityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
+            entityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 3);
 
             //load fonts
             //fontManager.LoadContent();
@@ -232,11 +249,17 @@ namespace Vaerydian.Screens
             mousePointerSystem.process();
             behaviorSystem.process();
             projectileSystem.process();
+            lifeSystem.process();
             healthSystem.process();
             damageSystem.process();
             attackSystem.process();
 
             mapCollisionSystem.process();
+
+            //process audio
+            audioSystem.process();
+
+            
         }
 
         public override void Draw(GameTime gameTime)
@@ -283,8 +306,9 @@ namespace Vaerydian.Screens
 
 
             //run UI systems
-            healthBarRenderSystem.process();
             damageDisplaySystem.process();
+            healthBarRenderSystem.process();
+            
 
             //run debug systems
             //quadTreeDebugRenderSystem.process();

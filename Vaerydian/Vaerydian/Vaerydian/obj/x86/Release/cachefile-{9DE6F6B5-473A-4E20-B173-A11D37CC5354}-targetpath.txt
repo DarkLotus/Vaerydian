@@ -53,3 +53,17 @@ Content\projectile.xnb
 Content\projectile2.xnb
 Content\effects\Shading.xnb
 Content\effects\DiferredCombine.xnb
+Content\audio\effects\fire.xnb
+Content\audio\effects\flame.xnb
+Content\audio\effects\hitwall.xnb
+Content\audio\effects\help.xnb
+Content\audio\effects\thereheis.xnb
+Content\audio\effects\death.xnb
+Content\audio\effects\hurt.xnb
+Content\audio\effects\thereheis2.xnb
+Content\audio\effects\thereheis3.xnb
+Content\audio\effects\help2.xnb
+Content\audio\effects\help3.xnb
+Content\audio\effects\hurt2.xnb
+Content\audio\effects\hurt3.xnb
+Content\audio\effects\hurt4.xnb

@@ -93,14 +93,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BehaviorLibrary.dll" size="7680">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BehaviorLibrary.dll" size="8704">
       <assemblyIdentity name="BehaviorLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>3VSd6Ou4fYRyACrkDXYX1TN6Wxg=</dsig:DigestValue>
+        <dsig:DigestValue>koO3NCg5NvHUG8IXwDF/FHfSUfE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -129,14 +129,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="140288">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vaerydian.exe" size="155648">
       <assemblyIdentity name="Vaerydian" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>VJRSQGlv3qSwLZzuEgn0S3A18Ws=</dsig:DigestValue>
+        <dsig:DigestValue>5NgAaCyumEjGcETDRnJmjqJOJ5E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -152,6 +152,132 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Content\audio\effects\death.xnb" size="149609">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>7Ht4+vWdTZFl1KvI1wyr3M8CPrs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\fire.xnb" size="149609">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>k+B3Cj70VtPLY+QWb/kN1aT3aaQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\flame.xnb" size="133225">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>wlYbf6HOxTsay8GTw14/tMxdqUA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\help.xnb" size="157801">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>QtGr3XHwlQF6Vl6GpePHPwBgGkU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\help2.xnb" size="286825">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>AcAKFgkt9WFyiUyCH7Iu7sgfIoE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\help3.xnb" size="280681">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>H6ukZlJY/mYEWsNPWDFt0X3MjT8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\hitwall.xnb" size="75881">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>cfaw7RrB4AKg33Thzmj+T930v94=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\hurt.xnb" size="131177">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>2frCFxmspnosCIhrZ3D1WWqGdfU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\hurt2.xnb" size="122985">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>TyoaaFvyevSaQDjXIpemp7xLdlA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\hurt3.xnb" size="100457">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>qGwVXthkknO/M7BWRdLTovuW2FI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\hurt4.xnb" size="108649">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>afzPExd7X70Frdq9V37/GvefYx8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\thereheis.xnb" size="247913">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>CVacUh0pil9qgQgDFKblDHNRbyo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\thereheis2.xnb" size="278633">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>TcszJkRYfSixJMgZOokLw70+1Ko=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\audio\effects\thereheis3.xnb" size="231529">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>L85hEQJckDfYwYbZ8DbDpIbRGUU=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\characters\enemy.xnb" size="270">
     <hash>
       <dsig:Transforms>
@@ -251,13 +377,13 @@
       <dsig:DigestValue>xzExhNK+p17jp5+jY9lXzRJ8Mbs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\effects\DiferredCombine.xnb" size="824">
+  <file name="Content\effects\DiferredCombine.xnb" size="826">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>e6mSDLR0kSoKd9D9Bg9yvKNIynI=</dsig:DigestValue>
+      <dsig:DigestValue>jc3J4ZDvpzXsZietRpmGx0O5lrA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\effects\Shading.xnb" size="1398">
@@ -266,7 +392,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>sBXoSLgAm9hhGkRk3rPUiHZbZx4=</dsig:DigestValue>
+      <dsig:DigestValue>8S7W5XjpU1yv9x2+RBMJYRU9INA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\export.xnb" size="191">

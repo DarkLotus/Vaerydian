@@ -160,6 +160,18 @@ namespace Vaerydian.Behaviors
             return s_Behavior.Behave();
         }
 
+        public override void deathCleanup()
+        {
+            //remove old references
+            if (s_LastNode != null)
+            {
+                s_LastNode.Contents.Remove(s_ThisEntity);
+            }
+
+            c_IsClean = true;
+        }
+
+
         private int switchBehaviors()
         {
             //is it time to start pathing?

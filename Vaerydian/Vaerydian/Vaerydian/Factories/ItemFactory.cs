@@ -35,7 +35,7 @@ namespace Vaerydian.Factories
 
             Item item = new Item("TestRangedWeapon", 0, 100);
 
-            Weapon weapon = new Weapon(5, 5, 0, 1f, WeaponType.Ranged, DamageType.Common);
+            Weapon weapon = new Weapon(5, 5, 100, 300, WeaponType.Ranged, DamageType.Common);
             weapon.RangedWeaponType = RangedWeaponType.Blaster;
 
             i_EcsInstance.EntityManager.addComponent(e, item);
@@ -70,6 +70,31 @@ namespace Vaerydian.Factories
             equipment.Armor = createTestArmor();
 
             return equipment;
+        }
+
+        public void destoryEquipment(Entity entity)
+        {
+            ComponentMapper equipMapper = new ComponentMapper(new Equipment(),i_EcsInstance);
+            ComponentMapper itemMapper = new ComponentMapper(new Item(),i_EcsInstance);
+
+            Equipment equip = (Equipment)equipMapper.get(entity);
+
+            if (equip == null)
+                return;
+
+
+            //remove ranged weapon
+            Item rangedWeapon = (Item)itemMapper.get(equip.RangedWeapon);
+            if (rangedWeapon != null)
+                i_EcsInstance.deleteEntity(equip.RangedWeapon);
+
+            //remove armor
+            Item armor = (Item)itemMapper.get(equip.Armor);
+            if (armor != null)
+                i_EcsInstance.deleteEntity(equip.Armor);
+
+
+            return;
         }
 
     }

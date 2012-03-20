@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using BehaviorLibrary;
 using BehaviorLibrary.Components;
 using BehaviorLibrary.Components.Actions;
@@ -13,86 +15,224 @@ using BehaviorLibrary.Components.Decorators;
 using ECSFramework;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Characters;
+using Vaerydian.Characters.Factions;
+using Vaerydian.Utils;
+using Vaerydian.Components.Items;
+using Vaerydian.Factories;
 
 namespace Vaerydian.Behaviors
 {
     class WanderingEnemyBehavior : CharacterBehavior
     {
-        private ECSInstance s_ECSInstance;
+        private ECSInstance w_ECSInstance;
 
-        private Behavior s_Behavior;
-        private RootSelector s_Root;
+        private Behavior w_Behavior;
+        private RootSelector w_Root;
 
-        private Entity s_ThisEntity;
-        private Entity s_Target;
-        private Entity s_Map;
-        private Entity s_Camera;
-        private Entity s_Spatial;
+        private Entity w_ThisEntity;
+        private Entity w_Target;
+        private Entity w_Map;
+        private Entity w_Camera;
+        private Entity w_Spatial;
 
-        private ComponentMapper s_PositionMapper;
-        private ComponentMapper s_VelocityMapper;
-        private ComponentMapper s_HeadingMapper;
-        private ComponentMapper s_GameMapMapper;
-        private ComponentMapper s_ColidableMapper;
-        private ComponentMapper s_ViewPortMapper;
-        private ComponentMapper s_SpatialMapper;
-        private ComponentMapper s_SpriteMapper;
+        private ComponentMapper w_PositionMapper;
+        private ComponentMapper w_VelocityMapper;
+        private ComponentMapper w_HeadingMapper;
+        //private ComponentMapper s_GameMapMapper;
+        private ComponentMapper w_ColidableMapper;
+        private ComponentMapper w_ViewPortMapper;
+        private ComponentMapper w_SpatialMapper;
+        private ComponentMapper w_SpriteMapper;
+        private ComponentMapper w_FactionMapper;
+        private ComponentMapper w_HealthMapper;
+        private ComponentMapper w_EquipmentMapper;
+        private ComponentMapper w_ItemMapper;
+        private ComponentMapper w_WeaponMapper;
 
-        private const int INITIALIZE = 0;
-        private const int WANDER = 1;
-        private const int ATTACK = 2;
-        private const int FLEE = 3;
+        private const int STATE_INITIALIZE = 0;
+        private const int STATE_WANDER = 1;
+        private const int STATE_PURSUE = 2;
+        private const int STATE_FLEE = 3;
 
-        private int s_CurrentState = 0;
+        private int w_CurrentState = 0;
+
+        private Factions w_EntityFaction;
+
+        private QuadNode<Entity> w_LastULNode;
+        private QuadNode<Entity> w_LastLLNode;
+        private QuadNode<Entity> w_LastLRNode;
+        private QuadNode<Entity> w_LastURNode;
+
+        private Random w_Random = new Random(42);
+
+        private bool w_Moved = false;
+
+        private const int MOVE_DOWN = 0;
+        private const int MOVE_DOWNLEFT = 1;
+        private const int MOVE_LEFT = 2;
+        private const int MOVE_UPLEFT = 3;
+        private const int MOVE_UP = 4;
+        private const int MOVE_UPRIGHT = 5;
+        private const int MOVE_RIGHT = 6;
+        private const int MOVE_DOWNRIGHT = 7;
+
+        private Animation w_Animation = new Animation(6, 42);
 
         private BehaviorAction init;
+        private BehaviorAction setStateWander;
+        private BehaviorAction setStatePursue;
+        private BehaviorAction setStateAttack;
+        private BehaviorAction setStateFlee;
+        private BehaviorAction choseDirection;
+        private BehaviorAction collideCorrection;
+        private BehaviorAction move;
+        private BehaviorAction towardsHeading;
+        private BehaviorAction awayHeading;
+        private BehaviorAction fireShot;
+        private BehaviorAction animate;
+        private BehaviorAction playDetected;
+        private BehaviorAction playFlee;
+        private BehaviorAction playDetected2;
+        private BehaviorAction playFlee2;
+        private BehaviorAction playDetected3;
+        private BehaviorAction playFlee3;
 
         private Conditional tooClose;
         private Conditional tooFar;
         private Conditional detectedHostile;
+        private Conditional collided;
+        private Conditional healthy;
+        private Conditional targetDead;
 
         public WanderingEnemyBehavior(Entity entity, ECSInstance ecsInstance)
         {
-            s_ECSInstance = ecsInstance;
-            s_ThisEntity = entity;
+            w_ECSInstance = ecsInstance;
+            w_ThisEntity = entity;
 
-            s_CurrentState = INITIALIZE;
+            w_CurrentState = STATE_INITIALIZE;
 
 
             //setup all conditionals
-            tooClose = new Conditional(()=>true);
-            tooFar = new Conditional(()=>true);
+            tooClose = new Conditional(tooCloseToTarget);
+            tooFar = new Conditional(tooFarFromTarget);
             detectedHostile = new Conditional(hasDetectedHostile);
+            collided = new Conditional(hasCollided);
+            healthy = new Conditional(isHealthy);
+            targetDead = new Conditional(isTargetDead);
 
             //setup all behavior actions
             init = new BehaviorAction(initialize);
+            setStateWander = new BehaviorAction(stateChangeWander);
+            setStatePursue = new BehaviorAction(stateChangePursue);
+            setStateFlee = new BehaviorAction(stateChangeFlee);
             
+            choseDirection = new BehaviorAction(chooseRandomDirection);
+            collideCorrection = new BehaviorAction(correctHeadingForCollision);
+            move = new BehaviorAction(moveViaHeading);
+            towardsHeading = new BehaviorAction(headingTowardsTarget);
+            awayHeading = new BehaviorAction(headingAwayTarget);
+            fireShot = new BehaviorAction(fireAtTarget);
+            animate = new BehaviorAction(updateAnimation);
+            playDetected = new BehaviorAction(playDetectedSound);
+            playFlee = new BehaviorAction(playFleeSound);
+            playDetected2 = new BehaviorAction(playDetected2Sound);
+            playFlee2 = new BehaviorAction(playFlee2Sound);
+            playDetected3 = new BehaviorAction(playDetected3Sound);
+            playFlee3 = new BehaviorAction(playFlee3Sound);
 
+            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3, playDetected, playDetected2, playDetected3), setStatePursue);
+            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3, playFlee, playFlee2, playFlee3), setStateFlee);
 
+            //initialize sequence
+            ParallelSequence initSeq = new ParallelSequence(init, setStateWander);
 
+            //if not healthy, flee
+            ParallelSelector healthSel = new ParallelSelector(healthy, new Inverter(setFlee));
 
+            //if target is dead, wander
+            ParallelSelector deadTargetSel = new ParallelSelector(new Inverter(targetDead), setStateWander);
 
-            ParallelSequence wanderSeq = new ParallelSequence();
-            ParallelSequence attackSeq = new ParallelSequence();
-            ParallelSequence fleeSeq = new ParallelSequence();
+            //if not collided, then chose a new direction every second
+            ParallelSequence randWalk = new ParallelSequence(new Inverter(collided), new Timer(elapsedTime, 1000, choseDirection));
+            
+            //if not randomly walking, correct for a collision
+            ParallelSelector walkOrCorrect = new ParallelSelector(randWalk, collideCorrection);
+            
+            //wander sequence, while no hostiles detected, walk around randomly
+            ParallelSequence wanderSeq = new ParallelSequence(new Inverter(new RandomDecorator(0.55f,getRandom,detectedHostile)), walkOrCorrect, move, animate);
+            
+            //wander or change to pursue state
+            ParallelSelector wanderSel2 = new ParallelSelector(wanderSeq, new Inverter(setPursue));
 
-            s_Root = new RootSelector(switchBehaviors, init, wanderSeq, attackSeq, fleeSeq);
+            //move towards your target
+            ParallelSequence moveTowards = new ParallelSequence(towardsHeading, move, animate);
+            
+            //move away from your target
+            ParallelSequence moveAway = new ParallelSequence(awayHeading, move, animate);
+            
+            //if too far from your target, move towards it
+            ParallelSelector moveTooFar = new ParallelSelector(new Inverter(tooFar), moveTowards);
+            
+            //if too close to your target, move away from it
+            ParallelSelector moveTooClose = new ParallelSelector(new Inverter(tooClose), moveAway);
+            
+            //if target isnt dead and you're not too far and not too close, shoot at it
+            ParallelSequence attackSeq = new ParallelSequence(deadTargetSel, new Inverter(tooFar), new Inverter(tooClose), new Timer(elapsedTime, 250, fireShot), animate);
+            
+            //move towards or away from your target, then attemp to attack it
+            ParallelSequence pursAttackSeq1 = new ParallelSequence(moveTooFar, moveTooClose, attackSeq);
+            
+            //as long as your healthy, pursue and attack your target
+            ParallelSequence pursAttackSeq2 = new ParallelSequence(healthSel, pursAttackSeq1);
 
-            s_Behavior = new Behavior(s_Root);
+            //pursue sequnce, while healthy & too far & not too close, move towards your target
+            ParallelSequence pursueSeq = new ParallelSequence(healthSel, deadTargetSel, tooFar, new Inverter(tooClose), towardsHeading, move, animate);
+            ParallelSelector pursueSel = new ParallelSelector(pursueSeq, setStateAttack);
+            
+            //flee sequence, while unhealthy, flee
+            ParallelSequence fleeSeq = new ParallelSequence(new Inverter(healthy), deadTargetSel, awayHeading, move, animate);
+            ParallelSelector fleeSel = new ParallelSelector(fleeSeq, setStateWander);
 
-            s_PositionMapper = new ComponentMapper(new Position(), ecsInstance);
-            s_VelocityMapper = new ComponentMapper(new Velocity(), ecsInstance);
-            s_HeadingMapper = new ComponentMapper(new Heading(), ecsInstance);
-            s_GameMapMapper = new ComponentMapper(new GameMap(), ecsInstance);
-            s_ViewPortMapper = new ComponentMapper(new ViewPort(), ecsInstance);
-            s_SpatialMapper = new ComponentMapper(new SpatialPartition(), ecsInstance);
-            s_SpriteMapper = new ComponentMapper(new Sprite(), ecsInstance);
+            //setup root selector
+            w_Root = new RootSelector(switchBehaviors, initSeq, wanderSel2, pursAttackSeq2, fleeSel); 
+            
+            //set tree reference
+            w_Behavior = new Behavior(w_Root);
+
+            w_PositionMapper = new ComponentMapper(new Position(), ecsInstance);
+            w_VelocityMapper = new ComponentMapper(new Velocity(), ecsInstance);
+            w_HeadingMapper = new ComponentMapper(new Heading(), ecsInstance);
+            w_ColidableMapper = new ComponentMapper(new MapCollidable(), ecsInstance);
+            w_ViewPortMapper = new ComponentMapper(new ViewPort(), ecsInstance);
+            w_SpatialMapper = new ComponentMapper(new SpatialPartition(), ecsInstance);
+            w_SpriteMapper = new ComponentMapper(new Sprite(), ecsInstance);
+            w_FactionMapper = new ComponentMapper(new Factions(), ecsInstance);
+            w_HealthMapper = new ComponentMapper(new Health(), ecsInstance);
+            w_EquipmentMapper = new ComponentMapper(new Equipment(), ecsInstance);
+            w_ItemMapper = new ComponentMapper(new Item(), ecsInstance);
+            w_WeaponMapper = new ComponentMapper(new Weapon(), ecsInstance);
         }
 
         public override BehaviorReturnCode Behave()
         {
-            return s_Behavior.Behave();
+            return w_Behavior.Behave();
         }
+
+        public override void deathCleanup()
+        {
+            //remove old references
+            if (w_LastULNode != null && w_LastLLNode != null && w_LastLRNode != null && w_LastURNode != null)
+            {
+                w_LastULNode.Contents.Remove(w_ThisEntity);
+                w_LastLLNode.Contents.Remove(w_ThisEntity);
+                w_LastLRNode.Contents.Remove(w_ThisEntity);
+                w_LastURNode.Contents.Remove(w_ThisEntity);
+            }
+
+            c_IsClean = true;
+        }
+
 
         /// <summary>
         /// returns an int of which behavior branch to use
@@ -100,7 +240,7 @@ namespace Vaerydian.Behaviors
         /// <returns>the current state</returns>
         private int switchBehaviors()
         {
-            return s_CurrentState;
+            return w_CurrentState;
         }
 
         /// <summary>
@@ -109,10 +249,44 @@ namespace Vaerydian.Behaviors
         /// <returns>whether initialization was a success or not</returns>
         private BehaviorReturnCode initialize()
         {
+            Position position = (Position)w_PositionMapper.get(w_ThisEntity);
 
+            w_Spatial =  w_ECSInstance.TagManager.getEntityByTag("SPATIAL");
+            SpatialPartition spatial = (SpatialPartition)w_SpatialMapper.get(w_Spatial);
+
+            Vector2 pos = position.getPosition();
+
+            w_LastULNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
+            w_LastLLNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(0, 32));
+            w_LastLRNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 32));
+            w_LastURNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 0));
+
+
+            w_Camera = w_ECSInstance.TagManager.getEntityByTag("CAMERA");
+
+            w_EntityFaction = (Factions)w_FactionMapper.get(w_ThisEntity);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        private BehaviorReturnCode stateChangeWander()
+        {
             //change state
-            s_CurrentState = WANDER;
+            w_CurrentState = STATE_WANDER;
+            return BehaviorReturnCode.Success;
+        }
 
+        private BehaviorReturnCode stateChangePursue()
+        {
+            //change state
+            w_CurrentState = STATE_PURSUE;
+            return BehaviorReturnCode.Success;
+        }
+
+        private BehaviorReturnCode stateChangeFlee()
+        {
+            //change state
+            w_CurrentState = STATE_FLEE;
             return BehaviorReturnCode.Success;
         }
 
@@ -122,7 +296,412 @@ namespace Vaerydian.Behaviors
         /// <returns>true if hostile was detected</returns>
         private bool hasDetectedHostile()
         {
+            if (w_LastULNode == null)
+                return false;
+
+            List<Entity> locals = new List<Entity>();
+            locals.AddRange(w_LastULNode.Contents);
+            locals.AddRange(w_LastLLNode.Contents);
+            locals.AddRange(w_LastLRNode.Contents);
+            locals.AddRange(w_LastURNode.Contents);
+
+            //nothing to detect
+            if (locals.Count == 0)
+                return false;
+             
+            for (int i = 0; i < locals.Count; i++)
+            {
+                //dont look at yourself
+                if (locals[i] == w_ThisEntity)
+                    continue;
+
+                Factions factions = (Factions)w_FactionMapper.get(locals[i]);
+                
+                //is this local known to this entity
+                if (factions.KnownFactions.ContainsKey(w_EntityFaction.OwnerFaction.FactionType))
+                {
+                    //should this entity be hostile towards this local?
+                    if (factions.KnownFactions[w_EntityFaction.OwnerFaction.FactionType].Value < 0)
+                    {
+                        Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+                        Position tPos = (Position)w_PositionMapper.get(locals[i]);
+
+                        if (Vector2.Distance(pos.getPosition()+pos.getOffset(),tPos.getPosition() +tPos.getOffset()) <= 200f)
+                        {
+                            //go hostile against it
+                            w_Target = locals[i];
+                            return true;
+                        }
+                        else
+                            continue;
+                    }
+                }
+                
+            }
+            
             return false;
+        }
+
+        /// <summary>
+        /// chose a random direction to move in
+        /// </summary>
+        /// <returns>success if direction was chosen</returns>
+        private BehaviorReturnCode chooseRandomDirection()
+        {
+
+            Vector2 dir = new Vector2((float)w_Random.NextDouble() * 2 - 1, (float)w_Random.NextDouble() * 2 - 1);
+            dir.Normalize();
+
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+
+            heading.setHeading(dir);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// has the entity collided
+        /// </summary>
+        /// <returns>returns true if it did</returns>
+        private bool hasCollided()
+        {
+            MapCollidable collidable = (MapCollidable)w_ColidableMapper.get(w_ThisEntity);
+
+            return collidable.Collided;
+        }
+
+        /// <summary>
+        /// returns the current elapsed time since last update
+        /// </summary>
+        /// <returns>elapsed time</returns>
+        private int elapsedTime()
+        {
+            return w_ECSInstance.ElapsedTime;
+        }
+
+        /// <summary>
+        /// corrects the heading for a collision
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode correctHeadingForCollision()
+        {
+            MapCollidable collidable = (MapCollidable)w_ColidableMapper.get(w_ThisEntity);
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+
+            Vector2 dir = collidable.ResponseVector;
+            dir.Normalize();
+
+            heading.setHeading(dir);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// are you currently too far from target
+        /// </summary>
+        /// <returns></returns>
+        private bool tooFarFromTarget()
+        {
+            Equipment equip = (Equipment)w_EquipmentMapper.get(w_ThisEntity);
+
+            Weapon weapon = (Weapon)w_WeaponMapper.get(equip.RangedWeapon);
+
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            Position tPos = (Position)w_PositionMapper.get(w_Target);
+
+            float dist = Vector2.Distance(pos.getPosition(), tPos.getPosition());
+
+            if (dist > weapon.MaxRange)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// are you currently too close to target
+        /// </summary>
+        /// <returns></returns>
+        private bool tooCloseToTarget()
+        {
+            Equipment equip = (Equipment)w_EquipmentMapper.get(w_ThisEntity);
+
+            Weapon weapon = (Weapon)w_WeaponMapper.get(equip.RangedWeapon);
+
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            Position tPos = (Position)w_PositionMapper.get(w_Target);
+
+            float dist = Vector2.Distance(pos.getPosition(), tPos.getPosition());
+
+            if (dist < weapon.MinRange)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// are you healthy
+        /// </summary>
+        /// <returns></returns>
+        private bool isHealthy()
+        {
+            Health health = (Health)w_HealthMapper.get(w_ThisEntity);
+
+            if (((float)health.CurrentHealth / (float)health.MaxHealth) > 0.25f)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// set heading towards target
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode headingTowardsTarget()
+        {
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+            Position position = (Position)w_PositionMapper.get(w_ThisEntity);
+            Position tPosition = (Position)w_PositionMapper.get(w_Target);
+
+            Vector2 dir = (tPosition.getPosition()) - (position.getPosition());
+
+            dir.Normalize();
+
+            heading.setHeading(dir);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// set heading away from target
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode headingAwayTarget()
+        {
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+            Position position = (Position)w_PositionMapper.get(w_ThisEntity);
+            Position tPosition = (Position)w_PositionMapper.get(w_Target);
+
+            Vector2 dir = (tPosition.getPosition()) - (position.getPosition());
+
+            dir = VectorHelper.rotateVector(dir, -0.1745f + (float)w_Random.NextDouble() * 0.1745f *2f);
+
+            dir.Normalize();
+
+            heading.setHeading(Vector2.Negate(dir));
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// move using the entities heading
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode moveViaHeading()
+        {
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+            Position position = (Position)w_PositionMapper.get(w_ThisEntity);
+            Velocity velocity = (Velocity)w_VelocityMapper.get(w_ThisEntity);
+
+
+            Vector2 pos = position.getPosition();// +position.getOffset();
+
+            pos += heading.getHeading() * velocity.getVelocity();
+
+            position.setPosition(pos);
+
+            w_Moved = true;
+
+            SpatialPartition spatial = (SpatialPartition)w_SpatialMapper.get(w_Spatial);
+
+            //remove old references
+            if (w_LastULNode != null && w_LastLLNode != null && w_LastLRNode != null && w_LastURNode != null)
+            {
+                w_LastULNode.Contents.Remove(w_ThisEntity);
+                w_LastLLNode.Contents.Remove(w_ThisEntity);
+                w_LastLRNode.Contents.Remove(w_ThisEntity);
+                w_LastURNode.Contents.Remove(w_ThisEntity);
+            }
+
+            //update references
+            w_LastULNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
+            w_LastLLNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(0, 32));
+            w_LastLRNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 32));
+            w_LastURNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 0));
+            
+
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// fire a projectile at the target
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode fireAtTarget()
+        {
+            EntityFactory ef = new EntityFactory(w_ECSInstance);
+            
+            Position position = (Position) w_PositionMapper.get(w_ThisEntity);
+            Position enemy = (Position) w_PositionMapper.get(w_Target);
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+
+            Vector2 dir = (enemy.getPosition()+enemy.getOffset()) - (position.getPosition()+position.getOffset());
+
+            dir = VectorHelper.rotateVector(dir, -0.08726f + (float)w_Random.NextDouble() * 0.1745f);
+            
+            dir.Normalize();
+
+            heading.setHeading(dir);
+
+            Vector2 pos = position.getPosition();
+
+            Transform trans = new Transform();
+            trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+            trans.RotationOrigin = new Vector2(16);
+
+            ef.createCollidingProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
+
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\fire", true, 0.5f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// is the target currently dead?
+        /// </summary>
+        /// <returns></returns>
+        private bool isTargetDead()
+        {
+            Health health = (Health)w_HealthMapper.get(w_Target);
+
+            if (health == null)
+                return true;
+
+            if (health.CurrentHealth <= 0)
+                return true;
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// update the current animation frame
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode updateAnimation()
+        {
+            //grab components
+            Sprite sprite = (Sprite)w_SpriteMapper.get(w_ThisEntity);
+            Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+
+            //reset animation index
+            sprite.Column = 0;
+
+            //determine angle of heading
+            float angle = VectorHelper.getAngle(new Vector2(1, 0), heading.getHeading());
+
+            //adjust spritesheet row based on angle
+            if (angle >= 0.393f && angle < 1.178f) { sprite.Row = MOVE_UPRIGHT; }
+            else if (angle >= 1.178f && angle < 1.963f) { sprite.Row = MOVE_UP; }
+            else if (angle >= 1.963f && angle < 2.749f) { sprite.Row = MOVE_UPLEFT; }
+            else if (angle >= 2.749f && angle < 3.534f) { sprite.Row = MOVE_LEFT; }
+            else if (angle >= 3.534f && angle < 4.320f) { sprite.Row = MOVE_DOWNLEFT; }
+            else if (angle >= 4.320f && angle < 5.105f) { sprite.Row = MOVE_DOWN; }
+            else if (angle >= 5.105f && angle < 5.890f) { sprite.Row = MOVE_DOWNRIGHT; }
+            else if (angle >= 5.890f || angle < .393f) { sprite.Row = MOVE_RIGHT; }
+
+            //if you moved this cycle, update your animation frame accordingly, otherwise reset
+            if (w_Moved)
+                sprite.Column = w_Animation.updateFrame(w_ECSInstance.ElapsedTime);
+            else
+                w_Animation.reset();
+
+            //reset movement flag
+            w_Moved = false;
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// returns a random float
+        /// </summary>
+        /// <returns></returns>
+        private float getRandom()
+        {
+            return (float)w_Random.NextDouble();
+        }
+
+        /// <summary>
+        /// plays the flee sound sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playFleeSound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\help", true, 1f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// plays the flee sound sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playFlee2Sound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\help2", true, 1f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// plays the flee sound sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playFlee3Sound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\help3", true, 1f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// plays the detected sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playDetectedSound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\thereheis", true, 1f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// plays the there he is sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playDetected2Sound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\thereheis2", true, 1f);
+
+            return BehaviorReturnCode.Success;
+        }
+
+        /// <summary>
+        /// plays the there he is sound
+        /// </summary>
+        /// <returns></returns>
+        private BehaviorReturnCode playDetected3Sound()
+        {
+            UtilFactory uf = new UtilFactory(w_ECSInstance);
+            uf.createSound("audio\\effects\\thereheis3", true, 1f);
+
+            return BehaviorReturnCode.Success;
         }
     }
 }

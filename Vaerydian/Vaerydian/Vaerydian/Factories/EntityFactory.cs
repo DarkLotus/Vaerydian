@@ -20,6 +20,8 @@ using Vaerydian.Factories;
 using WorldGeneration.Cave;
 using WorldGeneration.World;
 using WorldGeneration.Utils;
+using Vaerydian.Characters.Factions;
+using Vaerydian.Components.Characters;
 
 
 namespace Vaerydian.Factories
@@ -49,11 +51,30 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Controllable());
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
-            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(100));
+            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
-            e_EcsInstance.EntityManager.addComponent(e, createLight(false, 200, new Vector3(576, 360, 80), 0.7f, new Vector4(1f, 1f, 1f, 1f)));
+            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
             e_EcsInstance.EntityManager.addComponent(e, new Transform());
+
+            //create health
+            Health health = new Health(10000);
+            health.RecoveryAmmount = 2000;
+            health.RecoveryRate = 500;
+            e_EcsInstance.EntityManager.addComponent(e, health);
+
+            //create life
+            Life life = new Life();
+            life.IsAlive = true;
+            life.DeathLongevity = 5000;
+            e_EcsInstance.EntityManager.addComponent(e, life);
+
+            //create interactions
+            Interactable interact = new Interactable();
+            interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
+            interact.SupportedInteractions.ATTACKABLE = true;
+            e_EcsInstance.EntityManager.addComponent(e, interact);
+
 
             //create test equipment
             ItemFactory iFactory = new ItemFactory(e_EcsInstance);
@@ -61,7 +82,7 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Experiences experiences = new Experiences();
-            Experience xp = new Experience(0);
+            Experience xp = new Experience(50);
             experiences.GeneralExperience.Add(MobGroup.Test, xp);
             e_EcsInstance.EntityManager.addComponent(e, experiences);
 
@@ -78,7 +99,17 @@ namespace Vaerydian.Factories
             Skills skills = new Skills();
             Skill skill = new Skill("Ranged", 50, SkillType.Offensive);
             skills.SkillSet.Add(SkillNames.Ranged, skill);
+            skill = new Skill("Avoidance", 50, SkillType.Defensive);
+            skills.SkillSet.Add(SkillNames.Avoidance, skill);
             e_EcsInstance.EntityManager.addComponent(e, skills);
+
+            Faction faction = new Faction(100, FactionType.Player);
+            Faction enemy = new Faction(-10, FactionType.TestMob);
+            
+            Factions factions = new Factions();
+            factions.OwnerFaction = faction;
+            factions.KnownFactions.Add(enemy.FactionType, enemy);
+            e_EcsInstance.EntityManager.addComponent(e, factions);
 
 
             e_EcsInstance.TagManager.tagEntity("PLAYER", e);
@@ -106,7 +137,7 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
             e_EcsInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
             e_EcsInstance.EntityManager.addComponent(e, new MousePosition());
-            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 150, new Vector3(576, 360, 100), 0.9f, new Vector4(1f, 1f, 1f, 1f)));
+            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 75, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
             e_EcsInstance.EntityManager.addComponent(e, new Transform());
 
             e_EcsInstance.TagManager.tagEntity("MOUSE", e);
@@ -114,58 +145,11 @@ namespace Vaerydian.Factories
             e_EcsInstance.refresh(e);
         }
 
-        public void createFollower(Vector2 position, Entity target, float distance)
-        {
-            Entity e = e_EcsInstance.create(); 
+        
 
-            e_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(12.5f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals",32,32,0,0));
-            e_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new FollowerBehavior(e, target, distance, e_EcsInstance)));
-            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
-            e_EcsInstance.EntityManager.addComponent(e, new Heading());
-            e_EcsInstance.EntityManager.addComponent(e, new Transform());
+        
 
-            //create health
-            Health health = new Health(200);
-            health.RecoveryAmmount = 20;
-            health.RecoveryRate = 500;
-            e_EcsInstance.EntityManager.addComponent(e, health);
 
-            //create interactions
-            Interactable interact = new Interactable();
-            interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
-            interact.SupportedInteractions.ATTACKABLE = true;
-            e_EcsInstance.EntityManager.addComponent(e, interact);
-
-            //create test equipment
-            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
-            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
-
-            //setup experiences
-            Experiences experiences = new Experiences();
-            Experience xp = new Experience(100);
-            experiences.GeneralExperience.Add(MobGroup.Test, xp);
-            e_EcsInstance.EntityManager.addComponent(e, experiences);
-
-            //setup attributes
-            Attributes attributes = new Attributes();
-            attributes.Endurance.Value = 50;
-            attributes.Mind.Value = 50;
-            attributes.Muscle.Value = 50;
-            attributes.Perception.Value = 50;
-            attributes.Quickness.Value = 50;
-            e_EcsInstance.EntityManager.addComponent(e, attributes);
-
-            //setup skills
-            Skill skill = new Skill("Avoidance", 50, SkillType.Offensive);
-            Skills skills = new Skills();
-            skills.SkillSet.Add(SkillNames.Avoidance, skill);
-            e_EcsInstance.EntityManager.addComponent(e, skills);
-
-            e_EcsInstance.refresh(e);
-
-        }
 
         public void createCave()
         {
@@ -193,7 +177,7 @@ namespace Vaerydian.Factories
         /// <param name="counter">number of iterations</param>
         /// <param name="n">number of cells neighbors</param>
         /// <param name="c">number of cells closed neighbors</param>
-        public void createRandomMap(int x, int y, int prob, bool h, int counter, int n)
+        public GameMap createRandomMap(int x, int y, int prob, bool h, int counter, int n)
         {
             Map map = new Map(x, y);
             Random rand = new Random();
@@ -306,6 +290,8 @@ namespace Vaerydian.Factories
 
             e_EcsInstance.refresh(e);
 
+
+            return gameMap;
         }
 
         private int closedNeighbors(int x, int y, Map map)

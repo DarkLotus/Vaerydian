@@ -1,3 +1,5 @@
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\ResolveAssemblyReference.cache
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\General.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\Loading.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\StartScreen.xnb
@@ -53,6 +55,13 @@ C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\projectile.xn
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\projectile2.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\Shading.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\effects\DiferredCombine.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\fire.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\flame.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\hitwall.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\help.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\thereheis.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\death.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\hurt.xnb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe.manifest
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.application
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Vaerydian.exe
@@ -64,9 +73,14 @@ C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\LibNoise.dll
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\BehaviorLibrary.pdb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\ECSFramework.pdb
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\WorldGeneration.pdb
-C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\ResolveAssemblyReference.cache
-C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.exe.manifest
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.application
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.exe
 C:\workplace\Vaerydian\Vaerydian\Vaerydian\obj\x86\Release\Vaerydian.pdb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\thereheis2.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\thereheis3.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\help2.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\help3.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\hurt2.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\hurt3.xnb
+C:\workplace\Vaerydian\Vaerydian\Vaerydian\bin\x86\Release\Content\audio\effects\hurt4.xnb

@@ -16,8 +16,10 @@ namespace Vaerydian.Characters.Factions
     public class Faction
     {
 
-        public Faction(int value)
+        public Faction(int value, FactionType type)
         {
+            f_Value = value;
+            f_FactionType = type;
         }
 
         private int f_Value;

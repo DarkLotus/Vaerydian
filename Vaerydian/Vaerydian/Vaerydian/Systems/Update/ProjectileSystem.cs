@@ -11,6 +11,7 @@ using ECSFramework.Utils;
 using Vaerydian.Components;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
+using Vaerydian.Components.Characters;
 
 
 namespace Vaerydian.Systems.Update
@@ -26,6 +27,8 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper p_SpatialMapper;
         private ComponentMapper p_InteractionMapper;
         private ComponentMapper p_HealthMapper;
+        private ComponentMapper p_FactionMapper;
+        private ComponentMapper p_LifeMapper;
 
         private Entity p_Spatial;
 
@@ -44,6 +47,8 @@ namespace Vaerydian.Systems.Update
             p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
             p_InteractionMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
             p_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
+            p_FactionMapper = new ComponentMapper(new Factions(), e_ECSInstance);
+            p_LifeMapper = new ComponentMapper(new Life(), e_ECSInstance);
 
             p_Factory = new UtilFactory(e_ECSInstance);
         }
@@ -89,6 +94,17 @@ namespace Vaerydian.Systems.Update
                         if (locals[i] == projectile.Originator)
                             continue;
 
+                        Life life = (Life)p_LifeMapper.get(locals[i]);
+
+                        //if no life, uh, don't check for it...
+                        if (life == null)
+                            continue;
+
+                        //if target is dead, dont worry
+                        if (!life.IsAlive)
+                            continue;
+
+
                         //is there an interaction available?
                         Interactable interaction = (Interactable)p_InteractionMapper.get(locals[i]);
                         if (interaction != null)
@@ -104,6 +120,12 @@ namespace Vaerydian.Systems.Update
                                 if(interaction.SupportedInteractions.PROJECTILE_COLLIDABLE &&
                                     interaction.SupportedInteractions.ATTACKABLE)
                                 {
+
+                                    Factions lfactions = (Factions)p_FactionMapper.get(locals[i]);
+                                    Factions pfactions = (Factions)p_FactionMapper.get(projectile.Originator);
+
+                                    if (lfactions.OwnerFaction.FactionType == pfactions.OwnerFaction.FactionType)
+                                        continue;
 
                                     p_Factory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
 
@@ -125,6 +147,7 @@ namespace Vaerydian.Systems.Update
             {
                 if (mapCollide.Collided)
                 {
+                    /*
                     Vector2 norm = mapCollide.ResponseVector;
                     norm.Normalize();
                     Vector2 reflect = Vector2.Reflect(heading.getHeading(), norm);
@@ -135,6 +158,12 @@ namespace Vaerydian.Systems.Update
                     //trans.Rotation = -VectorHelper.getAngle2(new Vector2(1,0), reflect);
 
                     heading.setHeading(reflect);
+                     */
+                    
+                    UtilFactory uf = new UtilFactory(e_ECSInstance);
+                    uf.createSound("audio\\effects\\hitwall", true, 0.5f);
+
+                    e_ECSInstance.deleteEntity(entity);
                 }
             }
             

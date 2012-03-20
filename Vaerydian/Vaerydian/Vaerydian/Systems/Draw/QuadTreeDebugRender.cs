@@ -53,7 +53,7 @@ namespace Vaerydian.Systems.Draw
 
         protected override void process(Entity entity)
         {
-            Position position = (Position)q_PositionMapper.get(q_Player);
+            Position position = (Position)q_PositionMapper.get(entity);
             ViewPort camera = (ViewPort)q_ViewPortMapper.get(q_Camera);
             SpatialPartition spatial = (SpatialPartition)q_SpatialMapper.get(q_Spatial);
 

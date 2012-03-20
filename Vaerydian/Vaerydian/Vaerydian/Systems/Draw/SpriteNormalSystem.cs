@@ -57,7 +57,7 @@ namespace Vaerydian.Systems.Draw
                     s_Normals.Add(texName, s_Container.ContentManager.Load<Texture2D>(texName));
             }
 
-            s_Normals.Add("projectile", s_Container.ContentManager.Load<Texture2D>("projectile"));
+            s_Normals.Add("projectile", s_Container.ContentManager.Load<Texture2D>("projectile2"));
 
             //pre-load camera entity reference
             s_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");

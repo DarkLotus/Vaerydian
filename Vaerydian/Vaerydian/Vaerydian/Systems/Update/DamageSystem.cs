@@ -7,6 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Utils;
 using Vaerydian.Components;
+using Vaerydian.Factories;
 
 namespace Vaerydian.Systems.Update
 {
@@ -15,6 +16,9 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper d_DamageMapper;
         private ComponentMapper d_HealthMapper;
 
+        private Random d_Rand = new Random();
+
+        private UtilFactory d_UtilFactory;
 
         public DamageSystem() { }
 
@@ -22,6 +26,7 @@ namespace Vaerydian.Systems.Update
         {
             d_DamageMapper = new ComponentMapper(new Damage(), e_ECSInstance);
             d_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
+            d_UtilFactory = new UtilFactory(e_ECSInstance);;
         }
 
         protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
@@ -66,6 +71,31 @@ namespace Vaerydian.Systems.Update
             {
                 //damage target
                 health.CurrentHealth -= damage.DamageAmount;
+
+                if (damage.DamageAmount > 0)
+                {
+
+
+                    switch (d_Rand.Next(0, 7))
+                    {
+                        case 1:
+                            d_UtilFactory.createSound("audio\\effects\\hurt", true, 1f);
+                            break;
+                        case 3:
+                            d_UtilFactory.createSound("audio\\effects\\hurt2", true, 1f);
+                            break;
+                        case 5:
+                            d_UtilFactory.createSound("audio\\effects\\hurt3", true, 1f);
+                            break;
+                        case 7:
+                            d_UtilFactory.createSound("audio\\effects\\hurt4", true, 1f);
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
+                }
             }
 
             damage.IsActive = false;

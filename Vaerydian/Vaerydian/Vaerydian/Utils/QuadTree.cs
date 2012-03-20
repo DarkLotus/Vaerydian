@@ -10,18 +10,18 @@ namespace Vaerydian.Utils
     public class QuadTree<E> where E:class
     {
 
-        private QuadNode<E> rootNode;
+        private QuadNode<E> q_RootNode;
 
         public QuadTree(Vector2 ul, Vector2 lr)
         {
-            rootNode = new QuadNode<E>(ul, lr);
-            rootNode.Parent = null;
+            q_RootNode = new QuadNode<E>(ul, lr);
+            q_RootNode.Parent = null;
         }
 
         public void buildQuadTree(int tiers)
         {
-            rootNode.subdivide();
-            growTree(rootNode, tiers);
+            q_RootNode.subdivide();
+            growTree(q_RootNode, tiers);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Vaerydian.Utils
         /// <returns>successful or not</returns>
         public List<E> retrieveContentsAtLocation(Vector2 location)
         {
-            return retrieveContentsAtLocation(rootNode,location);
+            return retrieveContentsAtLocation(q_RootNode,location);
         }
 
         private List<E> retrieveContentsAtLocation(QuadNode<E> node, Vector2 location)
@@ -81,10 +81,15 @@ namespace Vaerydian.Utils
             }
         }
 
+        /// <summary>
+        /// retrieves all contents at the location
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public List<E> retrieveAllContents(Vector2 location)
         {
             List<E> contents = new List<E>();
-            contents = retrieveAllContents(rootNode, location, contents);
+            contents = retrieveAllContents(q_RootNode, location, contents);
             return contents;
         }
 
@@ -109,24 +114,25 @@ namespace Vaerydian.Utils
         /// </summary>
         /// <param name="content">content to place</param>
         /// <param name="location">location contained by the leaf node</param>
-        /// <returns>true if success</returns>
-        public bool setContentAtLocation(E content, Vector2 location)
+        /// <returns>node it was set to if successful, otherwise null</returns>
+        public QuadNode<E> setContentAtLocation(E content, Vector2 location)
         {
-            return setContentAtLocation(rootNode,content,location);
+            return setContentAtLocation(q_RootNode,content,location);
         }
 
-        private bool setContentAtLocation(QuadNode<E> node, E val, Vector2 point)
+        private QuadNode<E> setContentAtLocation(QuadNode<E> node, E val, Vector2 point)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
             {
                 if (node.contains(point))
                 {
-                    node.Contents.Add(val);
-                    return true;
+                    if(!node.Contents.Contains(val))
+                        node.Contents.Add(val);
+                    return node;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
 
             }
@@ -140,7 +146,7 @@ namespace Vaerydian.Utils
                     return setContentAtLocation(node.Q3, val, point);
                 if (node.Q4.contains(point))
                     return setContentAtLocation(node.Q4, val, point);
-                return false;
+                return null;
             }
         }
 
@@ -151,7 +157,7 @@ namespace Vaerydian.Utils
         /// <returns>leaf node containing point</returns>
         public QuadNode<E> locateNode(Vector2 point)
         {
-            return locateNode(rootNode, point);
+            return locateNode(q_RootNode, point);
         }
          
         private QuadNode<E> locateNode(QuadNode<E> node, Vector2 point)
@@ -174,7 +180,45 @@ namespace Vaerydian.Utils
             }
         }
 
-        
+        /// <summary>
+        /// remove
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public bool removeValAtNode(QuadNode<E> node, E val)
+        {
+            return removeVal(q_RootNode, node, val); ;
+        }
+
+        private bool removeVal(QuadNode<E> node, QuadNode<E> target, E val)
+        {
+            if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
+            {
+                if (node == target)
+                    return node.Contents.Remove(val);
+                else
+                    return false;
+            }
+            else
+            {
+                if (node.Q1.contains(target.ULCorner))
+                    return removeVal(node.Q1, target, val);
+                if (node.Q2.contains(target.ULCorner))
+                    return removeVal(node.Q2, target, val);
+                if (node.Q3.contains(target.ULCorner))
+                    return removeVal(node.Q3, target, val);
+                if (node.Q4.contains(target.ULCorner))
+                    return removeVal(node.Q4, target, val);
+                return false;
+            }
+        }
+
+
+        private void remove(QuadNode<E> node, E val)
+        {
+            node.Contents.Remove(val);
+        }
 
     }
 }

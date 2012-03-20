@@ -45,7 +45,13 @@ namespace Vaerydian.Systems.Update
         private bool p_Moved = false;
         private bool p_FirstRun = true;
 
-        private QuadNode<Entity> p_LastNode;
+        private int p_FireRate = 125;
+        private int p_LastFired = 0;
+
+        private QuadNode<Entity> p_LastULNode;
+        private QuadNode<Entity> p_LastLLNode;
+        private QuadNode<Entity> p_LastLRNode;
+        private QuadNode<Entity> p_LastURNode;
 
         private Random rand = new Random();
 
@@ -83,7 +89,7 @@ namespace Vaerydian.Systems.Update
             if (p_FirstRun)
             {
                 spatial.QuadTree.setContentAtLocation(entity, position.getPosition());
-                p_LastNode = spatial.QuadTree.locateNode(position.getPosition());
+                p_LastULNode = spatial.QuadTree.locateNode(position.getPosition());
                 p_FirstRun = false;
             }
 
@@ -282,25 +288,40 @@ namespace Vaerydian.Systems.Update
                 dir.Normalize();
 
                 Transform trans = new Transform();
-                trans.Rotation = 0;
-                //trans.RotationOrigin = new Vector2(16);
+                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+                trans.RotationOrigin = new Vector2(16);
 
-                ef.createProjectile(pos + dir*16, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Purple.ToVector4()), trans, entity);
+                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Purple.ToVector4()), trans, entity);
+
+                UtilFactory uf = new UtilFactory(e_ECSInstance);
+                uf.createSound("audio\\effects\\fire", true,0.5f);
             }
 
-            if (InputManager.isRightButtonDown())
+            p_LastFired += e_ECSInstance.ElapsedTime;
+
+            if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
             {
+                p_LastFired = 0;
+
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
+                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
+
+                dir = VectorHelper.rotateVector(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
 
                 dir.Normalize();
 
-                Transform trans = new Transform();
-                trans.Rotation = 0;
-                //trans.RotationOrigin = new Vector2(16);
+                
 
-                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+
+                Transform trans = new Transform();
+                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+                trans.RotationOrigin = new Vector2(16);
+
+                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+                
+                UtilFactory uf = new UtilFactory(e_ECSInstance);
+                uf.createSound("audio\\effects\\fire", true, 0.5f);
             } 
 
             if (InputManager.isKeyPressed(Keys.Up))
@@ -329,19 +350,36 @@ namespace Vaerydian.Systems.Update
             }
             else
             {
+
                 //remove last reference and set new one
-                if(p_LastNode != null)
-                    p_LastNode.Contents.Remove(entity);
-                
-                spatial.QuadTree.setContentAtLocation(entity, pos);
-                p_LastNode = spatial.QuadTree.locateNode(position.getPosition()); 
+                if (p_LastULNode != null && p_LastLLNode != null && p_LastLRNode != null && p_LastURNode != null)
+                {
+                    p_LastULNode.Contents.Remove(entity);
+                    p_LastLLNode.Contents.Remove(entity);
+                    p_LastLRNode.Contents.Remove(entity);
+                    p_LastURNode.Contents.Remove(entity);
+                }
+
+                p_LastULNode = spatial.QuadTree.setContentAtLocation(entity, pos);
+                p_LastLLNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(0,32));
+                p_LastLRNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(32,32));
+                p_LastURNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(32,0));
+               
             }
 
             if(InputManager.isKeyToggled(Keys.P))
             {
-                
-                EntityFactory ef = new EntityFactory(e_ECSInstance);
+
+                NPCFactory ef = new NPCFactory(e_ECSInstance);
                 ef.createFollower(mPosition.getPosition() + mPosition.getOffset() - new Vector2(16), entity, rand.Next(300));
+
+            }
+
+            if (InputManager.isKeyToggled(Keys.O))
+            {
+
+                NPCFactory ef = new NPCFactory(e_ECSInstance);
+                ef.createWanderingEnemy(mPosition.getPosition() + mPosition.getOffset() - new Vector2(16));
 
             }
 

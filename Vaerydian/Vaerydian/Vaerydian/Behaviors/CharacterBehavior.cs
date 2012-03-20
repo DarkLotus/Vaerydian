@@ -12,5 +12,16 @@ namespace Vaerydian.Behaviors
     {
         public CharacterBehavior() { }
         public abstract BehaviorReturnCode Behave();
+        
+        public abstract void deathCleanup();
+
+        protected bool c_IsClean = false;
+
+        public bool IsClean
+        {
+            get { return c_IsClean; }
+            set { c_IsClean = value; }
+        }
+
     }
 }
