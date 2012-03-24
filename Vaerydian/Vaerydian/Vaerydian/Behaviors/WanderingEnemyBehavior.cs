@@ -141,8 +141,8 @@ namespace Vaerydian.Behaviors
             playDetected3 = new BehaviorAction(playDetected3Sound);
             playFlee3 = new BehaviorAction(playFlee3Sound);
 
-            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3), setStatePursue);
-            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3,playFlee3), setStateFlee);
+            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3, playDetected, playDetected2, playDetected3), setStatePursue);
+            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3, playFlee, playFlee2, playFlee3), setStateFlee);
 
             //initialize sequence
             ParallelSequence initSeq = new ParallelSequence(init, setStateWander);
@@ -256,7 +256,6 @@ namespace Vaerydian.Behaviors
             w_LastLLNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(0, 32));
             w_LastLRNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 32));
             w_LastURNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 0));
-
 
             w_Camera = w_ECSInstance.TagManager.getEntityByTag("CAMERA");
 

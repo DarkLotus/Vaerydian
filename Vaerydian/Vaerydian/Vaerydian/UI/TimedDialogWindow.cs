@@ -167,12 +167,12 @@ namespace Vaerydian.UI
             t_Spritebatch.Begin();
 
             //draw the frame background
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - 4, (int)t_Origin.Y - 4, (int)t_DialogDimensions.X + 8, (int)(t_DialogDimensions.Y*2 + 8)), Color.Orange);
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - 2, (int)t_Origin.Y - 2, (int)t_DialogDimensions.X + 4, (int)(t_DialogDimensions.Y*2 + 4)), Color.White);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset/2 - 4, (int)t_Origin.Y - 4, (int)t_DialogDimensions.X + 8 + t_Offset, (int)(t_DialogDimensions.Y*2 + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset/2 - 2, (int)t_Origin.Y - 2, (int)t_DialogDimensions.X + 4 + t_Offset, (int)(t_DialogDimensions.Y*2 + 4)), Color.White);
 
             //draw name-plate
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset - 4), (int)(t_Origin.Y - t_Offset - 4), (int)(t_NameDimensions.X + 8), (int)(t_NameDimensions.Y + 8)), Color.Orange);
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset - 2), (int)(t_Origin.Y - t_Offset - 2), (int)(t_NameDimensions.X + 4), (int)(t_NameDimensions.Y + 4)), new Color(0, 116, 196));
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset*1.5 - 4), (int)(t_Origin.Y - t_Offset - 4), (int)(t_NameDimensions.X + 8 + t_Offset), (int)(t_NameDimensions.Y + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset*1.5 - 2), (int)(t_Origin.Y - t_Offset - 2), (int)(t_NameDimensions.X + 4 + t_Offset), (int)(t_NameDimensions.Y + 4)), new Color(0, 116, 196));
             t_Spritebatch.DrawString(FontManager.Instance.Fonts["StartScreen"], t_Name, new Vector2(t_Origin.X - t_Offset, t_Origin.Y - t_Offset), Color.White);
 
             //draw the text
