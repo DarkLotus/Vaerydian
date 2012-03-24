@@ -56,6 +56,8 @@ namespace Vaerydian.Systems.Update
         {
             UserInterface ui = (UserInterface)u_UIMapper.get(entity);
 
+            ui.UI.ECSInstance = e_ECSInstance;
+
             ui.UI.update(e_ECSInstance.ElapsedTime);
         }
 

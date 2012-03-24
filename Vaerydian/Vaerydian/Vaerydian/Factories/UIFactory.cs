@@ -27,11 +27,11 @@ namespace Vaerydian.Factories
             u_EcsInstance = ecsInstance;
         }
 
-        public void createTimedDialogWindow(String dialog, Vector2 origin, Vector2 size, int duration)
+        public void createTimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
             Entity e = u_EcsInstance.create();
 
-            TimedDialogWindow window = new TimedDialogWindow(dialog, origin, size, 3000);
+            TimedDialogWindow window = new TimedDialogWindow(caller, dialog, origin, name, duration);
 
             window.ECSInstance = u_EcsInstance;
             window.Owner = e;

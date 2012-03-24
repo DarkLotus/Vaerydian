@@ -21,6 +21,7 @@ using Vaerydian.Utils;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;
 
+
 namespace Vaerydian.Behaviors
 {
     class WanderingEnemyBehavior : CharacterBehavior
@@ -64,7 +65,7 @@ namespace Vaerydian.Behaviors
         private QuadNode<Entity> w_LastLRNode;
         private QuadNode<Entity> w_LastURNode;
 
-        private Random w_Random = new Random(42);
+        private Random w_Random = new Random((int)DateTime.Now.Ticks);
 
         private bool w_Moved = false;
 
@@ -82,7 +83,6 @@ namespace Vaerydian.Behaviors
         private BehaviorAction init;
         private BehaviorAction setStateWander;
         private BehaviorAction setStatePursue;
-        private BehaviorAction setStateAttack;
         private BehaviorAction setStateFlee;
         private BehaviorAction choseDirection;
         private BehaviorAction collideCorrection;
@@ -142,7 +142,7 @@ namespace Vaerydian.Behaviors
             playFlee3 = new BehaviorAction(playFlee3Sound);
 
             ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3), setStatePursue);
-            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3), setStateFlee);
+            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3,playFlee3), setStateFlee);
 
             //initialize sequence
             ParallelSequence initSeq = new ParallelSequence(init, setStateWander);
@@ -640,6 +640,12 @@ namespace Vaerydian.Behaviors
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\help", true, 1f);
 
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "Help!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+
             return BehaviorReturnCode.Success;
         }
 
@@ -651,6 +657,12 @@ namespace Vaerydian.Behaviors
         {
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\help2", true, 1f);
+
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "Oooh Stop!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -664,6 +676,12 @@ namespace Vaerydian.Behaviors
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\help3", true, 1f);
 
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "Run Away!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+
             return BehaviorReturnCode.Success;
         }
 
@@ -675,6 +693,14 @@ namespace Vaerydian.Behaviors
         {
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\thereheis", true, 1f);
+
+
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "I Found Him!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+
 
             return BehaviorReturnCode.Success;
         }
@@ -688,6 +714,12 @@ namespace Vaerydian.Behaviors
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\thereheis2", true, 1f);
 
+            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "There He Is!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+
             return BehaviorReturnCode.Success;
         }
 
@@ -699,6 +731,12 @@ namespace Vaerydian.Behaviors
         {
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\thereheis3", true, 1f);
+
+            Position pos = (Position) w_PositionMapper.get(w_ThisEntity);
+            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
+
+            UIFactory uif = new UIFactory(w_ECSInstance);
+            uif.createTimedDialogWindow(w_ThisEntity, "Gotcha!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }

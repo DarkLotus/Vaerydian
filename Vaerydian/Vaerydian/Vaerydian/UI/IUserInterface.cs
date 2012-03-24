@@ -13,6 +13,8 @@ namespace Vaerydian.UI
     {
         Entity Owner { get; set; }
 
+        Entity Caller { get; set; }
+
         ECSInstance ECSInstance { get; set; }
 
         GameContainer GameContainer { get; set; }

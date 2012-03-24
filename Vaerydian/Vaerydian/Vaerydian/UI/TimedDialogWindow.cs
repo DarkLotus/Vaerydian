@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ECSFramework;
+using Vaerydian.Components;
 
 namespace Vaerydian.UI
 {
@@ -19,15 +20,9 @@ namespace Vaerydian.UI
 
         private String t_Dialog;
 
+        private String t_Name = "Char Name";
+
         private Texture2D t_FrameBackground;
-
-        private Texture2D t_FrameHorizontal;
-
-        private Texture2D t_FrameVertical;
-
-        private Texture2D t_FrameCorner;
-
-        private Texture2D t_FrameCorner2;
 
         private int t_Duration = 3000;
 
@@ -35,9 +30,16 @@ namespace Vaerydian.UI
 
         private Vector2 t_Origin;
 
-        private Vector2 t_Size;
+        private Vector2 t_NameDimensions;
+
+        private Vector2 t_DialogDimensions;
 
         private int t_Offset = 10;
+
+        private ComponentMapper t_PositionMapper;
+        private ComponentMapper t_ViewPortMapper;
+
+        private Entity t_Camera;
 
         /// <summary>
         /// create a dialog window with the following attributes
@@ -47,11 +49,12 @@ namespace Vaerydian.UI
         /// <param name="size">size of the window</param>
         /// <param name="startTime">time window is called</param>
         /// <param name="duration">time window is to be alive</param>
-        public TimedDialogWindow(String dialog, Vector2 origin, Vector2 size, int duration)
+        public TimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
+            t_Caller = caller;
             t_Dialog = dialog;
             t_Origin = origin;
-            t_Size = size;
+            t_Name = name;
             t_Duration = duration;
         }
         
@@ -63,7 +66,14 @@ namespace Vaerydian.UI
             set { t_Owner = value; }
         }
 
-        public ECSFramework.ECSInstance ECSInstance
+        private Entity t_Caller;
+
+        public Entity Caller {
+            get { return t_Caller;}
+            set { t_Caller = value;}
+        }
+
+        public ECSInstance ECSInstance
         {
             get
             {
@@ -96,7 +106,14 @@ namespace Vaerydian.UI
 
         public void initialize()
         {
+            t_Offset = FontManager.Instance.Fonts["StartScreen"].LineSpacing;
+            
+            t_NameDimensions = FontManager.Instance.Fonts["StartScreen"].MeasureString(t_Name);
 
+            t_DialogDimensions = FontManager.Instance.Fonts["General"].MeasureString(t_Dialog);
+
+            t_PositionMapper = new ComponentMapper(new Position(), t_ECSInstance);
+            t_ViewPortMapper = new ComponentMapper(new ViewPort(), t_ECSInstance);
 
             t_IsInitialized = true;
         }
@@ -112,11 +129,9 @@ namespace Vaerydian.UI
         {
             t_Spritebatch = t_Container.SpriteBatch;
             
-            t_FrameBackground = t_Container.ContentManager.Load<Texture2D>("frame");
-            t_FrameHorizontal = t_Container.ContentManager.Load<Texture2D>("frame_h");
-            t_FrameVertical = t_Container.ContentManager.Load<Texture2D>("frame_v");
-            t_FrameCorner = t_Container.ContentManager.Load<Texture2D>("frame_c");
-            t_FrameCorner2 = t_Container.ContentManager.Load<Texture2D>("frame_c2");
+            t_FrameBackground = t_Container.ContentManager.Load<Texture2D>("dialog_bubble");
+
+            t_Camera = t_ECSInstance.TagManager.getEntityByTag("CAMERA");
 
             t_IsLoaded = true;
         }
@@ -139,6 +154,12 @@ namespace Vaerydian.UI
 
             if (t_ElapsedTime > t_Duration)
                 t_ECSInstance.deleteEntity(t_Owner);
+
+            Position pos = (Position)t_PositionMapper.get(t_Caller);
+            ViewPort camera = (ViewPort)t_ViewPortMapper.get(t_Camera);
+
+            if(pos != null)
+                t_Origin = pos.getPosition() - camera.getOrigin() - new Vector2(0,t_Offset*2);
         }
 
         public void draw(int elapsedTime)
@@ -146,44 +167,16 @@ namespace Vaerydian.UI
             t_Spritebatch.Begin();
 
             //draw the frame background
-            t_Spritebatch.Draw(t_FrameBackground, new Vector2(t_Origin.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                             new Vector2(t_Size.X, t_Size.Y), SpriteEffects.None, 0);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - 4, (int)t_Origin.Y - 4, (int)t_DialogDimensions.X + 8, (int)(t_DialogDimensions.Y*2 + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - 2, (int)t_Origin.Y - 2, (int)t_DialogDimensions.X + 4, (int)(t_DialogDimensions.Y*2 + 4)), Color.White);
 
-            //draw the frame vertical borders
-            //draw right border
-            t_Spritebatch.Draw(t_FrameVertical, new Vector2(t_Origin.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, t_Size.Y), SpriteEffects.None, 0);
-
-            //draw left border
-            t_Spritebatch.Draw(t_FrameVertical, new Vector2(t_Origin.X + t_Size.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, t_Size.Y), SpriteEffects.FlipHorizontally, 0);
-
-            //draw frame horizontal borders
-            //draw top border
-            t_Spritebatch.Draw(t_FrameHorizontal, new Vector2(t_Origin.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(t_Size.X, 1), SpriteEffects.None, 0);
-            //draw bottom border
-            t_Spritebatch.Draw(t_FrameHorizontal, new Vector2(t_Origin.X, t_Origin.Y + t_Size.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(t_Size.X, 1), SpriteEffects.FlipVertically, 0);
-
-            //draw corners
-            //UL
-            t_Spritebatch.Draw(t_FrameCorner, new Vector2(t_Origin.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, 1), SpriteEffects.None, 0);
-
-            //UR
-            t_Spritebatch.Draw(t_FrameCorner, new Vector2(t_Origin.X + t_Size.X, t_Origin.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0);
-
-            //LL
-            t_Spritebatch.Draw(t_FrameCorner, new Vector2(t_Origin.X, t_Origin.Y + t_Size.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, 1), SpriteEffects.FlipVertically, 0);
-            //LR
-            t_Spritebatch.Draw(t_FrameCorner2, new Vector2(t_Origin.X + t_Size.X, t_Origin.Y + t_Size.Y), null, Color.White, 0, new Vector2(0, 0),
-                                         new Vector2(1, 1), SpriteEffects.None, 0);
+            //draw name-plate
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset - 4), (int)(t_Origin.Y - t_Offset - 4), (int)(t_NameDimensions.X + 8), (int)(t_NameDimensions.Y + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset - 2), (int)(t_Origin.Y - t_Offset - 2), (int)(t_NameDimensions.X + 4), (int)(t_NameDimensions.Y + 4)), new Color(0, 116, 196));
+            t_Spritebatch.DrawString(FontManager.Instance.Fonts["StartScreen"], t_Name, new Vector2(t_Origin.X - t_Offset, t_Origin.Y - t_Offset), Color.White);
 
             //draw the text
-            t_Spritebatch.DrawString(FontManager.Instance.Fonts["General"], t_Dialog, new Vector2(t_Origin.X + t_Offset, t_Origin.Y + t_Offset), Color.White);
+            t_Spritebatch.DrawString(FontManager.Instance.Fonts["General"], t_Dialog, new Vector2(t_Origin.X, t_Origin.Y + t_Offset/2 ), Color.Black);
 
 
             t_Spritebatch.End();

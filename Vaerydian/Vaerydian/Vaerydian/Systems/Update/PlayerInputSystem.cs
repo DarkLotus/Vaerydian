@@ -390,7 +390,7 @@ namespace Vaerydian.Systems.Update
                 ViewPort camera = (ViewPort)p_ViewPortMapper.get(p_Camera);
 
 
-                uf.createTimedDialogWindow("HELLO WORLD", mPosition.getPosition() + mPosition.getOffset() - camera.getOrigin(), new Vector2(160, 100), 3000);
+                uf.createTimedDialogWindow(entity, "Character Dialog Here", mPosition.getPosition() + mPosition.getOffset() - camera.getOrigin(), "Player" , 3000);
             }
 
         }
