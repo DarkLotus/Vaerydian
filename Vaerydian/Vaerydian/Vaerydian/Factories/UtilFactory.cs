@@ -74,5 +74,17 @@ namespace Vaerydian.Factories
 
         }
 
+        public void createSound(String name, bool play, float volume, float pitch)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Audio audio = new Audio(name, play, volume, pitch);
+
+            u_EcsInstance.EntityManager.addComponent(e, audio);
+
+            u_EcsInstance.refresh(e);
+
+        }
+
     }
 }

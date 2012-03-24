@@ -141,8 +141,8 @@ namespace Vaerydian.Behaviors
             playDetected3 = new BehaviorAction(playDetected3Sound);
             playFlee3 = new BehaviorAction(playFlee3Sound);
 
-            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3, playDetected, playDetected2, playDetected3), setStatePursue);
-            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3, playFlee, playFlee2, playFlee3), setStateFlee);
+            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3), setStatePursue);
+            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3), setStateFlee);
 
             //initialize sequence
             ParallelSequence initSeq = new ParallelSequence(init, setStateWander);
@@ -186,10 +186,6 @@ namespace Vaerydian.Behaviors
             //as long as your healthy, pursue and attack your target
             ParallelSequence pursAttackSeq2 = new ParallelSequence(healthSel, pursAttackSeq1);
 
-            //pursue sequnce, while healthy & too far & not too close, move towards your target
-            ParallelSequence pursueSeq = new ParallelSequence(healthSel, deadTargetSel, tooFar, new Inverter(tooClose), towardsHeading, move, animate);
-            ParallelSelector pursueSel = new ParallelSelector(pursueSeq, setStateAttack);
-            
             //flee sequence, while unhealthy, flee
             ParallelSequence fleeSeq = new ParallelSequence(new Inverter(healthy), deadTargetSel, awayHeading, move, animate);
             ParallelSelector fleeSel = new ParallelSelector(fleeSeq, setStateWander);
@@ -296,7 +292,7 @@ namespace Vaerydian.Behaviors
         /// <returns>true if hostile was detected</returns>
         private bool hasDetectedHostile()
         {
-            if (w_LastULNode == null)
+            if (w_LastULNode == null || w_LastLLNode == null || w_LastLRNode == null || w_LastURNode == null)
                 return false;
 
             List<Entity> locals = new List<Entity>();
@@ -316,7 +312,10 @@ namespace Vaerydian.Behaviors
                     continue;
 
                 Factions factions = (Factions)w_FactionMapper.get(locals[i]);
-                
+
+                if (factions == null)
+                    continue;
+
                 //is this local known to this entity
                 if (factions.KnownFactions.ContainsKey(w_EntityFaction.OwnerFaction.FactionType))
                 {
@@ -483,7 +482,7 @@ namespace Vaerydian.Behaviors
 
             Vector2 dir = (tPosition.getPosition()) - (position.getPosition());
 
-            dir = VectorHelper.rotateVector(dir, -0.1745f + (float)w_Random.NextDouble() * 0.1745f *2f);
+            //dir = VectorHelper.rotateVector(dir, (float)w_Random.NextDouble());
 
             dir.Normalize();
 

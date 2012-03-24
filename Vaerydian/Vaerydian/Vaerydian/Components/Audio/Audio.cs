@@ -22,6 +22,14 @@ namespace Vaerydian.Components.Audio
             a_Volume = volume;   
         }
 
+        public Audio(String soundEffectName, bool playNow, float volume, float pitch)
+        {
+            a_SoundEffectName = soundEffectName;
+            a_Play = playNow;
+            a_Volume = volume;
+            a_Pitch = pitch;
+        }
+
         public int getEntityId()
         {
             return a_EntityID;
@@ -74,7 +82,13 @@ namespace Vaerydian.Components.Audio
             set { a_Volume = value; }
         }
 
+        private float a_Pitch = 0f;
 
+        public float Pitch
+        {
+            get { return a_Pitch; }
+            set { a_Pitch = value; }
+        }
 
 
     }

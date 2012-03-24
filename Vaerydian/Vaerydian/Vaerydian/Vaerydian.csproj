@@ -157,6 +157,7 @@
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
     <Compile Include="Components\Damage.cs" />
+    <Compile Include="Components\Graphical\UserInterface.cs" />
     <Compile Include="Components\Items\Equipment.cs" />
     <Compile Include="Components\Experiences.cs" />
     <Compile Include="Components\Health.cs" />
@@ -179,6 +180,10 @@
     <Compile Include="Components\SpatialPartition.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Components\Transform.cs" />
+    <Compile Include="Factories\UIFactory.cs" />
+    <Compile Include="Systems\Draw\UIDrawSystem.cs" />
+    <Compile Include="Systems\Update\UIUpdateSystem.cs" />
+    <Compile Include="UI\IUserInterface.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
     <Compile Include="Systems\Update\LifeSystem.cs" />
@@ -245,7 +250,7 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
     <Compile Include="Windows\TextMenuWindow.cs" />
-    <Compile Include="Windows\TimedDialogWindow.cs" />
+    <Compile Include="UI\TimedDialogWindow.cs" />
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>
@@ -293,7 +298,6 @@
   <ItemGroup>
     <Folder Include="Characters\Behaviors\Actions\" />
     <Folder Include="Characters\Behaviors\Conditionals\" />
-    <Folder Include="Components\Graphical\" />
     <Folder Include="Components\Spatials\" />
     <Folder Include="Components\Utils\" />
   </ItemGroup>

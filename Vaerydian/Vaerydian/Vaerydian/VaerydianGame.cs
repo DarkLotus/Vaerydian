@@ -37,14 +37,15 @@ namespace Vaerydian
         private ScreenManager screenManager;
         private WindowManager windowManager;
 
-        private int avg, disp, elapsed;
+        private int elapsed;
+        private int count = 0;
+        private float avg;
 
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = 768;
-            graphics.SynchronizeWithVerticalRetrace = false;
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             this.IsFixedTimeStep = true;
@@ -141,13 +142,11 @@ namespace Vaerydian
 
             //calculate ms/s
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
-
-            avg = (avg + gameTime.ElapsedGameTime.Milliseconds) / 2;
-
-            if (elapsed > 1000)
+            count++;
+            if(count > 100)
             {
-                disp = avg;
-                avg = 0;
+                avg = (float)elapsed / (float)count;
+                count = 0;
                 elapsed = 0;
             }
 
@@ -169,7 +168,7 @@ namespace Vaerydian
             spriteBatch.Begin();
 
             //display performance
-            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + disp, new Vector2(0), Color.Red);
+            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + avg, new Vector2(0), Color.Red);
 
             //end sprite batch
             spriteBatch.End();

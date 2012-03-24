@@ -14,6 +14,7 @@ using Vaerydian.Components;
 using Vaerydian.Components.Audio;
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Debug;
+using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;
 using Vaerydian.Systems;
@@ -44,6 +45,7 @@ namespace Vaerydian.Screens
         private EntitySystem damageSystem;
         private EntitySystem healthSystem;
         private EntitySystem lifeSystem;
+        private EntitySystem uiUpdateSystem;
         
         //audio
         private EntitySystem audioSystem;
@@ -60,6 +62,7 @@ namespace Vaerydian.Screens
         private EntitySystem healthBarRenderSystem;
         private EntitySystem damageDisplaySystem;
         private EntitySystem quadTreeDebugRenderSystem;
+        private EntitySystem uiDrawSystem;
 
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
@@ -98,6 +101,7 @@ namespace Vaerydian.Screens
             damageSystem = ecsInstance.SystemManager.setSystem(new DamageSystem(), new Damage());
             healthSystem = ecsInstance.SystemManager.setSystem(new HealthSystem(), new Health());
             lifeSystem = ecsInstance.SystemManager.setSystem(new LifeSystem(), new Life());
+            uiUpdateSystem = ecsInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
             
             //audio systems
             audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
@@ -114,6 +118,7 @@ namespace Vaerydian.Screens
             healthBarRenderSystem = ecsInstance.SystemManager.setSystem(new HealthBarRenderSystem(gameContainer), new Health());
             damageDisplaySystem = ecsInstance.SystemManager.setSystem(new DamageDisplaySystem(gameContainer), new Damage());
             quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer), new Position(),new AiBehavior());
+            uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer), new UserInterface());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -259,7 +264,8 @@ namespace Vaerydian.Screens
             //process audio
             audioSystem.process();
 
-            
+            //process user interfaces;
+            uiUpdateSystem.process();
         }
 
         public override void Draw(GameTime gameTime)
@@ -308,7 +314,7 @@ namespace Vaerydian.Screens
             //run UI systems
             damageDisplaySystem.process();
             healthBarRenderSystem.process();
-            
+            uiDrawSystem.process();
 
             //run debug systems
             //quadTreeDebugRenderSystem.process();

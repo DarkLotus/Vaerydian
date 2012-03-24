@@ -136,6 +136,11 @@ namespace Vaerydian.Systems.Draw
             s_GraphicsDevice.BlendState = s_BlendState;
 
             s_GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, s_Vertices, 0, 2);
+
+            
+
         }
+
+
     }
 }

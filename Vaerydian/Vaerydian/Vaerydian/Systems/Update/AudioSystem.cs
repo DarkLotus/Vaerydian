@@ -57,9 +57,7 @@ namespace Vaerydian.Systems.Update
             if (!audio.Play)
                 return;
 
-            SoundEffectInstance sei = a_SoundEffects[audio.SoundEffectName].CreateInstance();
-            sei.Volume = audio.Volume;
-            sei.Play();
+            a_SoundEffects[audio.SoundEffectName].Play(audio.Volume, audio.Pitch, 0f);
 
             audio.Play = false;
             e_ECSInstance.deleteEntity(entity);

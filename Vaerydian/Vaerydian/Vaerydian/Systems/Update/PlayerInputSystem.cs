@@ -383,6 +383,16 @@ namespace Vaerydian.Systems.Update
 
             }
 
+            if (InputManager.isKeyToggled(Keys.U))
+            {
+                UIFactory uf = new UIFactory(e_ECSInstance);
+
+                ViewPort camera = (ViewPort)p_ViewPortMapper.get(p_Camera);
+
+
+                uf.createTimedDialogWindow("HELLO WORLD", mPosition.getPosition() + mPosition.getOffset() - camera.getOrigin(), new Vector2(160, 100), 3000);
+            }
+
         }
 
        
