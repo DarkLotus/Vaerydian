@@ -42,7 +42,7 @@ namespace Vaerydian.Systems.Draw
         
         protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
         {
-            d_Font = FontManager.Instance.Fonts["Damage"];
+            d_Font = FontManager.Fonts["Damage"];
             d_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
 

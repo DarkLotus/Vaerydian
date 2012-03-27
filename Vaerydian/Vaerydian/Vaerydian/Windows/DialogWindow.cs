@@ -120,7 +120,7 @@ namespace Vaerydian.Windows
         public override void Initialize()
         {
             //figure out the offset
-            dw_Offset = (int) FontManager.Instance.Fonts["General"].LineSpacing;
+            dw_Offset = (int) FontManager.Fonts["General"].LineSpacing;
 
             addDialog(dw_Dialog);
         }
@@ -216,7 +216,7 @@ namespace Vaerydian.Windows
             //draw the text
             for (int i = dw_DialogLoopStart; i < dw_DialogList.Count; i++)
             {
-                spritebatch.DrawString(FontManager.Instance.Fonts["General"], dw_DialogList[i], new Vector2(dw_Origin.X + dw_Offset, dw_Origin.Y + dw_Offset * ((i-dw_DialogLoopStart) + 1)), Color.White);
+                spritebatch.DrawString(FontManager.Fonts["General"], dw_DialogList[i], new Vector2(dw_Origin.X + dw_Offset, dw_Origin.Y + dw_Offset * ((i-dw_DialogLoopStart) + 1)), Color.White);
             }
 
             spritebatch.End();

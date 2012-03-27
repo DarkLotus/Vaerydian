@@ -18,10 +18,14 @@ namespace Vaerydian.Screens
         bool loadingIsSlow;  
         bool otherScreensAreGone;
 
-        private Texture2D ls_LoadingTexture;
+        private Texture2D l_LoadingTexture;
  
         Screen[] screensToLoad;  
-        GameTime loadStartTime;  
+        GameTime loadStartTime;
+
+        private ScreenManager l_ScreenManager;
+
+        static Rectangle l_BackgroundRect;
 
         #endregion  
  
@@ -32,7 +36,7 @@ namespace Vaerydian.Screens
         {
             base.LoadContent();
 
-            ls_LoadingTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
+            l_LoadingTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
         }
 
 
@@ -60,7 +64,9 @@ namespace Vaerydian.Screens
         /// </summary>  
         public static void Load(ScreenManager screenManager, bool loadingIsSlow,
                                 params Screen[] screensToLoad)  
-        {  
+        {
+            l_BackgroundRect = new Rectangle(0, 0, screenManager.GraphicsDevice.Viewport.Width, screenManager.GraphicsDevice.Viewport.Height);
+
             // Tell all the current screens to transition off.  
             foreach (Screen screen in screenManager.Screens)  
                 screen.ScreenState = ScreenState.Inactive;  
@@ -211,7 +217,7 @@ namespace Vaerydian.Screens
             if (loadingIsSlow)  
             {  
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;  
-                SpriteFont font = FontManager.Instance.Fonts["Loading"];  
+                SpriteFont font = FontManager.Fonts["Loading"];  
  
                 const string message = "Generating World...";  
    
@@ -229,7 +235,9 @@ namespace Vaerydian.Screens
                 // Draw the text.  
                 spriteBatch.Begin();
 
-                spriteBatch.Draw(ls_LoadingTexture, Vector2.Zero, Color.DimGray);
+                spriteBatch.Draw(l_LoadingTexture, l_BackgroundRect, Color.DimGray);
+
+                //spriteBatch.Draw(ls_LoadingTexture, Vector2.Zero, Color.DimGray);
 
                 //show the base message
                 spriteBatch.DrawString(font, message, textPosition, Color.White);

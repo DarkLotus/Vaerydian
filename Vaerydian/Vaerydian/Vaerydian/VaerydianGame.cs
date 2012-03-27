@@ -30,7 +30,6 @@ namespace Vaerydian
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private FontManager fontManager = FontManager.Instance;
 
         private GameContainer gameContainer = new GameContainer();
 
@@ -45,7 +44,7 @@ namespace Vaerydian
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 480;
-            graphics.PreferredBackBufferWidth = 768;
+            graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             this.IsFixedTimeStep = true;
@@ -56,7 +55,7 @@ namespace Vaerydian
             Content.RootDirectory = "Content";
 
             //give the fontManager a reference to Content
-            fontManager.ContentManager = this.Content;
+            FontManager.ContentManager = this.Content;
 
             screenManager = new ScreenManager(this);
             Components.Add(screenManager);
@@ -93,9 +92,7 @@ namespace Vaerydian
 
             screenManager.WindowManager = windowManager;
 
-            
-
-            fontManager.LoadContent();
+            FontManager.LoadContent();
 
             LoadingScreen.Load(screenManager, true, new StartScreen());
 
@@ -109,7 +106,7 @@ namespace Vaerydian
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            fontManager.Fonts.Clear();
+            FontManager.Fonts.Clear();
 
             for(int i = 0; i < screenManager.Screens.Count;i++)
             {
@@ -168,7 +165,7 @@ namespace Vaerydian
             spriteBatch.Begin();
 
             //display performance
-            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "ms / frame: " + avg, new Vector2(0), Color.Red);
+            spriteBatch.DrawString(FontManager.Fonts["General"], "ms / frame: " + avg, new Vector2(0), Color.Red);
 
             //end sprite batch
             spriteBatch.End();

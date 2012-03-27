@@ -70,7 +70,7 @@ namespace Vaerydian.Windows
         /// </summary>
         public override void Initialize()
         {
-            tmw_Offset = FontManager.Instance.Fonts[tmw_FontName].LineSpacing;
+            tmw_Offset = FontManager.Fonts[tmw_FontName].LineSpacing;
             
             int max = 0;
             int stest;
@@ -78,7 +78,7 @@ namespace Vaerydian.Windows
             //figure out the max length of any of the menu strings
             foreach (string s in tmw_MenuItems)
             {
-                stest = (int)FontManager.Instance.Fonts[tmw_FontName].MeasureString(s).X;
+                stest = (int)FontManager.Fonts[tmw_FontName].MeasureString(s).X;
                 if (stest > max)
                     max = stest;
             }
@@ -179,11 +179,11 @@ namespace Vaerydian.Windows
                 //highlight the indexed menu item
                 if (tmw_MenuIndex == i)
                 {
-                    spritebatch.DrawString(FontManager.Instance.Fonts[tmw_FontName], tmw_MenuItems[i], new Vector2(tmw_Origin.X + tmw_Offset, tmw_Origin.Y + tmw_Offset * (i + 1)), Color.Yellow);
+                    spritebatch.DrawString(FontManager.Fonts[tmw_FontName], tmw_MenuItems[i], new Vector2(tmw_Origin.X + tmw_Offset, tmw_Origin.Y + tmw_Offset * (i + 1)), Color.Yellow);
                 }
                 else
                 {
-                    spritebatch.DrawString(FontManager.Instance.Fonts[tmw_FontName], tmw_MenuItems[i], new Vector2(tmw_Origin.X + tmw_Offset, tmw_Origin.Y + tmw_Offset * (i + 1)), Color.White);
+                    spritebatch.DrawString(FontManager.Fonts[tmw_FontName], tmw_MenuItems[i], new Vector2(tmw_Origin.X + tmw_Offset, tmw_Origin.Y + tmw_Offset * (i + 1)), Color.White);
                 }
             }
 

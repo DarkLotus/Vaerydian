@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using Vaerydian.Maps;
 using Vaerydian.Windows;
+using Vaerydian.Maps;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 using WorldGeneration.World;
+using WorldGeneration.Utils;
 
 
 namespace Vaerydian.Screens
@@ -27,25 +28,25 @@ namespace Vaerydian.Screens
     public class WorldScreen : Screen
     {
 
-        //private MapEngine ws_MapEngine = MapEngine.Instance;
+        private MapEngine w_MapEngine = MapEngine.Instance;
 
         /// <summary>
         /// world engine reference
         /// </summary>
         //private WorldEngine ws_WorldEngine = WorldEngine.Instance;
 
-        private WorldTerrain ws_Terrain;
+        private Map w_Map;
 
         /// <summary>
         /// local SpriteBatch copy
         /// </summary>
-        private SpriteBatch ws_SpriteBatch;
+        private SpriteBatch w_SpriteBatch;
 
         public override string LoadingMessage
         {
             get
             {
-                return "";// ws_WorldEngine.WorldGeneratorStatusMessage;
+                return w_MapEngine.WorldGeneratorStatusMessage;
             }
         }
 
@@ -53,9 +54,9 @@ namespace Vaerydian.Screens
 
         private int yStart = 0;
 
-        private int xFinish = 1024;
+        private int xFinish = 768;
 
-        private int yFinish = 640;
+        private int yFinish = 480;
 
         private ScreenViewPort ws_ViewPort = new ScreenViewPort();
 
@@ -74,33 +75,30 @@ namespace Vaerydian.Screens
         {
             base.Initialize();
 
-            ws_SpriteBatch = ScreenManager.SpriteBatch;
+            w_SpriteBatch = ScreenManager.SpriteBatch;
 
-            ws_ViewPort.Dimensions = new Point(1024, 640);
+            ws_ViewPort.Dimensions = new Point(this.ScreenManager.GraphicsDevice.Viewport.Width, this.ScreenManager.GraphicsDevice.Viewport.Height);
 
             ws_ViewPort.Origin = new Point(0, 0);
 
-            //ws_WorldEngine.createNewWorld();
-
-            //ws_WorldEngine.Initialize();
-
             UpdateView();
 
-            /*
-            ws_MapEngine.TileSize = 5;
-            
-            ws_MapEngine.XTiles = 1024;
+            w_MapEngine.ContentManager = this.ScreenManager.Game.Content;
 
-            ws_MapEngine.YTiles = 1024;
+            w_MapEngine.TileSize = 25;
 
-            ws_MapEngine.WorldGenerator.generateNewWorld(0, 0, ws_MapEngine.XTiles, ws_MapEngine.YTiles, 5f, 1024, new Random().Next());
+            w_MapEngine.XTiles = ws_ViewPort.Dimensions.X;
 
-            ws_MapEngine.ViewPort.Dimensions = new Point(1024, 640);
+            w_MapEngine.YTiles = ws_ViewPort.Dimensions.Y;
 
-            ws_MapEngine.ViewPort.Origin = new Point(0, 0);
+            w_MapEngine.WorldGenerator.generateNewWorld(0, 0, w_MapEngine.XTiles, w_MapEngine.YTiles, 5f, w_MapEngine.XTiles, w_MapEngine.YTiles, new Random().Next());
 
-            ws_MapEngine.Initialize();
-            */
+            w_MapEngine.ViewPort.Dimensions = ws_ViewPort.Dimensions;
+
+            w_MapEngine.ViewPort.Origin = ws_ViewPort.Origin;
+
+            w_MapEngine.Initialize();
+
         }
 
         /// <summary>
@@ -111,28 +109,8 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             //load map engine content
-            //ws_MapEngine.LoadContent();
-            
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\grass"));//0
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\ocean"));//1
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\mountains"));//2
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\arctic"));//3
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\beach"));//4
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\forest"));//5
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\grasslands"));//6
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\jungle"));//7
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\desert"));//8
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\swamp"));//9
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\tundra"));//10
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\foothills"));//11
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\steppes"));//12
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\cascade"));//13
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\peak"));//14
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\littoral"));//15
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\abyssal"));//16
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\ice"));//17
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("terrain\\sublittoral"));//18
-            textures.Add(this.ScreenManager.Game.Content.Load<Texture2D>("characters\\player"));//19player texture
+            w_MapEngine.LoadContent();
+
         }
 
         /// <summary>
@@ -141,7 +119,7 @@ namespace Vaerydian.Screens
         public override void UnloadContent()
         {
             base.UnloadContent();
-            //ws_MapEngine.UnloadContent();
+            w_MapEngine.UnloadContent();
 
             textures.Clear();
             
@@ -161,24 +139,37 @@ namespace Vaerydian.Screens
                 LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
             }
 
-            
+            if (InputManager.isKeyToggled(Keys.R))
+            {
+                this.ScreenManager.removeScreen(this);
+                LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
+            }
+
             if (InputManager.isKeyPressed(Keys.Up))
             {
+                w_MapEngine.ViewPort.Origin.Y -= 25;
+
                 ws_ViewPort.Origin.Y -= 25;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Down))
             {
+                w_MapEngine.ViewPort.Origin.Y += 25;
+
                 ws_ViewPort.Origin.Y += 25;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Left))
             {
+                w_MapEngine.ViewPort.Origin.X -= 25;
+                
                 ws_ViewPort.Origin.X -= 25;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Right))
             {
+                w_MapEngine.ViewPort.Origin.X += 25;
+
                 ws_ViewPort.Origin.X += 25;
                 UpdateView();
             }
@@ -187,36 +178,36 @@ namespace Vaerydian.Screens
             {
                 InputManager.YesScreenshot = true;
             }
-            /*
+            
             if (InputManager.isKeyToggled(Keys.T))
             {
-                if (!ws_MapEngine.ShowTemperature)
+                if (!w_MapEngine.ShowTemperature)
                 {
-                    ws_MapEngine.ShowTemperature = true;
-                    ws_MapEngine.ShowPrecipitation = false;
+                    w_MapEngine.ShowTemperature = true;
+                    w_MapEngine.ShowPrecipitation = false;
                 }
                 else
                 {
-                    ws_MapEngine.ShowTemperature = false;
+                    w_MapEngine.ShowTemperature = false;
                 }
             }
             if(InputManager.isKeyToggled(Keys.P))
             {
-                if (!ws_MapEngine.ShowPrecipitation)
+                if (!w_MapEngine.ShowPrecipitation)
                 {
-                    ws_MapEngine.ShowPrecipitation = true;
-                    ws_MapEngine.ShowTemperature = false;
+                    w_MapEngine.ShowPrecipitation = true;
+                    w_MapEngine.ShowTemperature = false;
                 }
                 else
                 {
-                    ws_MapEngine.ShowPrecipitation = false;
+                    w_MapEngine.ShowPrecipitation = false;
                 }
             }
             if (InputManager.isKeyToggled(Keys.PrintScreen))
             {
-                ws_MapEngine.YesScreenshot = true;
+                w_MapEngine.YesScreenshot = true;
             }
-            */
+            
 
         }
 
@@ -228,7 +219,7 @@ namespace Vaerydian.Screens
         {
             base.Update(gameTime);
 
-            //ws_MapEngine.UpdateView();
+            w_MapEngine.UpdateView();
         }
 
         /// <summary>
@@ -252,9 +243,6 @@ namespace Vaerydian.Screens
             if (yFinish >= 1024 - 1)
                 yFinish = 1024 - 1;
 
-            //Point p = ws_WorldEngine.updateSegments(new Point(xStart + (xFinish-xStart)/2, yStart + (yFinish - yStart)/2));
-            //ws_ViewPort.Origin.X += p.X * 128;
-            //ws_ViewPort.Origin.Y += p.Y * 128;
         }
 
         #region drawing
@@ -267,127 +255,8 @@ namespace Vaerydian.Screens
         {
             base.Draw(gameTime);
 
-            //ws_MapEngine.DrawMap(gameTime, ws_SpriteBatch);
+            w_MapEngine.DrawMap(gameTime, w_SpriteBatch);
 
-            ws_SpriteBatch.Begin();
-
-            for (int x = xStart; x <= xFinish; x++)
-            {
-                for (int y = yStart; y <= yFinish; y++)
-                {
-                    //ws_Terrain = ws_WorldEngine.getTerrain(x, y);
-
-                    if (ws_Terrain == null)
-                        continue;
-
-                    ws_SpriteBatch.Draw(textures[getBaseTexture(ws_Terrain)], new Vector2((x * ws_TileSize), (y * ws_TileSize)),
-                            null, Color.White, 0.0f, new Vector2(ws_ViewPort.Origin.X, ws_ViewPort.Origin.Y), new Vector2(1f),
-                            SpriteEffects.None, 0);
-                }
-            }
-
-
-            drawPlayer();
-
-            ws_SpriteBatch.End();
-
-            if (InputManager.YesScreenshot)
-            {
-                InputManager.YesScreenshot = false;
-
-                saveScreenShot(ws_SpriteBatch.GraphicsDevice);
-            }
-        }
-
-        private void drawPlayer()
-        {
-            ws_SpriteBatch.Draw(textures[19], new Vector2(ws_ViewPort.Origin.X + ws_ViewPort.Dimensions.X / 2, ws_ViewPort.Origin.Y + ws_ViewPort.Dimensions.Y / 2),
-                            null, Color.White, 0.0f, new Vector2(ws_ViewPort.Origin.X, ws_ViewPort.Origin.Y), new Vector2(1f),
-                            SpriteEffects.None, 0);
-        }
-
-        /// <summary>
-        /// returns the texture id for the given terrain
-        /// </summary>
-        /// <param name="terrain">terrain to get the texture for</param>
-        /// <returns></returns>
-        private int getBaseTexture(WorldTerrain terrain)
-        {
-            switch (terrain.BaseTerrainType)
-            {
-                case BaseTerrainType.Land:
-                    if (terrain.LandTerrainType == LandTerrainType.Arctic)
-                        return 3;
-                    if (terrain.LandTerrainType == LandTerrainType.Beach)
-                        return 4;
-                    if (terrain.LandTerrainType == LandTerrainType.Desert)
-                        return 8;
-                    if (terrain.LandTerrainType == LandTerrainType.Forest)
-                        return 5;
-                    if (terrain.LandTerrainType == LandTerrainType.Grassland)
-                        return 6;
-                    if (terrain.LandTerrainType == LandTerrainType.Jungle)
-                        return 7;
-                    if (terrain.LandTerrainType == LandTerrainType.Swamp)
-                        return 9;
-                    if (terrain.LandTerrainType == LandTerrainType.Tundra)
-                        return 10;
-                    return 0;
-                case BaseTerrainType.Ocean:
-                    if (terrain.OceanTerrainType == OceanTerrainType.Littoral)
-                        return 15;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Abyssal)
-                        return 16;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Ice)
-                        return 17;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Sublittoral)
-                        return 18;
-                    return 1;
-                case BaseTerrainType.Mountain:
-                    if (terrain.MountainTerrainType == MountainTerrainType.Foothill)
-                        return 11;
-                    if (terrain.MountainTerrainType == MountainTerrainType.Steppes)
-                        return 12;
-                    if (terrain.MountainTerrainType == MountainTerrainType.Cascade)
-                        return 13;
-                    if (terrain.MountainTerrainType == MountainTerrainType.SnowyPeak)
-                        return 14;
-                    return 2;
-                case BaseTerrainType.River:
-                    return 18;
-                default:
-                    return 0;
-            }
-        }
-
-        /// <summary>
-        /// captures and saves the screen of the current graphics device
-        /// </summary>
-        /// <param name="graphicsDevice"></param>
-        public void saveScreenShot(GraphicsDevice graphicsDevice)
-        {
-            //setup a color buffer to get the back Buffer's data
-            Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
-
-            //place the back bugger data into the color buffer
-            graphicsDevice.GetBackBufferData<Color>(colors);
-
-            //setup the filestream for the screenshot
-            FileStream fs = new FileStream("screenshot.png", FileMode.Create);
-
-            //setup the texture that will be saved
-            Texture2D picTex = new Texture2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
-
-            //set the texture's color data to that of the color buffer
-            picTex.SetData<Color>(colors);
-
-            //save the texture to a png image file
-            picTex.SaveAsPng(fs, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
-
-            //close the file stream
-            fs.Close();
-
-            GC.Collect();
         }
 
         #endregion

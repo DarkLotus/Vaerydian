@@ -23,6 +23,7 @@ namespace Vaerydian.UI
         private String t_Name = "Char Name";
 
         private Texture2D t_FrameBackground;
+        private Texture2D t_NameBackground;
 
         private int t_Duration = 3000;
 
@@ -106,11 +107,11 @@ namespace Vaerydian.UI
 
         public void initialize()
         {
-            t_Offset = FontManager.Instance.Fonts["StartScreen"].LineSpacing;
+            t_Offset = FontManager.Fonts["StartScreen"].LineSpacing;
             
-            t_NameDimensions = FontManager.Instance.Fonts["StartScreen"].MeasureString(t_Name);
+            t_NameDimensions = FontManager.Fonts["StartScreen"].MeasureString(t_Name);
 
-            t_DialogDimensions = FontManager.Instance.Fonts["General"].MeasureString(t_Dialog);
+            t_DialogDimensions = FontManager.Fonts["StartScreen"].MeasureString(t_Dialog);
 
             t_PositionMapper = new ComponentMapper(new Position(), t_ECSInstance);
             t_ViewPortMapper = new ComponentMapper(new ViewPort(), t_ECSInstance);
@@ -129,7 +130,8 @@ namespace Vaerydian.UI
         {
             t_Spritebatch = t_Container.SpriteBatch;
             
-            t_FrameBackground = t_Container.ContentManager.Load<Texture2D>("dialog_bubble");
+            t_FrameBackground = t_Container.ContentManager.Load<Texture2D>("dialog");
+            t_NameBackground = t_Container.ContentManager.Load<Texture2D>("dialog_bubble");
 
             t_Camera = t_ECSInstance.TagManager.getEntityByTag("CAMERA");
 
@@ -159,7 +161,7 @@ namespace Vaerydian.UI
             ViewPort camera = (ViewPort)t_ViewPortMapper.get(t_Camera);
 
             if(pos != null)
-                t_Origin = pos.getPosition() - camera.getOrigin() - new Vector2(0,t_Offset*2);
+                t_Origin = pos.getPosition() - camera.getOrigin() - new Vector2(0,t_Offset*3);
         }
 
         public void draw(int elapsedTime)
@@ -167,16 +169,16 @@ namespace Vaerydian.UI
             t_Spritebatch.Begin();
 
             //draw the frame background
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset/2 - 4, (int)t_Origin.Y - 4, (int)t_DialogDimensions.X + 8 + t_Offset, (int)(t_DialogDimensions.Y*2 + 8)), Color.Orange);
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset/2 - 2, (int)t_Origin.Y - 2, (int)t_DialogDimensions.X + 4 + t_Offset, (int)(t_DialogDimensions.Y*2 + 4)), Color.White);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset - 4, (int)t_Origin.Y - 4, (int)t_DialogDimensions.X + 8 + t_Offset*2, (int)(t_DialogDimensions.Y*2 + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)t_Origin.X - t_Offset - 2, (int)t_Origin.Y - 2, (int)t_DialogDimensions.X + 4 + t_Offset*2, (int)(t_DialogDimensions.Y*2 + 4)), Color.White);
 
             //draw name-plate
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset*1.5 - 4), (int)(t_Origin.Y - t_Offset - 4), (int)(t_NameDimensions.X + 8 + t_Offset), (int)(t_NameDimensions.Y + 8)), Color.Orange);
-            t_Spritebatch.Draw(t_FrameBackground, new Rectangle((int)(t_Origin.X - t_Offset*1.5 - 2), (int)(t_Origin.Y - t_Offset - 2), (int)(t_NameDimensions.X + 4 + t_Offset), (int)(t_NameDimensions.Y + 4)), new Color(0, 116, 196));
-            t_Spritebatch.DrawString(FontManager.Instance.Fonts["StartScreen"], t_Name, new Vector2(t_Origin.X - t_Offset, t_Origin.Y - t_Offset), Color.White);
+            t_Spritebatch.Draw(t_NameBackground, new Rectangle((int)(t_Origin.X - t_Offset*1.5 - 4), (int)(t_Origin.Y - t_Offset - 4), (int)(t_NameDimensions.X + 8 + t_Offset), (int)(t_NameDimensions.Y + 8)), Color.Orange);
+            t_Spritebatch.Draw(t_NameBackground, new Rectangle((int)(t_Origin.X - t_Offset * 1.5 - 2), (int)(t_Origin.Y - t_Offset - 2), (int)(t_NameDimensions.X + 4 + t_Offset), (int)(t_NameDimensions.Y + 4)), new Color(0, 116, 196));
+            t_Spritebatch.DrawString(FontManager.Fonts["StartScreen"], t_Name, new Vector2(t_Origin.X - t_Offset, t_Origin.Y - t_Offset), Color.White);
 
             //draw the text
-            t_Spritebatch.DrawString(FontManager.Instance.Fonts["General"], t_Dialog, new Vector2(t_Origin.X, t_Origin.Y + t_Offset/2 ), Color.Black);
+            t_Spritebatch.DrawString(FontManager.Fonts["StartScreen"], t_Dialog, new Vector2(t_Origin.X, t_Origin.Y + t_Offset / 2), Color.Black);
 
 
             t_Spritebatch.End();

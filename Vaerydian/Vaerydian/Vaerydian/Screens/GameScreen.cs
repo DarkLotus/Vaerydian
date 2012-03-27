@@ -30,7 +30,7 @@ namespace Vaerydian.Screens
         private ECSInstance ecsInstance;
         
         private SpriteBatch spriteBatch;
-        private FontManager fontManager = FontManager.Instance;
+        
 
         private GameContainer gameContainer = new GameContainer();
 
@@ -215,7 +215,8 @@ namespace Vaerydian.Screens
         {
             base.UnloadContent();
 
-            fontManager.Fonts.Clear();
+            ecsInstance.cleanUp();
+
             GC.Collect();
         }
 
@@ -223,7 +224,12 @@ namespace Vaerydian.Screens
         {
             base.hasFocusUpdate(gameTime);
 
-            
+            //check to see if escape was recently pressed
+            if (InputManager.isKeyToggled(Keys.Escape))
+            {
+                this.ScreenManager.removeScreen(this);
+                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -321,7 +327,7 @@ namespace Vaerydian.Screens
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
+            spriteBatch.DrawString(FontManager.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
 
             spriteBatch.End();
 

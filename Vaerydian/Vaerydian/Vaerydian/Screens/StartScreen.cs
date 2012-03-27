@@ -36,14 +36,13 @@ namespace Vaerydian.Screens
             s_MenuItems.Add("Options");//2
             s_MenuItems.Add("Exit");//3
             s_MenuItems.Add("Instructions");//4
-            s_MenuItems.Add("Combat Test");//5
-            s_MenuItems.Add("Cave Test");//6
+            s_MenuItems.Add("World Test");//5
             //create the menu
-            s_TextMenu = new TextMenuWindow(new Vector2(384, 240), s_MenuItems, "StartScreen");//"StartScreen");
+            s_TextMenu = new TextMenuWindow(new Vector2(this.ScreenManager.GraphicsDevice.Viewport.Width / 2, this.ScreenManager.GraphicsDevice.Viewport.Height / 2), s_MenuItems, "StartScreen");
             //register the menu
             this.ScreenManager.WindowManager.addWindow(s_TextMenu);
 
-            s_BackgroundRect = new Rectangle(0, 0, 768, 480);
+            s_BackgroundRect = new Rectangle(0, 0, this.ScreenManager.GraphicsDevice.Viewport.Width, this.ScreenManager.GraphicsDevice.Viewport.Height);
         }
 
         public override void LoadContent()
@@ -52,7 +51,7 @@ namespace Vaerydian.Screens
 
             //load title texture
             s_TitleTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
-            s_yTextOffset = FontManager.Instance.Fonts["StartScreen"].LineSpacing;
+            s_yTextOffset = FontManager.Fonts["StartScreen"].LineSpacing;
         }
 
         public override void UnloadContent()
@@ -106,13 +105,19 @@ namespace Vaerydian.Screens
                 else if (s_TextMenu.MenuIndex == 4)
                 {
                 }
-                else if (s_TextMenu.MenuIndex == 5)//test combat
+                else if (s_TextMenu.MenuIndex == 5)//test map
                 {
-                }
-                else if (s_TextMenu.MenuIndex == 6)
-                {
+                    //dispose of this screen
+                    this.ScreenManager.removeScreen(this);
+                    //dispose of the menu
+                    this.ScreenManager.WindowManager.removeWindow(s_TextMenu);
+                    //load the world screen
+                    LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
                 }
 
+            }else if(InputManager.isKeyToggled(Keys.Escape))
+            {
+                InputManager.YesExit = true;
             }
 
         }
@@ -133,7 +138,7 @@ namespace Vaerydian.Screens
             //display title texture
             s_SpriteBatch.Draw(s_TitleTexture, s_BackgroundRect, Color.White);
 
-            s_SpriteBatch.DrawString(FontManager.Instance.Fonts["General"], GameSession.Instance.GameVersion, new Vector2(0,480-s_yTextOffset), Color.White);
+            s_SpriteBatch.DrawString(FontManager.Fonts["General"], GameSession.GameVersion, new Vector2(0, this.ScreenManager.GraphicsDevice.Viewport.Height - s_yTextOffset), Color.White);
 
             s_SpriteBatch.End();
         }

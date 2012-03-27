@@ -123,7 +123,7 @@ namespace Vaerydian.Factories
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
             //e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(576, 360f), new Vector2(1152, 720)));
-            e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(0, 0), new Vector2(768, 480)));
+            e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(0, 0), new Vector2(e_Container.GraphicsDevice.Viewport.Width, e_Container.GraphicsDevice.Viewport.Height)));
 
             e_EcsInstance.TagManager.tagEntity("CAMERA", e);
 

@@ -104,12 +104,6 @@ namespace Vaerydian.Systems.Update
             sprite.Column = 0;
             p_Moved = false;
 
-            //should we exit?
-            if (InputManager.isKeyPressed(Keys.Escape))
-            {
-                InputManager.YesExit = true;
-            }
-
             //toggle light?
             if (InputManager.isKeyToggled(Keys.L))
             {

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using WorldGeneration;
 using WorldGeneration.World;
+using WorldGeneration.Utils;
 using Vaerydian.Screens;
 
 namespace Vaerydian.Maps
@@ -227,6 +228,7 @@ namespace Vaerydian.Maps
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\abyssal"));//16
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\ice"));//17
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\sublittoral"));//18
+
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -255,7 +257,7 @@ namespace Vaerydian.Maps
         {
             spriteBatch.Begin();
 
-            WorldTerrain terrain;
+            Terrain terrain;
 
             //iterate through the viewable indexes and draw the tiles
             for (int x = xStart; x <= xFinish; x++)
@@ -282,14 +284,13 @@ namespace Vaerydian.Maps
                     else
                     {
                         //draw terrain texture
-                        spriteBatch.Draw(textures[getBaseTexture(terrain)], new Vector2((x * me_TileSize), (y * me_TileSize)),
-                            null, Color.White, 0.0f, new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), new Vector2(1f),
-                            SpriteEffects.None, 0);
+                        spriteBatch.Draw(textures[getBaseTexture(terrain)], new Rectangle((x * me_TileSize), (y * me_TileSize), me_TileSize, me_TileSize),
+                            new Rectangle(0, 0, me_TileSize, me_TileSize), Color.White, 0f,
+                            new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), SpriteEffects.None, 0f);
+
                     }
                 }
             }
-
-            //spriteBatch.DrawString(FontManager.Instance.Fonts["General"], "MaxVal: " + maxVal, new Vector2(0, 28), Color.Blue);
 
             spriteBatch.End();
 
@@ -332,49 +333,43 @@ namespace Vaerydian.Maps
         /// </summary>
         /// <param name="terrain">terrain to get the texture for</param>
         /// <returns></returns>
-        private int getBaseTexture(WorldTerrain terrain)
+        private int getBaseTexture(Terrain terrain)
         {
-            switch (terrain.BaseTerrainType)
+            switch (terrain.TerrainType)
             {
-                case BaseTerrainType.Land:
-                    if (terrain.LandTerrainType == LandTerrainType.Arctic)
+                case TerrainType.LAND_ARCTIC:
                         return 3;
-                    if (terrain.LandTerrainType == LandTerrainType.Beach)
+                case TerrainType.LAND_BEACH:
                         return 4;
-                    if (terrain.LandTerrainType == LandTerrainType.Desert)
+                case TerrainType.LAND_DESERT:
                         return 8;
-                    if (terrain.LandTerrainType == LandTerrainType.Forest)
+                case TerrainType.LAND_FOREST:
                         return 5;
-                    if (terrain.LandTerrainType == LandTerrainType.Grassland)
+                case TerrainType.LAND_GRASSLAND:
                         return 6;
-                    if (terrain.LandTerrainType == LandTerrainType.Jungle)
+                case TerrainType.LAND_JUNGLE:
                         return 7;
-                    if (terrain.LandTerrainType == LandTerrainType.Swamp)
+                case TerrainType.LAND_SWAMP:
                         return 9;
-                    if (terrain.LandTerrainType == LandTerrainType.Tundra)
+                case TerrainType.LAND_TUNDRA:
                         return 10;
-                    return 0;
-                case BaseTerrainType.Ocean:
-                    if (terrain.OceanTerrainType == OceanTerrainType.Littoral)
+                case TerrainType.OCEAN_LITTORAL:
                         return 15;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Abyssal)
+                case TerrainType.OCEAN_ABYSSAL:
                         return 16;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Ice)
+                case TerrainType.OCEAN_ICE:
                         return 17;
-                    if (terrain.OceanTerrainType == OceanTerrainType.Sublittoral)
+                case TerrainType.OCEAN_SUBLITTORAL:
                         return 18;
-                    return 1;
-                case BaseTerrainType.Mountain:
-                    if (terrain.MountainTerrainType == MountainTerrainType.Foothill)
+                case TerrainType.MOUNTAIN_FOOTHILL:
                         return 11;
-                    if (terrain.MountainTerrainType == MountainTerrainType.Steppes)
+                case TerrainType.MOUNTAIN_STEPPES:
                         return 12;
-                    if(terrain.MountainTerrainType == MountainTerrainType.Cascade)
+                case TerrainType.MOUNTAIN_CASCADE:
                         return 13;
-                    if (terrain.MountainTerrainType == MountainTerrainType.SnowyPeak)
+                case TerrainType.MOUNTAIN_SNOWYPEAK:
                         return 14;
-                    return 2;
-                case BaseTerrainType.River:
+                case TerrainType.BASE_RIVER:
                     return 18;
                 default:
                     return 0;
@@ -404,13 +399,30 @@ namespace Vaerydian.Maps
         {
             List<ColorVal> cList = new List<ColorVal>();
 
+            
             cList.Add(new ColorVal(Color.Black, 0.0f));//dark blue
             cList.Add(new ColorVal(Color.Blue, 0.2f));//light blue
             cList.Add(new ColorVal(Color.Green, 0.4f));//green
             cList.Add(new ColorVal(Color.Yellow, 0.6f));//yellow
             cList.Add(new ColorVal(Color.Orange, 0.8f));//orange
             cList.Add(new ColorVal(Color.Red, 1.0f));//red
-            
+             
+            /*
+            cList.Add(new ColorVal(new Color(0, 0, 48), -1.0f));//dark blue
+            cList.Add(new ColorVal(new Color(0, 0, 64), -0.75f));
+            cList.Add(new ColorVal(new Color(0, 0, 128), 0.05f));//blue
+            cList.Add(new ColorVal(Color.LightBlue, 0.10f));//light blue
+            cList.Add(new ColorVal(new Color(255, 255, 0), 0.15f));//beach yellow
+            cList.Add(new ColorVal(new Color(96, 255, 0), 0.18f));//light green
+            cList.Add(new ColorVal(new Color(0, 196, 0), 0.2f));//green
+            cList.Add(new ColorVal(new Color(0, 128, 0), 0.25f));//green again
+            cList.Add(new ColorVal(new Color(0, 64, 0), 0.4f));//dark green
+            cList.Add(new ColorVal(new Color(96, 96, 64), 0.55f));//dark brown
+            cList.Add(new ColorVal(new Color(96, 96, 96), 0.6f));//mountain dark grey
+            cList.Add(new ColorVal(new Color(128, 128, 128), 0.65f));//mountain gray
+            cList.Add(new ColorVal(new Color(160, 160, 160), 0.75f));//mountain light gray
+            cList.Add(new ColorVal(new Color(255, 255, 255), 1.0f));//snow white
+            */
             int j = 1;
             int k = 0;
             ColorVal begin = cList[0];
@@ -472,9 +484,11 @@ namespace Vaerydian.Maps
 
             //place the back bugger data into the color buffer
             graphicsDevice.GetBackBufferData<Color>(colors);
-            
+
+            string timestamp = ""+DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+
             //setup the filestream for the screenshot
-            FileStream fs = new FileStream("screenshot.png", FileMode.Create);
+            FileStream fs = new FileStream("screenshot_" + timestamp + ".png", FileMode.Create);
             
             //setup the texture that will be saved
             Texture2D picTex = new Texture2D(graphicsDevice,  graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
