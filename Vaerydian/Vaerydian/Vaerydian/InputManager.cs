@@ -63,9 +63,14 @@ namespace Vaerydian
             return (i_currentKeyboardState.IsKeyDown(key) && !i_previousKeyboardState.IsKeyDown(key));
         }
 
-        public static Vector2 getMousePosition()
+        public static Vector2 getMousePositionVector()
         {
             return new Vector2(i_currentMouseState.X, i_currentMouseState.Y);
+        }
+
+        public static Point getMousePositionPoint()
+        {
+            return new Point(i_currentMouseState.X, i_currentMouseState.Y);
         }
 
         public static bool isLeftButtonClicked()

@@ -9,7 +9,7 @@ using Vaerydian.Components;
 
 namespace Vaerydian.UI
 {
-    class TimedDialogWindow : IUserInterface
+    class TimedDialog : IUserInterface
     {
 
         private ECSInstance t_ECSInstance;
@@ -50,7 +50,7 @@ namespace Vaerydian.UI
         /// <param name="size">size of the window</param>
         /// <param name="startTime">time window is called</param>
         /// <param name="duration">time window is to be alive</param>
-        public TimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
+        public TimedDialog(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
             t_Caller = caller;
             t_Dialog = dialog;

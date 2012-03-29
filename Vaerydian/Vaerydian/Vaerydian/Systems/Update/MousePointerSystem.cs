@@ -41,7 +41,7 @@ namespace Vaerydian.Systems.Update
             Vector2 center = viewPort.getDimensions() / 2;
             Vector2 origin = viewPort.getOrigin();
 
-            pos.setPosition((InputManager.getMousePosition()+origin));//-center);
+            pos.setPosition((InputManager.getMousePositionVector()+origin));//-center);
         }
     }
 }

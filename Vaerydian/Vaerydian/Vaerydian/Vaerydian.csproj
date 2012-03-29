@@ -184,6 +184,8 @@
     <Compile Include="Factories\UIFactory.cs" />
     <Compile Include="Systems\Draw\UIDrawSystem.cs" />
     <Compile Include="Systems\Update\UIUpdateSystem.cs" />
+    <Compile Include="UI\HotBar.cs" />
+    <Compile Include="UI\HotBarItem.cs" />
     <Compile Include="UI\IUserInterface.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
@@ -248,7 +250,7 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
     <Compile Include="Windows\TextMenuWindow.cs" />
-    <Compile Include="UI\TimedDialogWindow.cs" />
+    <Compile Include="UI\TimedDialog.cs" />
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>
