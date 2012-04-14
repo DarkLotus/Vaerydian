@@ -53,6 +53,9 @@ Content\projectile.xnb
 Content\projectile2.xnb
 Content\dialog_bubble.xnb
 Content\dialog.xnb
+Content\ui\buttonNormal.xnb
+Content\ui\buttonPressed.xnb
+Content\ui\buttonOver.xnb
 Content\effects\Shading.xnb
 Content\effects\DiferredCombine.xnb
 Content\audio\effects\fire.xnb

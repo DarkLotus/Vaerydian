@@ -13,6 +13,8 @@ using Vaerydian.Components;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
 
+using Glimpse.Input;
+
 namespace Vaerydian.Systems.Update
 {
     class PlayerInputSystem : EntityProcessingSystem
@@ -273,6 +275,7 @@ namespace Vaerydian.Systems.Update
                 position.setPosition(pos);
             }
 
+            /*
             if (InputManager.isLeftButtonClicked())
             {
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
@@ -289,9 +292,10 @@ namespace Vaerydian.Systems.Update
 
                 UtilFactory uf = new UtilFactory(e_ECSInstance);
                 uf.createSound("audio\\effects\\fire", true,0.5f);
-            }
+            }*/
 
             p_LastFired += e_ECSInstance.ElapsedTime;
+
 
             if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
             {

@@ -18,8 +18,10 @@ using Vaerydian.Components.Debug;
 using Vaerydian.Factories;
 using Vaerydian.Screens;
 
-
 using ECSFramework;
+
+using Glimpse.Input;
+using Glimpse.Managers;
 
 namespace Vaerydian
 {
@@ -72,6 +74,14 @@ namespace Vaerydian
         /// </summary>
         protected override void Initialize()
         {
+            FontManager.FontsToLoad.Add("General");
+            FontManager.FontsToLoad.Add("Loading");
+            FontManager.FontsToLoad.Add("StartScreen");
+            FontManager.FontsToLoad.Add("Damage");
+            FontManager.FontsToLoad.Add("DamageBold");
+
+            //InputManager.initialize();
+
             base.Initialize();
         }
 

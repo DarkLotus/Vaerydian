@@ -11,6 +11,9 @@ using ECSFramework;
 using Vaerydian;
 using Vaerydian.Components;
 
+using Glimpse.Input;
+using Glimpse.Managers;
+
 namespace Vaerydian.Systems.Draw
 {
     public class DamageDisplaySystem : EntityProcessingSystem

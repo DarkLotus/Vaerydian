@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Glimpse.Input;
+using Glimpse.Managers;
 
 namespace Vaerydian.Windows
 {
-    class DialogWindow : Window
+    class MonologWindow : Window
     {
         #region Variables
 
@@ -102,7 +104,7 @@ namespace Vaerydian.Windows
         /// <param name="size">size of the window</param>
         /// <param name="startTime">time window is called</param>
         /// <param name="duration">time window is to be alive</param>
-        public DialogWindow(String dialog, int lineLengh, int lines, Point origin, Point size)
+        public MonologWindow(String dialog, int lineLengh, int lines, Point origin, Point size)
         {
             dw_Dialog = dialog;
             dw_Origin = origin;

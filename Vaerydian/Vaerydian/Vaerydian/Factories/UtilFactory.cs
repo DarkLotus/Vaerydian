@@ -8,6 +8,7 @@ using ECSFramework;
 using Vaerydian.Utils;
 using Vaerydian.Components;
 using Vaerydian.Components.Audio;
+using Glimpse.Controls;
 
 namespace Vaerydian.Factories
 {
@@ -72,6 +73,17 @@ namespace Vaerydian.Factories
 
             u_EcsInstance.refresh(e);
 
+        }
+
+        public void createFireSound(IUserInterface sender, InterfaceArgs args)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Audio audio = new Audio("audio\\effects\\fire", true, 1f);
+
+            u_EcsInstance.EntityManager.addComponent(e, audio);
+
+            u_EcsInstance.refresh(e);
         }
 
         public void createSound(String name, bool play, float volume, float pitch)

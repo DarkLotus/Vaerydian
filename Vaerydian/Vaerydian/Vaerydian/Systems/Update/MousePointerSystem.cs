@@ -10,6 +10,8 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 
+using Glimpse.Input;
+
 namespace Vaerydian.Systems.Update
 {
     class MousePointerSystem : EntityProcessingSystem

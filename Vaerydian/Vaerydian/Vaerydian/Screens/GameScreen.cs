@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,14 +15,16 @@ using Vaerydian.Components;
 using Vaerydian.Components.Audio;
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Debug;
-using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;
 using Vaerydian.Systems;
 using Vaerydian.Systems.Draw;
 using Vaerydian.Systems.Update;
-using System.IO;
 
+using Glimpse.Input;
+using Glimpse.Systems;
+using Glimpse.Components;
+using Glimpse.Managers;
 
 namespace Vaerydian.Screens
 {
@@ -66,6 +69,7 @@ namespace Vaerydian.Screens
 
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
+        private UIFactory uiFactory;
 
         private int avg, disp, elapsed;
 
@@ -118,7 +122,7 @@ namespace Vaerydian.Screens
             healthBarRenderSystem = ecsInstance.SystemManager.setSystem(new HealthBarRenderSystem(gameContainer), new Health());
             damageDisplaySystem = ecsInstance.SystemManager.setSystem(new DamageDisplaySystem(gameContainer), new Damage());
             quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer), new Position(),new AiBehavior());
-            uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer), new UserInterface());
+            uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer.ContentManager, gameContainer.GraphicsDevice), new UserInterface());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -144,6 +148,7 @@ namespace Vaerydian.Screens
             //create the entity factory
             entityFactory = new EntityFactory(ecsInstance, gameContainer);
             npcFactory = new NPCFactory(ecsInstance);
+            uiFactory = new UIFactory(ecsInstance,gameContainer);
 
             //setup local geometrymapper
             geometryMapper = new ComponentMapper(new GeometryMap(), ecsInstance);
@@ -174,7 +179,9 @@ namespace Vaerydian.Screens
             //entityFactory.CreateTestMap();
             GameMap map = entityFactory.createRandomMap(100, 100, 75, true, 50000, 5);
 
-            npcFactory.createWanders(100, map);
+            //npcFactory.createWanders(100, map);
+
+            uiFactory.createButton();
             
 
             //create map debug

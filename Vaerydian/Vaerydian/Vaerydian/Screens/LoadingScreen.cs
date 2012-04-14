@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 
+using Glimpse.Input;
+using Glimpse.Managers;
+
 namespace Vaerydian.Screens
 {
      class LoadingScreen : Screen  

@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Audio;
 using Vaerydian.Windows;
 using Vaerydian.Sessions;
 
+using Glimpse.Input;
+using Glimpse.Managers;
+
 namespace Vaerydian.Screens
 {
     class StartScreen : Screen

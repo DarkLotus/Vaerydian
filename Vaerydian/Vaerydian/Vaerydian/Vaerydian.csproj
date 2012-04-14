@@ -82,6 +82,9 @@
     <Reference Include="ECSFramework">
       <HintPath>..\..\..\..\projects\ECSFramework\ECSFramework\bin\x86\Release\ECSFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse">
+      <HintPath>..\..\..\..\projects\Glimpse\Glimpse\bin\x86\Release\Glimpse.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -157,7 +160,6 @@
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
     <Compile Include="Components\Damage.cs" />
-    <Compile Include="Components\Graphical\UserInterface.cs" />
     <Compile Include="Components\Items\Equipment.cs" />
     <Compile Include="Components\Experiences.cs" />
     <Compile Include="Components\Health.cs" />
@@ -182,11 +184,7 @@
     <Compile Include="Components\Transform.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Factories\UIFactory.cs" />
-    <Compile Include="Systems\Draw\UIDrawSystem.cs" />
-    <Compile Include="Systems\Update\UIUpdateSystem.cs" />
-    <Compile Include="UI\HotBar.cs" />
-    <Compile Include="UI\HotBarItem.cs" />
-    <Compile Include="UI\IUserInterface.cs" />
+    <Compile Include="UI\ActionItem.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
     <Compile Include="Systems\Update\LifeSystem.cs" />
@@ -197,9 +195,7 @@
     <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="Factories\NPCFactory.cs" />
     <Compile Include="Factories\UtilFactory.cs" />
-    <Compile Include="FontManager.cs" />
     <Compile Include="GameContainer.cs" />
-    <Compile Include="InputManager.cs" />
     <Compile Include="Items\Armor.cs" />
     <Compile Include="Items\Equipment.cs" />
     <Compile Include="Items\Item.cs" />
@@ -298,6 +294,7 @@
   <ItemGroup>
     <Folder Include="Characters\Behaviors\Actions\" />
     <Folder Include="Characters\Behaviors\Conditionals\" />
+    <Folder Include="Components\Graphical\" />
     <Folder Include="Components\Spatials\" />
     <Folder Include="Components\Utils\" />
   </ItemGroup>

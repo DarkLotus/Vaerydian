@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using WorldGeneration.World;
 using WorldGeneration.Utils;
 
+using Glimpse.Input;
 
 namespace Vaerydian.Screens
 {

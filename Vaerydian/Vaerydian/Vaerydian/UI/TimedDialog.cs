@@ -7,7 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using ECSFramework;
 using Vaerydian.Components;
 
-namespace Vaerydian.UI
+using Glimpse.Input;
+using Glimpse.Controls;
+using Microsoft.Xna.Framework.Content;
+using Glimpse.Managers;
+
+namespace Vaerydian.UI.implemented
 {
     class TimedDialog : IUserInterface
     {
@@ -41,6 +46,12 @@ namespace Vaerydian.UI
         private ComponentMapper t_ViewPortMapper;
 
         private Entity t_Camera;
+
+        public event InterfaceHandler OnKeyPress;
+
+        private Rectangle g_Bounds;
+
+        public Rectangle Bounds { get { return g_Bounds; } set { g_Bounds = value; } }
 
         /// <summary>
         /// create a dialog window with the following attributes
@@ -128,10 +139,10 @@ namespace Vaerydian.UI
 
         public void loadContent()
         {
-            t_Spritebatch = t_Container.SpriteBatch;
+            t_Spritebatch = new SpriteBatch(t_GraphicsDevice);
             
-            t_FrameBackground = t_Container.ContentManager.Load<Texture2D>("dialog");
-            t_NameBackground = t_Container.ContentManager.Load<Texture2D>("dialog_bubble");
+            t_FrameBackground = t_ContentManager.Load<Texture2D>("dialog");
+            t_NameBackground = t_ContentManager.Load<Texture2D>("dialog_bubble");
 
             t_Camera = t_ECSInstance.TagManager.getEntityByTag("CAMERA");
 
@@ -183,5 +194,29 @@ namespace Vaerydian.UI
 
             t_Spritebatch.End();
         }
+
+        private ContentManager t_ContentManager;
+
+        public ContentManager ContentManager
+        {
+            get
+            {
+                return t_ContentManager;
+            }
+            set
+            {
+                t_ContentManager = value;
+            }
+        }
+
+        private GraphicsDevice t_GraphicsDevice;
+
+        public GraphicsDevice GraphicsDevice
+        {
+            get { return t_GraphicsDevice; }
+            set { t_GraphicsDevice = value; }
+        }
+
+        
     }
 }
