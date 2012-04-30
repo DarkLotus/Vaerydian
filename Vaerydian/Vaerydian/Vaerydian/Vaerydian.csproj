@@ -152,6 +152,7 @@
     <Compile Include="Combat\CombatEngine.cs" />
     <Compile Include="Combat\CombatIntelligence\BasicCombatAI.cs" />
     <Compile Include="Combat\CombatIntelligence\CombatAI.cs" />
+    <Compile Include="Components\Actions\MeleeAction.cs" />
     <Compile Include="Components\AiBehavior.cs" />
     <Compile Include="Components\Attack.cs" />
     <Compile Include="Components\Attributes.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Components\Transform.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Factories\UIFactory.cs" />
+    <Compile Include="Systems\Update\MeleeSystem.cs" />
     <Compile Include="UI\ActionItem.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />

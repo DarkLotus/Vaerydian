@@ -75,7 +75,6 @@ namespace Vaerydian.Factories
             interact.SupportedInteractions.ATTACKABLE = true;
             e_EcsInstance.EntityManager.addComponent(e, interact);
 
-
             //create test equipment
             ItemFactory iFactory = new ItemFactory(e_EcsInstance);
             e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
@@ -101,14 +100,18 @@ namespace Vaerydian.Factories
             skills.SkillSet.Add(SkillNames.Ranged, skill);
             skill = new Skill("Avoidance", 50, SkillType.Defensive);
             skills.SkillSet.Add(SkillNames.Avoidance, skill);
+            skill = new Skill("Melee", 50, SkillType.Offensive);
+            skills.SkillSet.Add(SkillNames.Melee, skill);
             e_EcsInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Player);
             Faction enemy = new Faction(-10, FactionType.TestMob);
+            Faction ally = new Faction(100, FactionType.Ally);
             
             Factions factions = new Factions();
             factions.OwnerFaction = faction;
             factions.KnownFactions.Add(enemy.FactionType, enemy);
+            factions.KnownFactions.Add(ally.FactionType, ally);
             e_EcsInstance.EntityManager.addComponent(e, factions);
 
 

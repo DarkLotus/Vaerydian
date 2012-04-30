@@ -24,5 +24,7 @@ namespace Vaerydian.Utils
 
         public bool ATTACKABLE = false;
 
+        public bool MELEE_ACTIONABLE = false;
+
     }
 }

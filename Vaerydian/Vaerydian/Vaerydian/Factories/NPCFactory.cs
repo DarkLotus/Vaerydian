@@ -62,6 +62,7 @@ namespace Vaerydian.Factories
             Interactable interact = new Interactable();
             interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
             interact.SupportedInteractions.ATTACKABLE = true;
+            interact.SupportedInteractions.MELEE_ACTIONABLE = true;
             n_EcsInstance.EntityManager.addComponent(e, interact);
 
             //create test equipment
@@ -93,10 +94,12 @@ namespace Vaerydian.Factories
 
             Faction faction = new Faction(100, FactionType.Ally);
             Faction enemy = new Faction(-10, FactionType.TestMob);
+            Faction player = new Faction(100, FactionType.Player);
 
             Factions factions = new Factions();
             factions.OwnerFaction = faction;
             factions.KnownFactions.Add(enemy.FactionType, enemy);
+            factions.KnownFactions.Add(player.FactionType, player);
             n_EcsInstance.EntityManager.addComponent(e, factions);
 
 
@@ -137,6 +140,7 @@ namespace Vaerydian.Factories
             Interactable interact = new Interactable();
             interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
             interact.SupportedInteractions.ATTACKABLE = true;
+            interact.SupportedInteractions.MELEE_ACTIONABLE = true;
             n_EcsInstance.EntityManager.addComponent(e, interact);
 
             //create test equipment
@@ -169,8 +173,13 @@ namespace Vaerydian.Factories
 
             //setup factions
             Faction faction = new Faction(100,FactionType.TestMob);
+            Faction player = new Faction(-10, FactionType.Player);
+            Faction ally = new Faction(-10, FactionType.Ally);
             Factions factions = new Factions();
+            
             factions.OwnerFaction = faction;
+            factions.KnownFactions.Add(player.FactionType, player);
+            factions.KnownFactions.Add(ally.FactionType, ally);
             n_EcsInstance.EntityManager.addComponent(e, factions);
 
             EntityFactory ef = new EntityFactory(n_EcsInstance);

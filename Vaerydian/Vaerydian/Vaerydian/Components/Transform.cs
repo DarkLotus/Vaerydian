@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Components
 {
-    class Transform : IComponent
+    public class Transform : IComponent
     {
         private static int t_TypeID;
         private int t_EntityID;

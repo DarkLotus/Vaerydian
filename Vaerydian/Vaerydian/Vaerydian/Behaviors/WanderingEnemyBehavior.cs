@@ -545,7 +545,7 @@ namespace Vaerydian.Behaviors
 
             Vector2 dir = (enemy.getPosition()+enemy.getOffset()) - (position.getPosition()+position.getOffset());
 
-            dir = VectorHelper.rotateVector(dir, -0.08726f + (float)w_Random.NextDouble() * 0.1745f);
+            dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)w_Random.NextDouble() * 0.1745f);
             
             dir.Normalize();
 

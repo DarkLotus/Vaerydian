@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Microsoft.Xna.Framework;
+
+using ECSFramework;
+
+using Vaerydian.Components;
+using Vaerydian.Factories;
+using Vaerydian.Components.Actions;
+using Vaerydian.Utils;
+using Vaerydian.Components.Characters;
+using Vaerydian.Components.Items;
+
+namespace Vaerydian.Systems.Update
+{
+    class MeleeSystem : EntityProcessingSystem
+    {
+        ComponentMapper m_MeleeActionMapper;
+        ComponentMapper m_PositionMapper;
+        ComponentMapper m_HeadingMapper;
+        ComponentMapper m_SpatialMapper;
+        ComponentMapper m_LifeMapper;
+        ComponentMapper m_InteractionMapper;
+        ComponentMapper m_FactionMapper;
+        ComponentMapper m_TransformMapper;
+        
+        UtilFactory m_UtilFactory;
+        
+        Entity m_Spatial;
+
+        public MeleeSystem() { }
+
+        public override void initialize()
+        {
+            m_MeleeActionMapper = new ComponentMapper(new MeleeAction(), e_ECSInstance);
+            m_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
+            m_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
+            m_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
+            m_LifeMapper = new ComponentMapper(new Life(), e_ECSInstance);
+            m_InteractionMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
+            m_FactionMapper = new ComponentMapper(new Factions(), e_ECSInstance);
+            m_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
+
+            m_UtilFactory = new UtilFactory(e_ECSInstance);
+        }
+
+        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        {
+            m_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
+        }
+
+        protected override void process(Entity entity)
+        {
+            MeleeAction action = (MeleeAction)m_MeleeActionMapper.get(entity);
+            Position position = (Position)m_PositionMapper.get(entity);
+            SpatialPartition spatial = (SpatialPartition)m_SpatialMapper.get(m_Spatial);
+
+            action.ElapsedTime += e_ECSInstance.ElapsedTime;
+
+            //is it time for the melee action to die?
+            if (action.ElapsedTime >= action.Lifetime)
+            {
+                e_ECSInstance.deleteEntity(entity);
+                return;
+            }
+
+            //retrieve all local entities
+            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(position.getPosition());
+
+            //is the location good?
+            if (locals != null)
+            {
+                //is there anyone here?
+                if (locals.Count > 0)
+                {
+                    for (int i = 0; i < locals.Count; i++)
+                    {
+                        //dont attempt to melee owner
+                        if (locals[i] == action.Owner)
+                            continue;
+
+                        if (action.HitByAction.Contains(locals[i]))
+                            continue;
+
+                        Life life = (Life)m_LifeMapper.get(locals[i]);
+
+                        //if no life, dont bother
+                        if (life == null)
+                            continue;
+
+                        //if not alive, dont bother
+                        if (!life.IsAlive)
+                            continue;
+
+                        //interaction available?
+                        Interactable interactions = (Interactable)m_InteractionMapper.get(locals[i]);
+                        if (interactions != null)
+                        {
+                            Position lposition = (Position)m_PositionMapper.get(locals[i]);
+                            
+                            //are we within melee distance?
+                            if (Vector2.Distance(position.getPosition(), lposition.getPosition()) < action.Range)
+                            {
+
+                                //does it support this interaction?
+                                if (interactions.SupportedInteractions.MELEE_ACTIONABLE &&
+                                   interactions.SupportedInteractions.ATTACKABLE)
+                                {
+                                    Factions lfactions = (Factions)m_FactionMapper.get(locals[i]);
+                                    Factions pfactions = (Factions)m_FactionMapper.get(action.Owner);
+
+                                    //dont attack allies
+                                    if (lfactions.OwnerFaction.FactionType == pfactions.OwnerFaction.FactionType)
+                                        continue;
+
+                                    //add to hit-list so we dont attack it again on swing follow-through
+                                    action.HitByAction.Add(locals[i]);
+
+                                    //create melee attack
+                                    m_UtilFactory.createAttack(action.Owner, locals[i], AttackType.Melee);
+
+                                    //destroy melee action
+                                    //e_ECSInstance.deleteEntity(entity);
+                                    //return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //update animation frame
+            Heading heading = (Heading)m_HeadingMapper.get(entity);
+            Transform transform = (Transform)m_TransformMapper.get(entity);
+
+            
+
+            float rot = (((float)action.Animation.updateFrame(e_ECSInstance.ElapsedTime) / (float)action.Animation.Frames) * action.ArcDegrees) - (action.ArcDegrees/2f);
+            transform.Rotation = rot * (((float)Math.PI) / 180f) - VectorHelper.getAngle(new Vector2(1, 0), heading.getHeading());
+
+            Position ownerPos = (Position)m_PositionMapper.get(action.Owner);
+
+            Vector2 pos = ownerPos.getPosition() + new Vector2(16,0);// +ownerPos.getOffset();
+            Vector2 dir = heading.getHeading();
+            dir.Normalize();
+
+            position.setPosition(pos + dir * 10);
+            
+        }
+    }
+}

@@ -26,7 +26,7 @@ namespace Vaerydian.Sessions
             set { gs_PlayerCharacter = value; }
         }
 
-        private static String gs_GameVersion = "Alpha 0.0.1.2";
+        private static String gs_GameVersion = "Alpha 0.0.2.0";
 
         public static String GameVersion
         {

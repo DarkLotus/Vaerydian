@@ -67,7 +67,7 @@ namespace Vaerydian.Systems.Update
             projectile.ElapsedTime += e_ECSInstance.ElapsedTime;
 
             //is it time for the projectile to die?
-            if (projectile.ElapsedTime > projectile.LifeTime)
+            if (projectile.ElapsedTime >= projectile.LifeTime)
             {
                 e_ECSInstance.deleteEntity(entity);
                 return;

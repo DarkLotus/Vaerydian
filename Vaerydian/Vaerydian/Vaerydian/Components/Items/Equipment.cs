@@ -38,12 +38,23 @@ namespace Vaerydian.Components.Items
 
         private Entity a_RangedWeapon;
         /// <summary>
-        /// the given entities ranged weapon entity reference
+        /// the given entity's ranged weapon entity reference
         /// </summary>
         public Entity RangedWeapon
         {
             get { return a_RangedWeapon; }
             set { a_RangedWeapon = value; }
+        }
+
+        private Entity a_MeleeWeapon;
+
+        /// <summary>
+        /// the given entity's melee weapon entity reference
+        /// </summary>
+        public Entity MeleeWeapon
+        {
+            get { return a_MeleeWeapon; }
+            set { a_MeleeWeapon = value; }
         }
 
         private Entity a_Armor;

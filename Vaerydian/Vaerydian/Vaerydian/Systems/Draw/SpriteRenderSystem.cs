@@ -71,6 +71,15 @@ namespace Vaerydian.Systems.Draw
             s_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
         }
 
+        protected override void added(Entity entity)
+        {
+            base.added(entity);
+
+            Sprite sprite = (Sprite)s_SpriteMapper.get(entity);
+            if (!s_Textures.ContainsKey(sprite.TextureName))
+                s_Textures.Add(sprite.TextureName, s_Container.ContentManager.Load<Texture2D>(sprite.TextureName));
+        }
+
         protected override void process(Entity entity)
         {
             Position position = (Position) s_PositionMapper.get(entity);

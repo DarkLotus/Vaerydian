@@ -9,6 +9,8 @@ using Vaerydian.Utils;
 using Vaerydian.Components;
 using Vaerydian.Components.Audio;
 using Glimpse.Controls;
+using Microsoft.Xna.Framework;
+using Vaerydian.Components.Actions;
 
 namespace Vaerydian.Factories
 {
@@ -96,6 +98,31 @@ namespace Vaerydian.Factories
 
             u_EcsInstance.refresh(e);
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void createMeleeAction(Vector2 position, Vector2 heading, Transform transform, Entity owner)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Sprite sprite = new Sprite("sword", "sword", 32, 32, 0, 0);
+
+            MeleeAction action = new MeleeAction();
+            action.Animation = new Animation(9, 20);
+            action.ArcDegrees = 180;
+            action.Owner = owner;
+            action.Lifetime = 250;
+            action.Range = 32;
+
+            u_EcsInstance.EntityManager.addComponent(e, new Position(position,new Vector2(16)));
+            u_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
+            u_EcsInstance.EntityManager.addComponent(e, transform);
+            u_EcsInstance.EntityManager.addComponent(e, sprite);
+            u_EcsInstance.EntityManager.addComponent(e, action);
+
+            u_EcsInstance.refresh(e);
         }
 
     }

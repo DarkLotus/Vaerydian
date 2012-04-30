@@ -38,8 +38,17 @@ namespace Vaerydian.Utils
 
         }
 
-        public static Vector2 rotateVector(Vector2 vector, float angle)
+        public static Vector2 rotateVectorRadians(Vector2 vector, float angleRadians)
         {
+            float x = vector.X * (float)Math.Cos(angleRadians) - vector.Y * (float)Math.Sin(angleRadians);
+            float y = vector.X * (float)Math.Sin(angleRadians) + vector.Y * (float)Math.Cos(angleRadians);
+            return new Vector2(x, y);
+        }
+
+        public static Vector2 rotateVectorDegrees(Vector2 vector, float angleDegrees)
+        {
+            float angle = ((2f * (float)Math.PI) / 360f) * angleDegrees;
+
             float x = vector.X * (float)Math.Cos(angle) - vector.Y * (float)Math.Sin(angle);
             float y = vector.X * (float)Math.Sin(angle) + vector.Y * (float)Math.Cos(angle);
             return new Vector2(x, y);

@@ -28,6 +28,21 @@ namespace Vaerydian.Factories
             i_EcsInstance = ecsInstance;
         }
 
+        public Entity createTestMeleeWeapon()
+        {
+            Entity e = i_EcsInstance.create();
+
+            Item item = new Item("TestMeleeWeapon", 0, 100);
+
+            Weapon weapon = new Weapon(5, 5, 0, 32, WeaponType.Melee, DamageType.Common);
+            weapon.MeleeWeaponType = MeleeWeaponType.Sword;
+
+            i_EcsInstance.EntityManager.addComponent(e, item);
+            i_EcsInstance.EntityManager.addComponent(e, weapon);
+
+            i_EcsInstance.refresh(e);
+            return e;
+        }
 
         public Entity createTestRangedWeapon()
         {
@@ -66,6 +81,7 @@ namespace Vaerydian.Factories
         {
             Equipment equipment = new Equipment();
 
+            equipment.MeleeWeapon = createTestMeleeWeapon();
             equipment.RangedWeapon = createTestRangedWeapon();
             equipment.Armor = createTestArmor();
 

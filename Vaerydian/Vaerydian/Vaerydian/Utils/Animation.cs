@@ -11,7 +11,7 @@ namespace Vaerydian.Utils
     {
         private int a_FrameRate;
 
-        private int a_Size;
+        private int a_Frames;
 
         private int a_ElapsedTime = 0;
 
@@ -19,9 +19,9 @@ namespace Vaerydian.Utils
 
         public Animation() { }
 
-        public Animation(int size, int frameRate) 
+        public Animation(int frames, int frameRate) 
         {
-            a_Size = size;
+            a_Frames = frames;
             a_FrameRate = frameRate;
         }
 
@@ -44,7 +44,7 @@ namespace Vaerydian.Utils
                 a_LastFrame++;
 
                 //make sure we didnt run over
-                if (a_LastFrame == a_Size)
+                if (a_LastFrame == a_Frames)
                     a_LastFrame = 0;
 
                 //return frame
@@ -67,7 +67,7 @@ namespace Vaerydian.Utils
                 a_LastFrame++;
 
                 //make sure we didnt run over
-                if (a_LastFrame == a_Size)
+                if (a_LastFrame == a_Frames)
                     a_LastFrame = 0;
 
                 //return frame
@@ -77,6 +77,13 @@ namespace Vaerydian.Utils
                 return a_LastFrame;
         }
 
-
+        /// <summary>
+        /// number of frames in this animation
+        /// </summary>
+        public int Frames
+        {
+            get { return a_Frames; }
+            set { a_Frames = value; }
+        }
     }
 }

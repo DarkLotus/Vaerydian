@@ -86,7 +86,7 @@ namespace Vaerydian.Screens
 
             w_MapEngine.ContentManager = this.ScreenManager.Game.Content;
 
-            w_MapEngine.TileSize = 25;
+            w_MapEngine.TileSize = 1;
 
             w_MapEngine.XTiles = ws_ViewPort.Dimensions.X;
 

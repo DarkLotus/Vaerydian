@@ -296,6 +296,21 @@ namespace Vaerydian.Systems.Update
 
             p_LastFired += e_ECSInstance.ElapsedTime;
 
+            if (InputManager.isLeftButtonDown() && (p_LastFired >= 3*p_FireRate))
+            {
+                p_LastFired = 0;
+
+                UtilFactory uf = new UtilFactory(e_ECSInstance);
+
+                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
+                dir.Normalize();
+
+                Transform trans = new Transform();
+                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+                trans.RotationOrigin = new Vector2(0, 16);
+
+                uf.createMeleeAction(pos + dir * 16, dir, trans, entity);
+            }
 
             if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
             {
@@ -305,7 +320,7 @@ namespace Vaerydian.Systems.Update
 
                 Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
 
-                dir = VectorHelper.rotateVector(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
+                dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
 
                 dir.Normalize();
 

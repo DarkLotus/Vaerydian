@@ -25,6 +25,7 @@ using Glimpse.Input;
 using Glimpse.Systems;
 using Glimpse.Components;
 using Glimpse.Managers;
+using Vaerydian.Components.Actions;
 
 namespace Vaerydian.Screens
 {
@@ -44,6 +45,7 @@ namespace Vaerydian.Screens
         private EntitySystem behaviorSystem;
         private EntitySystem mapCollisionSystem;
         private EntitySystem projectileSystem;
+        private EntitySystem meleeSystem;
         private EntitySystem attackSystem;
         private EntitySystem damageSystem;
         private EntitySystem healthSystem;
@@ -101,6 +103,7 @@ namespace Vaerydian.Screens
             behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
             mapCollisionSystem = ecsInstance.SystemManager.setSystem(new MapCollisionSystem(), new MapCollidable());
             projectileSystem = ecsInstance.SystemManager.setSystem(new ProjectileSystem(), new Projectile());
+            meleeSystem = ecsInstance.SystemManager.setSystem(new MeleeSystem(), new MeleeAction());
             attackSystem = ecsInstance.SystemManager.setSystem(new AttackSystem(), new Attack());
             damageSystem = ecsInstance.SystemManager.setSystem(new DamageSystem(), new Damage());
             healthSystem = ecsInstance.SystemManager.setSystem(new HealthSystem(), new Health());
@@ -181,7 +184,7 @@ namespace Vaerydian.Screens
 
             //npcFactory.createWanders(100, map);
 
-            uiFactory.createButton();
+            //uiFactory.createUITests();
             
 
             //create map debug
@@ -267,6 +270,7 @@ namespace Vaerydian.Screens
             mousePointerSystem.process();
             behaviorSystem.process();
             projectileSystem.process();
+            meleeSystem.process();
             lifeSystem.process();
             healthSystem.process();
             damageSystem.process();

@@ -86,6 +86,88 @@ namespace Vaerydian.Systems.Update
         /// <param name="attack">attack to handle</param>
         private void handleMelee(Attack attack)
         {
+            Position position = (Position)a_PositionMapper.get(attack.Defender);
+
+            //dont continue if this attack has no position
+            if (position == null)
+                return;
+
+            //calculate position
+            Vector2 pos = position.getPosition();
+            Position newPos = new Position(pos + new Vector2(rand.Next(16) + 8, 0), Vector2.Zero);
+
+            //get equipment
+            Equipment attEquip = (Equipment)a_EquipmentMapper.get(attack.Attacker);
+            Equipment defEquip = (Equipment)a_EquipmentMapper.get(attack.Defender);
+
+            //dont continue if we have no equipment to use
+            if (attEquip == null || defEquip == null)
+                return;
+
+            //get weapon and armor
+            Weapon weapon = (Weapon)a_WeaponMapper.get(attEquip.MeleeWeapon);
+            Armor armor = (Armor)a_ArmorMapper.get(defEquip.Armor);
+
+            //dont continue if either of these are null
+            if (weapon == null || armor == null)
+                return;
+
+            //get attributes
+            Attributes attAttr = (Attributes)a_AttributeMapper.get(attack.Attacker);
+            Attributes defAttr = (Attributes)a_AttributeMapper.get(attack.Defender);
+
+            //dont continue if either of these are null
+            if (attAttr == null || defAttr == null)
+                return;
+
+            //get Experience
+            Experiences attXp = (Experiences)a_ExperienceMapper.get(attack.Attacker);
+            Experiences defXp = (Experiences)a_ExperienceMapper.get(attack.Defender);
+
+            //dont continue if null
+            if (attXp == null || defXp == null)
+                return;
+
+            //get Skills
+            Skills attSkills = (Skills)a_SkillMapper.get(attack.Attacker);
+            Skills defSkills = (Skills)a_SkillMapper.get(attack.Defender);
+
+            //dont continue if either of these are null
+            if (attSkills == null || defSkills == null)
+                return;
+
+            int atkSkill = attSkills.SkillSet[SkillNames.Melee].Value;
+            int defSkill = defSkills.SkillSet[SkillNames.Avoidance].Value;
+
+            float probHit = atkSkill / 4 + attAttr.Perception.Value / 4 + attXp.GeneralExperience[MobGroup.Test].Value + weapon.Speed;
+            float probDef = defSkill / 4 + defAttr.Quickness.Value / 4 + defXp.GeneralExperience[MobGroup.Test].Value + armor.Mobility;
+
+            float hitProb = (probHit / (probHit + probDef)) * 1.75f + (probDef / (probHit + probDef)) * 0.15f;
+
+            float toHit = (float)rand.NextDouble();
+
+            int damage = 0;
+
+            if (toHit < hitProb)
+            {
+
+                float overhit = 0f;
+
+                if (hitProb > 1f)
+                    overhit = hitProb - 1f;
+
+                int maxDmg = (int)((overhit + 1f) * (atkSkill / 5 + attAttr.Perception.Value / 4 + (weapon.Lethality - armor.Mitigation + 1)));
+
+                damage = rand.Next(maxDmg / 2, maxDmg);
+
+                if (damage < 0)
+                    damage = 0;
+            }
+
+            a_Factory.createDirectDamage(damage, DamageType.Common, attack.Defender, newPos);
+            
+            
+            
             //remove attack
             e_ECSInstance.deleteEntity(a_CurrentEntity);
         }
