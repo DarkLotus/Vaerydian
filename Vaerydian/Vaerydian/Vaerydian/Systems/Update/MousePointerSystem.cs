@@ -11,6 +11,8 @@ using ECSFramework.Utils;
 using Vaerydian.Components;
 
 using Glimpse.Input;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Update
 {
@@ -43,7 +45,7 @@ namespace Vaerydian.Systems.Update
             Vector2 center = viewPort.getDimensions() / 2;
             Vector2 origin = viewPort.getOrigin();
 
-            pos.setPosition((InputManager.getMousePositionVector()+origin));//-center);
+            pos.Pos = InputManager.getMousePositionVector()+origin;
         }
     }
 }

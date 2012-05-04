@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using ECSFramework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Utils
 {
-    public class MousePosition : IComponent
+    class MapCollidable : IComponent
     {
         private static int m_TypeID;
         private int m_EntityID;
 
-        public MousePosition() { }
+        public MapCollidable() { }
 
         public int getEntityId()
         {
@@ -33,5 +35,23 @@ namespace Vaerydian.Components
         {
             m_TypeID = typeId;
         }
+
+        private bool m_Collided = false;
+
+        public bool Collided
+        {
+            get { return m_Collided; }
+            set { m_Collided = value; }
+        }
+
+        private Vector2 m_ResponseVector;
+
+        public Vector2 ResponseVector
+        {
+            get { return m_ResponseVector; }
+            set { m_ResponseVector = value; }
+        }
+
+
     }
 }

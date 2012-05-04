@@ -10,6 +10,8 @@ using ECSFramework;
 using ECSFramework.Utils;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {
@@ -81,7 +83,7 @@ namespace Vaerydian.Systems.Draw
             GeometryMap geometry = (GeometryMap)s_GeometryMapper.get(s_Geometry);
             Transform transform = (Transform)s_TranformMapper.get(entity);
 
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
             Vector2 origin = viewport.getOrigin();
             Vector2 center = viewport.getDimensions() / 2;
 

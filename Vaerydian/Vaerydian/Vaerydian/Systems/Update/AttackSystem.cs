@@ -12,6 +12,9 @@ using Vaerydian.Components;
 using Vaerydian.Components.Items;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Actions;
+using Vaerydian.Components.Characters;
 
 namespace Vaerydian.Systems.Update
 {
@@ -93,7 +96,7 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //calculate position
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
             Position newPos = new Position(pos + new Vector2(rand.Next(16) + 8, 0), Vector2.Zero);
 
             //get equipment
@@ -185,7 +188,7 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //calculate position
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
             Position newPos = new Position(pos + new Vector2(rand.Next(16)+8, 0), Vector2.Zero);
 
             //get equipment

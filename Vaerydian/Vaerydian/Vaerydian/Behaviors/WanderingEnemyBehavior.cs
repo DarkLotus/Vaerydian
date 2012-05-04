@@ -20,6 +20,9 @@ using Vaerydian.Characters.Factions;
 using Vaerydian.Utils;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
 
 
 namespace Vaerydian.Behaviors
@@ -250,7 +253,7 @@ namespace Vaerydian.Behaviors
             w_Spatial =  w_ECSInstance.TagManager.getEntityByTag("SPATIAL");
             SpatialPartition spatial = (SpatialPartition)w_SpatialMapper.get(w_Spatial);
 
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
 
             w_LastULNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
             w_LastLLNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(0, 32));
@@ -324,7 +327,7 @@ namespace Vaerydian.Behaviors
                         Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
                         Position tPos = (Position)w_PositionMapper.get(locals[i]);
 
-                        if (Vector2.Distance(pos.getPosition()+pos.getOffset(),tPos.getPosition() +tPos.getOffset()) <= 200f)
+                        if (Vector2.Distance(pos.Pos+pos.Offset,tPos.Pos +tPos.Offset) <= 200f)
                         {
                             //go hostile against it
                             w_Target = locals[i];
@@ -407,7 +410,7 @@ namespace Vaerydian.Behaviors
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             Position tPos = (Position)w_PositionMapper.get(w_Target);
 
-            float dist = Vector2.Distance(pos.getPosition(), tPos.getPosition());
+            float dist = Vector2.Distance(pos.Pos, tPos.Pos);
 
             if (dist > weapon.MaxRange)
                 return true;
@@ -428,7 +431,7 @@ namespace Vaerydian.Behaviors
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             Position tPos = (Position)w_PositionMapper.get(w_Target);
 
-            float dist = Vector2.Distance(pos.getPosition(), tPos.getPosition());
+            float dist = Vector2.Distance(pos.Pos, tPos.Pos);
 
             if (dist < weapon.MinRange)
                 return true;
@@ -460,7 +463,7 @@ namespace Vaerydian.Behaviors
             Position position = (Position)w_PositionMapper.get(w_ThisEntity);
             Position tPosition = (Position)w_PositionMapper.get(w_Target);
 
-            Vector2 dir = (tPosition.getPosition()) - (position.getPosition());
+            Vector2 dir = (tPosition.Pos) - (position.Pos);
 
             dir.Normalize();
 
@@ -479,7 +482,7 @@ namespace Vaerydian.Behaviors
             Position position = (Position)w_PositionMapper.get(w_ThisEntity);
             Position tPosition = (Position)w_PositionMapper.get(w_Target);
 
-            Vector2 dir = (tPosition.getPosition()) - (position.getPosition());
+            Vector2 dir = (tPosition.Pos) - (position.Pos);
 
             //dir = VectorHelper.rotateVector(dir, (float)w_Random.NextDouble());
 
@@ -501,11 +504,11 @@ namespace Vaerydian.Behaviors
             Velocity velocity = (Velocity)w_VelocityMapper.get(w_ThisEntity);
 
 
-            Vector2 pos = position.getPosition();// +position.getOffset();
+            Vector2 pos = position.Pos;// +position.Offset;
 
-            pos += heading.getHeading() * velocity.getVelocity();
+            pos += heading.getHeading() * velocity.Vel;
 
-            position.setPosition(pos);
+            position.Pos = pos;
 
             w_Moved = true;
 
@@ -543,7 +546,7 @@ namespace Vaerydian.Behaviors
             Position enemy = (Position) w_PositionMapper.get(w_Target);
             Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
 
-            Vector2 dir = (enemy.getPosition()+enemy.getOffset()) - (position.getPosition()+position.getOffset());
+            Vector2 dir = (enemy.Pos+enemy.Offset) - (position.Pos+position.Offset);
 
             dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)w_Random.NextDouble() * 0.1745f);
             
@@ -551,13 +554,13 @@ namespace Vaerydian.Behaviors
 
             heading.setHeading(dir);
 
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
 
             Transform trans = new Transform();
             trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
             trans.RotationOrigin = new Vector2(16);
 
-            ef.createCollidingProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
+            ef.createCollidingProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
 
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\fire", true, 0.5f);
@@ -643,7 +646,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Help!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "Help!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -661,7 +664,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Oooh Stop!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "Oooh Stop!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -679,7 +682,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Run Away!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "Run Away!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -698,7 +701,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "I Found Him!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "I Found Him!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
 
             return BehaviorReturnCode.Success;
@@ -717,7 +720,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "There He Is!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "There He Is!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -735,7 +738,7 @@ namespace Vaerydian.Behaviors
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Gotcha!", pos.getPosition() - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "Gotcha!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }

@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework;
 using WorldGeneration.Utils;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Update
 {
@@ -57,7 +60,7 @@ namespace Vaerydian.Systems.Update
             mapCollide.Collided = false;
 
             //get the coliding entities position
-            Vector2 colPos = pos.getPosition();
+            Vector2 colPos = pos.Pos;
             
             //create a polygon based at this entity's current position, using standard tileSize for height and width
             Polygon colPoly = createSquarePolygon(colPos, m_TileSize, m_TileSize);
@@ -88,7 +91,7 @@ namespace Vaerydian.Systems.Update
             }
 
             //set the corrected position
-            pos.setPosition(colPos);
+            pos.Pos = colPos;
         }
 
         /// <summary>

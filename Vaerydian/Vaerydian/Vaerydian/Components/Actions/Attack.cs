@@ -9,7 +9,7 @@ using Vaerydian.Utils;
 
 
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Actions
 {
     class Attack : IComponent
     {

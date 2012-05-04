@@ -7,7 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Characters.Experience;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Characters
 {
     public class Experiences : IComponent
     {

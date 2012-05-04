@@ -11,6 +11,9 @@ using Vaerydian.Components.Audio;
 using Glimpse.Controls;
 using Microsoft.Xna.Framework;
 using Vaerydian.Components.Actions;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Action;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Factories
 {
@@ -107,7 +110,7 @@ namespace Vaerydian.Factories
         {
             Entity e = u_EcsInstance.create();
 
-            Sprite sprite = new Sprite("sword", "sword", 32, 32, 0, 0);
+            Sprite sprite = new Sprite("sword", "swordnormal", 32, 32, 0, 0);
 
             MeleeAction action = new MeleeAction();
             action.Animation = new Animation(9, 20);

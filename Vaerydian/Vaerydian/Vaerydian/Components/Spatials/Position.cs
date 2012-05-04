@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 using ECSFramework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Spatials
 {
     public class Position : IComponent
     {
@@ -16,7 +16,19 @@ namespace Vaerydian.Components
 
         private Vector2 p_Position;
 
+        public Vector2 Pos
+        {
+            get { return p_Position; }
+            set { p_Position = value; }
+        }
+
         private Vector2 p_Offset;
+
+        public Vector2 Offset
+        {
+            get { return p_Offset; }
+            set { p_Offset = value; }
+        }
 
         public Position() { }
 
@@ -36,16 +48,6 @@ namespace Vaerydian.Components
             return p_TypeID;
         }
 
-        public Vector2 getPosition()
-        {
-            return p_Position;
-        }
-
-        public Vector2 getOffset()
-        {
-            return p_Offset;
-        }
-
         public void setEntityId(int entityId)
         {
             p_EntityID = entityId;
@@ -56,14 +58,5 @@ namespace Vaerydian.Components
             p_TypeID = typeId;
         }
 
-        public void setPosition(Vector2 position)
-        {
-            p_Position = position;
-        }
-
-        public void setOffset(Vector2 offset) 
-        {
-            p_Offset = offset;
-        }
     }
 }

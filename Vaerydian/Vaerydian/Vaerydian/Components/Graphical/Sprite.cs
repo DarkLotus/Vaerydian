@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Graphical
 {
     public class Sprite : IComponent
     {

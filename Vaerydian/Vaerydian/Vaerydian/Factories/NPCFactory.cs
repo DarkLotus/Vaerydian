@@ -13,6 +13,10 @@ using Vaerydian.Characters.Skills;
 using Vaerydian.Behaviors;
 using Vaerydian.Characters.Factions;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Actions;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Factories
 {

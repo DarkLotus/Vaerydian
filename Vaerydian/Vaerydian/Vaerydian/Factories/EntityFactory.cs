@@ -22,6 +22,10 @@ using WorldGeneration.World;
 using WorldGeneration.Utils;
 using Vaerydian.Characters.Factions;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
+using Vaerydian.Components.Actions;
 
 
 namespace Vaerydian.Factories

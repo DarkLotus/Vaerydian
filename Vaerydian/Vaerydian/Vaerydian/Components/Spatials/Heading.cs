@@ -7,7 +7,7 @@ using ECSFramework;
 
 using Microsoft.Xna.Framework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Spatials
 {
     public class Heading : IComponent
     {

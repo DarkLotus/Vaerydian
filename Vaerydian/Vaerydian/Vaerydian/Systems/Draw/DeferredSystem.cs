@@ -10,6 +10,7 @@ using ECSFramework;
 
 using Vaerydian;
 using Vaerydian.Components;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {

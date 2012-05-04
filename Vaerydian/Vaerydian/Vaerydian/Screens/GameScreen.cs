@@ -26,6 +26,10 @@ using Glimpse.Systems;
 using Glimpse.Components;
 using Glimpse.Managers;
 using Vaerydian.Components.Actions;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
+using Vaerydian.Components.Action;
 
 namespace Vaerydian.Screens
 {

@@ -39,11 +39,11 @@ namespace Vaerydian.Systems.Update
             AiBehavior behavior = (AiBehavior)b_BehaviorMapper.get(entity);
             Life life = (Life)b_LifeMapper.get(entity);
             if (life.IsAlive)
-                behavior.getBehavior().Behave();
+                behavior.Behavior.Behave();
             else
             {
-                if (!behavior.getBehavior().IsClean)
-                    behavior.getBehavior().deathCleanup();
+                if (!behavior.Behavior.IsClean)
+                    behavior.Behavior.deathCleanup();
             }
         }
 

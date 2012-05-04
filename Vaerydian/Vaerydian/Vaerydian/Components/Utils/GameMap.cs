@@ -9,7 +9,7 @@ using WorldGeneration.Utils;
 
 using Vaerydian.Utils;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Utils
 {
     public class GameMap : IComponent
     {

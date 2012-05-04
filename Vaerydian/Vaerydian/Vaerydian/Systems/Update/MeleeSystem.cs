@@ -13,6 +13,7 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Utils;
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Items;
+using Vaerydian.Components.Spatials;
 
 namespace Vaerydian.Systems.Update
 {
@@ -68,7 +69,7 @@ namespace Vaerydian.Systems.Update
             }
 
             //retrieve all local entities
-            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(position.getPosition());
+            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(position.Pos);
 
             //is the location good?
             if (locals != null)
@@ -102,7 +103,7 @@ namespace Vaerydian.Systems.Update
                             Position lposition = (Position)m_PositionMapper.get(locals[i]);
                             
                             //are we within melee distance?
-                            if (Vector2.Distance(position.getPosition(), lposition.getPosition()) < action.Range)
+                            if (Vector2.Distance(position.Pos, lposition.Pos) < action.Range)
                             {
 
                                 //does it support this interaction?
@@ -143,11 +144,11 @@ namespace Vaerydian.Systems.Update
 
             Position ownerPos = (Position)m_PositionMapper.get(action.Owner);
 
-            Vector2 pos = ownerPos.getPosition() + new Vector2(16,0);// +ownerPos.getOffset();
+            Vector2 pos = ownerPos.Pos + new Vector2(16, 0);// +ownerPos.getOffset();
             Vector2 dir = heading.getHeading();
             dir.Normalize();
 
-            position.setPosition(pos + dir * 10);
+            position.Pos = pos + dir * 10;
             
         }
     }

@@ -10,6 +10,9 @@ using ECSFramework;
 
 using Vaerydian;
 using Vaerydian.Components;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Characters;
+using Vaerydian.Components.Graphical;
 
 
 namespace Vaerydian.Systems.Draw
@@ -57,7 +60,7 @@ namespace Vaerydian.Systems.Draw
             Health health = (Health)h_HealthMapper.get(entity);
 
             //get vectors for easy working
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
             Vector2 origin = camera.getOrigin();
 
             //calculate current HP percentage

@@ -14,6 +14,8 @@ using Vaerydian.Utils;
 using Vaerydian.Factories;
 
 using Glimpse.Input;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Update
 {
@@ -90,13 +92,13 @@ namespace Vaerydian.Systems.Update
 
             if (p_FirstRun)
             {
-                spatial.QuadTree.setContentAtLocation(entity, position.getPosition());
-                p_LastULNode = spatial.QuadTree.locateNode(position.getPosition());
+                spatial.QuadTree.setContentAtLocation(entity, position.Pos);
+                p_LastULNode = spatial.QuadTree.locateNode(position.Pos);
                 p_FirstRun = false;
             }
 
-            Vector2 pos = position.getPosition();
-            float vel = velocity.getVelocity();
+            Vector2 pos = position.Pos;
+            float vel = velocity.Vel;
             Vector2 head = heading.getHeading();
             
             //reset direction
@@ -173,14 +175,14 @@ namespace Vaerydian.Systems.Update
             //move according to the correct speed
             if (dirCount > 1)
             {
-                position.setPosition(pos + head * vel * (float)Math.Sqrt(2) / 2);
+                position.Pos = pos + head * vel * (float)Math.Sqrt(2) / 2;
             }
             else
             {
-                position.setPosition(pos + head * vel);
+                position.Pos = pos + head * vel;
             }
 
-            Vector2 test = (mPosition.getPosition() + mPosition.getOffset()) - pos;
+            Vector2 test = (mPosition.Pos + mPosition.Offset) - pos;
             test.Normalize();
 
             float angle = VectorHelper.getAngle(new Vector2(1,0), test);
@@ -204,25 +206,25 @@ namespace Vaerydian.Systems.Update
             if (InputManager.isKeyPressed(Keys.T))
             {
                 //get mouse location
-                Vector2 mPos = mPosition.getPosition();
+                Vector2 mPos = mPosition.Pos;
 
                 //find vector pointing from entity towards reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
                 vec.Normalize();
                 
                 //issue new heading
-                heading.setHeading(Vector2.Multiply(vec,velocity.getVelocity()));
+                heading.setHeading(Vector2.Multiply(vec,velocity.Vel));
                 
                 //set new position
                 pos += heading.getHeading();
-                position.setPosition(pos);
+                position.Pos = pos;
             }
 
             //move away from reticle
             if (InputManager.isKeyPressed(Keys.G))
             {
                 //get mouse location
-                Vector2 mPos = mPosition.getPosition();
+                Vector2 mPos = mPosition.Pos;
 
                 //find vector pointing from entity away from reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
@@ -230,18 +232,18 @@ namespace Vaerydian.Systems.Update
                 vec = Vector2.Negate(vec);
 
                 //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.getVelocity()));
+                heading.setHeading(Vector2.Multiply(vec, velocity.Vel));
 
                 //set new position
                 pos += heading.getHeading();
-                position.setPosition(pos);
+                position.Pos = pos;
             }
 
             //move perp left
             if (InputManager.isKeyPressed(Keys.Q))
             {
                 //get mouse location
-                Vector2 mPos = mPosition.getPosition();
+                Vector2 mPos = mPosition.Pos;
 
                 //find vector pointing from entity towards reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
@@ -249,18 +251,18 @@ namespace Vaerydian.Systems.Update
                 vec.Normalize();
 
                 //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.getVelocity()/2));
+                heading.setHeading(Vector2.Multiply(vec, velocity.Vel/2));
 
                 //set new position
                 pos += heading.getHeading();
-                position.setPosition(pos);
+                position.Pos = pos;
             }
 
             //move perp right
             if (InputManager.isKeyPressed(Keys.E))
             {
                 //get mouse location
-                Vector2 mPos = mPosition.getPosition();
+                Vector2 mPos = mPosition.Pos;
 
                 //find vector pointing from entity towards reticle
                 Vector2 vec = Vector2.Subtract(mPos, pos);
@@ -268,11 +270,11 @@ namespace Vaerydian.Systems.Update
                 vec.Normalize();
 
                 //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.getVelocity()/2));
+                heading.setHeading(Vector2.Multiply(vec, velocity.Vel/2));
 
                 //set new position
                 pos += heading.getHeading();
-                position.setPosition(pos);
+                position.Pos = pos;
             }
 
             /*
@@ -280,7 +282,7 @@ namespace Vaerydian.Systems.Update
             {
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
+                Vector2 dir = mPosition.getPosition() + mPosition.Offset - new Vector2(16) - pos;
 
                 dir.Normalize();
 
@@ -288,7 +290,7 @@ namespace Vaerydian.Systems.Update
                 trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
                 trans.RotationOrigin = new Vector2(16);
 
-                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.Purple.ToVector4()), trans, entity);
+                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.Purple.ToVector4()), trans, entity);
 
                 UtilFactory uf = new UtilFactory(e_ECSInstance);
                 uf.createSound("audio\\effects\\fire", true,0.5f);
@@ -302,7 +304,7 @@ namespace Vaerydian.Systems.Update
 
                 UtilFactory uf = new UtilFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;
+                Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;
                 dir.Normalize();
 
                 Transform trans = new Transform();
@@ -318,7 +320,7 @@ namespace Vaerydian.Systems.Update
 
                 EntityFactory ef = new EntityFactory(e_ECSInstance);
 
-                Vector2 dir = mPosition.getPosition() + mPosition.getOffset() - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
+                Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
 
                 dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
 
@@ -331,7 +333,7 @@ namespace Vaerydian.Systems.Update
                 trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
                 trans.RotationOrigin = new Vector2(16);
 
-                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.getOffset(), 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
                 
                 UtilFactory uf = new UtilFactory(e_ECSInstance);
                 uf.createSound("audio\\effects\\fire", true, 0.5f);
@@ -384,7 +386,7 @@ namespace Vaerydian.Systems.Update
             {
 
                 NPCFactory ef = new NPCFactory(e_ECSInstance);
-                ef.createFollower(mPosition.getPosition() + mPosition.getOffset() - new Vector2(16), entity, rand.Next(300));
+                ef.createFollower(mPosition.Pos + mPosition.Offset - new Vector2(16), entity, rand.Next(300));
 
             }
 
@@ -392,7 +394,7 @@ namespace Vaerydian.Systems.Update
             {
 
                 NPCFactory ef = new NPCFactory(e_ECSInstance);
-                ef.createWanderingEnemy(mPosition.getPosition() + mPosition.getOffset() - new Vector2(16));
+                ef.createWanderingEnemy(mPosition.Pos + mPosition.Offset - new Vector2(16));
 
             }
 
@@ -403,7 +405,7 @@ namespace Vaerydian.Systems.Update
                 ViewPort camera = (ViewPort)p_ViewPortMapper.get(p_Camera);
 
 
-                uf.createTimedDialogWindow(entity, "Character Dialog Here", mPosition.getPosition() + mPosition.getOffset() - camera.getOrigin(), "Player" , 3000);
+                uf.createTimedDialogWindow(entity, "Character Dialog Here", mPosition.Pos + mPosition.Offset - camera.getOrigin(), "Player", 3000);
             }
 
         }

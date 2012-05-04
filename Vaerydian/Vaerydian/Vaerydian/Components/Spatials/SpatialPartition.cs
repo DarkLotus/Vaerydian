@@ -7,7 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Utils;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Spatials
 {
     class SpatialPartition : IComponent
     {

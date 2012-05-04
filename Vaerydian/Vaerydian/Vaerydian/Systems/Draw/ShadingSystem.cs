@@ -10,6 +10,8 @@ using ECSFramework;
 
 using Vaerydian;
 using Vaerydian.Components;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {
@@ -86,7 +88,7 @@ namespace Vaerydian.Systems.Draw
             //setup locals
             ViewPort viewport = (ViewPort)s_ViewPortMapper.get(s_Camera);
             Position lightPos = (Position)s_PositionMapper.get(entity);
-            Vector2 position = lightPos.getPosition()+lightPos.getOffset();
+            Vector2 position = lightPos.Pos + lightPos.Offset;
             Vector2 origin = viewport.getOrigin();
             Vector2 center = viewport.getDimensions() / 2;
             int radius = light.LightRadius;

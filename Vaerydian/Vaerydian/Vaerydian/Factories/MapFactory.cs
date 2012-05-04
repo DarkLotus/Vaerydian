@@ -10,6 +10,7 @@ using Vaerydian.Components;
 using WorldGeneration.Cave;
 using WorldGeneration.Utils;
 using WorldGeneration.World;
+using Vaerydian.Components.Utils;
 
 
 namespace Vaerydian.Factories

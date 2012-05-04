@@ -8,7 +8,7 @@ using ECSFramework;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Utils;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Characters
 {
     class Skills : IComponent
     {

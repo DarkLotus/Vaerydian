@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using WorldGeneration.Utils;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Utils;
 
 namespace Vaerydian.Utils
 {

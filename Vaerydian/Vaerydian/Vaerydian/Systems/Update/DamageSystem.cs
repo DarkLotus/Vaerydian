@@ -8,6 +8,8 @@ using ECSFramework;
 using Vaerydian.Utils;
 using Vaerydian.Components;
 using Vaerydian.Factories;
+using Vaerydian.Components.Action;
+using Vaerydian.Components.Characters;
 
 namespace Vaerydian.Systems.Update
 {

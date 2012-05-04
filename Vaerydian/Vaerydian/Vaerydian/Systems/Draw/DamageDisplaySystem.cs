@@ -13,6 +13,9 @@ using Vaerydian.Components;
 
 using Glimpse.Input;
 using Glimpse.Managers;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Action;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {
@@ -59,7 +62,7 @@ namespace Vaerydian.Systems.Draw
 
             ViewPort camera = (ViewPort)d_ViewPortMapper.get(d_Camera);
             Vector2 origin = camera.getOrigin();
-            Vector2 pos = position.getPosition() + new Vector2(0, -damage.Lifetime/7);
+            Vector2 pos = position.Pos + new Vector2(0, -damage.Lifetime / 7);
 
             String dmg;
             Color color = Color.Yellow;

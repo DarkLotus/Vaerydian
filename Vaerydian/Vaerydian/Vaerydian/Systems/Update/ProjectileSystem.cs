@@ -12,6 +12,9 @@ using Vaerydian.Components;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Actions;
+using Vaerydian.Components.Utils;
 
 
 namespace Vaerydian.Systems.Update
@@ -78,7 +81,7 @@ namespace Vaerydian.Systems.Update
             Heading heading = (Heading)p_HeadingMapper.get(entity);
             SpatialPartition spatial = (SpatialPartition)p_SpatialMapper.get(p_Spatial);
 
-            Vector2 pos = position.getPosition();
+            Vector2 pos = position.Pos;
 
             List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(pos);
 
@@ -114,7 +117,7 @@ namespace Vaerydian.Systems.Update
 
                             //are we close to it?
                             //23 - minimal radial distance for collision to occur
-                            if (Vector2.Distance(pos + position.getOffset(), localPosition.getPosition() + localPosition.getOffset()) < 23)
+                            if (Vector2.Distance(pos + position.Offset, localPosition.Pos + localPosition.Offset) < 23)
                             {
                                 //can we do anything to it?
                                 if(interaction.SupportedInteractions.PROJECTILE_COLLIDABLE &&
@@ -166,10 +169,10 @@ namespace Vaerydian.Systems.Update
                     e_ECSInstance.deleteEntity(entity);
                 }
             }
-            
-            pos += heading.getHeading() * velocity.getVelocity();
-            
-            position.setPosition(pos);
+
+            pos += heading.getHeading() * velocity.Vel;
+
+            position.Pos = pos;
         }
     }
 }

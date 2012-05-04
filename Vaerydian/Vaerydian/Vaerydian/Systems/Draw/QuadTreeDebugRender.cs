@@ -11,6 +11,8 @@ using ECSFramework;
 using Vaerydian;
 using Vaerydian.Components;
 using Vaerydian.Utils;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {
@@ -57,7 +59,7 @@ namespace Vaerydian.Systems.Draw
             ViewPort camera = (ViewPort)q_ViewPortMapper.get(q_Camera);
             SpatialPartition spatial = (SpatialPartition)q_SpatialMapper.get(q_Spatial);
 
-            Vector2 pos = position.getPosition() + position.getOffset();
+            Vector2 pos = position.Pos + position.Offset;
             Vector2 origin = camera.getOrigin();
             QuadNode<Entity> node = spatial.QuadTree.locateNode(pos);
 

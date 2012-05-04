@@ -34,7 +34,7 @@ namespace Vaerydian.Factories
 
             Item item = new Item("TestMeleeWeapon", 0, 100);
 
-            Weapon weapon = new Weapon(5, 5, 0, 32, WeaponType.Melee, DamageType.Common);
+            Weapon weapon = new Weapon(10, 5, 0, 32, WeaponType.Melee, DamageType.Common);
             weapon.MeleeWeaponType = MeleeWeaponType.Sword;
 
             i_EcsInstance.EntityManager.addComponent(e, item);
@@ -97,6 +97,11 @@ namespace Vaerydian.Factories
 
             if (equip == null)
                 return;
+
+            //remove melee weapon
+            Item meleeWeapon = (Item)itemMapper.get(equip.MeleeWeapon);
+            if (meleeWeapon != null)
+                i_EcsInstance.deleteEntity(equip.MeleeWeapon);
 
 
             //remove ranged weapon

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 using ECSFramework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Graphical
 {
     class Light : IComponent
     {

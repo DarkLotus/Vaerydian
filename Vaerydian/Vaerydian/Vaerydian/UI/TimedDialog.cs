@@ -11,6 +11,8 @@ using Glimpse.Input;
 using Glimpse.Controls;
 using Microsoft.Xna.Framework.Content;
 using Glimpse.Managers;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.UI.implemented
 {
@@ -172,7 +174,7 @@ namespace Vaerydian.UI.implemented
             ViewPort camera = (ViewPort)t_ViewPortMapper.get(t_Camera);
 
             if(pos != null)
-                t_Origin = pos.getPosition() - camera.getOrigin() - new Vector2(0,t_Offset*3);
+                t_Origin = pos.Pos - camera.getOrigin() - new Vector2(0, t_Offset * 3);
         }
 
         public void draw(int elapsedTime)

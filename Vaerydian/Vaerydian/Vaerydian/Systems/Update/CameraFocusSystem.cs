@@ -9,6 +9,9 @@ using ECSFramework;
 using ECSFramework.Utils;
 
 using Vaerydian.Components;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Update
 {
@@ -43,7 +46,7 @@ namespace Vaerydian.Systems.Update
 
             Vector2 cPos = cameraView.getOrigin();
             Vector2 center = cPos + cameraView.getDimensions() / 2;
-            Vector2 fPos = focusPosition.getPosition();
+            Vector2 fPos = focusPosition.Pos;
             float dist,radius;
             dist = Vector2.Distance(fPos,center);
             radius = focus.getFocusRadius();

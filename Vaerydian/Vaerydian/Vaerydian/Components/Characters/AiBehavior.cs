@@ -9,7 +9,7 @@ using BehaviorLibrary;
 
 using Vaerydian.Behaviors;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Characters
 {
     class AiBehavior : IComponent
     {
@@ -17,6 +17,15 @@ namespace Vaerydian.Components
         private int a_EntityID;
 
         private CharacterBehavior a_Behavior;
+
+        /// <summary>
+        /// current behavior of this AI
+        /// </summary>
+        public CharacterBehavior Behavior
+        {
+            get { return a_Behavior; }
+            set { a_Behavior = value; }
+        }
 
         public AiBehavior() { }
 
@@ -33,11 +42,6 @@ namespace Vaerydian.Components
         public int getTypeId()
         {
             return a_TypeID;
-        }
-
-        public CharacterBehavior getBehavior()
-        {
-            return a_Behavior;
         }
 
         public void setEntityId(int entityId)

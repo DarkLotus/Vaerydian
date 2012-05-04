@@ -11,6 +11,8 @@ using ECSFramework.Utils;
 
 using Vaerydian.Components;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Graphical;
 
 
 namespace Vaerydian.Systems.Draw
@@ -89,8 +91,8 @@ namespace Vaerydian.Systems.Draw
             Transform transform = (Transform)s_TranformMapper.get(entity);
             Life life = (Life)s_LifeMapper.get(entity);
 
-            Vector2 pos = position.getPosition();
-            Vector2 offset = position.getOffset();
+            Vector2 pos = position.Pos;
+            Vector2 offset = position.Offset;
             Vector2 origin = viewport.getOrigin();
             Vector2 center = viewport.getDimensions() / 2;
 

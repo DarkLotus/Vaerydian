@@ -18,6 +18,9 @@ using Vaerydian.Components;
 using Vaerydian.Components.Debug;
 using Vaerydian.Utils;
 using Vaerydian.Behaviors.Actions;
+using Vaerydian.Components.Spatials;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Graphical;
 
 
 namespace Vaerydian.Behaviors
@@ -194,19 +197,19 @@ namespace Vaerydian.Behaviors
             s_Spatial = s_EcsInstance.TagManager.getEntityByTag("SPATIAL");
             SpatialPartition spatial = (SpatialPartition)s_SpatialMapper.get(s_Spatial);
 
-            spatial.QuadTree.setContentAtLocation(s_ThisEntity, start.getPosition());
-            s_LastNode = spatial.QuadTree.locateNode(start.getPosition());
+            spatial.QuadTree.setContentAtLocation(s_ThisEntity, start.Pos);
+            s_LastNode = spatial.QuadTree.locateNode(start.Pos);
 
             Vector2 sVec, fVec;
 
             //s_Center = viewport.getDimensions() / 2;
 
-            sVec = (start.getPosition() ) / s_TileSize;
-            fVec = (finish.getPosition()) / s_TileSize;
+            sVec = (start.Pos) / s_TileSize;
+            fVec = (finish.Pos) / s_TileSize;
 
             /*
-            sVec = (start.getPosition() + s_Center) / s_TileSize;
-            fVec = (finish.getPosition() + s_Center) / s_TileSize; 
+            sVec = (start.Pos + s_Center) / s_TileSize;
+            fVec = (finish.Pos + s_Center) / s_TileSize; 
             */
 
             s_TargetCell.Position = fVec;
@@ -214,7 +217,7 @@ namespace Vaerydian.Behaviors
 
             findPath = new FindPathAction(s_EcsInstance,sVec,fVec, map);
 
-            s_TargetCurrentPosition = finish.getPosition() + s_Offset;
+            s_TargetCurrentPosition = finish.Pos + s_Offset;
 
             //convert to map position
             s_TargetCurrentPosition = new Vector2((int) s_TargetCurrentPosition.X / s_TileSize, (int) s_TargetCurrentPosition.Y / s_TileSize);
@@ -237,7 +240,7 @@ namespace Vaerydian.Behaviors
             Heading meHeading = (Heading)s_HeadingMapper.get(s_ThisEntity);
 
             //get current pos
-            Vector2 pos = mePos.getPosition();// +s_Offset;
+            Vector2 pos = mePos.Pos;// +s_Offset;
 
             Vector2 vec = new Vector2(s_CurrentCell.Position.X * s_TileSize, s_CurrentCell.Position.Y * s_TileSize);
 
@@ -252,11 +255,11 @@ namespace Vaerydian.Behaviors
             vec.Normalize();
 
             //set heading
-            meHeading.setHeading(Vector2.Multiply(vec, meVel.getVelocity()));
+            meHeading.setHeading(Vector2.Multiply(vec, meVel.Vel));
 
             //update position
             pos += meHeading.getHeading();
-            mePos.setPosition(pos);
+            mePos.Pos = pos;
 
             s_moved = true;
             
@@ -318,7 +321,7 @@ namespace Vaerydian.Behaviors
             Position followPos = (Position)s_PositionMapper.get(s_Target);
 
             //check distance
-            float dist = Vector2.Distance(followPos.getPosition(), mePos.getPosition());
+            float dist = Vector2.Distance(followPos.Pos, mePos.Pos);
             return dist < s_FollowDistance;
         }
 
@@ -333,7 +336,7 @@ namespace Vaerydian.Behaviors
 
             //get latest position
             Position targetPos = (Position)s_PositionMapper.get(s_Target);
-            s_TargetCurrentPosition = targetPos.getPosition() + s_Offset;
+            s_TargetCurrentPosition = targetPos.Pos + s_Offset;
 
             //convert to map position
             s_TargetCurrentPosition = new Vector2((int)s_TargetCurrentPosition.X / s_TileSize, (int)s_TargetCurrentPosition.Y / s_TileSize);
@@ -429,13 +432,13 @@ namespace Vaerydian.Behaviors
             
             Vector2 meVec, celVec;
 
-            meVec = mePos.getPosition();
+            meVec = mePos.Pos;
             celVec = s_CurrentCell.Position * s_TileSize;
 
             //float dist = Vector2.Distance(meVec, celVec- s_Center);
             float dist = Vector2.Distance(meVec, celVec);
 
-            if (dist <= meVel.getVelocity())
+            if (dist <= meVel.Vel)
                 return true;
             return false;
         }
@@ -450,7 +453,7 @@ namespace Vaerydian.Behaviors
             
             Vector2 meVec, celVec;
 
-            meVec = mePos.getPosition() +s_Offset;
+            meVec = mePos.Pos +s_Offset;
             celVec = s_TargetCell.Position * s_TileSize + s_Offset;
 
             float dist = Vector2.Distance(meVec, celVec);
@@ -481,11 +484,11 @@ namespace Vaerydian.Behaviors
 
             //s_Center = viewport.getDimensions() / 2;
 
-            sVec = (start.getPosition() ) / s_TileSize;
-            fVec = (finish.getPosition()) / s_TileSize;
+            sVec = (start.Pos ) / s_TileSize;
+            fVec = (finish.Pos) / s_TileSize;
             /*
-            sVec = (start.getPosition() + s_Center) / s_TileSize;
-            fVec = (finish.getPosition() + s_Center) / s_TileSize;
+            sVec = (start.Pos + s_Center) / s_TileSize;
+            fVec = (finish.Pos + s_Center) / s_TileSize;
             */
             s_TargetCell.Position = fVec;
             s_CurrentCell.Position = sVec;

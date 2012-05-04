@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Graphical
 {
     public class GeometryMap : IComponent
     {

@@ -7,7 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Characters.Stats;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Characters
 {
     class Attributes : IComponent
     {

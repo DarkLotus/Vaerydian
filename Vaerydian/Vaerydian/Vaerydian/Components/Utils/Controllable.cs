@@ -5,7 +5,7 @@ using System.Text;
 
 using ECSFramework;
 
-namespace Vaerydian.Components
+namespace Vaerydian.Components.Utils
 {
     public class Controllable : IComponent
     {
