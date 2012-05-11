@@ -31,6 +31,7 @@ namespace Vaerydian.Systems.Update
         UtilFactory m_UtilFactory;
         
         Entity m_Spatial;
+        Entity m_Mouse;
 
         public MeleeSystem() { }
 
@@ -51,6 +52,7 @@ namespace Vaerydian.Systems.Update
         protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
         {
             m_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
+            m_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");
         }
 
         protected override void process(Entity entity)
@@ -100,10 +102,15 @@ namespace Vaerydian.Systems.Update
                         Interactable interactions = (Interactable)m_InteractionMapper.get(locals[i]);
                         if (interactions != null)
                         {
-                            Position lposition = (Position)m_PositionMapper.get(locals[i]);
-                            
-                            //are we within melee distance?
-                            if (Vector2.Distance(position.Pos, lposition.Pos) < action.Range)
+                            Position lPosition = (Position)m_PositionMapper.get(locals[i]);
+
+                            Position oPosition = (Position)m_PositionMapper.get(action.Owner);
+                            Vector2 lToO = (oPosition.Pos + oPosition.Offset) - (lPosition.Pos + lPosition.Offset);//local to owner
+                            Heading head = (Heading)m_HeadingMapper.get(entity);//get the weapon heading
+                            bool facing = (Vector2.Dot(head.getHeading(), lToO) < 0);//is the weapon facing the local?
+
+                            //if you're facing, are you within range?
+                            if (facing && (Vector2.Distance(lPosition.Pos + lPosition.Offset, position.Pos + position.Offset) < action.Range))
                             {
 
                                 //does it support this interaction?
@@ -133,21 +140,19 @@ namespace Vaerydian.Systems.Update
                 }
             }
 
-            //update animation frame
+            //get info for rotation update
             Heading heading = (Heading)m_HeadingMapper.get(entity);
             Transform transform = (Transform)m_TransformMapper.get(entity);
-
             
-
+            //rotate melee by degrees over the melee arc
             float rot = (((float)action.Animation.updateFrame(e_ECSInstance.ElapsedTime) / (float)action.Animation.Frames) * action.ArcDegrees) - (action.ArcDegrees/2f);
             transform.Rotation = rot * (((float)Math.PI) / 180f) - VectorHelper.getAngle(new Vector2(1, 0), heading.getHeading());
 
+            //adjust the arc based on current position (i.e., move with the player)
             Position ownerPos = (Position)m_PositionMapper.get(action.Owner);
-
             Vector2 pos = ownerPos.Pos + new Vector2(16, 0);// +ownerPos.getOffset();
             Vector2 dir = heading.getHeading();
             dir.Normalize();
-
             position.Pos = pos + dir * 10;
             
         }

@@ -36,7 +36,6 @@ namespace Vaerydian.Utils
 
                     if (length < 0)
                         return false;
-
                 }
 
             }

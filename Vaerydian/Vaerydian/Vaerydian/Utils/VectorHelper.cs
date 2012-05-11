@@ -54,6 +54,38 @@ namespace Vaerydian.Utils
             return new Vector2(x, y);
         }
 
+        /// <summary>
+        /// rotate a vector about an offset by a given angle
+        /// </summary>
+        /// <param name="vector">vector to be rotated</param>
+        /// <param name="offset">the offset to be rotated around</param>
+        /// <param name="angle">the angle of rotation (IN RADIANS)</param>
+        /// <returns></returns>
+        public static Vector2 rotateOffsetVectorRadians(Vector2 vector, Vector2 offset, float angle)
+        {
+            Vector2 rotVec = new Vector2();
+            rotVec.X = (float)(offset.X + (vector.X - offset.X) * Math.Cos(angle) - (vector.X - offset.X) * Math.Sin(angle));
+            rotVec.Y = (float)(offset.Y + (vector.Y - offset.Y) * Math.Cos(angle) + (vector.Y - offset.Y) * Math.Sin(angle));
+            return rotVec;
+        }
+
+        /// <summary>
+        /// rotate a vector about an offset by a given angle
+        /// </summary>
+        /// <param name="vector">vector to be rotated</param>
+        /// <param name="offset">the offset to be rotated around</param>
+        /// <param name="angle">the angle of rotation (IN DEGREES)</param>
+        /// <returns></returns>
+        public static Vector2 rotateOffsetVectorDegrees(Vector2 vector, Vector2 offset, float angle)
+        {
+            angle = (((float)Math.PI) / 180f) * angle;
+
+            Vector2 rotVec = new Vector2();
+            rotVec.X = (float)(offset.X + (vector.X - offset.X) * Math.Cos(angle) - (vector.X - offset.X) * Math.Sin(angle));
+            rotVec.Y = (float)(offset.Y + (vector.Y - offset.Y) * Math.Cos(angle) + (vector.Y - offset.Y) * Math.Sin(angle));
+            return rotVec;
+        }
+
         public static Vector2 getRightNormal(Vector2 vector)
         {
             Vector2 returnVec;
@@ -73,13 +105,16 @@ namespace Vaerydian.Utils
         /// <summary>
         /// project vector a onto vector b
         /// </summary>
-        /// <param name="a">vector to project onto b</param>
-        /// <param name="b">axis of projection</param>
+        /// <param name="vector">vector to project onto b</param>
+        /// <param name="axis">axis of projection</param>
         /// <returns>projected vector</returns>
-        public static float project(Vector2 a, Vector2 b)
+        public static float project(Vector2 vector, Vector2 axis)
         {
-            return Math.Abs(Vector2.Dot(a, b));
+            //return Math.Abs(Vector2.Dot(vector, axis));
+            return ((Vector2.Dot(vector, axis) / axis.LengthSquared()) * axis).Length();
         }
+
+        
 
     }
 }

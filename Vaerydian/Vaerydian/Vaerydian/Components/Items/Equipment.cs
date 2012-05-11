@@ -5,8 +5,6 @@ using System.Text;
 
 using ECSFramework;
 
-using Vaerydian.Items;
-
 namespace Vaerydian.Components.Items
 {
     class Equipment : IComponent

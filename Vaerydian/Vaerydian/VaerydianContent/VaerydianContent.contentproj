@@ -526,15 +526,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sword.png">
-      <Name>sword</Name>
+    <Compile Include="swordnormal.png">
+      <Name>swordnormal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="swordnormal.png">
-      <Name>swordnormal</Name>
+    <Compile Include="sword.png">
+      <Name>sword</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

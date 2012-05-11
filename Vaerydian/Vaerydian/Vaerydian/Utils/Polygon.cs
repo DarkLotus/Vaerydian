@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Utils
 {
-    class Polygon
+    public class Polygon
     {
         private Vector2[] p_Normals;
 
@@ -101,19 +101,7 @@ namespace Vaerydian.Utils
             //right
             this.TestPoints[3] = new Vector2(position.X + width, position.Y + height / 2);
 
-            //setup edge normals - note, these MUST be normalized or your correcting vector will be too powerful
-            //left normal
-            this.Normals[0] = VectorHelper.getRightNormal(Vector2.Subtract(this.Vertices[1], this.Vertices[0]));
-            this.Normals[0].Normalize();
-            //bottom normal
-            this.Normals[1] = VectorHelper.getRightNormal(Vector2.Subtract(this.Vertices[2], this.Vertices[1]));
-            this.Normals[1].Normalize();
-            //right normal
-            this.Normals[2] = VectorHelper.getRightNormal(Vector2.Subtract(this.Vertices[2], this.Vertices[3]));
-            this.Normals[2].Normalize();
-            //top normal
-            this.Normals[3] = VectorHelper.getRightNormal(Vector2.Subtract(this.Vertices[0], this.Vertices[3]));
-            this.Normals[3].Normalize();
+            this.Normals = createNormals(this);
         }
 
 
@@ -166,6 +154,13 @@ namespace Vaerydian.Utils
             //right
             poly.TestPoints[3] = new Vector2(position.X + width, position.Y + height / 2);
 
+            poly.Normals = createNormals(poly);
+
+            return poly;
+        }
+
+        private static Vector2[] createNormals(Polygon poly)
+        {
             //setup edge normals - note, these MUST be normalized or your correcting vector will be too powerful
             //left normal
             poly.Normals[0] = VectorHelper.getRightNormal(Vector2.Subtract(poly.Vertices[1], poly.Vertices[0]));
@@ -180,7 +175,89 @@ namespace Vaerydian.Utils
             poly.Normals[3] = VectorHelper.getRightNormal(Vector2.Subtract(poly.Vertices[0], poly.Vertices[3]));
             poly.Normals[3].Normalize();
 
-            return poly;
+            return poly.Normals;
+        }
+
+        /// <summary>
+        /// rotates a polygon about an origin by a given angle
+        /// </summary>
+        /// <param name="polygon">polygon to be rotated</param>
+        /// <param name="origin">origin of rotation</param>
+        /// <param name="angle">angle of rotation</param>
+        /// <returns></returns>
+        public static Polygon rotatePolygon(Polygon polygon, Vector2 origin, float angle)
+        {
+            Polygon rotPoly = new Polygon();
+            rotPoly.Vertices = new Vector2[polygon.Vertices.Length];
+            rotPoly.Normals = new Vector2[polygon.Normals.Length];
+            rotPoly.TestPoints = new Vector2[polygon.TestPoints.Length];
+            rotPoly.HalfHeight = polygon.HalfHeight;
+            rotPoly.HalfWidth = polygon.HalfWidth;
+            
+            for(int i = 0; i < polygon.Vertices.Length;i++)
+            {
+                rotPoly.Vertices[i] = VectorHelper.rotateOffsetVectorRadians(polygon.Vertices[i], origin, angle);
+                rotPoly.TestPoints[i] = VectorHelper.rotateOffsetVectorRadians(polygon.TestPoints[i], origin, angle);
+            }
+
+            rotPoly.Center = VectorHelper.rotateOffsetVectorRadians(polygon.Center, origin, angle);
+            rotPoly.Normals = createNormals(rotPoly);
+
+            return rotPoly;
+        }
+
+        public static bool isColliding(Polygon A, Polygon B)
+        {
+            //setup temp variables
+            //float min = float.PositiveInfinity;
+            //Vector2 minAxis = Vector2.Zero;
+            //float BtoAlength, halfWidthA, halfHeightA, halfWidthB, halfHeightB, length;
+
+            Vector2 BtoA = A.Center - B.Center;
+
+            List<float> As = new List<float>();
+            List<float> Bs = new List<float>();
+
+            //for (int i = 0; i < A.Normals.Length; i++)
+            //{
+                for (int i = 0; i < B.Normals.Length; i++)
+                {
+                    //find the projected lengths of B-to-A and their half-widths/heights
+                    //BtoAlength = VectorHelper.project(BtoA, B.Normals[i]);
+                    //halfWidthA = VectorHelper.project(A.HalfWidth, B.Normals[i]);
+                    //halfHeightA = VectorHelper.project(A.HalfHeight, B.Normals[i]);
+                    //halfWidthB = VectorHelper.project(B.HalfWidth, B.Normals[i]);
+                    //halfHeightB = VectorHelper.project(B.HalfHeight, B.Normals[i]);
+                    As.Add(VectorHelper.project(A.HalfWidth, B.Normals[i]));
+                    As.Add(VectorHelper.project(A.HalfHeight, B.Normals[i]));
+                    Bs.Add(VectorHelper.project(B.HalfWidth, B.Normals[i]));
+                    Bs.Add(VectorHelper.project(B.HalfHeight, B.Normals[i]));
+
+                    //determine the overlapping length of the projections for this axis
+                    //length = halfWidthA + halfHeightA + halfWidthB + halfHeightB - BtoAlength;
+
+                    //if (length >= 0)
+                        //continue;
+                    //else
+                      //  return false;
+                }
+            //}
+
+            float aMin = As.Min();
+            float aMax = As.Max();
+            float bMin = Bs.Min();
+            float bMax = Bs.Max();
+
+            if (bMin <= aMax && bMax >= aMax)
+            {
+                return true;
+            }
+            else if (aMin <= bMax && aMax >= bMax)
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }
