@@ -151,6 +151,7 @@
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Characters\Attributes.cs" />
     <Compile Include="Components\Audio\Audio.cs" />
+    <Compile Include="Components\Characters\Victory.cs" />
     <Compile Include="Components\Utils\BoundingPolygon.cs" />
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
