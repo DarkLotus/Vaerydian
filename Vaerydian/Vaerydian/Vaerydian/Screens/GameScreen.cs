@@ -146,8 +146,9 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Weapon());
             ecsInstance.ComponentManager.registerComponentType(new Attributes());
             ecsInstance.ComponentManager.registerComponentType(new Skills());
-            ecsInstance.ComponentManager.registerComponentType(new Experiences());
+            ecsInstance.ComponentManager.registerComponentType(new Knowledges());
             ecsInstance.ComponentManager.registerComponentType(new Factions());
+            ecsInstance.ComponentManager.registerComponentType(new Victory());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();

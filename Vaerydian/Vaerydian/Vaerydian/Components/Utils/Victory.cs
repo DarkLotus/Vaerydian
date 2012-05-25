@@ -5,7 +5,7 @@ using System.Text;
 
 using ECSFramework;
 
-namespace Vaerydian.Components.Characters
+namespace Vaerydian.Components.Utils
 {
     class Victory : IComponent
     {
@@ -34,6 +34,22 @@ namespace Vaerydian.Components.Characters
             v_TypeID = typeId;
         }
 
-        //private Entity v_Owner;
+        private Entity v_Owner;
+
+        public Entity Awarder
+        {
+            get { return v_Owner; }
+            set { v_Owner = value; }
+        }
+
+        private Entity v_Receiver;
+
+        public Entity Receiver
+        {
+            get { return v_Receiver; }
+            set { v_Receiver = value; }
+        }
+
+        
     }
 }

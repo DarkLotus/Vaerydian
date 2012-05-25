@@ -84,10 +84,10 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
             //setup experiences
-            Experiences experiences = new Experiences();
-            Experience xp = new Experience(50);
-            experiences.GeneralExperience.Add(MobGroup.Test, xp);
-            e_EcsInstance.EntityManager.addComponent(e, experiences);
+            Knowledges knowledges = new Knowledges();
+            Knowledge knowledge = new Knowledge(50);
+            knowledges.GeneralKnowledge.Add(MobGroup.Test, knowledge);
+            e_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
             Attributes attributes = new Attributes();

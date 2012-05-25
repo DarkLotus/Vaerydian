@@ -49,7 +49,6 @@ namespace Vaerydian.Systems.Update
                 life.IsAlive = false;
 
 
-
                 return;
             }
 

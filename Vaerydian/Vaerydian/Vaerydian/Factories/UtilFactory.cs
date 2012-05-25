@@ -14,6 +14,7 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Action;
 using Vaerydian.Components.Graphical;
+using Vaerydian.Components.Utils;
 
 namespace Vaerydian.Factories
 {
@@ -50,6 +51,13 @@ namespace Vaerydian.Factories
         }
 
 
+        /// <summary>
+        /// creates direct damage
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="type"></param>
+        /// <param name="target"></param>
+        /// <param name="pos"></param>
         public void createDirectDamage(int amount, DamageType type, Entity target,Position pos)
         {
             Entity e = u_EcsInstance.create();
@@ -60,7 +68,7 @@ namespace Vaerydian.Factories
             damage.Target = target;
             damage.DamageClass = DamageClass.Direct;
             damage.DamageType = type;
-            damage.Lifespan = 500;//1 second
+            damage.Lifespan = 500;//.5 second
 
             u_EcsInstance.EntityManager.addComponent(e, damage);
             u_EcsInstance.EntityManager.addComponent(e, pos);
@@ -124,6 +132,22 @@ namespace Vaerydian.Factories
             u_EcsInstance.EntityManager.addComponent(e, transform);
             u_EcsInstance.EntityManager.addComponent(e, sprite);
             u_EcsInstance.EntityManager.addComponent(e, action);
+
+            u_EcsInstance.refresh(e);
+        }
+
+        /// <summary>
+        /// creates a victory entity component
+        /// </summary>
+        public void createVictory(Entity awarder, Entity receiver)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Victory victory = new Victory();
+            victory.Awarder = awarder;
+            victory.Receiver = receiver;
+
+            u_EcsInstance.EntityManager.addComponent(e, victory);
 
             u_EcsInstance.refresh(e);
         }

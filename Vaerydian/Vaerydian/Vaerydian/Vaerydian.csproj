@@ -142,8 +142,8 @@
     <Compile Include="Behaviors\FollowerBehavior.cs" />
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Behaviors\CharacterBehavior.cs" />
-    <Compile Include="Characters\Experience\Experience.cs" />
-    <Compile Include="Characters\Experience\ExperienceEnums.cs" />
+    <Compile Include="Characters\Experience\Knowledge.cs" />
+    <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
     <Compile Include="Characters\Factions\Faction.cs" />
     <Compile Include="Characters\Stats\Stat.cs" />
     <Compile Include="Components\Actions\MeleeAction.cs" />
@@ -151,13 +151,14 @@
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Characters\Attributes.cs" />
     <Compile Include="Components\Audio\Audio.cs" />
-    <Compile Include="Components\Characters\Victory.cs" />
+    <Compile Include="Components\Utils\Aggrivation.cs" />
+    <Compile Include="Components\Utils\Victory.cs" />
     <Compile Include="Components\Utils\BoundingPolygon.cs" />
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
     <Compile Include="Components\Actions\Damage.cs" />
     <Compile Include="Components\Items\Equipment.cs" />
-    <Compile Include="Components\Characters\Experiences.cs" />
+    <Compile Include="Components\Characters\Knowledges.cs" />
     <Compile Include="Components\Characters\Health.cs" />
     <Compile Include="Components\Actions\Interactable.cs" />
     <Compile Include="Components\Items\Armor.cs" />

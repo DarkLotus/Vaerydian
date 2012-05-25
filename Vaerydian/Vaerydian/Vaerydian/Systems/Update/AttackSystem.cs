@@ -24,7 +24,7 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper a_PositionMapper;
         private ComponentMapper a_SkillMapper;
         private ComponentMapper a_AttributeMapper;
-        private ComponentMapper a_ExperienceMapper;
+        private ComponentMapper a_KnowledgeMapper;
         private ComponentMapper a_EquipmentMapper;
         private ComponentMapper a_ItemMapper;
         private ComponentMapper a_WeaponMapper;
@@ -44,7 +44,7 @@ namespace Vaerydian.Systems.Update
             a_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             a_SkillMapper = new ComponentMapper(new Skills(), e_ECSInstance);
             a_AttributeMapper = new ComponentMapper(new Attributes(), e_ECSInstance);
-            a_ExperienceMapper = new ComponentMapper(new Experiences(), e_ECSInstance);
+            a_KnowledgeMapper = new ComponentMapper(new Knowledges(), e_ECSInstance);
             a_EquipmentMapper = new ComponentMapper(new Equipment(), e_ECSInstance);
             a_ItemMapper = new ComponentMapper(new Item(), e_ECSInstance);
             a_WeaponMapper = new ComponentMapper(new Weapon(), e_ECSInstance);
@@ -124,11 +124,11 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //get Experience
-            Experiences attXp = (Experiences)a_ExperienceMapper.get(attack.Attacker);
-            Experiences defXp = (Experiences)a_ExperienceMapper.get(attack.Defender);
+            Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
+            Knowledges defKnw = (Knowledges)a_KnowledgeMapper.get(attack.Defender);
 
             //dont continue if null
-            if (attXp == null || defXp == null)
+            if (attKnw == null || defKnw == null)
                 return;
 
             //get Skills
@@ -142,8 +142,8 @@ namespace Vaerydian.Systems.Update
             int atkSkill = attSkills.SkillSet[SkillNames.Melee].Value;
             int defSkill = defSkills.SkillSet[SkillNames.Avoidance].Value;
 
-            float probHit = atkSkill / 4 + attAttr.Perception.Value / 4 + attXp.GeneralExperience[MobGroup.Test].Value + weapon.Speed;
-            float probDef = defSkill / 4 + defAttr.Quickness.Value / 4 + defXp.GeneralExperience[MobGroup.Test].Value + armor.Mobility;
+            float probHit = atkSkill / 4 + attAttr.Perception.Value / 4 + attKnw.GeneralKnowledge[MobGroup.Test].Value + weapon.Speed;
+            float probDef = defSkill / 4 + defAttr.Quickness.Value / 4 + defKnw.GeneralKnowledge[MobGroup.Test].Value + armor.Mobility;
 
             float hitProb = (probHit / (probHit + probDef)) * 1.75f + (probDef / (probHit + probDef)) * 0.15f;
 
@@ -216,11 +216,11 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //get Experience
-            Experiences attXp = (Experiences)a_ExperienceMapper.get(attack.Attacker);
-            Experiences defXp = (Experiences)a_ExperienceMapper.get(attack.Defender);
+            Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
+            Knowledges defKnw = (Knowledges)a_KnowledgeMapper.get(attack.Defender);
 
             //dont continue if null
-            if (attXp == null || defXp == null)
+            if (attKnw == null || defKnw == null)
                 return;
 
             //get Skills
@@ -234,8 +234,8 @@ namespace Vaerydian.Systems.Update
             int atkSkill = attSkills.SkillSet[SkillNames.Ranged].Value;
             int defSkill = defSkills.SkillSet[SkillNames.Avoidance].Value;
 
-            float probHit = atkSkill / 4 + attAttr.Perception.Value / 4 + attXp.GeneralExperience[MobGroup.Test].Value + weapon.Speed;
-            float probDef = defSkill / 4 + defAttr.Quickness.Value / 4 + defXp.GeneralExperience[MobGroup.Test].Value + armor.Mobility;
+            float probHit = atkSkill / 4 + attAttr.Perception.Value / 4 + attKnw.GeneralKnowledge[MobGroup.Test].Value + weapon.Speed;
+            float probDef = defSkill / 4 + defAttr.Quickness.Value / 4 + defKnw.GeneralKnowledge[MobGroup.Test].Value + armor.Mobility;
 
             float hitProb = (probHit / (probHit + probDef)) * 1.75f + (probDef / (probHit + probDef)) * 0.15f;
 

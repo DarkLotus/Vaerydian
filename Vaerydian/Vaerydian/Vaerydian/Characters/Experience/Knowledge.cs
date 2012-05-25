@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vaerydian.Characters.Experience
 {
-    public class Experience
+    public class Knowledge
     {
         private int e_Value;
         /// <summary>
@@ -17,12 +17,12 @@ namespace Vaerydian.Characters.Experience
             set { e_Value = value; }
         }
 
-        public Experience()
+        public Knowledge()
         {
             e_Value = 0;
         }
 
-        public Experience(int value)
+        public Knowledge(int value)
         {
             e_Value = value;
         }
