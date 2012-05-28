@@ -68,9 +68,9 @@ namespace Vaerydian.Factories
             parameters[CaveGen.CAVE_PARAMS_X] = x;
             parameters[CaveGen.CAVE_PARAMS_Y] = y;
             parameters[CaveGen.CAVE_PARAMS_PROB] = prob;
-            parameters[CaveGen.CAVE_CELL_OP_SPEC] = h;
-            parameters[CaveGen.CAVE_ITER] = counter;
-            parameters[CaveGen.CAVE_NEIGHBORS] = n;
+            parameters[CaveGen.CAVE_PARAMS_CELL_OP_SPEC] = h;
+            parameters[CaveGen.CAVE_PARAMS_ITER] = counter;
+            parameters[CaveGen.CAVE_PARAMS_NEIGHBORS] = n;
 
             MapMaker.Parameters = parameters;
             

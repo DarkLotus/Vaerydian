@@ -75,15 +75,17 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BehaviorLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\projects\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
+    <Reference Include="BehaviorLibrary">
+      <HintPath>..\..\..\..\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
     </Reference>
     <Reference Include="ECSFramework">
-      <HintPath>..\..\..\..\projects\ECSFramework\ECSFramework\bin\x86\Release\ECSFramework.dll</HintPath>
+      <HintPath>..\..\..\..\ECSFramework\ECSFramework\bin\x86\Release\ECSFramework.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse">
-      <HintPath>..\..\..\..\projects\Glimpse\Glimpse\bin\x86\Release\Glimpse.dll</HintPath>
+      <HintPath>..\..\..\..\Glimpse\Glimpse\bin\x86\Release\Glimpse.dll</HintPath>
+    </Reference>
+    <Reference Include="LibNoise">
+      <HintPath>..\..\..\..\WorldGeneration\WorldGeneration\bin\Release\LibNoise.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
@@ -131,9 +133,8 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WorldGeneration, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\projects\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+    <Reference Include="WorldGeneration">
+      <HintPath>..\..\..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,9 @@
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Characters\Attributes.cs" />
     <Compile Include="Components\Audio\Audio.cs" />
+    <Compile Include="Components\Debug\MapDebug.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Components\Utils\Aggrivation.cs" />
     <Compile Include="Components\Utils\Victory.cs" />
     <Compile Include="Components\Utils\BoundingPolygon.cs" />
@@ -166,7 +170,6 @@
     <Compile Include="Components\Items\Weapon.cs" />
     <Compile Include="Components\Actions\Projectile.cs" />
     <Compile Include="Components\Utils\CameraFocus.cs" />
-    <Compile Include="Components\Debug\MapDebug.cs" />
     <Compile Include="Components\Utils\GameMap.cs" />
     <Compile Include="Components\Utils\Controllable.cs" />
     <Compile Include="Components\Graphical\GeometryMap.cs" />

@@ -56,6 +56,8 @@ Content\dialog.xnb
 Content\ui\buttonNormal.xnb
 Content\ui\buttonPressed.xnb
 Content\ui\buttonOver.xnb
+Content\swordnormal.xnb
+Content\sword.xnb
 Content\effects\Shading.xnb
 Content\effects\DiferredCombine.xnb
 Content\audio\effects\fire.xnb
@@ -72,5 +74,3 @@ Content\audio\effects\help3.xnb
 Content\audio\effects\hurt2.xnb
 Content\audio\effects\hurt4.xnb
 Content\audio\effects\hurt3.xnb
-Content\sword.xnb
-Content\swordnormal.xnb
