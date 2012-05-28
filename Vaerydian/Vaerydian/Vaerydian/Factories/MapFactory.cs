@@ -10,6 +10,7 @@ using Vaerydian.Components;
 using WorldGeneration.Cave;
 using WorldGeneration.Utils;
 using WorldGeneration.World;
+using WorldGeneration.Generators;
 using Vaerydian.Components.Utils;
 
 
@@ -46,6 +47,45 @@ namespace Vaerydian.Factories
 
             m_EcsInstance.refresh(e);
 
+        }
+
+                /// <summary>
+        /// creates a random map with the following parameters
+        /// </summary>
+        /// <param name="x">width</param>
+        /// <param name="y">height</param>
+        /// <param name="prob">close cell probability (0-100)</param>
+        /// <param name="h">cell operation specifier [h=true, if c>n close else open; h=false if c>n open else close]</param>
+        /// <param name="counter">number of iterations</param>
+        /// <param name="n">number of cells neighbors</param>
+        /// <param name="c">number of cells closed neighbors</param>
+        public GameMap createRandomCaveMap(int x, int y, int prob, bool h, int counter, int n)
+        {
+            Map map = MapMaker.create(x, y);
+
+            object[] parameters = new object[CaveGen.CAVE_PARAMS_SIZE];
+
+            parameters[CaveGen.CAVE_PARAMS_X] = x;
+            parameters[CaveGen.CAVE_PARAMS_Y] = y;
+            parameters[CaveGen.CAVE_PARAMS_PROB] = prob;
+            parameters[CaveGen.CAVE_CELL_OP_SPEC] = h;
+            parameters[CaveGen.CAVE_ITER] = counter;
+            parameters[CaveGen.CAVE_NEIGHBORS] = n;
+
+            MapMaker.Parameters = parameters;
+            
+            MapMaker.generate(ref map, MapType.CAVE);
+
+            GameMap gameMap = new GameMap(map);
+
+            Entity e = m_EcsInstance.create();
+            m_EcsInstance.EntityManager.addComponent(e, gameMap);
+
+            m_EcsInstance.TagManager.tagEntity("MAP", e);
+
+            m_EcsInstance.refresh(e);
+
+            return gameMap;
         }
 
     }

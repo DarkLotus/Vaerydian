@@ -76,6 +76,7 @@ namespace Vaerydian.Screens
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
         private UIFactory uiFactory;
+        private MapFactory mapFactory;
 
         private int avg, disp, elapsed;
 
@@ -157,6 +158,7 @@ namespace Vaerydian.Screens
             entityFactory = new EntityFactory(ecsInstance, gameContainer);
             npcFactory = new NPCFactory(ecsInstance);
             uiFactory = new UIFactory(ecsInstance,gameContainer);
+            mapFactory = new MapFactory(ecsInstance, gameContainer);
 
             //setup local geometrymapper
             geometryMapper = new ComponentMapper(new GeometryMap(), ecsInstance);
@@ -185,7 +187,8 @@ namespace Vaerydian.Screens
             //create cave
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
-            GameMap map = entityFactory.createRandomMap(100, 100, 75, true, 50000, 5);
+            //GameMap map = entityFactory.createRandomMap(100, 100, 75, true, 50000, 5);
+            GameMap map = mapFactory.createRandomCaveMap(100, 100, 75, true, 30000, 5);
 
             //npcFactory.createWanders(100, map);
 

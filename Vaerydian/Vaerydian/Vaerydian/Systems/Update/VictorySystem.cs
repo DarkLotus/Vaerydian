@@ -46,7 +46,7 @@ namespace Vaerydian.Systems.Update
             if (awarder == null || receiver == null)
                 return;
 
-
+            //TODO: Finish this damn thing
             
         }
 
