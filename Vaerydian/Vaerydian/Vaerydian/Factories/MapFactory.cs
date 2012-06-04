@@ -88,5 +88,35 @@ namespace Vaerydian.Factories
             return gameMap;
         }
 
+        public GameMap createWorldMap(int x, int y, int dx, int dy, float z, int xSize, int ySize, int seed )
+        {
+            Map map = MapMaker.create(xSize, ySize);
+
+            object[] parameters = new object[WorldGen.WORLD_PARAMS_SIZE];
+
+            parameters[WorldGen.WORLD_PARAMS_X] = x;
+            parameters[WorldGen.WORLD_PARAMS_Y] = y;
+            parameters[WorldGen.WORLD_PARAMS_DX] = dx;
+            parameters[WorldGen.WORLD_PARAMS_DY] = dy;
+            parameters[WorldGen.WORLD_PARAMS_Z] = z;
+            parameters[WorldGen.WORLD_PARAMS_XSIZE] = xSize;
+            parameters[WorldGen.WORLD_PARAMS_YSIZE] = ySize;
+            parameters[WorldGen.WORLD_PARAMS_SEED] = seed;
+
+            MapMaker.Parameters = parameters;
+
+            MapMaker.generate(ref map, MapType.WORLD);
+
+            GameMap gameMap = new GameMap(map);
+
+            Entity e = m_EcsInstance.create();
+            m_EcsInstance.EntityManager.addComponent(e, gameMap);
+
+            m_EcsInstance.TagManager.tagEntity("MAP", e);
+
+            m_EcsInstance.refresh(e);
+
+            return gameMap;
+        }
     }
 }

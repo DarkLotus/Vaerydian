@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
+
 
 namespace Vaerydian.Components.Graphical
 {
@@ -105,6 +107,14 @@ namespace Vaerydian.Components.Graphical
         {
             get { return s_Row; }
             set { s_Row = value; }
+        }
+
+        private Color s_Color = Color.White;
+
+        public Color Color
+        {
+            get { return s_Color; }
+            set { s_Color = value; }
         }
 
     }

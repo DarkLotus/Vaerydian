@@ -133,7 +133,8 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WorldGeneration">
+    <Reference Include="WorldGeneration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -190,6 +191,8 @@
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
     <Compile Include="Systems\Update\LifeSystem.cs" />
+    <Compile Include="Utils\BinaryHeap.cs" />
+    <Compile Include="Utils\HeapCell.cs" />
     <Compile Include="Utils\SkillNames.cs" />
     <Compile Include="Utils\WeaponEnums.cs" />
     <Compile Include="Components\Spatials\Velocity.cs" />

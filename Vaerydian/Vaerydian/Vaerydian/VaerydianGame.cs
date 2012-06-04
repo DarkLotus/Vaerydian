@@ -115,7 +115,6 @@ namespace Vaerydian
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
             FontManager.Fonts.Clear();
 
             for(int i = 0; i < screenManager.Screens.Count;i++)

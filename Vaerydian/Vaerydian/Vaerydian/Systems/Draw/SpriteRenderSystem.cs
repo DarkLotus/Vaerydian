@@ -97,7 +97,7 @@ namespace Vaerydian.Systems.Draw
             Vector2 center = viewport.getDimensions() / 2;
 
             float fade = 1;
-            s_Color = Color.White;
+            s_Color = sprite.Color;
 
             if (life != null)
             {

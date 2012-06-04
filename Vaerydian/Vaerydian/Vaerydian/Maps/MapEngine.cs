@@ -178,7 +178,7 @@ namespace Vaerydian.Maps
         /// </summary>
         public String WorldGeneratorStatusMessage
         {
-            get{return me_WorldGenerator.StatusMessage;}
+            get{return MapMaker.StatusMessage;}
         }
 
 

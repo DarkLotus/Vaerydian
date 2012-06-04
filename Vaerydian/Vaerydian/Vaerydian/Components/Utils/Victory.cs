@@ -35,7 +35,9 @@ namespace Vaerydian.Components.Utils
         }
 
         private Entity v_Owner;
-
+        /// <summary>
+        /// entity awarding victory (defeated enemy)
+        /// </summary>
         public Entity Awarder
         {
             get { return v_Owner; }
@@ -43,13 +45,23 @@ namespace Vaerydian.Components.Utils
         }
 
         private Entity v_Receiver;
-
+        /// <summary>
+        /// entity receiving victory
+        /// </summary>
         public Entity Receiver
         {
             get { return v_Receiver; }
             set { v_Receiver = value; }
         }
 
-        
+        private int v_MaxAwardable;
+        /// <summary>
+        /// maximum knowledge awardable
+        /// </summary>
+        public int MaxAwardable
+        {
+            get { return v_MaxAwardable; }
+            set { v_MaxAwardable = value; }
+        }
     }
 }
