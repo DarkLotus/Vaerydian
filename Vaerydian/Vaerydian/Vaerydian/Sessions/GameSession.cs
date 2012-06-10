@@ -12,7 +12,7 @@ namespace Vaerydian.Sessions
     static class GameSession
     {
 
-        private static String gs_GameVersion = "Alpha 0.0.2.0";
+        private static String gs_GameVersion = "Alpha 0.0.3.0";
 
         public static String GameVersion
         {

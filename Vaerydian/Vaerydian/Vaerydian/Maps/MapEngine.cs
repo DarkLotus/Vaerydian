@@ -204,11 +204,14 @@ namespace Vaerydian.Maps
         //texture for making screenshots
         private Texture2D exportTexture;
 
+        private Texture2D terrainTexture;
+
         /// <summary>
         /// performs any needed map loading
         /// </summary>
         public void LoadContent()
         {
+            /*
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\grass"));//0
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\ocean"));//1
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\mountains"));//2
@@ -228,7 +231,9 @@ namespace Vaerydian.Maps
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\abyssal"));//16
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\ice"));//17
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\sublittoral"));//18
+            */
 
+            terrainTexture = me_contentManager.Load<Texture2D>("export");
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -284,10 +289,16 @@ namespace Vaerydian.Maps
                     else
                     {
                         //draw terrain texture
+                        /* old way
                         spriteBatch.Draw(textures[getBaseTexture(terrain)], new Rectangle((x * me_TileSize), (y * me_TileSize), me_TileSize, me_TileSize),
                             new Rectangle(0, 0, me_TileSize, me_TileSize), Color.White, 0f,
                             new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), SpriteEffects.None, 0f);
+                        */
 
+                        //new way
+                        spriteBatch.Draw(terrainTexture, new Rectangle((x * me_TileSize), (y * me_TileSize), me_TileSize, me_TileSize),
+                            new Rectangle(0, 0, me_TileSize, me_TileSize), getColor(terrain), 0f,
+                            new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), SpriteEffects.None, 0f);
                     }
                 }
             }
@@ -328,6 +339,69 @@ namespace Vaerydian.Maps
         }
 
 
+        private Color getColor(Terrain terrain)
+        {
+            switch (terrain.TerrainType)
+            {
+                case TerrainType.LAND_TUNDRA:
+                    return new Color(153, 255, 153);
+                case TerrainType.LAND_DESERT:
+                    return new Color(204, 204, 0);
+                case TerrainType.LAND_SCORCHED:
+                    return new Color(153,102,51);
+                case TerrainType.LAND_TAIGA:
+                    return new Color(24,72,48);
+                case TerrainType.LAND_TEMPERATE_GRASSLAND:
+                    return new Color(153,255,102);
+                case TerrainType.LAND_WOODLAND:
+                    return new Color(102,153,0);
+                case TerrainType.LAND_SAVANA:
+                    return new Color(204,255,102);
+                case TerrainType.LAND_TEMPERATE_FOREST:
+                    return new Color(0,153,0);
+                case TerrainType.LAND_TROPICAL_FOREST:
+                    return new Color(102,255,51);
+                case TerrainType.LAND_SNOW_PLAINS:
+                    return Color.White;
+                case TerrainType.LAND_MARSH:
+                    return new Color(33,101,67);
+                case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
+                    return new Color(0,102,0);
+                case TerrainType.LAND_BOG:
+                    return new Color(51,51,0);
+                case TerrainType.LAND_SWAMP:
+                    return new Color(0,51,0);
+                case TerrainType.LAND_TROPICAL_RAIN_FOREST:
+                    return new Color(0,128,0);
+                case TerrainType.OCEAN_ICE:
+                    return new Color(204,255,255);
+                case TerrainType.OCEAN_COAST:
+                    return new Color(255,255,153);
+                case TerrainType.OCEAN_LITTORAL:
+                    return new Color(51,153,255);
+                case TerrainType.OCEAN_SUBLITTORAL:
+                    return new Color(0,102,255);
+                case TerrainType.OCEAN_ABYSSAL:
+                    return new Color(0,51,204);
+                case TerrainType.MOUNTAIN_FOOTHILL:
+                    return new Color(57,69,43);
+                case TerrainType.MOUNTAIN_LOWLAND:
+                    return new Color(79,95,59);
+                case TerrainType.MOUNTAIN_HIGHLAND:
+                    return new Color(131,158,98);
+                case TerrainType.MOUNTAIN_CASCADE:
+                    return new Color(150,150,150);
+                case TerrainType.MOUNTAIN_DRY_PEAK:
+                    return new Color(192,192,192);
+                case TerrainType.MOUNTAIN_SNOWY_PEAK:
+                    return new Color(221,221,221);
+                case TerrainType.BASE_RIVER:
+                    return new Color(0,102,102);
+                default:
+                    return Color.Red;
+            }
+        }
+
         /// <summary>
         /// returns the texture id for the given terrain
         /// </summary>
@@ -337,21 +411,21 @@ namespace Vaerydian.Maps
         {
             switch (terrain.TerrainType)
             {
-                case TerrainType.LAND_ARCTIC:
+                case TerrainType.LAND_TUNDRA:
                         return 3;
-                case TerrainType.LAND_BEACH:
+                case TerrainType.OCEAN_COAST:
                         return 4;
                 case TerrainType.LAND_DESERT:
                         return 8;
-                case TerrainType.LAND_FOREST:
+                case TerrainType.LAND_TEMPERATE_FOREST:
                         return 5;
-                case TerrainType.LAND_GRASSLAND:
+                case TerrainType.LAND_TEMPERATE_GRASSLAND:
                         return 6;
-                case TerrainType.LAND_JUNGLE:
+                case TerrainType.LAND_TROPICAL_FOREST:
                         return 7;
                 case TerrainType.LAND_SWAMP:
                         return 9;
-                case TerrainType.LAND_TUNDRA:
+                case TerrainType.LAND_TAIGA:
                         return 10;
                 case TerrainType.OCEAN_LITTORAL:
                         return 15;
@@ -363,11 +437,11 @@ namespace Vaerydian.Maps
                         return 18;
                 case TerrainType.MOUNTAIN_FOOTHILL:
                         return 11;
-                case TerrainType.MOUNTAIN_STEPPES:
+                case TerrainType.MOUNTAIN_LOWLAND:
                         return 12;
                 case TerrainType.MOUNTAIN_CASCADE:
                         return 13;
-                case TerrainType.MOUNTAIN_SNOWYPEAK:
+                case TerrainType.MOUNTAIN_SNOWY_PEAK:
                         return 14;
                 case TerrainType.BASE_RIVER:
                     return 18;
