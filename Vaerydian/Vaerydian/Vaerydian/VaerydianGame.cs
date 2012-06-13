@@ -45,7 +45,7 @@ namespace Vaerydian
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferHeight = 768;// 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = true;

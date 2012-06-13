@@ -343,12 +343,16 @@ namespace Vaerydian.Maps
         {
             switch (terrain.TerrainType)
             {
-                case TerrainType.LAND_TUNDRA:
-                    return new Color(153, 255, 153);
+                case TerrainType.LAND_ARCTIC_DESERT:
+                    return new Color(204,204,255);
                 case TerrainType.LAND_DESERT:
                     return new Color(204, 204, 0);
                 case TerrainType.LAND_SCORCHED:
                     return new Color(153,102,51);
+                case TerrainType.LAND_SNOW_PLAINS:
+                    return Color.White;
+                case TerrainType.LAND_TUNDRA:
+                    return new Color(153, 255, 153);
                 case TerrainType.LAND_TAIGA:
                     return new Color(24,72,48);
                 case TerrainType.LAND_TEMPERATE_GRASSLAND:
@@ -361,12 +365,14 @@ namespace Vaerydian.Maps
                     return new Color(0,153,0);
                 case TerrainType.LAND_TROPICAL_FOREST:
                     return new Color(102,255,51);
-                case TerrainType.LAND_SNOW_PLAINS:
-                    return Color.White;
+                case TerrainType.LAND_GLACIER:
+                    return new Color(153,255,204);
                 case TerrainType.LAND_MARSH:
                     return new Color(33,101,67);
                 case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
                     return new Color(0,102,0);
+                case TerrainType.LAND_HYBOREAN_RIMELAND:
+                    return new Color(204,255,255);
                 case TerrainType.LAND_BOG:
                     return new Color(51,51,0);
                 case TerrainType.LAND_SWAMP:
