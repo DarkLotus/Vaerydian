@@ -220,5 +220,7 @@ namespace Vaerydian.Utils
             node.Contents.Remove(val);
         }
 
+        //TODO: add range/distance query
+
     }
 }

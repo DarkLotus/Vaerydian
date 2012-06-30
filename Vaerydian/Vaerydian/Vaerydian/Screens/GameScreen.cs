@@ -192,7 +192,7 @@ namespace Vaerydian.Screens
             //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
 
 
-            //npcFactory.createWanders(100, map);
+            npcFactory.createWanders(100, map);
 
             //uiFactory.createUITests();
             

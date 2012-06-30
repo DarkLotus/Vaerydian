@@ -35,6 +35,7 @@ namespace Vaerydian.Factories
             u_EcsInstance = ecsInstance;
         }
 
+        //TODO: replace timed dialog window with a Glimpse structure
         public void createTimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
             Entity e = u_EcsInstance.create();

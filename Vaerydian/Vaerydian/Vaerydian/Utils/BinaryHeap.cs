@@ -7,6 +7,7 @@ namespace Vaerydian.Utils
 {
 
     //TODO: test binary heap
+    //TODO: figure out how to integrate this into ASharpPathing
     public class BinaryHeap<T>
     {
         /// <summary>

@@ -159,7 +159,7 @@ namespace Vaerydian.Systems.Update
                 if (hitProb > 1f)
                     overhit = hitProb - 1f;
 
-                int maxDmg = (int)((overhit + 1f) * (atkSkill / 5 + attAttr.Perception.Value / 4 + (weapon.Lethality - armor.Mitigation + 1)));
+                int maxDmg = (int)((overhit + 1f) * (atkSkill / 5 + attAttr.Perception.Value / 4) * (weapon.Lethality / armor.Mitigation));
 
                 damage = rand.Next(maxDmg / 2, maxDmg);
 
@@ -251,7 +251,7 @@ namespace Vaerydian.Systems.Update
                 if (hitProb > 1f)
                     overhit = hitProb - 1f;
 
-                int maxDmg = (int)((overhit + 1f) * (atkSkill / 5 + attAttr.Perception.Value / 4 + (weapon.Lethality - armor.Mitigation + 1)));
+                int maxDmg = (int)((overhit + 1f) * (atkSkill / 5 + attAttr.Perception.Value / 4) * (weapon.Lethality / armor.Mitigation));
 
                 damage = rand.Next(maxDmg / 2, maxDmg);
 

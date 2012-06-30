@@ -315,6 +315,7 @@ namespace Vaerydian.Maps
             maxVal = 0f;
         }
 
+
         /// <summary>
         /// updates the tile indexes based on current viewport for the draw loop
         /// </summary>
@@ -352,12 +353,12 @@ namespace Vaerydian.Maps
                 case TerrainType.LAND_SNOW_PLAINS:
                     return Color.White;
                 case TerrainType.LAND_TUNDRA:
-                    return new Color(153, 255, 153);
+                    return new Color(53,111,53);
                 case TerrainType.LAND_TAIGA:
                     return new Color(24,72,48);
                 case TerrainType.LAND_TEMPERATE_GRASSLAND:
                     return new Color(153,255,102);
-                case TerrainType.LAND_WOODLAND:
+                case TerrainType.LAND_SHRUBLAND:
                     return new Color(102,153,0);
                 case TerrainType.LAND_SAVANA:
                     return new Color(204,255,102);
@@ -394,7 +395,7 @@ namespace Vaerydian.Maps
                 case TerrainType.MOUNTAIN_LOWLAND:
                     return new Color(79,95,59);
                 case TerrainType.MOUNTAIN_HIGHLAND:
-                    return new Color(131,158,98);
+                    return new Color(115,123,105);
                 case TerrainType.MOUNTAIN_CASCADE:
                     return new Color(150,150,150);
                 case TerrainType.MOUNTAIN_DRY_PEAK:
