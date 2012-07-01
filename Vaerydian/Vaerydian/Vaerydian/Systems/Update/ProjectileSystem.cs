@@ -83,7 +83,8 @@ namespace Vaerydian.Systems.Update
 
             Vector2 pos = position.Pos;
 
-            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(pos);
+            //List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(pos);
+            List<Entity> locals = spatial.QuadTree.findAllWithinRange(pos, 32);
 
             //anything retrieved?
             if (locals != null)

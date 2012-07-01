@@ -67,6 +67,7 @@ namespace Vaerydian.Behaviors
         private QuadNode<Entity> w_LastLLNode;
         private QuadNode<Entity> w_LastLRNode;
         private QuadNode<Entity> w_LastURNode;
+        //private QuadNode<Entity> w_LastNode;
 
         private Random w_Random = new Random((int)DateTime.Now.Ticks);
 
@@ -163,7 +164,8 @@ namespace Vaerydian.Behaviors
             ParallelSelector walkOrCorrect = new ParallelSelector(randWalk, collideCorrection);
             
             //wander sequence, while no hostiles detected, walk around randomly
-            ParallelSequence wanderSeq = new ParallelSequence(new Inverter(new RandomDecorator(0.55f,getRandom,detectedHostile)), walkOrCorrect, move, animate);
+            //ParallelSequence wanderSeq = new ParallelSequence(new Inverter(new RandomDecorator(0.55f,getRandom,detectedHostile)), walkOrCorrect, move, animate);
+            ParallelSequence wanderSeq = new ParallelSequence(new Inverter(detectedHostile), walkOrCorrect, move, animate);
             
             //wander or change to pursue state
             ParallelSelector wanderSel2 = new ParallelSelector(wanderSeq, new Inverter(setPursue));
@@ -221,6 +223,7 @@ namespace Vaerydian.Behaviors
         public override void deathCleanup()
         {
             //remove old references
+            
             if (w_LastULNode != null && w_LastLLNode != null && w_LastLRNode != null && w_LastURNode != null)
             {
                 w_LastULNode.Contents.Remove(w_ThisEntity);
@@ -228,6 +231,9 @@ namespace Vaerydian.Behaviors
                 w_LastLRNode.Contents.Remove(w_ThisEntity);
                 w_LastURNode.Contents.Remove(w_ThisEntity);
             }
+
+            //if (w_LastNode != null)
+                //w_LastNode.Contents.Remove(w_ThisEntity);
 
             c_IsClean = true;
         }
@@ -255,10 +261,14 @@ namespace Vaerydian.Behaviors
 
             Vector2 pos = position.Pos;
 
+            
             w_LastULNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
             w_LastLLNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(0, 32));
             w_LastLRNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 32));
             w_LastURNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 0));
+            
+
+            //w_LastNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
 
             w_Camera = w_ECSInstance.TagManager.getEntityByTag("CAMERA");
 
@@ -297,12 +307,19 @@ namespace Vaerydian.Behaviors
             if (w_LastULNode == null || w_LastLLNode == null || w_LastLRNode == null || w_LastURNode == null)
                 return false;
 
+            
             List<Entity> locals = new List<Entity>();
             locals.AddRange(w_LastULNode.Contents);
             locals.AddRange(w_LastLLNode.Contents);
             locals.AddRange(w_LastLRNode.Contents);
             locals.AddRange(w_LastURNode.Contents);
-
+            
+            
+            /*SpatialPartition spatial = (SpatialPartition) w_SpatialMapper.get(w_Spatial);
+            Position position = (Position) w_PositionMapper.get(w_ThisEntity);
+            List<Entity> locals = spatial.QuadTree.findAllWithinRange(position.Pos, 200f);
+            */
+             
             //nothing to detect
             if (locals.Count == 0)
                 return false;
@@ -530,6 +547,11 @@ namespace Vaerydian.Behaviors
             w_LastURNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos + new Vector2(32, 0));
             
 
+            /*if (w_LastNode != null)
+                w_LastNode.Contents.Remove(w_ThisEntity);
+
+            w_LastNode = spatial.QuadTree.setContentAtLocation(w_ThisEntity, pos);
+            */
 
             return BehaviorReturnCode.Success;
         }

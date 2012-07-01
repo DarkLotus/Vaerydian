@@ -9,6 +9,14 @@ namespace Vaerydian.Utils
 {
     public class QuadNode<E> where E : class
     {
+        private Vector2 q_Center;
+
+        public Vector2 Center
+        {
+            get { return q_Center; }
+            set { q_Center = value; }
+        }
+
         private Vector2 q_ULCorner;
         /// <summary>
         /// represents UL corner
@@ -101,6 +109,7 @@ namespace Vaerydian.Utils
             q_ULCorner = ul;
             q_LRCorner = lr;
             q_Contents = new List<E>();
+            q_Center = new Vector2((lr.X - ul.X) / 2f, (lr.Y - ul.Y) / 2f);
         }
 
         /// <summary>

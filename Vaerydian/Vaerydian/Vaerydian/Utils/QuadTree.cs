@@ -221,6 +221,72 @@ namespace Vaerydian.Utils
         }
 
         //TODO: add range/distance query
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public List<E> findAllWithinRange(Vector2 point, float range)
+        {
+            List<E> contents = new List<E>();
+            contents = allWithinRange(q_RootNode, point, range, contents);
+            return contents;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="point"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        private List<E> allWithinRange(QuadNode<E> node, Vector2 point, float range, List<E> contents)
+        {
+            if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
+            {
+                //return contents
+                return node.Contents;
+            }
+            else
+            {
+                //determine if nodes are within range
+                if(nodeWithinRange(node.Q1,point,range))
+                    contents.AddRange(allWithinRange(node.Q1,point,range,contents));
+                if (nodeWithinRange(node.Q2, point, range))
+                    contents.AddRange(allWithinRange(node.Q2, point, range, contents));
+                if (nodeWithinRange(node.Q3, point, range))
+                    contents.AddRange(allWithinRange(node.Q3, point, range, contents));
+                if (nodeWithinRange(node.Q4, point, range))
+                    contents.AddRange(allWithinRange(node.Q4, point, range, contents));
+                
+                //return any nodes within range
+                return contents;
+            }
+        }
+
+        private bool nodeWithinRange(QuadNode<E> node, Vector2 point, float range)
+        {
+            if (node.contains(point))
+                return true;
+            else if (Vector2.Distance(node.Center, point) <= range)
+                return true;
+            else
+            {
+                //get the vector from the point to the node's center
+                Vector2 pToC = node.Center - point;
+                pToC.Normalize();
+                
+                //find the closest position to the node center that is at max range from the point
+                pToC = point + pToC * Vector2.Distance(node.Center, point);
+
+                //if that point is within the node, then the node is within range
+                if (node.contains(pToC))
+                    return true;
+            }
+
+            //node not within range
+            return false;
+        }
     }
 }

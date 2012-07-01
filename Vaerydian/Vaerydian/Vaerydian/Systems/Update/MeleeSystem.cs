@@ -71,7 +71,8 @@ namespace Vaerydian.Systems.Update
             }
 
             //retrieve all local entities
-            List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(position.Pos);
+            //List<Entity> locals = spatial.QuadTree.retrieveContentsAtLocation(position.Pos);
+            List<Entity> locals = spatial.QuadTree.findAllWithinRange(position.Pos, action.Range);
 
             //is the location good?
             if (locals != null)

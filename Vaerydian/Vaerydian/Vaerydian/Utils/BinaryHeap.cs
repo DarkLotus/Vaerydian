@@ -71,9 +71,12 @@ namespace Vaerydian.Utils
             return;
         }
 
-        public void remove(int index)
+        public HeapCell<T> removeFirst()
         {
             //TODO: add heapcell remove
+
+
+            return b_Data[1];
         }
 
 
