@@ -6,25 +6,46 @@ using System.Text;
 namespace Vaerydian.Utils
 {
 
-    //TODO: test binary heap
-    //TODO: figure out how to integrate this into ASharpPathing
     public class BinaryHeap<T>
     {
         /// <summary>
         /// data structure
         /// </summary>
-        HeapCell<T>[] b_Data;
+        HeapCell<T>[] b_Data = new HeapCell<T>[0];
 
         private int b_Length;
 
         private int b_Size;
 
-
-        public BinaryHeap(int size)
+        public int Size
         {
-            b_Size = size;
-            b_Length = size * 2 + 2;
+            get { return b_Size; }
+            set { b_Size = value; }
+        }
+
+        public BinaryHeap()
+        {
+            b_Size = 0;
+            b_Length = 16 * 2 + 2;
             b_Data = new HeapCell<T>[b_Length];
+
+
+            for (int i = 0; i < b_Length; i++)
+            {
+                b_Data[i] = new HeapCell<T>();
+            }
+        }
+
+        public BinaryHeap(int length)
+        {
+            b_Size = 0;
+            b_Length = length * 2 + 2;
+            b_Data = new HeapCell<T>[b_Length];
+
+            for (int i = 0; i < b_Length; i++)
+            {
+                b_Data[i] = new HeapCell<T>();
+            }
         }
 
         /// <summary>
@@ -34,7 +55,7 @@ namespace Vaerydian.Utils
         /// <param name="data">data package to store</param>
         public void add(int value, T data)
         {
-            add(new HeapCell<T>(value,data));
+            add(new HeapCell<T>(value, data));
             return;
         }
 
@@ -46,12 +67,12 @@ namespace Vaerydian.Utils
         {
             b_Size++;
 
-            if ((b_Size*2+1) >= b_Length)
+            if ((b_Size * 2 + 1) >= b_Length)
                 grow(b_Size);
 
-            b_Data[b_Length - 1] = cell;
+            b_Data[b_Size] = cell;
 
-            int i = b_Length;
+            int i = b_Size;
 
             //do any needed swapping
             while (i != 1)
@@ -68,15 +89,55 @@ namespace Vaerydian.Utils
                 else//otherwise break
                     break;
             }
-            return;
         }
 
         public HeapCell<T> removeFirst()
         {
             //TODO: add heapcell remove
+            HeapCell<T> retVal = b_Data[1];
 
+            //move last item to 1st position, reduce size by 1
+            b_Data[1] = b_Data[b_Size];
+            b_Data[b_Size] = null;
+            b_Size--;
 
-            return b_Data[1];
+            int u, v;
+            v = 1;
+
+            //sort the heap
+            while (true)
+            {
+                u = v;
+
+                //if both children exist
+                if ((2 * u + 1) <= b_Size)
+                {
+                    //select lowest child
+                    if (b_Data[u].Value >= b_Data[2 * u].Value)
+                        v = 2 * u;
+                    if (b_Data[v].Value >= b_Data[2 * u + 1].Value)
+                        v = 2 * u + 1;
+                }//if only one child exists
+                else if (2 * u <= b_Size)
+                {
+                    if (b_Data[u].Value >= b_Data[2 * u].Value)
+                        v = 2 * u;
+                }
+
+                //do we need to swap or exit?
+                if (u != v)
+                {
+                    HeapCell<T> temp = b_Data[u];
+                    b_Data[u] = b_Data[v];
+                    b_Data[v] = temp;
+                }
+                else
+                {
+                    break;//we've re-sorted the heap, so exit
+                }
+            }
+
+            return retVal;
         }
 
 
@@ -95,6 +156,28 @@ namespace Vaerydian.Utils
             b_Length = length;
 
             return;
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < b_Size; i++)
+            {
+                b_Data[i] = null;
+            }
+
+            b_Size = 0;
+        }
+
+        public override String ToString()
+        {
+            String str = "";
+
+            for (int i = 1; i < b_Size + 1; i++)
+            {
+                str += b_Data[i].Value + ", ";
+            }
+
+            return str;
         }
     }
 }

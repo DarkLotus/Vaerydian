@@ -28,13 +28,23 @@ namespace Vaerydian.Utils
         private GameMap a_GameMap;
         private Vector2 a_Start,a_Finish;
         private Cell a_StartCell, a_FinishCell;
-        private List<Cell> a_OpenSet = new List<Cell>();
-
+        /*private List<Cell> a_OpenSet = new List<Cell>();
+        
         public List<Cell> OpenSet
         {
             get { return a_OpenSet; }
             set { a_OpenSet = value; }
+        }*/
+
+        private BinaryHeap<Cell> a_OpenSet = new BinaryHeap<Cell>(16);
+
+        public BinaryHeap<Cell> OpenSet
+        {
+            get { return a_OpenSet; }
+            set { a_OpenSet = value; }
         }
+
+        
         private List<Cell> a_ClosedSet = new List<Cell>();
 
         public List<Cell> ClosedSet
@@ -53,7 +63,7 @@ namespace Vaerydian.Utils
 
         private int linCost = 10;
         private int diaCost = 14;
-        private int a_MaxLoops = 60;
+        private int a_MaxLoops = 100;
 
         private bool a_Failed = false;
 
@@ -86,16 +96,16 @@ namespace Vaerydian.Utils
             a_Finish = finish;
             a_StartCell = createCell((int)start.X, (int)start.Y);
             a_FinishCell = createCell((int)finish.X, (int)finish.Y);
-            a_OpenSet.Add(a_StartCell);
+            //a_OpenSet.Add(a_StartCell);
+            a_OpenSet.add(a_StartCell.F, a_StartCell);
 
             List<Cell> temp = findAdjacentCells(a_StartCell);
             for (int i = 0; i < temp.Count; i++)
             {
-                a_OpenSet.Add(temp[i]);
+                a_OpenSet.add(temp[i].F,temp[i]);
             }
-
-            a_OpenSet.Remove(a_StartCell);
-            a_ClosedSet.Add(a_StartCell);
+            
+            a_ClosedSet.Add(a_OpenSet.removeFirst().Data);
         }
 
         /// <summary>
@@ -110,7 +120,7 @@ namespace Vaerydian.Utils
             while (loopCount < a_MaxLoops)
             {
                 //have we failed to find it?
-                if (a_OpenSet.Count == 0)
+                if (a_OpenSet.Size == 0)
                 {
                     if (contains(a_FinishCell, a_ClosedSet) < 0)
                     {
@@ -120,14 +130,15 @@ namespace Vaerydian.Utils
                 }
 
                 //find the current loswest cost square
-                temp = findLeastCostCell(a_OpenSet);
-                a_OpenSet.Remove(temp);
+                //temp = findLeastCostCell(a_OpenSet);
+                temp = a_OpenSet.removeFirst().Data;
+                //a_OpenSet.Remove(temp);
                 a_ClosedSet.Add(temp);
 
                 int fin = contains(a_FinishCell, a_ClosedSet);
 
                 //did we find it?
-                if (contains(a_FinishCell,a_ClosedSet) >= 0)
+                if (fin >= 0)
                 {
                     a_IsFound = true;
                     temp = a_ClosedSet[fin];
@@ -141,10 +152,8 @@ namespace Vaerydian.Utils
 
                 for (int i = 0; i < workingList.Count; i++)
                 {
-                    a_OpenSet.Add(workingList[i]);
+                    a_OpenSet.add(workingList[i].F,workingList[i]);
                 }
-
-
 
                 loopCount++;
             }
@@ -341,7 +350,7 @@ namespace Vaerydian.Utils
                     newCell.F = findCost(newCell);
 
                     //check to see if we already have this one on an open list
-                    int pos = contains(newCell, a_OpenSet);
+                    /*int pos = contains(newCell, a_OpenSet);
                     if (pos >= 0)
                     {
                         Cell temp = a_OpenSet[pos];
@@ -363,7 +372,9 @@ namespace Vaerydian.Utils
                         }
                         else
                             continue;
-                    }
+                    }*/
+
+                    a_OpenSet.add(newCell.F, newCell);
 
                     //add its location to the list as a good candidate
                     goodAdjacents.Add(newCell);
@@ -440,16 +451,18 @@ namespace Vaerydian.Utils
             a_StartCell = createCell((int)start.X, (int)start.Y);
             a_FinishCell = createCell((int)finish.X, (int)finish.Y);
 
-            a_OpenSet.Add(a_StartCell);
+            a_OpenSet.add(a_StartCell.F,a_StartCell);
 
             List<Cell> temp = findAdjacentCells(a_StartCell);
             for (int i = 0; i < temp.Count; i++)
             {
-                a_OpenSet.Add(temp[i]);
+                a_OpenSet.add(temp[i].F, temp[i]);
             }
 
-            a_OpenSet.Remove(a_StartCell);
-            a_ClosedSet.Add(a_StartCell);
+            //a_OpenSet.Remove(a_StartCell);
+            //a_ClosedSet.Add(a_StartCell);
+            a_ClosedSet.Add(a_OpenSet.removeFirst().Data);
+
         }
 
         /// <summary>

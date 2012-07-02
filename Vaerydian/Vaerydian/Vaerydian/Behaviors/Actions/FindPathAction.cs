@@ -56,7 +56,12 @@ namespace Vaerydian.Behaviors.Actions
             return f_Pathing.ClosedSet;
         }
 
-        public List<Cell> getOpenSet()
+        /*public List<Cell> getOpenSet()
+        {
+            return f_Pathing.OpenSet;
+        }*/
+
+        public BinaryHeap<Cell> getOpenSet()
         {
             return f_Pathing.OpenSet;
         }

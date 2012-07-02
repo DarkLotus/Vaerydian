@@ -37,5 +37,7 @@ namespace Vaerydian.Utils
             h_Value = value;
             h_Data = data;
         }
+
+        public HeapCell() { }
     }
 }
