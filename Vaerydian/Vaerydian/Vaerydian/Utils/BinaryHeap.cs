@@ -48,6 +48,12 @@ namespace Vaerydian.Utils
             }
         }
 
+        public HeapCell<T> this[int index]
+        {
+            get { return b_Data[index]; }
+            set { b_Data[index] = value; }
+        }
+
         /// <summary>
         /// adds data to the heap using the given sort-value
         /// </summary>

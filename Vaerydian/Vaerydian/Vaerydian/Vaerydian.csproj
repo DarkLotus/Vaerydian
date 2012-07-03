@@ -185,12 +185,14 @@
     <Compile Include="Components\Spatials\Transform.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Factories\UIFactory.cs" />
+    <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Systems\Update\MeleeSystem.cs" />
     <Compile Include="Systems\Update\VictorySystem.cs" />
-    <Compile Include="UI\ActionItem.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
     <Compile Include="Systems\Update\LifeSystem.cs" />
+    <Compile Include="UI\ButtonMenu.cs" />
+    <Compile Include="UI\DialogTimer.cs" />
     <Compile Include="Utils\BinaryHeap.cs" />
     <Compile Include="Utils\HeapCell.cs" />
     <Compile Include="Utils\SkillNames.cs" />
@@ -208,7 +210,6 @@
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenManager.cs" />
-    <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
     <Compile Include="Characters\Skills\Skill.cs" />
@@ -233,7 +234,7 @@
     <Compile Include="Systems\Draw\SpriteRenderSystem.cs" />
     <Compile Include="Systems\Draw\HealthBarRenderSystem.cs" />
     <Compile Include="Utils\Animation.cs" />
-    <Compile Include="Utils\ASharpPathing.cs" />
+    <Compile Include="Utils\AStarPathing.cs" />
     <Compile Include="Utils\AttackType.cs" />
     <Compile Include="Utils\CollisionDetect.cs" />
     <Compile Include="Utils\DamageType.cs" />
@@ -245,7 +246,6 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="Windows\DialogWindow.cs" />
     <Compile Include="Windows\TextMenuWindow.cs" />
-    <Compile Include="UI\TimedDialog.cs" />
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>

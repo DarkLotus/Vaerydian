@@ -495,6 +495,9 @@ namespace Vaerydian.Behaviors
 
             findPath.reset(sVec, fVec, map);
 
+            s_currentPath.Clear();
+            s_newPath = true;
+
             return BehaviorReturnCode.Success;
         }
     }

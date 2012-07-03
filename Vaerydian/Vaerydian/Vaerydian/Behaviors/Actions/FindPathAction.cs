@@ -19,13 +19,13 @@ namespace Vaerydian.Behaviors.Actions
 {
     class FindPathAction : BehaviorComponent
     {
-        private ASharpPathing f_Pathing;
+        private AStarPathing f_Pathing;
         private ECSInstance f_EcsInstance;
 
         public FindPathAction(ECSInstance ecsInstance, Vector2 start, Vector2 finish, GameMap map) 
         {
             f_EcsInstance = ecsInstance;
-            f_Pathing = new ASharpPathing(start, finish, map);
+            f_Pathing = new AStarPathing(start, finish, map);
         }
 
         public override BehaviorReturnCode Behave()

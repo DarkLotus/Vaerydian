@@ -22,7 +22,7 @@ namespace Vaerydian.Utils
     }
 
 
-    public class ASharpPathing
+    public class AStarPathing
     {
 
         private GameMap a_GameMap;
@@ -63,7 +63,7 @@ namespace Vaerydian.Utils
 
         private int linCost = 10;
         private int diaCost = 14;
-        private int a_MaxLoops = 100;
+        private int a_MaxLoops = 1000;
 
         private bool a_Failed = false;
 
@@ -89,7 +89,7 @@ namespace Vaerydian.Utils
         /// <param name="start">starting point</param>
         /// <param name="finish">ending point</param>
         /// <param name="map">map to path through</param>
-        public ASharpPathing(Vector2 start, Vector2 finish, GameMap map) 
+        public AStarPathing(Vector2 start, Vector2 finish, GameMap map) 
         {
             a_GameMap = map;
             a_Start = start;
@@ -349,11 +349,12 @@ namespace Vaerydian.Utils
                     //finds this cell's cost
                     newCell.F = findCost(newCell);
 
+                    
                     //check to see if we already have this one on an open list
-                    /*int pos = contains(newCell, a_OpenSet);
+                    int pos = heapContains(newCell, a_OpenSet);
                     if (pos >= 0)
                     {
-                        Cell temp = a_OpenSet[pos];
+                        Cell temp = a_OpenSet[pos].Data;
                         
                         //is cell a better path?
                         if (cell.G + (temp.G - temp.Parent.G) < temp.G)
@@ -367,14 +368,14 @@ namespace Vaerydian.Utils
 
                             temp.F = findCost(temp);
 
-                            a_OpenSet[pos] = temp;
+                            a_OpenSet[pos] = new HeapCell<Cell>(temp.F,temp);
                             continue;
                         }
                         else
                             continue;
-                    }*/
+                    }
 
-                    a_OpenSet.add(newCell.F, newCell);
+                    //a_OpenSet.add(newCell.F, newCell);
 
                     //add its location to the list as a good candidate
                     goodAdjacents.Add(newCell);
@@ -400,6 +401,17 @@ namespace Vaerydian.Utils
                     return i;
             }
             
+            return -1;
+        }
+
+        private int heapContains(Cell cell, BinaryHeap<Cell> heap)
+        {
+            for (int i = 1; i < heap.Size; i++)
+            {
+                if (cell.Position == heap[i].Data.Position)
+                    return i;
+            }
+
             return -1;
         }
 

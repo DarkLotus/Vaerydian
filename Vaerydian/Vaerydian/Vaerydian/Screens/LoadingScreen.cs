@@ -68,6 +68,8 @@ namespace Vaerydian.Screens
         public static void Load(ScreenManager screenManager, bool loadingIsSlow,
                                 params Screen[] screensToLoad)  
         {
+            GC.Collect();
+
             l_BackgroundRect = new Rectangle(0, 0, screenManager.GraphicsDevice.Viewport.Width, screenManager.GraphicsDevice.Viewport.Height);
 
             // Tell all the current screens to transition off.  
@@ -205,11 +207,15 @@ namespace Vaerydian.Screens
             // method, rather than in Update, because it isn't enough just for the  
             // screens to be gone: in order for the transition to look good we must  
             // have actually drawn a frame without them before we perform the load.  
-            if ((ScreenState == ScreenState.Active) &&  
-                (ScreenManager.Screens.Count == 1))  
-            {  
-                otherScreensAreGone = true;  
-            }  
+            if ((ScreenState == ScreenState.Active) &&
+                (ScreenManager.Screens.Count == 1))
+            {
+                otherScreensAreGone = true;
+            }
+            else
+            {
+                GC.Collect();
+            }
  
             // The gameplay screen takes a while to load, so we display a loading  
             // message while that is going on, but the menus load very quickly, and  

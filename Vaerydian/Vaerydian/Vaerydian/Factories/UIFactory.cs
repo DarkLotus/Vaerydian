@@ -7,7 +7,6 @@ using ECSFramework;
 
 using Vaerydian.Components;
 using Vaerydian.UI;
-using Vaerydian.UI.implemented;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -35,21 +34,127 @@ namespace Vaerydian.Factories
             u_EcsInstance = ecsInstance;
         }
 
-        //TODO: replace timed dialog window with a Glimpse structure
+
+        /// <summary>
+        /// creates a timed dialog
+        /// </summary>
+        /// <param name="caller"></param>
+        /// <param name="dialog"></param>
+        /// <param name="origin"></param>
+        /// <param name="name"></param>
+        /// <param name="duration"></param>
         public void createTimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
             Entity e = u_EcsInstance.create();
 
-            TimedDialog window = new TimedDialog(caller, dialog, origin, name, duration);
+            DialogTimer timer = new DialogTimer(duration,u_EcsInstance);
 
-            window.ECSInstance = u_EcsInstance;
-            window.Owner = e;
+            GForm form = new GForm();
+            form.Caller = caller;
+            form.Owner = e;
+            form.ECSInstance = u_EcsInstance;
+            form.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 100, 50);
 
-            UserInterface ui = new UserInterface(window);
+            GCanvas canvas = new GCanvas();
+            canvas.Caller = caller;
+            canvas.Owner = e;
+            canvas.ECSInstance = u_EcsInstance;
+            canvas.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 200, 200);
 
+            GTextBox textBox = new GTextBox();
+            textBox.Caller = caller;
+            textBox.Owner = e;
+            textBox.ECSInstance = u_EcsInstance;
+            textBox.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 100, 10);
+            textBox.FontName = "StartScreen";
+            textBox.BackgroundName = "dialog";//_bubble";
+            textBox.Border = 10;
+            textBox.Text = dialog;
+            textBox.TextColor = Color.White;
+            textBox.CenterText = true;
+            textBox.BackgroundColor = Color.Black;
+            textBox.BackgroundTransparency = 0.75f;
+
+            textBox.Updating += timer.updateHandler;
+
+            canvas.Controls.Add(textBox);
+
+            form.CanvasControls.Add(canvas);
+
+            UserInterface ui = new UserInterface(form);
+
+            //assign component and issue refresh
             u_EcsInstance.EntityManager.addComponent(e, ui);
+            u_EcsInstance.refresh(e);
+        }
+
+        public void createFrame(Entity caller, Point Position, int height, int width, string textureName)
+        {
+            Entity e = u_EcsInstance.create();
+
+            GForm form = new GForm();
+            form.Caller = caller;
+            form.Owner = e;
+            form.ECSInstance = u_EcsInstance;
+            form.Bounds = new Rectangle(Position.X, Position.Y, width, height);
+
+            GCanvas canvas = new GCanvas();
+            canvas.Caller = caller;
+            canvas.Owner = e;
+            canvas.ECSInstance = u_EcsInstance;
+            canvas.Bounds = new Rectangle(Position.X, Position.Y, width, height);
+
+            GFrame frame = new GFrame();
+            frame.Caller = caller;
+            frame.Owner = e;
+            frame.ECSInstance = u_EcsInstance;
+            frame.Bounds = new Rectangle(Position.X, Position.Y, width, height);
+            frame.BackgroundName = textureName;
+
+            canvas.Controls.Add(frame);
+
+            form.CanvasControls.Add(canvas);
+
+            UserInterface ui = new UserInterface(form);
+
+            u_EcsInstance.ComponentManager.addComponent(e, ui);
 
             u_EcsInstance.refresh(e);
+        }
+
+        public GFrame createMousePointer(Point position, int width, int height, string textureName, InterfaceHandler handler)
+        {
+            Entity e = u_EcsInstance.create();
+
+            GForm form = new GForm();
+            form.Owner = e;
+            form.ECSInstance = u_EcsInstance;
+            form.Bounds = new Rectangle(position.X, position.Y, width, height);
+
+            GCanvas canvas = new GCanvas();
+            canvas.Owner = e;
+            canvas.ECSInstance = u_EcsInstance;
+            canvas.Bounds = new Rectangle(position.X, position.Y, width, height);
+
+            GFrame frame = new GFrame();
+            frame.Owner = e;
+            frame.ECSInstance = u_EcsInstance;
+            frame.Bounds = new Rectangle(position.X, position.Y, width, height);
+            frame.BackgroundName = textureName;
+
+            frame.Updating += handler;
+
+            canvas.Controls.Add(frame);
+
+            form.CanvasControls.Add(canvas);
+
+            UserInterface ui = new UserInterface(form);
+
+            u_EcsInstance.ComponentManager.addComponent(e, ui);
+
+            u_EcsInstance.refresh(e);
+
+            return frame;
         }
 
         public void createUITests()
