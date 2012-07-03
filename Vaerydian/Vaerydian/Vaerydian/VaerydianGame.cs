@@ -48,8 +48,8 @@ namespace Vaerydian
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = true;
-            this.IsFixedTimeStep = true;
+            graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
             
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));

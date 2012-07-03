@@ -84,7 +84,7 @@ namespace Vaerydian.Behaviors
 
         private Vector2 s_TargetPreviousPosition, s_TargetCurrentPosition;
 
-        private Vector2 s_Offset = new Vector2(12.5f);
+        private Vector2 s_Offset = new Vector2(16f);//12.5f);
         private Vector2 s_Center = new Vector2(0);
 
         private List<Cell> s_currentPath = new List<Cell>();
@@ -205,7 +205,7 @@ namespace Vaerydian.Behaviors
             //s_Center = viewport.getDimensions() / 2;
 
             sVec = (start.Pos) / s_TileSize;
-            fVec = (finish.Pos) / s_TileSize;
+            fVec = (finish.Pos + finish.Offset) / s_TileSize;
 
             /*
             sVec = (start.Pos + s_Center) / s_TileSize;
@@ -485,7 +485,7 @@ namespace Vaerydian.Behaviors
             //s_Center = viewport.getDimensions() / 2;
 
             sVec = (start.Pos ) / s_TileSize;
-            fVec = (finish.Pos) / s_TileSize;
+            fVec = (finish.Pos + finish.Offset) / s_TileSize;
             /*
             sVec = (start.Pos + s_Center) / s_TileSize;
             fVec = (finish.Pos + s_Center) / s_TileSize;
