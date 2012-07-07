@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vaerydian.Characters.Stats
+namespace Vaerydian.Characters.Attributes
 {
-    public class Stat
+    public class AttributeStat
     {
         /// <summary>
         /// default constructor
         /// </summary>
-        public Stat() { }
+        public AttributeStat() { }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public Stat(String name, int value)
+        public AttributeStat(String name, int value)
         {
             a_Name = name;
             a_Value = value;

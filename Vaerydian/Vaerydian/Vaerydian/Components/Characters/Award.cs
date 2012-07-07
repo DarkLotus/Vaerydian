@@ -4,15 +4,26 @@ using System.Linq;
 using System.Text;
 
 using ECSFramework;
+using Vaerydian.Utils;
 
-namespace Vaerydian.Components.Utils
+namespace Vaerydian.Components.Characters
 {
-    class Victory : IComponent
+
+    public enum AwardType
+    {
+        Victory,
+        SkillUp,
+        Attribute,
+        Health
+    }
+
+
+    class Award : IComponent
     {
         private static int v_TypeID;
         private int v_EntityID;
 
-        public Victory() { }
+        public Award() { }
 
         public int getEntityId()
         {
@@ -32,6 +43,16 @@ namespace Vaerydian.Components.Utils
         public void setTypeId(int typeId)
         {
             v_TypeID = typeId;
+        }
+
+        private AwardType v_AwardType;
+        /// <summary>
+        /// type of award
+        /// </summary>
+        public AwardType AwardType
+        {
+            get { return v_AwardType; }
+            set { v_AwardType = value; }
         }
 
         private Entity v_Owner;
@@ -62,6 +83,34 @@ namespace Vaerydian.Components.Utils
         {
             get { return v_MaxAwardable; }
             set { v_MaxAwardable = value; }
+        }
+
+        private int v_MinAwardable = 1;
+        /// <summary>
+        /// minimum knowledge awardable
+        /// </summary>
+        public int MinAwardable
+        {
+            get { return v_MinAwardable; }
+            set { v_MinAwardable = value; }
+        }
+
+        private SkillName v_SkillName;
+        /// <summary>
+        /// name of what is to be awarded
+        /// </summary>
+        public SkillName SkillName
+        {
+            get { return v_SkillName; }
+            set { v_SkillName = value; }
+        }
+
+        private AttributeType v_AttributeType;
+
+        public AttributeType AttributeType
+        {
+            get { return v_AttributeType; }
+            set { v_AttributeType = value; }
         }
     }
 }

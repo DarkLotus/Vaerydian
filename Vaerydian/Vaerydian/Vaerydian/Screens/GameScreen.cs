@@ -29,7 +29,7 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Graphical;
-using Vaerydian.Components.Action;
+using Vaerydian.Components.Actions;
 
 namespace Vaerydian.Screens
 {
@@ -54,6 +54,7 @@ namespace Vaerydian.Screens
         private EntitySystem damageSystem;
         private EntitySystem healthSystem;
         private EntitySystem lifeSystem;
+        private EntitySystem victorySystem;
         private EntitySystem uiUpdateSystem;
         
         //audio
@@ -69,7 +70,7 @@ namespace Vaerydian.Screens
         private EntitySystem shadingSystem;
         private EntitySystem deferredSystem;
         private EntitySystem healthBarRenderSystem;
-        private EntitySystem damageDisplaySystem;
+        private EntitySystem floatingTextDisplaySystem;
         private EntitySystem quadTreeDebugRenderSystem;
         private EntitySystem uiDrawSystem;
 
@@ -113,6 +114,7 @@ namespace Vaerydian.Screens
             damageSystem = ecsInstance.SystemManager.setSystem(new DamageSystem(), new Damage());
             healthSystem = ecsInstance.SystemManager.setSystem(new HealthSystem(), new Health());
             lifeSystem = ecsInstance.SystemManager.setSystem(new LifeSystem(), new Life());
+            victorySystem = ecsInstance.SystemManager.setSystem(new AwardSystem(), new Award());
             uiUpdateSystem = ecsInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
             
             //audio systems
@@ -128,7 +130,7 @@ namespace Vaerydian.Screens
             shadingSystem = ecsInstance.SystemManager.setSystem(new ShadingSystem(gameContainer), new Light());
             deferredSystem = ecsInstance.SystemManager.setSystem(new DeferredSystem(gameContainer), new GeometryMap());
             healthBarRenderSystem = ecsInstance.SystemManager.setSystem(new HealthBarRenderSystem(gameContainer), new Health());
-            damageDisplaySystem = ecsInstance.SystemManager.setSystem(new DamageDisplaySystem(gameContainer), new Damage());
+            floatingTextDisplaySystem = ecsInstance.SystemManager.setSystem(new FloatingTextDisplaySystem(gameContainer), new FloatingText());
             quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer), new Position(),new AiBehavior());
             uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer.ContentManager, gameContainer.GraphicsDevice), new UserInterface());
 
@@ -149,7 +151,9 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Skills());
             ecsInstance.ComponentManager.registerComponentType(new Knowledges());
             ecsInstance.ComponentManager.registerComponentType(new Factions());
-            ecsInstance.ComponentManager.registerComponentType(new Victory());
+            ecsInstance.ComponentManager.registerComponentType(new Award());
+            ecsInstance.ComponentManager.registerComponentType(new Information());
+            ecsInstance.ComponentManager.registerComponentType(new Aggrivation());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -285,6 +289,7 @@ namespace Vaerydian.Screens
             healthSystem.process();
             damageSystem.process();
             attackSystem.process();
+            victorySystem.process();
 
             mapCollisionSystem.process();
 
@@ -339,7 +344,7 @@ namespace Vaerydian.Screens
 
 
             //run UI systems
-            damageDisplaySystem.process();
+            floatingTextDisplaySystem.process();
             healthBarRenderSystem.process();
             uiDrawSystem.process();
 

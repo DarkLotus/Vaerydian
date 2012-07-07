@@ -147,17 +147,19 @@
     <Compile Include="Characters\Experience\Knowledge.cs" />
     <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
     <Compile Include="Characters\Factions\Faction.cs" />
-    <Compile Include="Characters\Stats\Stat.cs" />
+    <Compile Include="Characters\Attributes\AttributeStat.cs" />
     <Compile Include="Components\Actions\MeleeAction.cs" />
     <Compile Include="Components\Characters\AiBehavior.cs" />
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Characters\Attributes.cs" />
     <Compile Include="Components\Audio\Audio.cs" />
+    <Compile Include="Components\Characters\Information.cs" />
     <Compile Include="Components\Debug\MapDebug.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\Utils\Aggrivation.cs" />
-    <Compile Include="Components\Utils\Victory.cs" />
+    <Compile Include="Components\Graphical\FloatingText.cs" />
+    <Compile Include="Components\Characters\Aggrivation.cs" />
+    <Compile Include="Components\Characters\Award.cs" />
     <Compile Include="Components\Utils\BoundingPolygon.cs" />
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
@@ -187,7 +189,7 @@
     <Compile Include="Factories\UIFactory.cs" />
     <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Systems\Update\MeleeSystem.cs" />
-    <Compile Include="Systems\Update\VictorySystem.cs" />
+    <Compile Include="Systems\Update\AwardSystem.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Systems\Update\AudioSystem.cs" />
     <Compile Include="Systems\Update\LifeSystem.cs" />
@@ -218,7 +220,7 @@
     <Compile Include="Systems\Update\CameraFocusSystem.cs" />
     <Compile Include="Systems\Update\DamageSystem.cs" />
     <Compile Include="Systems\Draw\DeferredSystem.cs" />
-    <Compile Include="Systems\Draw\DamageDisplaySystem.cs" />
+    <Compile Include="Systems\Draw\FloatingTextDisplaySystem.cs" />
     <Compile Include="Systems\Update\HealthSystem.cs" />
     <Compile Include="Systems\Draw\MapDepthSystem.cs" />
     <Compile Include="Systems\Draw\MapNormalSystem.cs" />

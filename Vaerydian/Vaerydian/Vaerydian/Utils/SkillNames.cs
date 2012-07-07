@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vaerydian.Utils
 {
-    public enum SkillNames
+    public enum SkillName
     {
         Ranged,
         Melee,

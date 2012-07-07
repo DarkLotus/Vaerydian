@@ -8,6 +8,8 @@ using ECSFramework;
 using Vaerydian.Components;
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Items;
+using Vaerydian.Components.Utils;
+using Vaerydian.Components.Actions;
 using Vaerydian.Factories;
 
 namespace Vaerydian.Systems.Update
@@ -16,6 +18,8 @@ namespace Vaerydian.Systems.Update
     {
         private ComponentMapper h_HealthMapper;
         private ComponentMapper h_LifeMapper;
+        private ComponentMapper h_AggroMapper;
+        private ComponentMapper h_InteractionMapper;
         
         public HealthSystem() { }
 
@@ -23,6 +27,8 @@ namespace Vaerydian.Systems.Update
         {
             h_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
             h_LifeMapper = new ComponentMapper(new Life(), e_ECSInstance);
+            h_AggroMapper = new ComponentMapper(new Aggrivation(), e_ECSInstance);
+            h_InteractionMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
         }
 
         protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
@@ -44,6 +50,26 @@ namespace Vaerydian.Systems.Update
                 {
                     UtilFactory uf = new UtilFactory(e_ECSInstance);
                     uf.createSound("audio\\effects\\death", true, 1f);
+
+                    //issue victory
+                    Aggrivation aggro = (Aggrivation)h_AggroMapper.get(entity);
+
+                    if (aggro != null)
+                    {
+                        foreach (Entity receiver in aggro.HateList)
+                        {
+                            Interactable interactor = (Interactable)h_InteractionMapper.get(entity);
+                            Interactable interactee = (Interactable)h_InteractionMapper.get(receiver);
+
+                            if (interactor == null || interactee == null)
+                                continue;
+                            
+                            if(interactor.SupportedInteractions.AWARDS_VICTORY &&
+                               interactee.SupportedInteractions.MAY_RECEIVE_VICTORY)
+                                uf.createVictoryAward(entity, receiver, 10);
+                        }
+                    }
+
                 }
                 
                 life.IsAlive = false;

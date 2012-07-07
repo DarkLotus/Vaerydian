@@ -10,11 +10,11 @@ using Vaerydian.Components;
 using Vaerydian.Components.Audio;
 using Glimpse.Controls;
 using Microsoft.Xna.Framework;
-using Vaerydian.Components.Actions;
 using Vaerydian.Components.Spatials;
-using Vaerydian.Components.Action;
+using Vaerydian.Components.Actions;
 using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Utils;
+using Vaerydian.Components.Characters;
 
 namespace Vaerydian.Factories
 {
@@ -139,15 +139,63 @@ namespace Vaerydian.Factories
         /// <summary>
         /// creates a victory entity component
         /// </summary>
-        public void createVictory(Entity awarder, Entity receiver)
+        public void createVictoryAward(Entity awarder, Entity receiver, int maxAwardable)
         {
             Entity e = u_EcsInstance.create();
 
-            Victory victory = new Victory();
+            Award victory = new Award();
+            victory.AwardType = AwardType.Victory;
             victory.Awarder = awarder;
             victory.Receiver = receiver;
+            victory.MaxAwardable = maxAwardable;
 
             u_EcsInstance.EntityManager.addComponent(e, victory);
+
+            u_EcsInstance.refresh(e);
+        }
+
+        public void createSkillupAward(Entity awarder, Entity receiver, SkillName skill, int maxAwardable)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Award award = new Award();
+            award.AwardType = AwardType.SkillUp;
+            award.Awarder = awarder;
+            award.Receiver = receiver;
+            award.MaxAwardable = maxAwardable;
+            award.SkillName = skill;
+
+            u_EcsInstance.EntityManager.addComponent(e, award);
+
+            u_EcsInstance.refresh(e);
+        }
+
+        public void createAttributeAward(Entity awarder, Entity receiver, AttributeType attribute, int maxAwardable)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Award award = new Award();
+            award.AwardType = AwardType.Attribute;
+            award.Awarder = awarder;
+            award.Receiver = receiver;
+            award.MaxAwardable = maxAwardable;
+            award.AttributeType = attribute;
+
+            u_EcsInstance.EntityManager.addComponent(e, award);
+
+            u_EcsInstance.refresh(e);
+        }
+
+        public void createHealthAward(Entity receiver, int maxAwardable)
+        {
+            Entity e = u_EcsInstance.create();
+
+            Award award = new Award();
+            award.AwardType = AwardType.Health;
+            award.Receiver = receiver;
+            award.MaxAwardable = maxAwardable;
+
+            u_EcsInstance.EntityManager.addComponent(e, award);
 
             u_EcsInstance.refresh(e);
         }

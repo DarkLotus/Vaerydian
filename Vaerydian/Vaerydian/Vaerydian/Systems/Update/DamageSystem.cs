@@ -8,7 +8,7 @@ using ECSFramework;
 using Vaerydian.Utils;
 using Vaerydian.Components;
 using Vaerydian.Factories;
-using Vaerydian.Components.Action;
+using Vaerydian.Components.Actions;
 using Vaerydian.Components.Characters;
 
 namespace Vaerydian.Systems.Update
@@ -17,6 +17,8 @@ namespace Vaerydian.Systems.Update
     {
         private ComponentMapper d_DamageMapper;
         private ComponentMapper d_HealthMapper;
+        private ComponentMapper d_AttributeMapper;
+        private ComponentMapper d_InteractMapper;
 
         private Random d_Rand = new Random();
 
@@ -28,6 +30,9 @@ namespace Vaerydian.Systems.Update
         {
             d_DamageMapper = new ComponentMapper(new Damage(), e_ECSInstance);
             d_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
+            d_AttributeMapper = new ComponentMapper(new Attributes(), e_ECSInstance);
+            d_InteractMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
+
             d_UtilFactory = new UtilFactory(e_ECSInstance);;
         }
 
@@ -76,6 +81,23 @@ namespace Vaerydian.Systems.Update
 
                 if (damage.DamageAmount > 0)
                 {
+
+                    if (damage.DamageAmount > (health.MaxHealth * 0.25f))
+                    {
+                        if (((Interactable)d_InteractMapper.get(damage.Target)).SupportedInteractions.MAY_ADVANCE)
+                        {
+                            int endurance = ((Attributes)d_AttributeMapper.get(damage.Target)).AttributeSet[AttributeType.Endurance];
+
+                            if (health.MaxHealth < (endurance * 5))
+                            {
+
+                                if (d_Rand.NextDouble() <= ((double)(endurance*5) - (double)health.MaxHealth)/(double)(endurance*5))
+                                {
+                                    d_UtilFactory.createHealthAward(damage.Target, 1);
+                                }
+                            }
+                        }
+                    }
 
 
                     switch (d_Rand.Next(0, 7))

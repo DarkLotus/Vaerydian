@@ -36,33 +36,33 @@ namespace Vaerydian.Components.Characters
             e_TypeID = typeId;
         }
 
-        private Dictionary<MobGroup, Knowledge> e_GeneralKnowledge = new Dictionary<MobGroup, Knowledge>();
+        private Dictionary<CreatureGeneralGroup, Knowledge> e_GeneralKnowledge = new Dictionary<CreatureGeneralGroup, Knowledge>();
         /// <summary>
         /// experience fighting a mob group type
         /// </summary>
-        public Dictionary<MobGroup, Knowledge> GeneralKnowledge
+        public Dictionary<CreatureGeneralGroup, Knowledge> GeneralKnowledge
         {
             get { return e_GeneralKnowledge; }
             set { e_GeneralKnowledge = value; }
         }
 
-        private Dictionary<MobVariation, Knowledge> e_TypeKnowledge = new Dictionary<MobVariation, Knowledge>();
+        private Dictionary<CreatureVariationGroup, Knowledge> e_VariationKnowledge = new Dictionary<CreatureVariationGroup, Knowledge>();
 
         /// <summary>
         /// experience fighting a variation of mob
         /// </summary>
-        public Dictionary<MobVariation, Knowledge> TypeKnowledge
+        public Dictionary<CreatureVariationGroup, Knowledge> VariationKnowledge
         {
-            get { return e_TypeKnowledge; }
-            set { e_TypeKnowledge = value; }
+            get { return e_VariationKnowledge; }
+            set { e_VariationKnowledge = value; }
         }
 
-        private Dictionary<UniqueType, Knowledge> e_UniqueKnowledge = new Dictionary<UniqueType, Knowledge>();
+        private Dictionary<CreatureUniqueGroup, Knowledge> e_UniqueKnowledge = new Dictionary<CreatureUniqueGroup, Knowledge>();
 
         /// <summary>
         /// experience fighting something or somewhere unique
         /// </summary>
-        public Dictionary<UniqueType, Knowledge> UniqueKnowledge
+        public Dictionary<CreatureUniqueGroup, Knowledge> UniqueKnowledge
         {
             get { return e_UniqueKnowledge; }
             set { e_UniqueKnowledge = value; }

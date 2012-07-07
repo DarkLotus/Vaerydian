@@ -67,7 +67,7 @@ namespace Vaerydian.Factories
 
             Item item = new Item("TestArmor", 0, 100);
 
-            Armor armor = new Armor(4, 5);
+            Armor armor = new Armor(5, 5);
 
             i_EcsInstance.EntityManager.addComponent(e, item);
             i_EcsInstance.EntityManager.addComponent(e, armor);

@@ -5,16 +5,18 @@ using System.Text;
 
 namespace Vaerydian.Characters.Experience
 {
-    public enum MobGroup
+    public enum CreatureGeneralGroup
     {
-        Test
+        Human
     }
 
-    public enum MobVariation
+    public enum CreatureVariationGroup
     {
+        None
     }
 
-    public enum UniqueType
+    public enum CreatureUniqueGroup
     {
+        None
     }
 }

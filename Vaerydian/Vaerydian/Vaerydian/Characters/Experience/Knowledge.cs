@@ -7,11 +7,11 @@ namespace Vaerydian.Characters.Experience
 {
     public class Knowledge
     {
-        private int e_Value;
+        private float e_Value;
         /// <summary>
         /// experience value
         /// </summary>
-        public int Value
+        public float Value
         {
             get { return e_Value; }
             set { e_Value = value; }
@@ -22,7 +22,7 @@ namespace Vaerydian.Characters.Experience
             e_Value = 0;
         }
 
-        public Knowledge(int value)
+        public Knowledge(float value)
         {
             e_Value = value;
         }

@@ -49,12 +49,15 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
             n_EcsInstance.EntityManager.addComponent(e, new Transform());
+            n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
 
-            //create health
-            Health health = new Health(200);
-            health.RecoveryAmmount = 20;
-            health.RecoveryRate = 500;
-            n_EcsInstance.EntityManager.addComponent(e, health);
+            //create info
+            Information info = new Information();
+            info.Name = "TEST FOLLOWER";
+            info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
+            info.CreatureVariationGroup = CreatureVariationGroup.None;
+            info.CreatureUniqueGroup = CreatureUniqueGroup.None;
+            n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
             Life life = new Life();
@@ -67,33 +70,49 @@ namespace Vaerydian.Factories
             interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
             interact.SupportedInteractions.ATTACKABLE = true;
             interact.SupportedInteractions.MELEE_ACTIONABLE = true;
+            interact.SupportedInteractions.AWARDS_VICTORY = true;
+            interact.SupportedInteractions.CAUSES_ADVANCEMENT = true;
+            interact.SupportedInteractions.MAY_ADVANCE = false;
             n_EcsInstance.EntityManager.addComponent(e, interact);
 
             //create test equipment
             ItemFactory iFactory = new ItemFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
+            int val = 25;
+
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            Knowledge knowledge = new Knowledge(50);
-            knowledges.GeneralKnowledge.Add(MobGroup.Test, knowledge);
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(val));
+            knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
+            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
             Attributes attributes = new Attributes();
-            attributes.Endurance.Value = 50;
-            attributes.Mind.Value = 50;
-            attributes.Muscle.Value = 50;
-            attributes.Perception.Value = 50;
-            attributes.Quickness.Value = 50;
+
+            attributes.AttributeSet.Add(AttributeType.Focus, val);
+            attributes.AttributeSet.Add(AttributeType.Endurance, val);
+            attributes.AttributeSet.Add(AttributeType.Mind, val);
+            attributes.AttributeSet.Add(AttributeType.Muscle, val);
+            attributes.AttributeSet.Add(AttributeType.Perception, val);
+            attributes.AttributeSet.Add(AttributeType.Personality, val);
+            attributes.AttributeSet.Add(AttributeType.Quickness, val);
             n_EcsInstance.EntityManager.addComponent(e, attributes);
 
+            //create health
+            Health health = new Health(attributes.AttributeSet[AttributeType.Endurance] * 5);
+            health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
+            health.RecoveryRate = 1000;
+            n_EcsInstance.EntityManager.addComponent(e, health);
+
             //setup skills
-            Skill skill = new Skill("Avoidance", 50, SkillType.Offensive);
+            Skill skill = new Skill("Avoidance", val, SkillType.Offensive);
             Skills skills = new Skills();
-            skills.SkillSet.Add(SkillNames.Avoidance, skill);
-            skill = new Skill("Ranged", 50, SkillType.Offensive);
-            skills.SkillSet.Add(SkillNames.Ranged, skill);
+            skills.SkillSet.Add(SkillName.Avoidance, skill);
+
+            skill = new Skill("Ranged", val, SkillType.Offensive);
+            skills.SkillSet.Add(SkillName.Ranged, skill);
             n_EcsInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Ally);
@@ -127,12 +146,15 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
             n_EcsInstance.EntityManager.addComponent(e, new Transform());
+            n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
 
-            //create health
-            Health health = new Health(100);
-            health.RecoveryAmmount = 10;
-            health.RecoveryRate = 500;
-            n_EcsInstance.EntityManager.addComponent(e, health);
+            //create info
+            Information info = new Information();
+            info.Name = "TEST WANDERER";
+            info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
+            info.CreatureVariationGroup = CreatureVariationGroup.None; 
+            info.CreatureUniqueGroup = CreatureUniqueGroup.None;
+            n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
             Life life = new Life();
@@ -145,34 +167,49 @@ namespace Vaerydian.Factories
             interact.SupportedInteractions.PROJECTILE_COLLIDABLE = true;
             interact.SupportedInteractions.ATTACKABLE = true;
             interact.SupportedInteractions.MELEE_ACTIONABLE = true;
+            interact.SupportedInteractions.AWARDS_VICTORY = true;
+            interact.SupportedInteractions.CAUSES_ADVANCEMENT = true;
+            interact.SupportedInteractions.MAY_ADVANCE = false;
             n_EcsInstance.EntityManager.addComponent(e, interact);
 
             //create test equipment
             ItemFactory iFactory = new ItemFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
+            int val = 25;
+
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            Knowledge knowledge = new Knowledge(50);
-            knowledges.GeneralKnowledge.Add(MobGroup.Test, knowledge);
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(val));
+            knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
+            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
             Attributes attributes = new Attributes();
-            attributes.Endurance.Value = 50;
-            attributes.Mind.Value = 50;
-            attributes.Muscle.Value = 50;
-            attributes.Perception.Value = 50;
-            attributes.Quickness.Value = 50;
+
+            attributes.AttributeSet.Add(AttributeType.Focus, val);
+            attributes.AttributeSet.Add(AttributeType.Endurance, val);
+            attributes.AttributeSet.Add(AttributeType.Mind, val);
+            attributes.AttributeSet.Add(AttributeType.Muscle, val);
+            attributes.AttributeSet.Add(AttributeType.Perception, val);
+            attributes.AttributeSet.Add(AttributeType.Personality, val);
+            attributes.AttributeSet.Add(AttributeType.Quickness, val);
             n_EcsInstance.EntityManager.addComponent(e, attributes);
 
+            //create health
+            Health health = new Health(attributes.AttributeSet[AttributeType.Endurance] * 5);
+            health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
+            health.RecoveryRate = 1000;
+            n_EcsInstance.EntityManager.addComponent(e, health);
+
             //setup skills
-            Skill skill = new Skill("Avoidance", 50, SkillType.Offensive);
+            Skill skill = new Skill("Avoidance", val, SkillType.Offensive);
             Skills skills = new Skills();
-            skills.SkillSet.Add(SkillNames.Avoidance, skill);
-            
-            skill = new Skill("Ranged", 50, SkillType.Offensive);
-            skills.SkillSet.Add(SkillNames.Ranged, skill);
+            skills.SkillSet.Add(SkillName.Avoidance, skill);
+
+            skill = new Skill("Ranged", val, SkillType.Offensive);
+            skills.SkillSet.Add(SkillName.Ranged, skill);
             n_EcsInstance.EntityManager.addComponent(e, skills);
 
             //setup factions
@@ -185,6 +222,9 @@ namespace Vaerydian.Factories
             factions.KnownFactions.Add(player.FactionType, player);
             factions.KnownFactions.Add(ally.FactionType, ally);
             n_EcsInstance.EntityManager.addComponent(e, factions);
+
+            Aggrivation aggro = new Aggrivation();
+            n_EcsInstance.EntityManager.addComponent(e, aggro);
 
             EntityFactory ef = new EntityFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, ef.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));

@@ -7,7 +7,7 @@ using ECSFramework;
 
 using Vaerydian.Utils;
 
-namespace Vaerydian.Components.Action
+namespace Vaerydian.Components.Actions
 {
     class Damage : IComponent
     {

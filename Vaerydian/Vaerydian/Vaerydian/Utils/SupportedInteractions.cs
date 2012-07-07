@@ -26,5 +26,12 @@ namespace Vaerydian.Utils
 
         public bool MELEE_ACTIONABLE = false;
 
+        public bool AWARDS_VICTORY = false;
+
+        public bool MAY_RECEIVE_VICTORY = false;
+
+        public bool CAUSES_ADVANCEMENT = false;
+
+        public bool MAY_ADVANCE = false;
     }
 }

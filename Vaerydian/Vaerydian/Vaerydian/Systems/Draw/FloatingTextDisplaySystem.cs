@@ -14,12 +14,12 @@ using Vaerydian.Components;
 using Glimpse.Input;
 using Glimpse.Managers;
 using Vaerydian.Components.Spatials;
-using Vaerydian.Components.Action;
+using Vaerydian.Components.Actions;
 using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Draw
 {
-    public class DamageDisplaySystem : EntityProcessingSystem
+    public class FloatingTextDisplaySystem : EntityProcessingSystem
     {
         private GameContainer d_Container;
         private SpriteBatch d_SpriteBatch;
@@ -27,23 +27,25 @@ namespace Vaerydian.Systems.Draw
         private ComponentMapper d_DamageMapper;
         private ComponentMapper d_PositionMapper;
         private ComponentMapper d_ViewPortMapper;
+        private ComponentMapper d_FloatMapper;
 
         private SpriteFont d_Font;
 
         private Entity d_Camera;
 
-        public DamageDisplaySystem(GameContainer container)
+        public FloatingTextDisplaySystem(GameContainer container)
         {
             d_Container = container;
             d_SpriteBatch = container.SpriteBatch;
         }
 
 
-        public override void initialize()
+        public override void initialize()   
         {
             d_DamageMapper = new ComponentMapper(new Damage(), e_ECSInstance);
             d_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             d_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
+            d_FloatMapper = new ComponentMapper(new FloatingText(), e_ECSInstance);
         }
         
         protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
@@ -54,19 +56,36 @@ namespace Vaerydian.Systems.Draw
 
         protected override void process(Entity entity)
         {
-            Damage damage = (Damage)d_DamageMapper.get(entity);
+            //Damage damage = (Damage)d_DamageMapper.get(entity);
+            FloatingText text = (FloatingText)d_FloatMapper.get(entity);
+
+            if (text == null)
+                return;
+            else
+            {
+                //see if we should destroy this
+                text.ElapsedTime += e_ECSInstance.ElapsedTime;
+                if (text.ElapsedTime >= text.Lifetime)
+                {
+                    e_ECSInstance.deleteEntity(entity);
+                    return;
+                }
+            }
+
+            
             Position position = (Position)d_PositionMapper.get(entity);//damage.Target);
 
-            if (position == null || damage == null)
+            if (position == null || text == null)
                 return;
 
             ViewPort camera = (ViewPort)d_ViewPortMapper.get(d_Camera);
             Vector2 origin = camera.getOrigin();
-            Vector2 pos = position.Pos + new Vector2(0, -damage.Lifetime / 7);
+            Vector2 pos = position.Pos + new Vector2(0, -text.ElapsedTime / 7);
 
-            String dmg;
-            Color color = Color.Yellow;
+            //String dmg;
+            //Color color = Color.Yellow;
             
+            /*
             if (damage.DamageAmount == 0)
             {
                 dmg = "miss";
@@ -74,23 +93,24 @@ namespace Vaerydian.Systems.Draw
             }
             else
                 dmg = "" + damage.DamageAmount;
+            */
 
             float fade = 1f;
-            float half = (float)damage.Lifespan / 2f;
+            float half = (float)text.Lifetime / 2f;
 
-            if (damage.Lifetime > half)
-                fade = (1f - (damage.Lifetime - half) / half);
+            if (text.ElapsedTime > half)
+                fade = (1f - (text.ElapsedTime - half) / half);
             
 
             d_SpriteBatch.Begin();
             
             //background
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(1, 0), Color.Black*fade);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(-1, 0), Color.Black*fade);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, 1), Color.Black*fade);
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin + new Vector2(0, -1), Color.Black*fade);
+            d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin + new Vector2(1, 0), Color.Black * fade);
+            d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin + new Vector2(-1, 0), Color.Black * fade);
+            d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin + new Vector2(0, 1), Color.Black * fade);
+            d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin + new Vector2(0, -1), Color.Black * fade);
             //foreground
-            d_SpriteBatch.DrawString(d_Font, dmg, pos - origin, color*fade);
+            d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin, text.Color * fade);
 
             d_SpriteBatch.End();
         }
