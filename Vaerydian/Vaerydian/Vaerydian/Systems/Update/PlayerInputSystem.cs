@@ -382,7 +382,7 @@ namespace Vaerydian.Systems.Update
                
             }
 
-            if(InputManager.isKeyToggled(Keys.P))
+            if(InputManager.isKeyPressed(Keys.P))
             {
 
                 NPCFactory ef = new NPCFactory(e_ECSInstance);
