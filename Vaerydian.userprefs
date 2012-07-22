@@ -1,0 +1,35 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="c:\workspaceMono\Vaerydian\Vaerydian\Screens\GameScreen.cs">
+    <Files>
+      <File FileName="c:\workspaceMono\Vaerydian\Vaerydian\Screens\GameScreen.cs" Line="220" Column="114" />
+      <File FileName="Vaerydian\Behaviors\WanderingEnemyBehavior.cs" Line="320" Column="86" />
+      <File FileName="Vaerydian\Utils\QuadTree.cs" Line="241" Column="13" />
+      <File FileName="Vaerydian\Factories\UIFactory.cs" Line="178" Column="22" />
+      <File FileName="Vaerydian\UI\HpLabelUpdater.cs" Line="31" Column="19" />
+      <File FileName="Vaerydian\Factories\EntityFactory.cs" Line="112" Column="39" />
+      <File FileName="Vaerydian\VaerydianGame.cs" Line="28" Column="5" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Vaerydian" expanded="True">
+            <Node name="Behaviors" expanded="True" />
+            <Node name="Components" expanded="True">
+              <Node name="Characters" expanded="True" />
+            </Node>
+            <Node name="Factories" expanded="True" />
+            <Node name="Screens" expanded="True">
+              <Node name="GameScreen.cs" selected="True" />
+            </Node>
+            <Node name="UI" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
