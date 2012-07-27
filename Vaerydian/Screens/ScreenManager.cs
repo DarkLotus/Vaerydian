@@ -159,6 +159,13 @@ namespace Vaerydian.Screens
             sm_Screens.Add(screen);
         }
 
+		public void addLoadedScreen (Screen screen)
+		{
+			screen.ScreenState = ScreenState.Active;
+			screen.ScreenManager = this;
+			sm_Screens.Add(screen);
+		}
+
         /// <summary>
         /// removes a screen from the screen list
         /// </summary>

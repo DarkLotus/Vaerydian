@@ -296,9 +296,13 @@ namespace Vaerydian.Maps
                         */
 
                         //new way
-                        spriteBatch.Draw(terrainTexture, new Rectangle((x * me_TileSize), (y * me_TileSize), me_TileSize, me_TileSize),
+                        /*spriteBatch.Draw(temperatureTexture, new Rectangle((x * me_TileSize), (y * me_TileSize), me_TileSize, me_TileSize),
                             new Rectangle(0, 0, me_TileSize, me_TileSize), getColor(terrain), 0f,
                             new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y), SpriteEffects.None, 0f);
+						*/
+
+						spriteBatch.Draw(terrainTexture, new Vector2((x * me_TileSize), (y * me_TileSize)) - new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y),
+                            new Rectangle(0, 0, me_TileSize, me_TileSize), getColor(terrain), 0f, new Vector2(0,0) , new Vector2(1f), SpriteEffects.None, 0);
                     }
                 }
             }

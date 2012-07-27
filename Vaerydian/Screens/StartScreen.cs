@@ -166,7 +166,8 @@ namespace Vaerydian.Screens
             this.ScreenManager.removeScreen(this);
 
             //load the world screen
-            LoadingScreen.Load(this.ScreenManager, false, new WorldScreen());
+            //LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
+			LoadingScreen.Load(this.ScreenManager,true,new WorldScreen());
         }
 
         private void OnMouseClickExit(IControl control, InterfaceArgs args)

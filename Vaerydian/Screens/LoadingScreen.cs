@@ -30,6 +30,8 @@ namespace Vaerydian.Screens
 
         static Rectangle l_BackgroundRect;
 
+
+
         #endregion  
  
         #region Initialization  
@@ -185,7 +187,7 @@ namespace Vaerydian.Screens
                 // Draw the loading screen.  
                 Draw(gameTime);  
  
-                ScreenManager.GraphicsDevice.Present();  
+				ScreenManager.GraphicsDevice.Present();  
             }  
             catch 
             {  

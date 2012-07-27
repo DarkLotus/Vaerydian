@@ -62,7 +62,7 @@ namespace Vaerydian.Screens
 
         private ScreenViewPort ws_ViewPort = new ScreenViewPort();
 
-        private int ws_TileSize = 1;
+        private int ws_TileSize = 5;
 
         /// <summary>
         /// list of usuable textures
@@ -77,7 +77,7 @@ namespace Vaerydian.Screens
         {
             base.Initialize();
 
-            w_SpriteBatch = ScreenManager.SpriteBatch;
+			w_SpriteBatch = new SpriteBatch(this.ScreenManager.GraphicsDevice);
 
             ws_ViewPort.Dimensions = new Point(this.ScreenManager.GraphicsDevice.Viewport.Width, this.ScreenManager.GraphicsDevice.Viewport.Height);
 
@@ -280,7 +280,7 @@ namespace Vaerydian.Screens
         {
             base.Draw(gameTime);
 
-			this.ScreenManager.GraphicsDevice.Clear(Color.CornflowerBlue);
+			this.ScreenManager.GraphicsDevice.Clear(Color.Red);
 
             w_MapEngine.DrawMap(gameTime, w_SpriteBatch);
 

@@ -175,6 +175,7 @@
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />
     <Compile Include="UI\HpLabelUpdater.cs" />
+    <Compile Include="Screens\NewLoadingScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />

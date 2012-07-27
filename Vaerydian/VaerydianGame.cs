@@ -47,7 +47,7 @@ namespace Vaerydian
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             this.IsFixedTimeStep = true;
             
@@ -104,7 +104,7 @@ namespace Vaerydian
 
             FontManager.LoadContent();
 
-            LoadingScreen.Load(screenManager, true, new StartScreen());
+            LoadingScreen.Load(screenManager, false, new StartScreen());
 
             base.LoadContent();
         }
