@@ -1,31 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="c:\workspaceMono\Vaerydian\Vaerydian\Screens\Screen.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\Screens\WorldScreen.cs">
     <Files>
-      <File FileName="Vaerydian\VaerydianGame.cs" Line="99" Column="25" />
-      <File FileName="Vaerydian\Screens\WorldScreen.cs" Line="84" Column="27" />
-      <File FileName="Vaerydian\Maps\MapEngine.cs" Line="261" Column="26" />
-      <File FileName="Vaerydian\Screens\StartScreen.cs" Line="155" Column="10" />
-      <File FileName="Vaerydian\Screens\ScreenManager.cs" Line="165" Column="32" />
-      <File FileName="Vaerydian\Screens\LoadingScreen.cs" Line="190" Column="5" />
-      <File FileName="Vaerydian\Screens\NewLoadingScreen.cs" Line="69" Column="25" />
-      <File FileName="c:\workspaceMono\Vaerydian\Vaerydian\Screens\Screen.cs" Line="13" Column="6" />
+      <File FileName="Vaerydian\Screens\NewLoadingScreen.cs" Line="85" Column="4" />
+      <File FileName="Vaerydian\Screens\StartScreen.cs" Line="175" Column="49" />
+      <File FileName="Vaerydian\Screens\WorldScreen.cs" Line="61" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
-            <Node name="Behaviors" expanded="True" />
-            <Node name="Content" expanded="True" />
-            <Node name="Factories" expanded="True" />
             <Node name="Maps" expanded="True" />
             <Node name="Screens" expanded="True">
-              <Node name="Screen.cs" selected="True" />
+              <Node name="WorldScreen.cs" selected="True" />
             </Node>
-            <Node name="Systems" expanded="True">
-              <Node name="Draw" expanded="True" />
-            </Node>
-            <Node name="UI" expanded="True" />
           </Node>
         </State>
       </Pad>
