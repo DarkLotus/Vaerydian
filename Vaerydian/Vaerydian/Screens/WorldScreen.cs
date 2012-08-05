@@ -109,7 +109,7 @@ namespace Vaerydian.Screens
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate(ref map, MapType.WORLD);
+            MapMaker.generate( map, MapType.WORLD);
 
             w_MapEngine.WorldGenerator.WorldTerrainMap = map.Terrain;
             //end quick test hack

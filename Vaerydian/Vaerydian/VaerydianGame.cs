@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Media;
 using Vaerydian.Windows;
 using Vaerydian.Systems;
 using Vaerydian.Components;
-using Vaerydian.Components.Debug;
+using Vaerydian.Components.Dbg;
 using Vaerydian.Factories;
 using Vaerydian.Screens;
 
@@ -48,8 +48,8 @@ namespace Vaerydian
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = true;
-            this.IsFixedTimeStep = true;
+            graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
             
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));

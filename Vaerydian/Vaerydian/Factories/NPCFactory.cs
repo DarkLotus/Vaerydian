@@ -62,7 +62,7 @@ namespace Vaerydian.Factories
             //create life
             Life life = new Life();
             life.IsAlive = true;
-            life.DeathLongevity = 5000;
+            life.DeathLongevity = 500;
             n_EcsInstance.EntityManager.addComponent(e, life);
 
             //create interactions
@@ -159,7 +159,7 @@ namespace Vaerydian.Factories
             //create life
             Life life = new Life();
             life.IsAlive = true;
-            life.DeathLongevity = 2000;
+            life.DeathLongevity = 500;
             n_EcsInstance.EntityManager.addComponent(e, life);
 
             //create interactions

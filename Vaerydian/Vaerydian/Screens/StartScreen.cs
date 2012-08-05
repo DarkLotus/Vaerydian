@@ -70,26 +70,70 @@ namespace Vaerydian.Screens
 
             s_ButtonMenu = new ButtonMenu(e, null, s_ECSInstance, 3, location, height, width, border, spacing);
 
+
             s_ButtonMenu.init();
 
             s_ButtonMenu.Frame.BackgroundName = "frame";
             s_ButtonMenu.Frame.BackgroundColor = Color.Black;
-            s_ButtonMenu.Frame.Transparency = 0.75f;
+            s_ButtonMenu.Frame.Transparency = 0.75f;            
 
-            s_ButtonMenu.Buttons[0].NormalTextureName = "ui\\buttonNormal";
-            s_ButtonMenu.Buttons[0].PressedTextureName = "ui\\buttonPressed";
-            s_ButtonMenu.Buttons[0].MouseOverTextureName = "ui\\buttonOver";
+            //s_ButtonMenu.Buttons[0].NormalTextureName = "ui\\buttonNormal";
+            //s_ButtonMenu.Buttons[0].PressedTextureName = "ui\\buttonPressed";
+            //s_ButtonMenu.Buttons[0].MouseOverTextureName = "ui\\buttonOver";
+            
+            s_ButtonMenu.Buttons[0].NormalTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[0].PressedTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[0].MouseOverTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[0].Color = Color.Gray;
+            s_ButtonMenu.Buttons[0].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[0].Border = 10;
+            s_ButtonMenu.Buttons[0].FontName = "General";
+            s_ButtonMenu.Buttons[0].AutoSize = true;
+            s_ButtonMenu.Buttons[0].CenterText = true;
+            s_ButtonMenu.Buttons[0].Text = "New Game";
+            s_ButtonMenu.Buttons[0].NormalTextColor = Color.White;
+            s_ButtonMenu.Buttons[0].MouseOverTextColor = Color.Yellow;
+            s_ButtonMenu.Buttons[0].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[0].MouseClick += OnMouseClickNewGame;
 
-            s_ButtonMenu.Buttons[1].NormalTextureName = "ui\\buttonNormal";
-            s_ButtonMenu.Buttons[1].PressedTextureName = "ui\\buttonPressed";
-            s_ButtonMenu.Buttons[1].MouseOverTextureName = "ui\\buttonOver";
+            //s_ButtonMenu.Buttons[1].NormalTextureName = "ui\\buttonNormal";
+            //s_ButtonMenu.Buttons[1].PressedTextureName = "ui\\buttonPressed";
+            //s_ButtonMenu.Buttons[1].MouseOverTextureName = "ui\\buttonOver";
+            
+            s_ButtonMenu.Buttons[1].NormalTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[1].PressedTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[1].MouseOverTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[1].Color = Color.Gray;
+            s_ButtonMenu.Buttons[1].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[1].Border = 10;
+            s_ButtonMenu.Buttons[1].FontName = "General";
+            s_ButtonMenu.Buttons[1].AutoSize = true;
+            s_ButtonMenu.Buttons[1].CenterText = true;
+            s_ButtonMenu.Buttons[1].Text = "World Gen";
+            s_ButtonMenu.Buttons[1].NormalTextColor = Color.White;
+            s_ButtonMenu.Buttons[1].MouseOverTextColor = Color.Yellow;
+            s_ButtonMenu.Buttons[1].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[1].MouseClick += OnMouseClickWorldGen;
 
-            s_ButtonMenu.Buttons[2].NormalTextureName = "ui\\buttonNormal";
-            s_ButtonMenu.Buttons[2].PressedTextureName = "ui\\buttonPressed";
-            s_ButtonMenu.Buttons[2].MouseOverTextureName = "ui\\buttonOver";
+            //s_ButtonMenu.Buttons[2].NormalTextureName = "ui\\buttonNormal";
+            //s_ButtonMenu.Buttons[2].PressedTextureName = "ui\\buttonPressed";
+            //s_ButtonMenu.Buttons[2].MouseOverTextureName = "ui\\buttonOver";
+            
+            s_ButtonMenu.Buttons[2].NormalTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[2].PressedTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[2].MouseOverTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[2].Color = Color.Gray;
+            s_ButtonMenu.Buttons[2].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[2].Border = 10;
+            s_ButtonMenu.Buttons[2].FontName = "General";
+            s_ButtonMenu.Buttons[2].AutoSize = true;
+            s_ButtonMenu.Buttons[2].CenterText = true;
+            s_ButtonMenu.Buttons[2].Text = "Exit Game";
+            s_ButtonMenu.Buttons[2].NormalTextColor = Color.White;
+            s_ButtonMenu.Buttons[2].MouseOverTextColor = Color.Yellow;
+            s_ButtonMenu.Buttons[2].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[2].MouseClick += OnMouseClickExit;
+
 
             s_ButtonMenu.assemble();
 

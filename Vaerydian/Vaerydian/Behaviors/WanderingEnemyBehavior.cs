@@ -183,7 +183,7 @@ namespace Vaerydian.Behaviors
             ParallelSelector moveTooClose = new ParallelSelector(new Inverter(tooClose), moveAway);
             
             //if target isnt dead and you're not too far and not too close, shoot at it
-            ParallelSequence attackSeq = new ParallelSequence(deadTargetSel, new Inverter(tooFar), new Inverter(tooClose), new Timer(elapsedTime, 250, fireShot), animate);
+            ParallelSequence attackSeq = new ParallelSequence(deadTargetSel, new Inverter(tooFar), new Inverter(tooClose), new Timer(elapsedTime, 500, fireShot), animate);
             
             //move towards or away from your target, then attemp to attack it
             ParallelSequence pursAttackSeq1 = new ParallelSequence(moveTooFar, moveTooClose, attackSeq);

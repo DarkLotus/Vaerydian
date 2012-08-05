@@ -12,7 +12,7 @@ using Vaerydian.Characters.Experience;
 using Vaerydian.Characters.Skills;
 using Vaerydian.Characters.Attributes;
 using Vaerydian.Components;
-using Vaerydian.Components.Debug;
+using Vaerydian.Components.Dbg;
 using Vaerydian.Behaviors;
 using Vaerydian.Utils;
 using Vaerydian.Factories;

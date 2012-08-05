@@ -74,7 +74,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
             
-            MapMaker.generate(ref map, MapType.CAVE);
+            MapMaker.generate( map, MapType.CAVE);
 
             GameMap gameMap = new GameMap(map);
 
@@ -105,7 +105,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate(ref map, MapType.WORLD);
+            MapMaker.generate( map, MapType.WORLD);
 
             GameMap gameMap = new GameMap(map);
 

@@ -23,9 +23,9 @@ namespace Vaerydian.UI
         private int b_Width;
         private int b_Spacing;
         private Point b_Position;
-        private GForm b_Form;
-        private GCanvas b_Canvas;
-        private GFrame b_Frame;
+        private GForm b_Form = new GForm();
+        private GCanvas b_Canvas = new GCanvas();
+        private GFrame b_Frame = new GFrame();
 
         /// <summary>
         /// 

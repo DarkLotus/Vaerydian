@@ -15,7 +15,7 @@ using ECSFramework;
 using Microsoft.Xna.Framework;
 
 using Vaerydian.Components;
-using Vaerydian.Components.Debug;
+using Vaerydian.Components.Dbg;
 using Vaerydian.Utils;
 using Vaerydian.Behaviors.Actions;
 using Vaerydian.Components.Spatials;

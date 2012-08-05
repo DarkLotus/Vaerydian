@@ -13,7 +13,7 @@ using ECSFramework.Utils;
 using WorldGeneration.Utils;
 
 using Vaerydian.Components;
-using Vaerydian.Components.Debug;
+using Vaerydian.Components.Dbg;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Graphical;
@@ -24,7 +24,7 @@ namespace Vaerydian.Systems.Draw
     {
         private Dictionary<short, Rectangle> m_RectDict;
         private Texture2D m_Texture;
-        private ComponentMapper m_CaveMapMapper;
+        private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewportMapper;
         private ComponentMapper m_PositionMapper;
         private ComponentMapper m_MapDebugMapper;
@@ -39,7 +39,7 @@ namespace Vaerydian.Systems.Draw
 
         private int m_xStart, m_yStart, m_xFinish, m_yFinish, m_TileSize;
 
-        private Terrain c_CaveTerrain;
+        private Terrain m_Terrain;
 
         public MapSystem(GameContainer container)
         {
@@ -50,7 +50,7 @@ namespace Vaerydian.Systems.Draw
         public override void initialize()
         {
             m_RectDict = new Dictionary<short, Rectangle>();
-            m_CaveMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
+            m_GameMapMapper = new ComponentMapper(new GameMap(), e_ECSInstance);
             m_ViewportMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             m_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             m_MapDebugMapper = new ComponentMapper(new MapDebug(), e_ECSInstance);
@@ -75,7 +75,7 @@ namespace Vaerydian.Systems.Draw
         protected override void process(Entity entity)
         {
             //get map and viewport
-            GameMap map = (GameMap) m_CaveMapMapper.get(entity);
+            GameMap map = (GameMap) m_GameMapMapper.get(entity);
             m_ViewPort = (ViewPort) m_ViewportMapper.get(m_Camera);
             //GeometryMap geometry = (GeometryMap)m_GeometryMapper.get(m_Geometry);
 
@@ -97,16 +97,16 @@ namespace Vaerydian.Systems.Draw
                 for (int y = m_yStart; y <= m_yFinish; y++)
                 {
                     //grab current tile terrain
-                    c_CaveTerrain = map.getTerrain(x, y);
+                    m_Terrain = map.getTerrain(x, y);
 
                     //ensure its useable
-                    if (c_CaveTerrain == null)
+                    if (m_Terrain == null)
                         continue;
 
                     //calculate position to place tile
                     pos = new Vector2(x*m_TileSize,y*m_TileSize);
 
-                    m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[c_CaveTerrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[m_Terrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
 

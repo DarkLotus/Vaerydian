@@ -118,7 +118,8 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WorldGeneration">
+    <Reference Include="WorldGeneration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -149,7 +150,7 @@
     <Compile Include="Components\Characters\Knowledges.cs" />
     <Compile Include="Components\Characters\Life.cs" />
     <Compile Include="Components\Characters\Skills.cs" />
-    <Compile Include="Components\Debug\MapDebug.cs" />
+    <Compile Include="Components\Dbg\MapDebug.cs" />
     <Compile Include="Components\Graphical\FloatingText.cs" />
     <Compile Include="Components\Graphical\GeometryMap.cs" />
     <Compile Include="Components\Graphical\Light.cs" />
