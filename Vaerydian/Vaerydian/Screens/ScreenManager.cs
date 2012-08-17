@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Vaerydian.Windows;
 using Vaerydian;
 
 namespace Vaerydian.Screens
@@ -62,19 +61,6 @@ namespace Vaerydian.Screens
         {
             get { return sm_spriteBatch; }
             set { sm_spriteBatch = value; }
-        }
-
-        /// <summary>
-        /// reference to the window manager
-        /// </summary>
-        private WindowManager sm_WindowManager;
-        /// <summary>
-        /// reference to the window manager
-        /// </summary>
-        public WindowManager WindowManager
-        {
-            get { return sm_WindowManager; }
-            set { sm_WindowManager = value; }
         }
 
         /// <summary>

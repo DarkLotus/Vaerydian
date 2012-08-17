@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
-using ECSFramework.Utils;
+
 
 //using WorldGeneration.Cave;
 using WorldGeneration.Utils;
@@ -67,7 +67,8 @@ namespace Vaerydian.Systems.Draw
             m_RectDict.Add(TerrainType.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
             m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
 
-            m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various");
+            //m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various");
+            m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\noise");
 
             m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
         }
@@ -106,7 +107,8 @@ namespace Vaerydian.Systems.Draw
                     //calculate position to place tile
                     pos = new Vector2(x*m_TileSize,y*m_TileSize);
 
-                    m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[m_Terrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+                    //m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[m_Terrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+                    m_SpriteBatch.Draw(m_Texture, pos - origin, null, getColorVariation(m_Terrain), 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                 }
             }
 
@@ -120,13 +122,13 @@ namespace Vaerydian.Systems.Draw
 
                 if (debug.OpenSet != null)
                 {
-                    for (int i = 0; i < debug.OpenSet.Count; i++)
+                    for (int i = 0; i < debug.OpenSet.Size; i++)
                     {
                         if (debug.OpenSet[i] == null)
                             continue;
-                        pos = debug.OpenSet[i].Position * m_TileSize;
+                        pos = debug.OpenSet[i].Data.Position * m_TileSize;
 
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.Orange, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                        m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[TerrainType.CAVE_FLOOR], Color.Orange, 0f,new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                     }
                 }
 
@@ -138,7 +140,7 @@ namespace Vaerydian.Systems.Draw
                             continue;
                         pos = debug.Blocking[i].Position * m_TileSize;
 
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_WALL], pos, null, Color.Red, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                        m_SpriteBatch.Draw(m_Texture, pos - origin, m_RectDict[TerrainType.CAVE_FLOOR], Color.Red, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                     }
                 }
 
@@ -150,7 +152,7 @@ namespace Vaerydian.Systems.Draw
                             continue;
                         pos = debug.ClosedSet[i].Position * m_TileSize;
 
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.Yellow, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                        m_SpriteBatch.Draw(m_Texture, pos - origin, m_RectDict[TerrainType.CAVE_FLOOR], Color.Yellow, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                     }
                 }
 
@@ -162,7 +164,7 @@ namespace Vaerydian.Systems.Draw
                             continue;
                         pos = debug.Path[i].Position * m_TileSize;
 
-                        m_SpriteBatch.Draw(m_TextureDict[TerrainType.CAVE_FLOOR], pos, null, Color.YellowGreen, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
+                        m_SpriteBatch.Draw(m_Texture, pos - origin, m_RectDict[TerrainType.CAVE_FLOOR], Color.YellowGreen, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                     }
                 }
 
@@ -198,27 +200,92 @@ namespace Vaerydian.Systems.Draw
                 m_yFinish = map.YSize-1;// (int)m_ViewPort.getDimensions().X - 1;
         }
 
-        /// <summary>
-        /// updates the tile indexes based on current viewport for the draw loop
-        /// </summary>
-        private void updateView(Vector2 origin, Vector2 center, Vector2 dimensions)
+
+        private Color getColorVariation(Terrain terrain)
         {
-            m_xStart = (int)(origin.X - center.X) / m_TileSize;
-            if (m_xStart <= 0)
-                m_xStart = 0;
+            Color color = getColor(terrain);
 
-            m_xFinish = (int)(origin.X - center.X + dimensions.X) / m_TileSize;
-            if (m_xFinish >= dimensions.X - 1)
-                m_xFinish = (int)dimensions.X - 1;
+            Vector3 colVec = color.ToVector3();
 
-            m_yStart = (int)(origin.Y - center.Y) / m_TileSize;
-            if (m_yStart <= 0)
-                m_yStart = 0;
+            colVec.X *= terrain.Variation;
+            colVec.Y *= terrain.Variation;
+            colVec.Z *= terrain.Variation;
 
-            m_yFinish = (int)(origin.Y - center.Y + dimensions.Y) / m_TileSize;
-            if (m_yFinish >= dimensions.X - 1)
-                m_yFinish = (int)dimensions.X - 1;
+
+            return new Color(colVec);
         }
 
+        private Color getColor(Terrain terrain)
+        {
+            switch (terrain.TerrainType)
+            {
+                case TerrainType.LAND_ARCTIC_DESERT:
+                    return new Color(204, 204, 255);
+                case TerrainType.LAND_DESERT:
+                    return new Color(204, 204, 0);
+                case TerrainType.LAND_SCORCHED:
+                    return new Color(153, 102, 51);
+                case TerrainType.LAND_SNOW_PLAINS:
+                    return Color.White;
+                case TerrainType.LAND_TUNDRA:
+                    return new Color(53, 111, 53);
+                case TerrainType.LAND_TAIGA:
+                    return new Color(24, 72, 48);
+                case TerrainType.LAND_TEMPERATE_GRASSLAND:
+                    return new Color(153, 255, 102);
+                case TerrainType.LAND_SHRUBLAND:
+                    return new Color(102, 153, 0);
+                case TerrainType.LAND_SAVANA:
+                    return new Color(204, 255, 102);
+                case TerrainType.LAND_TEMPERATE_FOREST:
+                    return new Color(0, 153, 0);
+                case TerrainType.LAND_TROPICAL_FOREST:
+                    return new Color(102, 255, 51);
+                case TerrainType.LAND_GLACIER:
+                    return new Color(153, 255, 204);
+                case TerrainType.LAND_MARSH:
+                    return new Color(33, 101, 67);
+                case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
+                    return new Color(0, 102, 0);
+                case TerrainType.LAND_HYBOREAN_RIMELAND:
+                    return new Color(204, 255, 255);
+                case TerrainType.LAND_BOG:
+                    return new Color(51, 51, 0);
+                case TerrainType.LAND_SWAMP:
+                    return new Color(0, 51, 0);
+                case TerrainType.LAND_TROPICAL_RAIN_FOREST:
+                    return new Color(0, 128, 0);
+                case TerrainType.OCEAN_ICE:
+                    return new Color(204, 255, 255);
+                case TerrainType.OCEAN_COAST:
+                    return new Color(255, 255, 153);
+                case TerrainType.OCEAN_LITTORAL:
+                    return new Color(51, 153, 255);
+                case TerrainType.OCEAN_SUBLITTORAL:
+                    return new Color(0, 102, 255);
+                case TerrainType.OCEAN_ABYSSAL:
+                    return new Color(0, 51, 204);
+                case TerrainType.MOUNTAIN_FOOTHILL:
+                    return new Color(57, 69, 43);
+                case TerrainType.MOUNTAIN_LOWLAND:
+                    return new Color(79, 95, 59);
+                case TerrainType.MOUNTAIN_HIGHLAND:
+                    return new Color(115, 123, 105);
+                case TerrainType.MOUNTAIN_CASCADE:
+                    return new Color(150, 150, 150);
+                case TerrainType.MOUNTAIN_DRY_PEAK:
+                    return new Color(192, 192, 192);
+                case TerrainType.MOUNTAIN_SNOWY_PEAK:
+                    return new Color(221, 221, 221);
+                case TerrainType.BASE_RIVER:
+                    return new Color(0, 102, 102);
+                case TerrainType.CAVE_WALL:
+                    return new Color(64, 64, 64);
+                case TerrainType.CAVE_FLOOR:
+                    return new Color(128, 128, 128);
+                default:
+                    return Color.Red;
+            }
+        }
     }
 }

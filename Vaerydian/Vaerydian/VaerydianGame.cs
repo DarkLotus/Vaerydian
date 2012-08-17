@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using Vaerydian.Windows;
 using Vaerydian.Systems;
 using Vaerydian.Components;
 using Vaerydian.Components.Dbg;
@@ -36,7 +35,6 @@ namespace Vaerydian
         private GameContainer gameContainer = new GameContainer();
 
         private ScreenManager screenManager;
-        //private WindowManager windowManager;
 
         private int elapsed;
         private int count = 0;
@@ -48,8 +46,8 @@ namespace Vaerydian
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = false;
-            this.IsFixedTimeStep = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
+            this.IsFixedTimeStep = true;
             
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
@@ -61,9 +59,6 @@ namespace Vaerydian
 
             screenManager = new ScreenManager(this);
             Components.Add(screenManager);
-
-            //windowManager = new WindowManager(this);
-            //Components.Add(windowManager);
         }
 
         /// <summary>
@@ -179,7 +174,5 @@ namespace Vaerydian
             //end sprite batch
             spriteBatch.End();
         }
-
-
     }
 }

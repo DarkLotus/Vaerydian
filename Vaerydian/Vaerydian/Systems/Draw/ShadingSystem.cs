@@ -66,7 +66,7 @@ namespace Vaerydian.Systems.Draw
             s_BlendState.AlphaDestinationBlend = Blend.One;
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
             s_ShadingEffect = s_Container.ContentManager.Load<Effect>("effects\\Shading");
             s_GeometryMap = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");

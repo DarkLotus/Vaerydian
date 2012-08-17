@@ -49,7 +49,7 @@ namespace Vaerydian.Systems.Update
             m_UtilFactory = new UtilFactory(e_ECSInstance);
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
             m_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
             m_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");

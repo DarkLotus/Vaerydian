@@ -233,7 +233,7 @@ namespace Vaerydian.Maps
             textures.Add(me_contentManager.Load<Texture2D>("terrain\\sublittoral"));//18
             */
 
-            terrainTexture = me_contentManager.Load<Texture2D>("export");
+            terrainTexture = me_contentManager.Load<Texture2D>("terrain\\noise");
             temperatureTexture = me_contentManager.Load<Texture2D>("temperature");
             exportTexture = me_contentManager.Load<Texture2D>("export");
 
@@ -302,7 +302,7 @@ namespace Vaerydian.Maps
 						*/
 
 						spriteBatch.Draw(terrainTexture, new Vector2((x * me_TileSize), (y * me_TileSize)) - new Vector2(me_ViewPort.Origin.X, me_ViewPort.Origin.Y),
-                            new Rectangle(0, 0, me_TileSize, me_TileSize), getColor(terrain), 0f, new Vector2(0,0) , new Vector2(1f), SpriteEffects.None, 0);
+                            new Rectangle(0, 0, me_TileSize, me_TileSize), getColorVariation(terrain), 0f, new Vector2(0,0) , new Vector2(1f), SpriteEffects.None, 0);
                     }
                 }
             }
@@ -343,6 +343,19 @@ namespace Vaerydian.Maps
 
         }
 
+        private Color getColorVariation(Terrain terrain)
+        {
+            Color color = getColor(terrain);
+
+            Vector3 colVec = color.ToVector3();
+
+            colVec.X *= terrain.Variation;
+            colVec.Y *= terrain.Variation;
+            colVec.Z *= terrain.Variation;
+
+
+            return new Color(colVec);
+        }
 
         private Color getColor(Terrain terrain)
         {
@@ -564,7 +577,7 @@ namespace Vaerydian.Maps
         /// <param name="graphicsDevice"></param>
         public void saveScreenShot(GraphicsDevice graphicsDevice)
         {
-			/*
+			
             //setup a color buffer to get the back Buffer's data
             Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
 
@@ -589,7 +602,7 @@ namespace Vaerydian.Maps
             fs.Close();
 
             GC.Collect();
-            */
+            
         }
     }
 }

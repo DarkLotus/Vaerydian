@@ -44,7 +44,7 @@ namespace Vaerydian.Systems.Draw
             q_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
             q_Player = e_ECSInstance.TagManager.getEntityByTag("PLAYER");
             q_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");

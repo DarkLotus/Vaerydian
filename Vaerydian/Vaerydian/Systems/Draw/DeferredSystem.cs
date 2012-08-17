@@ -32,7 +32,7 @@ namespace Vaerydian.Systems.Draw
             d_GeometryMapper = new ComponentMapper(new GeometryMap(), e_ECSInstance);
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
             d_CombinedEffect = d_Container.ContentManager.Load<Effect>("effects\\DiferredCombine");
         }

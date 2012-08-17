@@ -171,6 +171,7 @@
     <Compile Include="Components\Utils\Controllable.cs" />
     <Compile Include="Components\Utils\GameMap.cs" />
     <Compile Include="Components\Utils\MapCollidable.cs" />
+    <Compile Include="Components\Utils\Trigger.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Factories\MapFactory.cs" />
@@ -231,10 +232,6 @@
     <Compile Include="Utils\VectorHelper.cs" />
     <Compile Include="Utils\WeaponEnums.cs" />
     <Compile Include="VaerydianGame.cs" />
-    <Compile Include="Windows\DialogWindow.cs" />
-    <Compile Include="Windows\TextMenuWindow.cs" />
-    <Compile Include="Windows\Window.cs" />
-    <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

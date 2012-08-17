@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using Vaerydian.Windows;
 using Vaerydian.Maps;
 
 using Microsoft.Xna.Framework;
@@ -60,7 +59,7 @@ namespace Vaerydian.Screens
 
         private int yFinish = 480;
 
-        private ScreenViewPort ws_ViewPort = new ScreenViewPort();
+        private ScreenViewPort w_ViewPort = new ScreenViewPort();
 
         private int ws_TileSize = 32;
 
@@ -79,19 +78,19 @@ namespace Vaerydian.Screens
 
 			w_SpriteBatch = new SpriteBatch(this.ScreenManager.GraphicsDevice);
 
-            ws_ViewPort.Dimensions = new Point(this.ScreenManager.GraphicsDevice.Viewport.Width, this.ScreenManager.GraphicsDevice.Viewport.Height);
+            w_ViewPort.Dimensions = new Point(this.ScreenManager.GraphicsDevice.Viewport.Width, this.ScreenManager.GraphicsDevice.Viewport.Height);
 
-            ws_ViewPort.Origin = new Point(0, 0);
+            w_ViewPort.Origin = new Point(0, 0);
 
             UpdateView();
 
             w_MapEngine.ContentManager = this.ScreenManager.Game.Content;
 
-            w_MapEngine.TileSize = ws_TileSize;
+            w_MapEngine.TileSize = 5;// ws_TileSize;
 
-            w_MapEngine.XTiles = ws_ViewPort.Dimensions.X;
+            w_MapEngine.XTiles = w_ViewPort.Dimensions.X;
 
-            w_MapEngine.YTiles = ws_ViewPort.Dimensions.Y;
+            w_MapEngine.YTiles = w_ViewPort.Dimensions.Y;
 
             //quick test hack
             Map map = MapMaker.create(w_MapEngine.XTiles, w_MapEngine.YTiles);
@@ -100,8 +99,8 @@ namespace Vaerydian.Screens
 
             parameters[WorldGen.WORLD_PARAMS_X] = 0;
             parameters[WorldGen.WORLD_PARAMS_Y] = 0;
-            parameters[WorldGen.WORLD_PARAMS_DX] = w_MapEngine.XTiles;
-            parameters[WorldGen.WORLD_PARAMS_DY] = w_MapEngine.YTiles;
+            parameters[WorldGen.WORLD_PARAMS_DX] = w_ViewPort.Dimensions.X;
+            parameters[WorldGen.WORLD_PARAMS_DY] = w_ViewPort.Dimensions.Y;
             parameters[WorldGen.WORLD_PARAMS_Z] = 5f;
             parameters[WorldGen.WORLD_PARAMS_XSIZE] = w_MapEngine.XTiles;
             parameters[WorldGen.WORLD_PARAMS_YSIZE] = w_MapEngine.YTiles;
@@ -109,16 +108,16 @@ namespace Vaerydian.Screens
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate( map, MapType.WORLD);
+            MapMaker.generate(map, MapType.WORLD);
 
             w_MapEngine.WorldGenerator.WorldTerrainMap = map.Terrain;
             //end quick test hack
 
             //w_MapEngine.WorldGenerator.generateNewWorld(0, 0, w_MapEngine.XTiles, w_MapEngine.YTiles, 5f, w_MapEngine.XTiles, w_MapEngine.YTiles, new Random().Next());
 
-            w_MapEngine.ViewPort.Dimensions = ws_ViewPort.Dimensions;
+            w_MapEngine.ViewPort.Dimensions = w_ViewPort.Dimensions;
 
-            w_MapEngine.ViewPort.Origin = ws_ViewPort.Origin;
+            w_MapEngine.ViewPort.Origin = w_ViewPort.Origin;
 
             w_MapEngine.Initialize();
 
@@ -161,41 +160,41 @@ namespace Vaerydian.Screens
             if (InputManager.isKeyToggled(Keys.Escape))
             {
                 this.ScreenManager.removeScreen(this);
-                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+                NewLoadingScreen.Load(this.ScreenManager, false, new StartScreen());
             }
 
             if (InputManager.isKeyToggled(Keys.R))
             {
                 this.ScreenManager.removeScreen(this);
-                LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
+                NewLoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
             }
 
             if (InputManager.isKeyPressed(Keys.Up))
             {
                 w_MapEngine.ViewPort.Origin.Y -= MOVE_VALUE;
 
-                ws_ViewPort.Origin.Y -= MOVE_VALUE;
+                w_ViewPort.Origin.Y -= MOVE_VALUE;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Down))
             {
                 w_MapEngine.ViewPort.Origin.Y += MOVE_VALUE;
 
-                ws_ViewPort.Origin.Y += MOVE_VALUE;
+                w_ViewPort.Origin.Y += MOVE_VALUE;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Left))
             {
                 w_MapEngine.ViewPort.Origin.X -= MOVE_VALUE;
 
-                ws_ViewPort.Origin.X -= MOVE_VALUE;
+                w_ViewPort.Origin.X -= MOVE_VALUE;
                 UpdateView();
             }
             if (InputManager.isKeyPressed(Keys.Right))
             {
                 w_MapEngine.ViewPort.Origin.X += MOVE_VALUE;
 
-                ws_ViewPort.Origin.X += MOVE_VALUE;
+                w_ViewPort.Origin.X += MOVE_VALUE;
                 UpdateView();
             }
             
@@ -252,19 +251,19 @@ namespace Vaerydian.Screens
         /// </summary>
         public void UpdateView()
         {
-            xStart = ws_ViewPort.Origin.X / ws_TileSize;
+            xStart = w_ViewPort.Origin.X / ws_TileSize;
             if (xStart <= 0)
                 xStart = 0;
 
-            xFinish = (ws_ViewPort.Origin.X + ws_ViewPort.Dimensions.X) / ws_TileSize;
+            xFinish = (w_ViewPort.Origin.X + w_ViewPort.Dimensions.X) / ws_TileSize;
             if (xFinish >= w_MapEngine.XTiles - 1)
                 xFinish = w_MapEngine.XTiles - 1;
 
-            yStart = ws_ViewPort.Origin.Y / ws_TileSize;
+            yStart = w_ViewPort.Origin.Y / ws_TileSize;
             if (yStart <= 0)
                 yStart = 0;
 
-            yFinish = (ws_ViewPort.Origin.Y + ws_ViewPort.Dimensions.Y) / ws_TileSize;
+            yFinish = (w_ViewPort.Origin.Y + w_ViewPort.Dimensions.Y) / ws_TileSize;
             if (yFinish >= w_MapEngine.YTiles - 1)
                 yFinish = w_MapEngine.YTiles - 1;
 

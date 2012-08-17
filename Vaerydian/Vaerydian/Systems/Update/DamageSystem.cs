@@ -36,7 +36,7 @@ namespace Vaerydian.Systems.Update
             d_UtilFactory = new UtilFactory(e_ECSInstance);;
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
          
         }

@@ -24,7 +24,7 @@ namespace Vaerydian.Systems.Update
             l_NPCFactory = new NPCFactory(e_ECSInstance);
         }
 
-        protected override void preLoadContent(ECSFramework.Utils.Bag<Entity> entities)
+        protected override void preLoadContent(Bag<Entity> entities)
         {
             l_Player = e_ECSInstance.TagManager.getEntityByTag("PLAYER");
         }

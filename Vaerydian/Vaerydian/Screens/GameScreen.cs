@@ -35,6 +35,7 @@ using Glimpse.Managers;
 using AgentComponentBus.Core;
 using AgentComponentBus.Components.ECS;
 using AgentComponentBus.Systems;
+using WorldGeneration.Utils;
 
 
 namespace Vaerydian.Screens
@@ -99,6 +100,19 @@ namespace Vaerydian.Screens
 
         private Texture2D debugTex;
         private Random rand = new Random();
+
+
+        /// <summary>
+        /// current loading message
+        /// </summary>
+        public override string LoadingMessage
+        {
+            get
+            {
+                return MapMaker.StatusMessage;
+            }
+        }
+
 
         public override void Initialize()
         {
@@ -210,9 +224,9 @@ namespace Vaerydian.Screens
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
             //GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
-            GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
-            //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
-
+            //GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
+            GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
+            
 
             //npcFactory.createWanders(1500, map);
 
@@ -407,7 +421,7 @@ namespace Vaerydian.Screens
         /// <param name="graphicsDevice"></param>
         public void saveScreenShot(GraphicsDevice graphicsDevice)
         {
-			/*
+			
             //setup a color buffer to get the back Buffer's data
             Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
 
@@ -432,9 +446,6 @@ namespace Vaerydian.Screens
             fs.Close();
 
             GC.Collect();
-            */
-
-		
 		}
 
 

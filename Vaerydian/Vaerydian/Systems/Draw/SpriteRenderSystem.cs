@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
-using ECSFramework.Utils;
+
 
 using Vaerydian.Components;
 using Vaerydian.Components.Characters;
