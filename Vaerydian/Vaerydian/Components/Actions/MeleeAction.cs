@@ -80,11 +80,11 @@ namespace Vaerydian.Components.Actions
             set { m_Range = value; }
         }
 
-        private Animation m_Animation;
+        private SpriteAnimation m_Animation;
         /// <summary>
         /// the animation for this action
         /// </summary>
-        public Animation Animation
+        public SpriteAnimation Animation
         {
             get { return m_Animation; }
             set { m_Animation = value; }

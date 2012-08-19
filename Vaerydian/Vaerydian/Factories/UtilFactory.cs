@@ -121,7 +121,7 @@ namespace Vaerydian.Factories
             Sprite sprite = new Sprite("sword", "swordnormal", 32, 32, 0, 0);
 
             MeleeAction action = new MeleeAction();
-            action.Animation = new Animation(9, 20);
+            action.Animation = new SpriteAnimation(9, 20);
             action.ArcDegrees = 180;
             action.Owner = owner;
             action.Lifetime = 250;

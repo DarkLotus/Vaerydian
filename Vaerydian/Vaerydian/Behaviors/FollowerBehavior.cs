@@ -105,7 +105,7 @@ namespace Vaerydian.Behaviors
         private const int MOVE_RIGHT = 6;
         private const int MOVE_DOWNRIGHT = 7;
 
-        private Animation s_Animation = new Animation(6, 42);
+        private SpriteAnimation s_Animation = new SpriteAnimation(6, 42);
 
         public FollowerBehavior(Entity entity, Entity target, float followDistance, ECSInstance ecsInstance)
         {

@@ -4,86 +4,86 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Vaerydian.Utils
+namespace XNAKeyFrameTest
 {
-    public class Animation
+    class Animation
     {
-        private int a_FrameRate;
+        public int a_ElapsedTime;
 
-        private int a_Frames;
+        public int a_AnimationTime;
 
-        private int a_ElapsedTime = 0;
+        public List<KeyFrame> a_KeyFrames = new List<KeyFrame>();
 
-        private int a_LastFrame = 0;
+        public Texture2D a_Texture;
 
-        public Animation() { }
+        public Vector2 a_Origin;
 
-        public Animation(int frames, int frameRate) 
-        {
-            a_Frames = frames;
-            a_FrameRate = frameRate;
-        }
+        public Vector2 a_RotationOrigin;
 
-        public void reset()
-        {
-            a_ElapsedTime = 0;
-            a_LastFrame = 0;
-        }
+        public float a_Rotation;
 
-        public int updateFrame(GameTime gameTime)
+        public void updateTime(GameTime gameTime)
         {
             a_ElapsedTime += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (a_ElapsedTime > a_FrameRate)
+            if (a_ElapsedTime >= a_AnimationTime)
             {
-                //reset elapsed
                 a_ElapsedTime = 0;
-
-                //update frame
-                a_LastFrame++;
-
-                //make sure we didnt run over
-                if (a_LastFrame == a_Frames)
-                    a_LastFrame = 0;
-
-                //return frame
-                return a_LastFrame;
             }
-            else
-                return a_LastFrame;
         }
 
-        public int updateFrame(int gameTime)
+        public Vector2 getKeyPosition()
         {
-            a_ElapsedTime += gameTime;
-
-            if (a_ElapsedTime > a_FrameRate)
+            for (int i = 0; i < a_KeyFrames.Count; i++)
             {
-                //reset elapsed
-                a_ElapsedTime = 0;
-
-                //update frame
-                a_LastFrame++;
-
-                //make sure we didnt run over
-                if (a_LastFrame == a_Frames)
-                    a_LastFrame = 0;
-
-                //return frame
-                return a_LastFrame;
+                if (i > 0)
+                {
+                    if (a_ElapsedTime <= a_KeyFrames[i].k_KeyTime && a_ElapsedTime > a_KeyFrames[i - 1].k_KeyTime)
+                        return a_Origin + tweenKeyFramesPosition(a_KeyFrames[i - 1], a_KeyFrames[i], a_ElapsedTime);
+                }
             }
-            else
-                return a_LastFrame;
+
+
+            return a_Origin + Vector2.Zero;
         }
 
-        /// <summary>
-        /// number of frames in this animation
-        /// </summary>
-        public int Frames
+
+        private Vector2 tweenKeyFramesPosition(KeyFrame a, KeyFrame b, int time)
         {
-            get { return a_Frames; }
-            set { a_Frames = value; }
+            int timeBetweenFrames = b.k_KeyTime - a.k_KeyTime;
+            int timeAfterA = time - a.k_KeyTime;
+            float percentTween = (float)timeAfterA / (float)timeBetweenFrames;
+
+            Vector2 aToB = b.k_KeyPosition - a.k_KeyPosition;
+
+            return a.k_KeyPosition + (aToB * percentTween);
+        }
+
+        public float getKeyRotation()
+        {
+            for (int i = 0; i < a_KeyFrames.Count; i++)
+            {
+                if (i > 0)
+                {
+                    if (a_ElapsedTime <= a_KeyFrames[i].k_KeyTime && a_ElapsedTime > a_KeyFrames[i - 1].k_KeyTime)
+                        return tweenKeyFramesRotation(a_KeyFrames[i - 1], a_KeyFrames[i], a_ElapsedTime);
+                }
+            }
+            return a_Rotation;
+        }
+
+
+        private float tweenKeyFramesRotation(KeyFrame a, KeyFrame b, int time)
+        {
+            int timeBetweenFrames = b.k_KeyTime - a.k_KeyTime;
+            int timeAfterA = time - a.k_KeyTime;
+            float percentTween = (float)timeAfterA / (float)timeBetweenFrames;
+
+            float aToB = b.k_KeyRotation - a.k_KeyRotation;
+
+            return a.k_KeyRotation + aToB * percentTween;
         }
     }
 }

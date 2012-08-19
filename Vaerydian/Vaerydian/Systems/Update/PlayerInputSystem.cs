@@ -44,7 +44,7 @@ namespace Vaerydian.Systems.Update
         private const int MOVE_RIGHT = 6;
         private const int MOVE_DOWNRIGHT = 7;
 
-        private Animation p_Movement = new Animation(6, 42);
+        private SpriteAnimation p_Movement = new SpriteAnimation(6, 42);
 
         private bool p_Moved = false;
         private bool p_FirstRun = true;

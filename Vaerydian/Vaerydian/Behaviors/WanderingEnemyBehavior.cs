@@ -82,7 +82,7 @@ namespace Vaerydian.Behaviors
         private const int MOVE_RIGHT = 6;
         private const int MOVE_DOWNRIGHT = 7;
 
-        private Animation w_Animation = new Animation(6, 42);
+        private SpriteAnimation w_Animation = new SpriteAnimation(6, 42);
 
         private BehaviorAction init;
         private BehaviorAction setStateWander;

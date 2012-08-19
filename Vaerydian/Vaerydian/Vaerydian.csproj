@@ -218,6 +218,8 @@
     <Compile Include="UI\DialogTimer.cs" />
     <Compile Include="UI\HpLabelUpdater.cs" />
     <Compile Include="Utils\Animation.cs" />
+    <Compile Include="Utils\KeyFrame.cs" />
+    <Compile Include="Utils\SpriteAnimation.cs" />
     <Compile Include="Utils\AStarPathing.cs" />
     <Compile Include="Utils\AttackType.cs" />
     <Compile Include="Utils\BinaryHeap.cs" />
