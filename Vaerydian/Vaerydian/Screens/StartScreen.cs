@@ -95,6 +95,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[0].MouseOverTextColor = Color.Yellow;
             s_ButtonMenu.Buttons[0].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[0].MouseClick += OnMouseClickNewGame;
+            
 
             //s_ButtonMenu.Buttons[1].NormalTextureName = "ui\\buttonNormal";
             //s_ButtonMenu.Buttons[1].PressedTextureName = "ui\\buttonPressed";
@@ -114,7 +115,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[1].MouseOverTextColor = Color.Yellow;
             s_ButtonMenu.Buttons[1].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[1].MouseClick += OnMouseClickWorldGen;
-
+            
             //s_ButtonMenu.Buttons[2].NormalTextureName = "ui\\buttonNormal";
             //s_ButtonMenu.Buttons[2].PressedTextureName = "ui\\buttonPressed";
             //s_ButtonMenu.Buttons[2].MouseOverTextureName = "ui\\buttonOver";
@@ -133,6 +134,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[2].MouseOverTextColor = Color.Yellow;
             s_ButtonMenu.Buttons[2].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[2].MouseClick += OnMouseClickExit;
+            
 
 
             s_ButtonMenu.assemble();

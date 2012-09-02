@@ -82,11 +82,11 @@ namespace Vaerydian.Screens
         private EntitySystem uiDrawSystem;
 
         //ACB systems
-        //private EntitySystem busCommitSystem;
-        //private EntitySystem busRetrieveSystem;
-        //private EntitySystem busRegistrationSystem;
+        private EntitySystem busCommitSystem;
+        private EntitySystem busRetrieveSystem;
+        private EntitySystem busRegistrationSystem;
 
-        //private Bus bus;
+        private Bus bus;
 
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
@@ -124,7 +124,8 @@ namespace Vaerydian.Screens
 
             gameContainer = ScreenManager.GameContainer;
 
-            //bus = new Bus();
+            //instantiate the bus
+            bus = new Bus();
 
 
             //create & register systems
@@ -161,9 +162,9 @@ namespace Vaerydian.Screens
             uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer.ContentManager, gameContainer.GraphicsDevice), new UserInterface());
 
             //bus setup
-            //busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
-            //busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(bus), new BusDataCommit());
-            //busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(bus), new BusDataRetrieval());
+            busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
+            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(bus), new BusDataCommit());
+            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(bus), new BusDataRetrieval());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -224,8 +225,8 @@ namespace Vaerydian.Screens
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
             //GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
-            //GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
-            GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
+            GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
+            //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
             
 
             //npcFactory.createWanders(1500, map);
@@ -267,11 +268,10 @@ namespace Vaerydian.Screens
             //geometry = (GeometryMap)geometryMapper.get(ecsInstance.TagManager.getEntityByTag("GEOMETRY"));
 
             //issue bus loads
-            //TODO: issue bus load
 
             //launch bus
-            //Thread thread = new Thread(bus.run);
-            //thread.Start();
+            Thread thread = new Thread(bus.run);
+            thread.Start();
         }
 
         public override void UnloadContent()
@@ -280,7 +280,7 @@ namespace Vaerydian.Screens
 
             ecsInstance.cleanUp();
 
-            //bus.shutdown();
+            bus.shutdown();
 
             GC.Collect();
         }
@@ -341,9 +341,9 @@ namespace Vaerydian.Screens
             uiUpdateSystem.process();
 
             //run bus systems
-            //busRegistrationSystem.process();
-            //busCommitSystem.process();
-            //busRetrieveSystem.process();
+            busRegistrationSystem.process();
+            busCommitSystem.process();
+            busRetrieveSystem.process();
         }
 
         public override void Draw(GameTime gameTime)

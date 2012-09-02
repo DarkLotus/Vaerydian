@@ -10,12 +10,24 @@ namespace Vaerydian.Utils
     public static class VectorHelper
     {
 
+        public static Vector2 normalize(Vector2 vec)
+        {
+            float val = (float)Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y);
+
+            if (val == 0)
+                return Vector2.Zero;
+
+            return new Vector2(vec.X / val, vec.Y / val);
+        }
+
         public static float getAngle(Vector2 a, Vector2 b)
         {
             Vector2 ta = a;
             Vector2 tb = b;
-            ta.Normalize();
-            tb.Normalize();
+            ta = VectorHelper.normalize(ta);
+            tb = VectorHelper.normalize(tb);
+            //ta.Normalize();
+            //tb.Normalize();
 
             float dot = Vector2.Dot(ta, tb);
 
@@ -29,13 +41,21 @@ namespace Vaerydian.Utils
         {
             Vector2 ta = a;
             Vector2 tb = b;
-            ta.Normalize();
-            tb.Normalize();
+            ta = VectorHelper.normalize(ta);
+            tb = VectorHelper.normalize(tb);
+            //ta.Normalize();
+            //tb.Normalize();
 
             float dot = Vector2.Dot(ta, tb);
 
             return (float)Math.Acos(dot);
 
+        }
+
+        public static float getSignedAngle(Vector2 a, Vector2 b)
+        {
+            float perDot = a.X * b.Y - a.Y * b.X;
+            return (float)Math.Atan2(perDot, Vector2.Dot(a, b));
         }
 
         public static Vector2 rotateVectorRadians(Vector2 vector, float angleRadians)
