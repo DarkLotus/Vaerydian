@@ -29,6 +29,8 @@ namespace Vaerydian.Systems.Update
             l_Player = e_ECSInstance.TagManager.getEntityByTag("PLAYER");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Life life = (Life)l_LifeMapper.get(entity);

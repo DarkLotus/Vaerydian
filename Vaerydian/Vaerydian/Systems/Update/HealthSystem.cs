@@ -36,6 +36,8 @@ namespace Vaerydian.Systems.Update
             
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Health health = (Health)h_HealthMapper.get(entity);

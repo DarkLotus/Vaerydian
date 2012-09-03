@@ -55,6 +55,8 @@ namespace Vaerydian.Systems.Update
             m_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             MeleeAction action = (MeleeAction)m_MeleeActionMapper.get(entity);

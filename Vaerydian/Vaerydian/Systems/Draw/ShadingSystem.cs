@@ -73,6 +73,8 @@ namespace Vaerydian.Systems.Draw
             s_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void begin()
         {
             s_Geometry = (GeometryMap) s_GeometryMapper.get(s_GeometryMap);

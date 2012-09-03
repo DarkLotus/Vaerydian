@@ -66,6 +66,8 @@ namespace Vaerydian.Systems.Draw
             s_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void added(Entity entity)
         {
             base.added(entity);

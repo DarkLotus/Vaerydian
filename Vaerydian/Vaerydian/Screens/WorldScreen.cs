@@ -142,7 +142,8 @@ namespace Vaerydian.Screens
         {
             base.UnloadContent();
             w_MapEngine.UnloadContent();
-
+            
+            
             textures.Clear();
             
         }

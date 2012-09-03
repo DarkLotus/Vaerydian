@@ -53,6 +53,8 @@ namespace Vaerydian.Systems.Draw
             s_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Position position = (Position) s_PositionMapper.get(entity);

@@ -158,14 +158,6 @@ namespace Vaerydian.Screens
         public override void UnloadContent()
         {
             base.UnloadContent();
-            
-            //cleanup button events
-            s_ButtonMenu.Buttons[0].ResetEvents();
-            s_ButtonMenu.Buttons[1].ResetEvents();
-            s_ButtonMenu.Buttons[2].ResetEvents();
-
-            //cleanup frame event
-            s_Frame.ResetEvents();
 
             s_ECSInstance.cleanUp();
 

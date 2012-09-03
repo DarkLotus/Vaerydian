@@ -76,6 +76,8 @@ namespace Vaerydian.Systems.Draw
             m_TileSize = m_DepthTex.Width;
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             //get map and viewport

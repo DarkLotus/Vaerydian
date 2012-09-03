@@ -45,6 +45,8 @@ namespace Vaerydian.Systems.Draw
             h_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void preLoadContent(Bag<Entity> entities)
         {
             h_Texture = h_Container.ContentManager.Load<Texture2D>("export");

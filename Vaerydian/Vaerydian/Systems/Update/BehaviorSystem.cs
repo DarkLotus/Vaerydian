@@ -34,6 +34,8 @@ namespace Vaerydian.Systems.Update
 
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             AiBehavior behavior = (AiBehavior)b_BehaviorMapper.get(entity);

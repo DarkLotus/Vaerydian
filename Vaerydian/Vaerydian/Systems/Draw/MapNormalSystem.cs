@@ -73,6 +73,8 @@ namespace Vaerydian.Systems.Draw
             m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             //get map and viewport

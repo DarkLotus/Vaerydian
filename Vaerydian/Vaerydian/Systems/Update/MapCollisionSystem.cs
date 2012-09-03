@@ -48,7 +48,9 @@ namespace Vaerydian.Systems.Update
             m_Map = e_ECSInstance.TagManager.getEntityByTag("MAP");
             m_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
-        
+
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             //get colidable entity's position

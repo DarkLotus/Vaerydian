@@ -38,6 +38,8 @@ namespace Vaerydian.Systems.Update
             c_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Position focusPosition = (Position) c_PositionMapper.get(entity);

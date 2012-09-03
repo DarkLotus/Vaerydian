@@ -80,6 +80,8 @@ namespace Vaerydian.Systems.Update
             p_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Position position = (Position) p_PositionMapper.get(entity);

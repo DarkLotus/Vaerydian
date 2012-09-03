@@ -53,6 +53,8 @@ namespace Vaerydian.Systems.Draw
             q_Texture = q_Contaner.ContentManager.Load<Texture2D>("export");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             Position position = (Position)q_PositionMapper.get(entity);

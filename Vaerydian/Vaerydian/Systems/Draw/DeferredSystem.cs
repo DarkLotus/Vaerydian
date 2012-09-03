@@ -37,6 +37,8 @@ namespace Vaerydian.Systems.Draw
             d_CombinedEffect = d_Container.ContentManager.Load<Effect>("effects\\DiferredCombine");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             GeometryMap geometry = (GeometryMap)d_GeometryMapper.get(entity);

@@ -206,7 +206,7 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             //debugTex = ScreenManager.Game.Content.Load<Texture2D>("temperature");
-            debugTex = gameContainer.ContentManager.Load<Texture2D>("temperature");
+            //debugTex = gameContainer.ContentManager.Load<Texture2D>("temperature");
 
             //load early entities
             //entityFactory.createBackground();
@@ -229,7 +229,7 @@ namespace Vaerydian.Screens
             //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
             
 
-            //npcFactory.createWanders(1500, map);
+            npcFactory.createWanders(500, map);
 
             //uiFactory.createUITests();
 			uiFactory.createHitPointLabel(player, 100,50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width-100)/2,0));
@@ -448,7 +448,7 @@ namespace Vaerydian.Screens
             GC.Collect();
 		}
 
-
+        /*
         /// <summary>
         /// [DEBUG] Draws the debug render targets onto the bottom of the screen.
         /// </summary>
@@ -492,7 +492,7 @@ namespace Vaerydian.Screens
                 Color.White);
 
             spriteBatch.End();
-        }
+        }*/
 
     }
 }

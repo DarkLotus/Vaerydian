@@ -54,6 +54,8 @@ namespace Vaerydian.Systems.Draw
             d_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
         }
 
+        protected override void cleanUp(Bag<Entity> entities) { }
+
         protected override void process(Entity entity)
         {
             //Damage damage = (Damage)d_DamageMapper.get(entity);
