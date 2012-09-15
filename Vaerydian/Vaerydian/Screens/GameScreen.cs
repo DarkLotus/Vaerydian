@@ -169,8 +169,8 @@ namespace Vaerydian.Screens
 
             //bus setup
             busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
-            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(bus, taskWorker), new BusDataCommit());
-            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(bus, taskWorker), new BusDataRetrieval());
+            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(taskWorker), new BusDataCommit());
+            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(taskWorker), new BusDataRetrieval());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
