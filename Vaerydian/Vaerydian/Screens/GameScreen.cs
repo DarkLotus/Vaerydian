@@ -87,6 +87,7 @@ namespace Vaerydian.Screens
         private EntitySystem busRegistrationSystem;
 
         private Bus bus;
+        private TaskWorker taskWorker;
 
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
@@ -126,7 +127,12 @@ namespace Vaerydian.Screens
 
             //instantiate the bus
             bus = new Bus();
-
+            bus.TickIntervalTime = 32;
+            bus.MaxUpdatesPerCycle = 10;
+            
+            taskWorker = new TaskWorker();
+            taskWorker.MaxTasksPerCycle = 10;
+            taskWorker.MaxRetrievesPerCycle = 10;
 
             //create & register systems
             //register update systems
@@ -163,8 +169,8 @@ namespace Vaerydian.Screens
 
             //bus setup
             busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
-            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(bus), new BusDataCommit());
-            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(bus), new BusDataRetrieval());
+            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(bus, taskWorker), new BusDataCommit());
+            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(bus, taskWorker), new BusDataRetrieval());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new ViewPort());
@@ -272,6 +278,10 @@ namespace Vaerydian.Screens
             //launch bus
             Thread thread = new Thread(bus.run);
             thread.Start();
+
+            Thread twThread = new Thread(taskWorker.run);
+            twThread.Start();
+                
         }
 
         public override void UnloadContent()
@@ -281,6 +291,7 @@ namespace Vaerydian.Screens
             ecsInstance.cleanUp();
 
             bus.shutdown();
+            taskWorker.shutdown();
 
             GC.Collect();
         }

@@ -283,7 +283,8 @@ namespace Vaerydian.Utils
                 pToC.Normalize();
                 
                 //find the closest position to the node center that is at max range from the point
-                pToC = point + pToC * Vector2.Distance(node.Center, point);
+                //pToC = point + pToC * Vector2.Distance(node.Center, point);
+                pToC = point + pToC * range;
 
                 //if that point is within the node, then the node is within range
                 if (node.contains(pToC))
