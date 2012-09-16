@@ -109,7 +109,7 @@ namespace Vaerydian.Utils
             q_ULCorner = ul;
             q_LRCorner = lr;
             q_Contents = new List<E>();
-            q_Center = new Vector2((lr.X - ul.X) / 2f, (lr.Y - ul.Y) / 2f);
+            q_Center = ul + new Vector2((lr.X - ul.X) / 2f, (lr.Y - ul.Y) / 2f);
         }
 
         /// <summary>
