@@ -127,7 +127,7 @@ namespace Vaerydian.Screens
 
             //instantiate the bus
             bus = new Bus();
-            bus.TickIntervalTime = 32;
+            bus.UpdateIntervalTime = 32;
             bus.MaxUpdatesPerCycle = 10;
             
             taskWorker = new TaskWorker();
@@ -235,7 +235,7 @@ namespace Vaerydian.Screens
             //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
             
 
-            npcFactory.createWanders(500, map);
+            npcFactory.createWanders(100, map);
 
             //uiFactory.createUITests();
 			uiFactory.createHitPointLabel(player, 100,50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width-100)/2,0));
@@ -312,16 +312,9 @@ namespace Vaerydian.Screens
         {
             base.Update(gameTime);
 
-            /*
-            //update all input
-            InputManager.Update();
 
-            if (InputManager.YesExit)
-                this.Exit();
-            */
             if (InputManager.isKeyToggled(Keys.PrintScreen))
                 InputManager.YesScreenshot = true;
-
 
             //update time
             ecsInstance.TotalTime = gameTime.TotalGameTime.Milliseconds;
@@ -371,7 +364,7 @@ namespace Vaerydian.Screens
             mapSystem.process();
             spriteRenderSystem.process();
 
-			/*
+			/* 
             gameContainer.GraphicsDevice.SetRenderTarget(null);
             gameContainer.GraphicsDevice.SetRenderTarget(geometry.NormalMap);
             gameContainer.GraphicsDevice.Clear(Color.Transparent);
@@ -459,51 +452,7 @@ namespace Vaerydian.Screens
             GC.Collect();
 		}
 
-        /*
-        /// <summary>
-        /// [DEBUG] Draws the debug render targets onto the bottom of the screen.
-        /// </summary>
-        /// <param name="spriteBatch">The sprite batch.</param>
-        public void DrawDebugRenderTargets(SpriteBatch spriteBatch)
-        {
-            // Draw some debug textures
-            spriteBatch.Begin();
-
-            Rectangle size = new Rectangle(0, 0, geometry.ColorMap.Width / 3, geometry.ColorMap.Height / 3);
-            var position = new Vector2(0, gameContainer.GraphicsDevice.Viewport.Height - size.Height);
-            spriteBatch.Draw(
-                geometry.ColorMap,
-                new Rectangle(
-                    (int)position.X, (int)position.Y,
-                    size.Width,
-                    size.Height),
-                Color.White);
-
-            spriteBatch.Draw(
-                geometry.NormalMap,
-                new Rectangle(
-                    (int)position.X + size.Width, (int)position.Y,
-                    size.Width,
-                    size.Height),
-                Color.White);
-
-            spriteBatch.Draw(
-                debugTex,
-                new Rectangle(
-                    (int)position.X + size.Width * 2, (int)position.Y,
-                    size.Width,
-                    size.Height), Color.Black);
-
-            spriteBatch.Draw(
-                geometry.ShadingMap,
-                new Rectangle(
-                    (int)position.X + size.Width * 2, (int)position.Y,
-                    size.Width,
-                    size.Height),
-                Color.White);
-
-            spriteBatch.End();
-        }*/
+        
 
     }
 }

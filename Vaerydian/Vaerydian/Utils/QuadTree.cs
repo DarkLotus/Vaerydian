@@ -58,6 +58,12 @@ namespace Vaerydian.Utils
             return retrieveContentsAtLocation(q_RootNode,location);
         }
 
+        /// <summary>
+        /// retrieves the contents at a given leaf node containing the given point
+        /// </summary>
+        /// <param name="node">node being searched</param>
+        /// <param name="location">point the leaf node contains</param>
+        /// <returns>list of content</returns>
         private List<E> retrieveContentsAtLocation(QuadNode<E> node, Vector2 location)
         {
             
@@ -84,8 +90,8 @@ namespace Vaerydian.Utils
         /// <summary>
         /// retrieves all contents at the location
         /// </summary>
-        /// <param name="location"></param>
-        /// <returns></returns>
+        /// <param name="location">location of content</param>
+        /// <returns>list of content</returns>
         public List<E> retrieveAllContents(Vector2 location)
         {
             List<E> contents = new List<E>();
@@ -93,6 +99,13 @@ namespace Vaerydian.Utils
             return contents;
         }
 
+        /// <summary>
+        /// retrieves all content decending from the given node
+        /// </summary>
+        /// <param name="node">node content to be retrieved from</param>
+        /// <param name="location">location of the content</param>
+        /// <param name="contents">list of all known content descended from the searched node</param>
+        /// <returns>a list of content</returns>
         private List<E> retrieveAllContents(QuadNode<E> node, Vector2 location, List<E> contents)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
@@ -120,6 +133,13 @@ namespace Vaerydian.Utils
             return setContentAtLocation(q_RootNode,content,location);
         }
 
+        /// <summary>
+        /// sets the content at the leaf node descendant from the given node
+        /// </summary>
+        /// <param name="node">given node</param>
+        /// <param name="val">content to be set</param>
+        /// <param name="point">location of the content</param>
+        /// <returns>the leaf node set or null if set failed or content already exists</returns>
         private QuadNode<E> setContentAtLocation(QuadNode<E> node, E val, Vector2 point)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
@@ -160,6 +180,12 @@ namespace Vaerydian.Utils
             return locateNode(q_RootNode, point);
         }
          
+        /// <summary>
+        /// locates a leaf node descendant of the current node that contains the given point
+        /// </summary>
+        /// <param name="node">node being searched</param>
+        /// <param name="point">point searched for</param>
+        /// <returns>leaf node containing the point</returns>
         private QuadNode<E> locateNode(QuadNode<E> node, Vector2 point)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
@@ -180,57 +206,28 @@ namespace Vaerydian.Utils
             }
         }
 
+        
         /// <summary>
-        /// remove
+        /// remove specific contents of a node
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public bool removeValAtNode(QuadNode<E> node, E val)
-        {
-            return removeVal(q_RootNode, node, val); ;
-        }
-
-        private bool removeVal(QuadNode<E> node, QuadNode<E> target, E val)
-        {
-            if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
-            {
-                if (node == target)
-                    return node.Contents.Remove(val);
-                else
-                    return false;
-            }
-            else
-            {
-                if (node.Q1.contains(target.ULCorner))
-                    return removeVal(node.Q1, target, val);
-                if (node.Q2.contains(target.ULCorner))
-                    return removeVal(node.Q2, target, val);
-                if (node.Q3.contains(target.ULCorner))
-                    return removeVal(node.Q3, target, val);
-                if (node.Q4.contains(target.ULCorner))
-                    return removeVal(node.Q4, target, val);
-                return false;
-            }
-        }
-
-
+        /// <param name="node">node contents to remove</param>
+        /// <param name="val">content to be removed</param>
         private void remove(QuadNode<E> node, E val)
         {
             node.Contents.Remove(val);
         }
 
         /// <summary>
-        /// 
+        /// search nodes within a range of a point, return a list of all contents
         /// </summary>
-        /// <param name="point"></param>
-        /// <param name="range"></param>
-        /// <returns></returns>
+        /// <param name="point">point from which range check is being performed</param>
+        /// <param name="range">length of the range check</param>
+        /// <returns>List of contents within range</returns>
         public List<E> findAllWithinRange (Vector2 point, float range)
 		{
 			List<E> contents = new List<E> ();
 			try {
-				contents = allWithinRange (q_RootNode, point, range);//, contents);
+                contents = allWithinRange(q_RootNode, point, range);
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
@@ -238,13 +235,13 @@ namespace Vaerydian.Utils
         }
 
         /// <summary>
-        /// 
+        /// search nodes within a range of a point, return a list of all contents
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="point"></param>
-        /// <param name="range"></param>
-        /// <returns></returns>
-        private List<E> allWithinRange(QuadNode<E> node, Vector2 point, float range)//, List<E> contents)
+        /// <param name="node">node being searched</param>
+        /// <param name="point">point from which range check is being performed</param>
+        /// <param name="range">length of the range check</param>
+        /// <returns>List of contents within range</returns>
+        private List<E> allWithinRange(QuadNode<E> node, Vector2 point, float range)
         {
             if (node.Q1 == null || node.Q2 == null || node.Q3 == null || node.Q4 == null)
             {
@@ -257,19 +254,26 @@ namespace Vaerydian.Utils
 
                 //determine if nodes are within range
                 if(nodeWithinRange(node.Q1,point,range))
-					contents.AddRange(allWithinRange(node.Q1,point,range));//,contents));
+					contents.AddRange(allWithinRange(node.Q1,point,range));
                 if (nodeWithinRange(node.Q2, point, range))
-                    contents.AddRange(allWithinRange(node.Q2, point, range));//, contents));
+                    contents.AddRange(allWithinRange(node.Q2, point, range));
                 if (nodeWithinRange(node.Q3, point, range))
-                    contents.AddRange(allWithinRange(node.Q3, point, range));//, contents));
+                    contents.AddRange(allWithinRange(node.Q3, point, range));
                 if (nodeWithinRange(node.Q4, point, range))
-                    contents.AddRange(allWithinRange(node.Q4, point, range));//, contents));
+                    contents.AddRange(allWithinRange(node.Q4, point, range));
                 
                 //return any nodes within range
                 return contents;
             }
         }
 
+        /// <summary>
+        /// runs three fail-over range checks for a given node
+        /// </summary>
+        /// <param name="node">node to check</param>
+        /// <param name="point">location from which range check is made</param>
+        /// <param name="range">the length of the range check</param>
+        /// <returns>true if in range, false if not</returns>
         private bool nodeWithinRange(QuadNode<E> node, Vector2 point, float range)
         {
             if (node.contains(point))
@@ -283,7 +287,6 @@ namespace Vaerydian.Utils
                 pToC.Normalize();
                 
                 //find the closest position to the node center that is at max range from the point
-                //pToC = point + pToC * Vector2.Distance(node.Center, point);
                 pToC = point + pToC * range;
 
                 //if that point is within the node, then the node is within range

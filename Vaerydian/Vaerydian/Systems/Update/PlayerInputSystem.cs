@@ -52,10 +52,11 @@ namespace Vaerydian.Systems.Update
         private int p_FireRate = 125;
         private int p_LastFired = 0;
 
-        private QuadNode<Entity> p_LastULNode;
-        private QuadNode<Entity> p_LastLLNode;
-        private QuadNode<Entity> p_LastLRNode;
-        private QuadNode<Entity> p_LastURNode;
+        //private QuadNode<Entity> p_LastULNode;
+        //private QuadNode<Entity> p_LastLLNode;
+        //private QuadNode<Entity> p_LastLRNode;
+        //private QuadNode<Entity> p_LastURNode;
+        private QuadNode<Entity> p_LastNode;
 
         private Random rand = new Random();
 
@@ -95,7 +96,7 @@ namespace Vaerydian.Systems.Update
             if (p_FirstRun)
             {
                 spatial.QuadTree.setContentAtLocation(entity, position.Pos);
-                p_LastULNode = spatial.QuadTree.locateNode(position.Pos);
+                p_LastNode = spatial.QuadTree.locateNode(position.Pos + position.Offset);
                 p_FirstRun = false;
             }
 
@@ -368,20 +369,11 @@ namespace Vaerydian.Systems.Update
             else
             {
 
-                //remove last reference and set new one
-                if (p_LastULNode != null && p_LastLLNode != null && p_LastLRNode != null && p_LastURNode != null)
-                {
-                    p_LastULNode.Contents.Remove(entity);
-                    p_LastLLNode.Contents.Remove(entity);
-                    p_LastLRNode.Contents.Remove(entity);
-                    p_LastURNode.Contents.Remove(entity);
-                }
+                if (p_LastNode != null)
+                    p_LastNode.Contents.Remove(entity);
 
-                p_LastULNode = spatial.QuadTree.setContentAtLocation(entity, pos);
-                p_LastLLNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(0,32));
-                p_LastLRNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(32,32));
-                p_LastURNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(32,0));
-               
+                p_LastNode = spatial.QuadTree.setContentAtLocation(entity, pos + new Vector2(16,16));
+
             }
 
             if(InputManager.isKeyPressed(Keys.P))

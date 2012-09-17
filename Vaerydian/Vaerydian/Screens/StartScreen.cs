@@ -76,14 +76,10 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Frame.BackgroundName = "frame";
             s_ButtonMenu.Frame.BackgroundColor = Color.Black;
             s_ButtonMenu.Frame.Transparency = 0.75f;            
-
-            //s_ButtonMenu.Buttons[0].NormalTextureName = "ui\\buttonNormal";
-            //s_ButtonMenu.Buttons[0].PressedTextureName = "ui\\buttonPressed";
-            //s_ButtonMenu.Buttons[0].MouseOverTextureName = "ui\\buttonOver";
-            
-            s_ButtonMenu.Buttons[0].NormalTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[0].PressedTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[0].MouseOverTextureName = "dialog_bubble";
+           
+            s_ButtonMenu.Buttons[0].NormalTextureName = "temperature";
+            s_ButtonMenu.Buttons[0].PressedTextureName = "temperature";
+            s_ButtonMenu.Buttons[0].MouseOverTextureName = "temperature";
             s_ButtonMenu.Buttons[0].Color = Color.Gray;
             s_ButtonMenu.Buttons[0].Transparency = 0.75f;
             s_ButtonMenu.Buttons[0].Border = 10;
@@ -96,14 +92,9 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[0].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[0].MouseClick += OnMouseClickNewGame;
             
-
-            //s_ButtonMenu.Buttons[1].NormalTextureName = "ui\\buttonNormal";
-            //s_ButtonMenu.Buttons[1].PressedTextureName = "ui\\buttonPressed";
-            //s_ButtonMenu.Buttons[1].MouseOverTextureName = "ui\\buttonOver";
-            
-            s_ButtonMenu.Buttons[1].NormalTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[1].PressedTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[1].MouseOverTextureName = "dialog_bubble";
+            s_ButtonMenu.Buttons[1].NormalTextureName = "temperature";
+            s_ButtonMenu.Buttons[1].PressedTextureName = "temperature";
+            s_ButtonMenu.Buttons[1].MouseOverTextureName = "temperature";
             s_ButtonMenu.Buttons[1].Color = Color.Gray;
             s_ButtonMenu.Buttons[1].Transparency = 0.75f;
             s_ButtonMenu.Buttons[1].Border = 10;
@@ -115,14 +106,10 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[1].MouseOverTextColor = Color.Yellow;
             s_ButtonMenu.Buttons[1].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[1].MouseClick += OnMouseClickWorldGen;
-            
-            //s_ButtonMenu.Buttons[2].NormalTextureName = "ui\\buttonNormal";
-            //s_ButtonMenu.Buttons[2].PressedTextureName = "ui\\buttonPressed";
-            //s_ButtonMenu.Buttons[2].MouseOverTextureName = "ui\\buttonOver";
-            
-            s_ButtonMenu.Buttons[2].NormalTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[2].PressedTextureName = "dialog_bubble";
-            s_ButtonMenu.Buttons[2].MouseOverTextureName = "dialog_bubble";
+
+            s_ButtonMenu.Buttons[2].NormalTextureName = "temperature";
+            s_ButtonMenu.Buttons[2].PressedTextureName = "temperature";
+            s_ButtonMenu.Buttons[2].MouseOverTextureName = "temperature";
             s_ButtonMenu.Buttons[2].Color = Color.Gray;
             s_ButtonMenu.Buttons[2].Transparency = 0.75f;
             s_ButtonMenu.Buttons[2].Border = 10;
