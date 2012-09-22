@@ -214,6 +214,7 @@
     <Compile Include="Systems\Update\MousePointerSystem.cs" />
     <Compile Include="Systems\Update\PlayerInputSystem.cs" />
     <Compile Include="Systems\Update\ProjectileSystem.cs" />
+    <Compile Include="Systems\Update\TriggerSystem.cs" />
     <Compile Include="UI\ButtonMenu.cs" />
     <Compile Include="UI\DialogTimer.cs" />
     <Compile Include="UI\HpLabelUpdater.cs" />

@@ -229,6 +229,8 @@ namespace Vaerydian.Factories
             EntityFactory ef = new EntityFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, ef.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
 
+            n_EcsInstance.GroupManager.addEntityToGroup("WANDERERS", e);
+
             n_EcsInstance.refresh(e);
         }
 
@@ -259,6 +261,50 @@ namespace Vaerydian.Factories
 
                 placed = false;
             }
+        }
+
+        /// <summary>
+        /// creates a trigger that spawns wanderers
+        /// </summary>
+        /// <param name="count">max number of wanderers to spawn</param>
+        /// <param name="map">map they are spawned in</param>
+        public void createWandererTrigger(int count, GameMap map)
+        {
+            Entity e = n_EcsInstance.create();
+
+            Trigger trigger = new Trigger(count, map);
+
+            trigger.TriggerAction += OnTriggerActionCreateWanders;
+            trigger.TimeDelay = 5000;
+            trigger.RecurrancePeriod = 10000;
+            trigger.IsRecurring = true;
+
+            n_EcsInstance.EntityManager.addComponent(e, trigger);
+
+            n_EcsInstance.refresh(e);
+        }
+
+        /// <summary>
+        /// handles the wanderer trigger actions
+        /// </summary>
+        /// <param name="ecsInstance"></param>
+        /// <param name="paremeters"></param>
+        private void OnTriggerActionCreateWanders(ECSInstance ecsInstance, Object[] paremeters)
+        {
+            int count = (int)paremeters[0];
+            GameMap map = (GameMap)paremeters[1];
+
+            Bag<Entity> wanderers = n_EcsInstance.GroupManager.getGroup("WANDERERS");
+
+            int size = 0;
+
+            if(wanderers != null)
+                size = wanderers.Size();
+
+            int create = count - size;
+
+            if (create != 0)
+                createWanders(create, map);
         }
 
 

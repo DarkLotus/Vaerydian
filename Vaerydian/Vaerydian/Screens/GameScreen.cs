@@ -63,6 +63,7 @@ namespace Vaerydian.Screens
         private EntitySystem lifeSystem;
         private EntitySystem victorySystem;
         private EntitySystem uiUpdateSystem;
+        private EntitySystem triggerSystem;
         
         //audio
         private EntitySystem audioSystem;
@@ -149,6 +150,7 @@ namespace Vaerydian.Screens
             lifeSystem = ecsInstance.SystemManager.setSystem(new LifeSystem(), new Life());
             victorySystem = ecsInstance.SystemManager.setSystem(new AwardSystem(), new Award());
             uiUpdateSystem = ecsInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
+            triggerSystem = ecsInstance.SystemManager.setSystem(new TriggerSystem(), new Trigger());
             
             //audio systems
             audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
@@ -166,6 +168,7 @@ namespace Vaerydian.Screens
             floatingTextDisplaySystem = ecsInstance.SystemManager.setSystem(new FloatingTextDisplaySystem(gameContainer), new FloatingText());
             quadTreeDebugRenderSystem = ecsInstance.SystemManager.setSystem(new QuadTreeDebugRenderSystem(gameContainer), new Position(),new AiBehavior());
             uiDrawSystem = ecsInstance.SystemManager.setSystem(new UIDrawSystem(gameContainer.ContentManager, gameContainer.GraphicsDevice), new UserInterface());
+
 
             //bus setup
             busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
@@ -230,12 +233,13 @@ namespace Vaerydian.Screens
             //create cave
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
-            //GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
-            GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
+            GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
+            //GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
             //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
             
 
-            npcFactory.createWanders(100, map);
+            //npcFactory.createWanders(100, map);
+            npcFactory.createWandererTrigger(10, map);
 
             //uiFactory.createUITests();
 			uiFactory.createHitPointLabel(player, 100,50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width-100)/2,0));
@@ -335,6 +339,7 @@ namespace Vaerydian.Screens
             damageSystem.process();
             attackSystem.process();
             victorySystem.process();
+            triggerSystem.process();
 
             mapCollisionSystem.process();
 

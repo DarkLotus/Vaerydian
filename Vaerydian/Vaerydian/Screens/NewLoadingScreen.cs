@@ -39,7 +39,7 @@ namespace Vaerydian
 
 			NewLoadingScreen.n_DoneLoading = false;
 
-			Thread n_BackgroundThread = new Thread(handleSlowLoading);
+			n_BackgroundThread = new Thread(handleSlowLoading);
 			n_BackgroundThread.IsBackground = true;
 			n_BackgroundThread.Start();
 

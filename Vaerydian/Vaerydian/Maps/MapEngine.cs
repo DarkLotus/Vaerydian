@@ -421,6 +421,8 @@ namespace Vaerydian.Maps
                     return new Color(221,221,221);
                 case TerrainType.BASE_RIVER:
                     return new Color(0,102,102);
+                case TerrainType.CAVE_ENTRANCE:
+                    return new Color(255, 0, 0);
                 default:
                     return Color.Red;
             }

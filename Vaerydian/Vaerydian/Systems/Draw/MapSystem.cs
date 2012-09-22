@@ -281,6 +281,8 @@ namespace Vaerydian.Systems.Draw
                     return new Color(221, 221, 221);
                 case TerrainType.BASE_RIVER:
                     return new Color(0, 102, 102);
+                case TerrainType.CAVE_ENTRANCE:
+                    return new Color(255, 0, 0);
                 case TerrainType.CAVE_WALL:
                     return new Color(64, 64, 64);
                 case TerrainType.CAVE_FLOOR:
