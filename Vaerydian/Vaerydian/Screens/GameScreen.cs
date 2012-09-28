@@ -233,8 +233,8 @@ namespace Vaerydian.Screens
             //create cave
             //entityFactory.createCave();
             //entityFactory.CreateTestMap();
-            GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
-            //GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
+            //GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
+            GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
             //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
             
 

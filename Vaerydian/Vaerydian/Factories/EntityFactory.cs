@@ -88,7 +88,7 @@ namespace Vaerydian.Factories
             ItemFactory iFactory = new ItemFactory(e_EcsInstance);
             e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            int val = 15;
+            int val = 25  ;
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
@@ -109,9 +109,9 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, attributes);
 
             //create health
-			Health health = new Health(5000);//attributes.AttributeSet[AttributeType.Endurance] * 5);
-			health.RecoveryAmmount = 500;//attributes.AttributeSet[AttributeType.Endurance] / 5;
-            health.RecoveryRate = 32;
+			Health health = new Health(attributes.AttributeSet[AttributeType.Endurance] * 5);// new Health(5000);//
+			health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
+            health.RecoveryRate = 1000;
             e_EcsInstance.EntityManager.addComponent(e, health);
 
             //setup skills
