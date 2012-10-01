@@ -115,6 +115,20 @@ namespace Vaerydian.Screens
             }
         }
 
+        private bool g_FirstLoad = false;
+
+        private object[] g_Parameters;
+
+        private short g_MapType;
+
+        public GameScreen() { }
+
+        public GameScreen(bool firstLoad, short mapType, params object[] parameters)
+        {
+            g_FirstLoad = firstLoad;
+            g_MapType = mapType;
+            g_Parameters = parameters;
+        }
 
         public override void Initialize()
         {

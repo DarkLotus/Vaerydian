@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Vaerydian.Characters;
+using Vaerydian.Maps;
 
 namespace Vaerydian.Sessions
 {
@@ -12,15 +14,18 @@ namespace Vaerydian.Sessions
     static class GameSession
     {
 
-        private static String gs_GameVersion = "Alpha 0.0.3.0";
+        private static String g_GameVersion = "Alpha 0.0.5.0";
 
         public static String GameVersion
         {
-            get { return gs_GameVersion; }
-            set { gs_GameVersion = value; }
+            get { return g_GameVersion; }
+            set { g_GameVersion = value; }
         }
 
+        private static Stack<MapDef> g_MapDefStack;
 
+
+        private static string PLAYER_PLACEHOLDER;
 
     }
 }

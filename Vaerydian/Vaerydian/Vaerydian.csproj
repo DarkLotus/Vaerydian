@@ -179,6 +179,7 @@
     <Compile Include="Factories\UIFactory.cs" />
     <Compile Include="Factories\UtilFactory.cs" />
     <Compile Include="GameContainer.cs" />
+    <Compile Include="Maps\MapDef.cs" />
     <Compile Include="Maps\MapEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

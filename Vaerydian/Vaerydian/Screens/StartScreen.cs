@@ -77,11 +77,11 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Frame.BackgroundColor = Color.Black;
             s_ButtonMenu.Frame.Transparency = 0.75f;            
            
-            s_ButtonMenu.Buttons[0].NormalTextureName = "temperature";
-            s_ButtonMenu.Buttons[0].PressedTextureName = "temperature";
-            s_ButtonMenu.Buttons[0].MouseOverTextureName = "temperature";
+            s_ButtonMenu.Buttons[0].NormalTextureName = "test_dialog";
+            s_ButtonMenu.Buttons[0].PressedTextureName = "test_dialog2";
+            s_ButtonMenu.Buttons[0].MouseOverTextureName = "test_dialog2";
             s_ButtonMenu.Buttons[0].Color = Color.Gray;
-            s_ButtonMenu.Buttons[0].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[0].Transparency = 1f; //0.75f;
             s_ButtonMenu.Buttons[0].Border = 10;
             s_ButtonMenu.Buttons[0].FontName = "General";
             s_ButtonMenu.Buttons[0].AutoSize = true;
@@ -91,12 +91,12 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[0].MouseOverTextColor = Color.Yellow;
             s_ButtonMenu.Buttons[0].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[0].MouseClick += OnMouseClickNewGame;
-            
-            s_ButtonMenu.Buttons[1].NormalTextureName = "temperature";
-            s_ButtonMenu.Buttons[1].PressedTextureName = "temperature";
-            s_ButtonMenu.Buttons[1].MouseOverTextureName = "temperature";
+
+            s_ButtonMenu.Buttons[1].NormalTextureName = "test_dialog";
+            s_ButtonMenu.Buttons[1].PressedTextureName = "test_dialog2";
+            s_ButtonMenu.Buttons[1].MouseOverTextureName = "test_dialog2";
             s_ButtonMenu.Buttons[1].Color = Color.Gray;
-            s_ButtonMenu.Buttons[1].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[1].Transparency = 1f;
             s_ButtonMenu.Buttons[1].Border = 10;
             s_ButtonMenu.Buttons[1].FontName = "General";
             s_ButtonMenu.Buttons[1].AutoSize = true;
@@ -107,11 +107,11 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[1].PressedTextColor = Color.Red;
             s_ButtonMenu.Buttons[1].MouseClick += OnMouseClickWorldGen;
 
-            s_ButtonMenu.Buttons[2].NormalTextureName = "temperature";
-            s_ButtonMenu.Buttons[2].PressedTextureName = "temperature";
-            s_ButtonMenu.Buttons[2].MouseOverTextureName = "temperature";
+            s_ButtonMenu.Buttons[2].NormalTextureName = "test_dialog";
+            s_ButtonMenu.Buttons[2].PressedTextureName = "test_dialog2";
+            s_ButtonMenu.Buttons[2].MouseOverTextureName = "test_dialog2";
             s_ButtonMenu.Buttons[2].Color = Color.Gray;
-            s_ButtonMenu.Buttons[2].Transparency = 0.75f;
+            s_ButtonMenu.Buttons[2].Transparency = 1f;
             s_ButtonMenu.Buttons[2].Border = 10;
             s_ButtonMenu.Buttons[2].FontName = "General";
             s_ButtonMenu.Buttons[2].AutoSize = true;
