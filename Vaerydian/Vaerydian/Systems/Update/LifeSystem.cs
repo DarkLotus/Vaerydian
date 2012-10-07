@@ -8,6 +8,7 @@ using ECSFramework;
 using Vaerydian.Components;
 using Vaerydian.Components.Characters;
 using Vaerydian.Factories;
+using Vaerydian.Screens;
 
 namespace Vaerydian.Systems.Update
 {
@@ -41,7 +42,10 @@ namespace Vaerydian.Systems.Update
 
             //don't decay the player yet
             if (entity == l_Player)
+            {
+                GameScreen.PLAYER_IS_DEAD = true;
                 return;
+            }
 
             life.TimeSinceDeath += e_ECSInstance.ElapsedTime;
 

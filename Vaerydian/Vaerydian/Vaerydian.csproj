@@ -133,6 +133,7 @@
     <Compile Include="Characters\Experience\Knowledge.cs" />
     <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
     <Compile Include="Characters\Factions\Faction.cs" />
+    <Compile Include="Characters\PlayerHolder.cs" />
     <Compile Include="Characters\Skills\Skill.cs" />
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Actions\Damage.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Components\Utils\GameMap.cs" />
     <Compile Include="Components\Utils\MapCollidable.cs" />
     <Compile Include="Components\Utils\Trigger.cs" />
+    <Compile Include="Factories\AnimationFactory.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="Factories\MapFactory.cs" />
@@ -179,7 +181,7 @@
     <Compile Include="Factories\UIFactory.cs" />
     <Compile Include="Factories\UtilFactory.cs" />
     <Compile Include="GameContainer.cs" />
-    <Compile Include="Maps\MapDef.cs" />
+    <Compile Include="Maps\MapState.cs" />
     <Compile Include="Maps\MapEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Screens\WorldScreen.cs" />
     <Compile Include="Sessions\GameSession.cs" />
+    <Compile Include="Systems\Draw\AnimationSystem.cs" />
     <Compile Include="Systems\Draw\DeferredSystem.cs" />
     <Compile Include="Systems\Draw\FloatingTextDisplaySystem.cs" />
     <Compile Include="Systems\Draw\HealthBarRenderSystem.cs" />
@@ -219,8 +222,10 @@
     <Compile Include="UI\ButtonMenu.cs" />
     <Compile Include="UI\DialogTimer.cs" />
     <Compile Include="UI\HpLabelUpdater.cs" />
-    <Compile Include="Utils\Animation.cs" />
+    <Compile Include="Utils\Bone.cs" />
+    <Compile Include="Utils\Character.cs" />
     <Compile Include="Utils\KeyFrame.cs" />
+    <Compile Include="Utils\Skeleton.cs" />
     <Compile Include="Utils\SpriteAnimation.cs" />
     <Compile Include="Utils\AStarPathing.cs" />
     <Compile Include="Utils\AttackType.cs" />

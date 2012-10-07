@@ -12,6 +12,7 @@ using WorldGeneration.Utils;
 using WorldGeneration.World;
 using WorldGeneration.Generators;
 using Vaerydian.Components.Utils;
+using Microsoft.Xna.Framework;
 
 
 namespace Vaerydian.Factories
@@ -59,7 +60,7 @@ namespace Vaerydian.Factories
         /// <param name="counter">number of iterations</param>
         /// <param name="n">number of cells neighbors</param>
         /// <param name="c">number of cells closed neighbors</param>
-        public GameMap createRandomCaveMap(int x, int y, int prob, bool h, int counter, int n)
+        public GameMap createRandomCaveMap(int x, int y, int prob, bool h, int counter, int n, int seed)
         {
             Map map = MapMaker.create(x, y);
 
@@ -71,10 +72,11 @@ namespace Vaerydian.Factories
             parameters[CaveGen.CAVE_PARAMS_CELL_OP_SPEC] = h;
             parameters[CaveGen.CAVE_PARAMS_ITER] = counter;
             parameters[CaveGen.CAVE_PARAMS_NEIGHBORS] = n;
+            parameters[CaveGen.CAVE_PARAMS_SEED] = seed;
 
             MapMaker.Parameters = parameters;
             
-            MapMaker.generate( map, MapType.CAVE);
+            MapMaker.generate(map, MapType.CAVE);
 
             GameMap gameMap = new GameMap(map);
 
@@ -117,6 +119,32 @@ namespace Vaerydian.Factories
             m_EcsInstance.refresh(e);
 
             return gameMap;
+        }
+
+        public GameMap recreateWorldMap(GameMap map)
+        {
+            Entity e = m_EcsInstance.create();
+            m_EcsInstance.EntityManager.addComponent(e, map);
+
+            m_EcsInstance.TagManager.tagEntity("MAP", e);
+
+            m_EcsInstance.refresh(e);
+
+            return map;
+        }
+
+        public Vector2 findSafeLocation(GameMap map)
+        {
+            for (int i = 0; i < map.Map.XSize; i++)
+            {
+                for (int j = 0; j < map.Map.YSize; j++)
+                {
+                    if (!map.Map.Terrain[i, j].IsBlocking)
+                        return new Vector2(i*32, j*32);
+                }
+            }
+
+            return Vector2.Zero;
         }
     }
 }

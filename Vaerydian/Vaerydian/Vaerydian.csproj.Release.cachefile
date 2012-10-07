@@ -1,11 +1,7 @@
-Content\characters\enemy.xnb
 Content\characters\herr_von_speck_sheet.xnb
 Content\characters\lord_lard_sheet.xnb
-Content\characters\normals\enemy_normal.xnb
 Content\characters\normals\herr_von_speck_sheet_normals.xnb
 Content\characters\normals\lord_lard_sheet_normals.xnb
-Content\characters\normals\player_normal.xnb
-Content\characters\player.xnb
 Content\terrain\abyssal.xnb
 Content\terrain\arctic.xnb
 Content\terrain\beach.xnb
@@ -78,3 +74,5 @@ Content\audio\effects\thereheis3.xnb
 Content\terrain\noise.xnb
 Content\test_dialog.xnb
 Content\test_dialog2.xnb
+Content\characters\bat_head.xnb
+Content\characters\bat_wing.xnb

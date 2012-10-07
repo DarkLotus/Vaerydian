@@ -42,11 +42,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="characters\enemy.bmp">
-      <Name>enemy</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="characters\herr_von_speck_sheet.png">
       <Name>herr_von_speck_sheet</Name>
       <Importer>TextureImporter</Importer>
@@ -57,11 +52,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="characters\normals\enemy_normal.bmp">
-      <Name>enemy_normal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="characters\normals\herr_von_speck_sheet_normals.png">
       <Name>herr_von_speck_sheet_normals</Name>
       <Importer>TextureImporter</Importer>
@@ -69,16 +59,6 @@
     </Compile>
     <Compile Include="characters\normals\lord_lard_sheet_normals.png">
       <Name>lord_lard_sheet_normals</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="characters\normals\player_normal.bmp">
-      <Name>player_normal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="characters\player.bmp">
-      <Name>player</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -460,6 +440,18 @@
   <ItemGroup>
     <Compile Include="test_dialog2.bmp">
       <Name>test_dialog2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\bat_head.png">
+      <Name>bat_head</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="characters\bat_wing.png">
+      <Name>bat_wing</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -205,80 +205,7 @@ namespace Vaerydian.Systems.Update
 
             //transform.Rotation = getAngle(pos, mPosition.getPosition());
 
-            //move twoards reticle
-            if (InputManager.isKeyPressed(Keys.T))
-            {
-                //get mouse location
-                Vector2 mPos = mPosition.Pos;
-
-                //find vector pointing from entity towards reticle
-                Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec.Normalize();
-                
-                //issue new heading
-                heading.setHeading(Vector2.Multiply(vec,velocity.Vel));
-                
-                //set new position
-                pos += heading.getHeading();
-                position.Pos = pos;
-            }
-
-            //move away from reticle
-            if (InputManager.isKeyPressed(Keys.G))
-            {
-                //get mouse location
-                Vector2 mPos = mPosition.Pos;
-
-                //find vector pointing from entity away from reticle
-                Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec.Normalize();
-                vec = Vector2.Negate(vec);
-
-                //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.Vel));
-
-                //set new position
-                pos += heading.getHeading();
-                position.Pos = pos;
-            }
-
-            //move perp left
-            if (InputManager.isKeyPressed(Keys.Q))
-            {
-                //get mouse location
-                Vector2 mPos = mPosition.Pos;
-
-                //find vector pointing from entity towards reticle
-                Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec = VectorHelper.getLeftNormal(vec);
-                vec.Normalize();
-
-                //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.Vel/2));
-
-                //set new position
-                pos += heading.getHeading();
-                position.Pos = pos;
-            }
-
-            //move perp right
-            if (InputManager.isKeyPressed(Keys.E))
-            {
-                //get mouse location
-                Vector2 mPos = mPosition.Pos;
-
-                //find vector pointing from entity towards reticle
-                Vector2 vec = Vector2.Subtract(mPos, pos);
-                vec = VectorHelper.getRightNormal(vec);
-                vec.Normalize();
-
-                //issue new heading
-                heading.setHeading(Vector2.Multiply(vec, velocity.Vel/2));
-
-                //set new position
-                pos += heading.getHeading();
-                position.Pos = pos;
-            }
+           
 
             /*
             if (InputManager.isLeftButtonClicked())
@@ -388,7 +315,7 @@ namespace Vaerydian.Systems.Update
             {
 
                 NPCFactory ef = new NPCFactory(e_ECSInstance);
-                ef.createWanderingEnemy(mPosition.Pos + mPosition.Offset - new Vector2(16));
+                ef.createWanderingEnemy(mPosition.Pos + mPosition.Offset - new Vector2(16),15);
 
             }
 

@@ -5,6 +5,7 @@ using System.Text;
 
 using Vaerydian.Characters;
 using Vaerydian.Maps;
+using Vaerydian.Components.Utils;
 
 namespace Vaerydian.Sessions
 {
@@ -22,10 +23,30 @@ namespace Vaerydian.Sessions
             set { g_GameVersion = value; }
         }
 
-        private static Stack<MapDef> g_MapDefStack;
+        private static GameMap g_WorldMap;
+
+        public static GameMap WorldMap
+        {
+            get { return GameSession.g_WorldMap; }
+            set { GameSession.g_WorldMap = value; }
+        }
+
+        private static Stack<MapState> g_MapStack = new Stack<MapState>();
+
+        public static Stack<MapState> MapStack
+        {
+            get { return GameSession.g_MapStack; }
+            set { GameSession.g_MapStack = value; }
+        }
 
 
-        private static string PLAYER_PLACEHOLDER;
+        private static PlayerState g_PlayerState;
+
+        public static PlayerState PlayerState
+        {
+            get { return GameSession.g_PlayerState; }
+            set { GameSession.g_PlayerState = value; }
+        }
 
     }
 }

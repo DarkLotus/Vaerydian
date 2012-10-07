@@ -15,6 +15,7 @@ using Glimpse.Components;
 using Glimpse.Systems;
 using Glimpse.Input;
 using Microsoft.Xna.Framework.Input;
+using WorldGeneration.Utils;
 
 namespace Vaerydian.Screens
 {
@@ -181,8 +182,15 @@ namespace Vaerydian.Screens
             //dispose of this screen
             this.ScreenManager.removeScreen(this);
 
+            //setup new game parameters
+            object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
+            parameters[GameScreen.GAMESCREEN_SEED] = 42;
+            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = 10;
+            parameters[GameScreen.GAMESCREEN_RETURNING] = false;
+            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
+            
             //load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen());
+            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WORLD,parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)

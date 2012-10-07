@@ -135,18 +135,21 @@ namespace Vaerydian.Factories
         }
 
 
-        public void createWanderingEnemy(Vector2 position)
+        public void createWanderingEnemy(Vector2 position, int skillLevel)
         {
             Entity e = n_EcsInstance.create();
 
             n_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(16)));
             n_EcsInstance.EntityManager.addComponent(e, new Velocity(3f));
-            n_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals", 32, 32, 0, 0));
+            //n_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals", 32, 32, 0, 0));
             n_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new WanderingEnemyBehavior(e, n_EcsInstance)));
             n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
             n_EcsInstance.EntityManager.addComponent(e, new Transform());
             n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
+
+            AnimationFactory animFactory = new AnimationFactory(n_EcsInstance);
+            n_EcsInstance.EntityManager.addComponent(e, animFactory.createBatAnimation());
 
             //create info
             Information info = new Information();
@@ -176,11 +179,11 @@ namespace Vaerydian.Factories
             ItemFactory iFactory = new ItemFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            int val = 25;
+            
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(val));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
@@ -188,13 +191,13 @@ namespace Vaerydian.Factories
             //setup attributes
             Attributes attributes = new Attributes();
 
-            attributes.AttributeSet.Add(AttributeType.Focus, val);
-            attributes.AttributeSet.Add(AttributeType.Endurance, val);
-            attributes.AttributeSet.Add(AttributeType.Mind, val);
-            attributes.AttributeSet.Add(AttributeType.Muscle, val);
-            attributes.AttributeSet.Add(AttributeType.Perception, val);
-            attributes.AttributeSet.Add(AttributeType.Personality, val);
-            attributes.AttributeSet.Add(AttributeType.Quickness, val);
+            attributes.AttributeSet.Add(AttributeType.Focus, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Endurance, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Mind, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Muscle, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Perception, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Personality, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Quickness, skillLevel);
             n_EcsInstance.EntityManager.addComponent(e, attributes);
 
             //create health
@@ -204,11 +207,11 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, health);
 
             //setup skills
-            Skill skill = new Skill("Avoidance", val, SkillType.Offensive);
+            Skill skill = new Skill("Avoidance", skillLevel, SkillType.Offensive);
             Skills skills = new Skills();
             skills.SkillSet.Add(SkillName.Avoidance, skill);
 
-            skill = new Skill("Ranged", val, SkillType.Offensive);
+            skill = new Skill("Ranged", skillLevel, SkillType.Offensive);
             skills.SkillSet.Add(SkillName.Ranged, skill);
             n_EcsInstance.EntityManager.addComponent(e, skills);
 
@@ -234,7 +237,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.refresh(e);
         }
 
-        public void createWanders(int count, GameMap map)
+        public void createWanders(int count, GameMap map, int skillLevel)
         {
             int xSize = map.Map.XSize;
             int ySize = map.Map.YSize;
@@ -253,7 +256,7 @@ namespace Vaerydian.Factories
 
                     if (!map.Map.Terrain[x, y].IsBlocking)
                     {
-                        createWanderingEnemy(new Vector2(x*32, y*32));
+                        createWanderingEnemy(new Vector2(x * 32, y * 32), skillLevel);
                         placed = true;
                     }
 
@@ -268,14 +271,14 @@ namespace Vaerydian.Factories
         /// </summary>
         /// <param name="count">max number of wanderers to spawn</param>
         /// <param name="map">map they are spawned in</param>
-        public void createWandererTrigger(int count, GameMap map)
+        public void createWandererTrigger(int count, GameMap map, int skillLevel)
         {
             Entity e = n_EcsInstance.create();
 
-            Trigger trigger = new Trigger(count, map);
+            Trigger trigger = new Trigger(count, map, skillLevel);
 
             trigger.TriggerAction += OnTriggerActionCreateWanders;
-            trigger.TimeDelay = 5000;
+            trigger.TimeDelay = 500;
             trigger.RecurrancePeriod = 10000;
             trigger.IsRecurring = true;
 
@@ -288,11 +291,12 @@ namespace Vaerydian.Factories
         /// handles the wanderer trigger actions
         /// </summary>
         /// <param name="ecsInstance"></param>
-        /// <param name="paremeters"></param>
-        private void OnTriggerActionCreateWanders(ECSInstance ecsInstance, Object[] paremeters)
+        /// <param name="parameters"></param>
+        private void OnTriggerActionCreateWanders(ECSInstance ecsInstance, Object[] parameters)
         {
-            int count = (int)paremeters[0];
-            GameMap map = (GameMap)paremeters[1];
+            int count = (int)parameters[0];
+            GameMap map = (GameMap)parameters[1];
+            int skillLevel = (int)parameters[2];
 
             Bag<Entity> wanderers = n_EcsInstance.GroupManager.getGroup("WANDERERS");
 
@@ -304,7 +308,7 @@ namespace Vaerydian.Factories
             int create = count - size;
 
             if (create != 0)
-                createWanders(create, map);
+                createWanders(create, map, skillLevel);
         }
 
 

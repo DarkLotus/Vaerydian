@@ -47,7 +47,7 @@ namespace Vaerydian.Behaviors
         private ComponentMapper w_ColidableMapper;
         private ComponentMapper w_ViewPortMapper;
         private ComponentMapper w_SpatialMapper;
-        private ComponentMapper w_SpriteMapper;
+        //private ComponentMapper w_SpriteMapper;
         private ComponentMapper w_FactionMapper;
         private ComponentMapper w_HealthMapper;
         private ComponentMapper w_EquipmentMapper;
@@ -208,7 +208,7 @@ namespace Vaerydian.Behaviors
             w_ColidableMapper = new ComponentMapper(new MapCollidable(), ecsInstance);
             w_ViewPortMapper = new ComponentMapper(new ViewPort(), ecsInstance);
             w_SpatialMapper = new ComponentMapper(new SpatialPartition(), ecsInstance);
-            w_SpriteMapper = new ComponentMapper(new Sprite(), ecsInstance);
+            //w_SpriteMapper = new ComponentMapper(new Sprite(), ecsInstance);
             w_FactionMapper = new ComponentMapper(new Factions(), ecsInstance);
             w_HealthMapper = new ComponentMapper(new Health(), ecsInstance);
             w_EquipmentMapper = new ComponentMapper(new Equipment(), ecsInstance);
@@ -583,6 +583,7 @@ namespace Vaerydian.Behaviors
         private BehaviorReturnCode updateAnimation()
         {
             //grab components
+            /*
             Sprite sprite = (Sprite)w_SpriteMapper.get(w_ThisEntity);
             Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
 
@@ -609,7 +610,7 @@ namespace Vaerydian.Behaviors
                 w_Animation.reset();
 
             //reset movement flag
-            w_Moved = false;
+            w_Moved = false;*/
 
             return BehaviorReturnCode.Success;
         }

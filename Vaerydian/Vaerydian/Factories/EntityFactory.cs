@@ -26,6 +26,8 @@ using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Actions;
+using Vaerydian.Characters;
+using Vaerydian.Sessions;
 
 
 namespace Vaerydian.Factories
@@ -47,7 +49,7 @@ namespace Vaerydian.Factories
             e_EcsInstance = ecsInstance;
         }
 
-        public Entity createPlayer()
+        public Entity createPlayer(int skillLevel)
         {
             Entity e = e_EcsInstance.create();
             e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
@@ -88,24 +90,22 @@ namespace Vaerydian.Factories
             ItemFactory iFactory = new ItemFactory(e_EcsInstance);
             e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            int val = 25  ;
-
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(val));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             e_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
             Attributes attributes = new Attributes();
-            attributes.AttributeSet.Add(AttributeType.Focus, val);
-            attributes.AttributeSet.Add(AttributeType.Endurance, val);
-            attributes.AttributeSet.Add(AttributeType.Mind, val);
-            attributes.AttributeSet.Add(AttributeType.Muscle, val);
-            attributes.AttributeSet.Add(AttributeType.Perception, val);
-            attributes.AttributeSet.Add(AttributeType.Personality, val);
-            attributes.AttributeSet.Add(AttributeType.Quickness, val);
+            attributes.AttributeSet.Add(AttributeType.Focus, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Endurance, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Mind, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Muscle, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Perception, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Personality, skillLevel);
+            attributes.AttributeSet.Add(AttributeType.Quickness, skillLevel);
             e_EcsInstance.EntityManager.addComponent(e, attributes);
 
             //create health
@@ -116,11 +116,11 @@ namespace Vaerydian.Factories
 
             //setup skills
             Skills skills = new Skills();
-            Skill skill = new Skill("Ranged", val, SkillType.Offensive);
+            Skill skill = new Skill("Ranged", skillLevel, SkillType.Offensive);
             skills.SkillSet.Add(SkillName.Ranged, skill);
-            skill = new Skill("Avoidance", val, SkillType.Defensive);
+            skill = new Skill("Avoidance", skillLevel, SkillType.Defensive);
             skills.SkillSet.Add(SkillName.Avoidance, skill);
-            skill = new Skill("Melee", val, SkillType.Offensive);
+            skill = new Skill("Melee", skillLevel, SkillType.Offensive);
             skills.SkillSet.Add(SkillName.Melee, skill);
             e_EcsInstance.EntityManager.addComponent(e, skills);
 
@@ -134,6 +134,15 @@ namespace Vaerydian.Factories
             factions.KnownFactions.Add(ally.FactionType, ally);
             e_EcsInstance.EntityManager.addComponent(e, factions);
 
+            GameSession.PlayerState = new PlayerState();
+            GameSession.PlayerState.Attributes = attributes;
+            GameSession.PlayerState.Factions = factions;
+            GameSession.PlayerState.Health = health;
+            GameSession.PlayerState.Information = info;
+            GameSession.PlayerState.Interactable = interact;
+            GameSession.PlayerState.Knowledges = knowledges;
+            GameSession.PlayerState.Life = life;
+            GameSession.PlayerState.Skills = skills;
 
             e_EcsInstance.TagManager.tagEntity("PLAYER", e);
 
@@ -141,6 +150,52 @@ namespace Vaerydian.Factories
 
 			return e;
 
+        }
+
+        public Entity recreatePlayer(PlayerState playerHolder, Position position)
+        {
+            Entity e = e_EcsInstance.create();
+
+            e_EcsInstance.EntityManager.addComponent(e, position);
+            //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
+            e_EcsInstance.EntityManager.addComponent(e, new Controllable());
+            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals", 32, 32, 0, 0));
+            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
+            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+            e_EcsInstance.EntityManager.addComponent(e, new Heading());
+            //e_EcsInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+            e_EcsInstance.EntityManager.addComponent(e, new Transform());
+
+            /* LIKELY NOT NEEDED
+            GameSession.PlayerState.Attributes.setEntityId(e.Id);
+            GameSession.PlayerState.Factions.setEntityId(e.Id);
+            GameSession.PlayerState.Health.setEntityId(e.Id);
+            GameSession.PlayerState.Information.setEntityId(e.Id);
+            GameSession.PlayerState.Interactable.setEntityId(e.Id);
+            GameSession.PlayerState.Knowledges.setEntityId(e.Id);
+            GameSession.PlayerState.Life.setEntityId(e.Id);
+            GameSession.PlayerState.Skills.setEntityId(e.Id);
+            */
+
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Information);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Life);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Interactable);
+
+            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
+            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Knowledges);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Attributes);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Health);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Skills);
+            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Factions);
+
+            e_EcsInstance.TagManager.tagEntity("PLAYER", e);
+
+            e_EcsInstance.refresh(e);
+
+            return e;
         }
 
         public void createCamera()

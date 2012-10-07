@@ -36,6 +36,8 @@ using AgentComponentBus.Core;
 using AgentComponentBus.Components.ECS;
 using AgentComponentBus.Systems;
 using WorldGeneration.Utils;
+using Vaerydian.Sessions;
+using Vaerydian.Maps;
 
 
 namespace Vaerydian.Screens
@@ -71,6 +73,7 @@ namespace Vaerydian.Screens
         //draw systems
         private EntitySystem spriteRenderSystem;
         private EntitySystem spriteNormalSystem;
+        private EntitySystem animationSystem;
         //private EntitySystem spriteDepthSystem;
         private EntitySystem mapSystem;
         private EntitySystem mapNormalSystem;
@@ -103,6 +106,18 @@ namespace Vaerydian.Screens
         private Texture2D debugTex;
         private Random rand = new Random();
 
+        private GameMap map;
+        private Entity player;
+
+        private MapState mapState;
+
+        public const int GAMESCREEN_PARAM_SIZE = 4;
+        public const int GAMESCREEN_SEED = 0;
+        public const int GAMESCREEN_SKILLLEVEL = 1;
+        public const int GAMESCREEN_RETURNING = 2;
+        public const int GAMESCREEN_LAST_PLAYER_POSITION = 3;
+
+        public static bool PLAYER_IS_DEAD = false;
 
         /// <summary>
         /// current loading message
@@ -123,7 +138,7 @@ namespace Vaerydian.Screens
 
         public GameScreen() { }
 
-        public GameScreen(bool firstLoad, short mapType, params object[] parameters)
+        public GameScreen(bool firstLoad, short mapType, object[] parameters)
         {
             g_FirstLoad = firstLoad;
             g_MapType = mapType;
@@ -147,6 +162,7 @@ namespace Vaerydian.Screens
             
             taskWorker = new TaskWorker();
             taskWorker.MaxTasksPerCycle = 10;
+            taskWorker.MaxCommitsPerCycle = 10;
             taskWorker.MaxRetrievesPerCycle = 10;
 
             //create & register systems
@@ -173,6 +189,7 @@ namespace Vaerydian.Screens
             spriteRenderSystem = ecsInstance.SystemManager.setSystem(new SpriteRenderSystem(gameContainer), new Position(), new Sprite());
             //spriteNormalSystem = ecsInstance.SystemManager.setSystem(new SpriteNormalSystem(gameContainer), new Position(), new Sprite());
             //spriteDepthSystem = ecsInstance.SystemManager.setSystem(new SpriteDepthSystem(gameContainer), new Position(), new Sprite());
+            animationSystem = ecsInstance.SystemManager.setSystem(new AnimationSystem(gameContainer), new Character(), new Position());
             mapSystem = ecsInstance.SystemManager.setSystem(new MapSystem(gameContainer), new GameMap());
             //mapNormalSystem = ecsInstance.SystemManager.setSystem(new MapNormalSystem(gameContainer), new GameMap());
             //mapDepthSystem = ecsInstance.SystemManager.setSystem(new MapDepthSystem(gameContainer), new GameMap());
@@ -190,7 +207,7 @@ namespace Vaerydian.Screens
             busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(taskWorker), new BusDataRetrieval());
 
             //any additional component registration
-            ecsInstance.ComponentManager.registerComponentType(new ViewPort());
+            ecsInstance.ComponentManager.registerComponentType(new Vaerydian.Components.Graphical.ViewPort());
             ecsInstance.ComponentManager.registerComponentType(new MousePosition());
             ecsInstance.ComponentManager.registerComponentType(new Heading());
             ecsInstance.ComponentManager.registerComponentType(new MapDebug());
@@ -231,38 +248,56 @@ namespace Vaerydian.Screens
             //debugTex = ScreenManager.Game.Content.Load<Texture2D>("temperature");
             //debugTex = gameContainer.ContentManager.Load<Texture2D>("temperature");
 
-            //load early entities
-            //entityFactory.createBackground();
-            Entity player = entityFactory.createPlayer();
+            switch(g_MapType)
+            {
+                case MapType.WORLD:
+                    if (g_FirstLoad)
+                    {
+                        map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters[GAMESCREEN_SEED]);
+                        GameSession.WorldMap = map;
+                    }
+                    else
+                    {
+                        map = mapFactory.recreateWorldMap(GameSession.WorldMap);
+                        GameSession.WorldMap = map;
+                    }
+                    break;
+                case MapType.CAVE:
+                    map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4, (int)g_Parameters[GAMESCREEN_SEED]);
+                    break;
+                default:
+                    map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters[GAMESCREEN_SEED]);
+                    break;
+            }
+
+            if (g_FirstLoad)
+                player = entityFactory.createPlayer((int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
+            else
+                if((bool) g_Parameters[GAMESCREEN_RETURNING])
+                    player = entityFactory.recreatePlayer(GameSession.PlayerState, (Position) g_Parameters[GAMESCREEN_LAST_PLAYER_POSITION]);
+                else
+                    player = entityFactory.recreatePlayer(GameSession.PlayerState, new Position(mapFactory.findSafeLocation(map),new Vector2(16,16)));
+
+
+            mapState = new MapState();
+            mapState.MapType = map.Map.MapType;
+            mapState.Seed = map.Map.Seed;
+            mapState.SkillLevel = (int)g_Parameters[GAMESCREEN_SKILLLEVEL];
+            
+
             entityFactory.createCamera();
             entityFactory.createMousePointer();
 
-            //npcFactory.createFollower(new Vector2(500, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 50);
-            //entityFactory.createFollower(new Vector2(150, 250), ecsInstance.TagManager.getEntityByTag("PLAYER"), 100);
-            //entityFactory.createFollower(new Vector2(250, 350), ecsInstance.TagManager.getEntityByTag("PLAYER"), 150);
-            //entityFactory.createFollower(new Vector2(350, 450), ecsInstance.TagManager.getEntityByTag("PLAYER"), 200);
-            //npcFactory.createWanderingEnemy(new Vector2(100, 100));
-            
+            uiFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
-            //create cave
-            //entityFactory.createCave();
-            //entityFactory.CreateTestMap();
-            //GameMap map = entityFactory.createRandomMap(100, 100, 25, true, 50000, 5);
-            GameMap map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4);
-            //GameMap map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, 42);
-            
-
-            //npcFactory.createWanders(100, map);
-            npcFactory.createWandererTrigger(10, map);
-
-            //uiFactory.createUITests();
-			uiFactory.createHitPointLabel(player, 100,50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width-100)/2,0));
+            if(!g_FirstLoad && mapState.MapType != MapType.WORLD)
+                npcFactory.createWandererTrigger(20, map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
 
             //create map debug
             entityFactory.createMapDebug();
-
+            
             //create lights
-
+            /*
             for (int i = 0; i <= 5; i++)
             {
                 for (int j = 0; j <= 5; j++)
@@ -271,16 +306,14 @@ namespace Vaerydian.Screens
                     entityFactory.createStandaloneLight(true, 640, new Vector3(i * 640, j * 640, 100), .1f,
                         new Vector4(.5f, .5f, .7f, (float)rand.NextDouble()));
                 }
-            }
+            }*/
 
             //create GeometryMap
-            entityFactory.createGeometryMap();
+            //entityFactory.createGeometryMap();
 
             //create spatialpartition
             entityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
 
-            //load fonts
-            //fontManager.LoadContent();
 
             //early entity reslove
             ecsInstance.resolveEntities();
@@ -322,9 +355,74 @@ namespace Vaerydian.Screens
             if (InputManager.isKeyToggled(Keys.Escape))
             {
                 this.ScreenManager.removeScreen(this);
-                LoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+                NewLoadingScreen.Load(this.ScreenManager, false, new StartScreen());
             }
+
+            if (InputManager.isKeyToggled(Keys.Enter))
+            {
+
+               
+
+                //set skill level
+                Skills skills = new Skills();
+                int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent(player, skills.getTypeId())).SkillSet[Utils.SkillName.Ranged].Value;
+                
+                //set seed
+                Position pos = new Position();
+                pos = (Position)ecsInstance.ComponentManager.getComponent(player, pos.getTypeId());
+                int x = (int)(pos.Pos.X + pos.Offset.X) / 32;
+                int y = (int)(pos.Pos.Y + pos.Offset.Y) / 32;
+
+                /* WILL HELP DETECT ENTRANCES LATER
+                if (map.Map.Terrain[x,y].TerrainType != TerrainType.CAVE_ENTRANCE)
+                    return;
+                 */
+
+                mapState.LastPlayerPosition = pos;
+
+                GameSession.MapStack.Push(mapState);
+
+                //setup the parameters for the new zone
+                object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
+                parameters[GameScreen.GAMESCREEN_SEED] =  x * y + x + y;
+                parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = mapState.SkillLevel + 5;//skilllevel + 5;
+                parameters[GameScreen.GAMESCREEN_RETURNING] = false;
+                parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
+
+                this.ScreenManager.removeScreen(this);
+                NewLoadingScreen.Load(this.ScreenManager, false, new GameScreen(false, MapType.CAVE,parameters));
+
+            }
+
+            //return to previous map
+            if(InputManager.isKeyToggled(Keys.F12))
+            {
+                if (GameSession.MapStack.Count == 0)
+                    return;
+
+                MapState state = GameSession.MapStack.Pop();
+
+                //setup the parameters for the previous zone
+                object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
+                parameters[GameScreen.GAMESCREEN_SEED] = state.Seed;
+                parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = state.SkillLevel;
+                parameters[GameScreen.GAMESCREEN_RETURNING] = true;
+                parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = state.LastPlayerPosition;
+
+                this.ScreenManager.removeScreen(this);
+                NewLoadingScreen.Load(this.ScreenManager,true, new GameScreen(false,state.MapType,parameters));
+            }
+
+            if (PLAYER_IS_DEAD)
+            {
+                GameScreen.PLAYER_IS_DEAD = false;
+                this.ScreenManager.removeScreen(this);
+                NewLoadingScreen.Load(this.ScreenManager, false, new StartScreen());
+            }
+
         }
+
+
 
         public override void Update(GameTime gameTime)
         {
@@ -382,6 +480,7 @@ namespace Vaerydian.Screens
             //run color draw systems
             mapSystem.process();
             spriteRenderSystem.process();
+            animationSystem.process();
 
 			/* 
             gameContainer.GraphicsDevice.SetRenderTarget(null);
