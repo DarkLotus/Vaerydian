@@ -124,9 +124,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACB\BatHSM.cs" />
+    <Compile Include="ACB\PathFinder.cs" />
     <Compile Include="Behaviors\Actions\FindPathAction.cs" />
     <Compile Include="Behaviors\CharacterBehavior.cs" />
     <Compile Include="Behaviors\FollowerBehavior.cs" />
+    <Compile Include="Behaviors\FollowPath.cs" />
     <Compile Include="Behaviors\WanderingEnemyBehavior.cs" />
     <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Characters\Attributes\AttributeStat.cs" />
@@ -172,7 +175,9 @@
     <Compile Include="Components\Utils\Controllable.cs" />
     <Compile Include="Components\Utils\GameMap.cs" />
     <Compile Include="Components\Utils\MapCollidable.cs" />
+    <Compile Include="Components\Utils\Path.cs" />
     <Compile Include="Components\Utils\Trigger.cs" />
+    <Compile Include="Factories\AgentFactory.cs" />
     <Compile Include="Factories\AnimationFactory.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
@@ -237,6 +242,7 @@
     <Compile Include="Utils\QuadNode.cs" />
     <Compile Include="Utils\QuadTree.cs" />
     <Compile Include="Utils\SkillNames.cs" />
+    <Compile Include="Utils\StateMachine.cs" />
     <Compile Include="Utils\SupportedInteractions.cs" />
     <Compile Include="Utils\VectorHelper.cs" />
     <Compile Include="Utils\WeaponEnums.cs" />

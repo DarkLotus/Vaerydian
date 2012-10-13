@@ -45,10 +45,12 @@ namespace Vaerydian.UI
             Position pos = (Position)d_PositionMapper.get(control.Caller);
             ViewPort camera = (ViewPort)d_ViewPortMapper.get(control.ECSInstance.TagManager.getEntityByTag("CAMERA"));
 
+            
+
             if (pos != null)
             {
                 Vector2 pt = pos.Pos - camera.getOrigin();
-                control.Bounds = new Rectangle((int)pt.X, (int)pt.Y, control.Bounds.Width, control.Bounds.Height);
+                control.Bounds = new Rectangle((int)pt.X, (int)pt.Y - control.Bounds.Height - 16, control.Bounds.Width, control.Bounds.Height);
             }
         }
 

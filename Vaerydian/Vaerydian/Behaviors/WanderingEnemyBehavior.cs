@@ -97,10 +97,6 @@ namespace Vaerydian.Behaviors
         private BehaviorAction animate;
         private BehaviorAction playDetected;
         private BehaviorAction playFlee;
-        private BehaviorAction playDetected2;
-        private BehaviorAction playFlee2;
-        private BehaviorAction playDetected3;
-        private BehaviorAction playFlee3;
 
         private Conditional tooClose;
         private Conditional tooFar;
@@ -140,13 +136,10 @@ namespace Vaerydian.Behaviors
             animate = new BehaviorAction(updateAnimation);
             playDetected = new BehaviorAction(playDetectedSound);
             playFlee = new BehaviorAction(playFleeSound);
-            playDetected2 = new BehaviorAction(playDetected2Sound);
-            playFlee2 = new BehaviorAction(playFlee2Sound);
-            playDetected3 = new BehaviorAction(playDetected3Sound);
-            playFlee3 = new BehaviorAction(playFlee3Sound);
 
-            ParallelSequence setPursue = new ParallelSequence(new RandomSelector(playDetected, playDetected2, playDetected3, playDetected, playDetected2, playDetected3), setStatePursue);
-            ParallelSequence setFlee = new ParallelSequence(new RandomSelector(playFlee, playFlee2, playFlee3, playFlee, playFlee2, playFlee3), setStateFlee);
+
+            ParallelSequence setPursue = new ParallelSequence(playDetected, setStatePursue);
+            ParallelSequence setFlee = new ParallelSequence(playFlee, setStateFlee);
 
             //initialize sequence
             ParallelSequence initSeq = new ParallelSequence(init, setStateWander);
@@ -550,7 +543,7 @@ namespace Vaerydian.Behaviors
             trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
             trans.RotationOrigin = new Vector2(16);
 
-            ef.createCollidingProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
+            ef.createSonicProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
 
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\fire", true, 0.5f);
@@ -630,53 +623,16 @@ namespace Vaerydian.Behaviors
         /// <returns></returns>
         private BehaviorReturnCode playFleeSound()
         {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\help", true, 1f);
-
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Help!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "(wimper)", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
 
-        /// <summary>
-        /// plays the flee sound sound
-        /// </summary>
-        /// <returns></returns>
-        private BehaviorReturnCode playFlee2Sound()
-        {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\help2", true, 1f);
-
-            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
-            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
-
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Oooh Stop!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
-
-            return BehaviorReturnCode.Success;
-        }
-
-        /// <summary>
-        /// plays the flee sound sound
-        /// </summary>
-        /// <returns></returns>
-        private BehaviorReturnCode playFlee3Sound()
-        {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\help3", true, 1f);
-
-            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
-            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
-
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Run Away!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
-
-            return BehaviorReturnCode.Success;
-        }
+        
 
         /// <summary>
         /// plays the detected sound
@@ -684,54 +640,16 @@ namespace Vaerydian.Behaviors
         /// <returns></returns>
         private BehaviorReturnCode playDetectedSound()
         {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\thereheis", true, 1f);
-
-
+            
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
             UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "I Found Him!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+            uif.createTimedDialogWindow(w_ThisEntity, "SCREEE!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
 
             return BehaviorReturnCode.Success;
         }
 
-        /// <summary>
-        /// plays the there he is sound
-        /// </summary>
-        /// <returns></returns>
-        private BehaviorReturnCode playDetected2Sound()
-        {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\thereheis2", true, 1f);
-
-            Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
-            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
-
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "There He Is!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
-
-            return BehaviorReturnCode.Success;
-        }
-
-        /// <summary>
-        /// plays the there he is sound
-        /// </summary>
-        /// <returns></returns>
-        private BehaviorReturnCode playDetected3Sound()
-        {
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\thereheis3", true, 1f);
-
-            Position pos = (Position) w_PositionMapper.get(w_ThisEntity);
-            ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
-
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "Gotcha!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
-
-            return BehaviorReturnCode.Success;
-        }
     }
 }

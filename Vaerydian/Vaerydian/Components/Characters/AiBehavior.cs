@@ -14,6 +14,12 @@ namespace Vaerydian.Components.Characters
     class AiBehavior : IComponent
     {
         private static int a_TypeID;
+
+        public static int TypeID
+        {
+            get { return AiBehavior.a_TypeID; }
+            set { AiBehavior.a_TypeID = value; }
+        }
         private int a_EntityID;
 
         private CharacterBehavior a_Behavior;

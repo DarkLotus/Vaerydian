@@ -38,6 +38,7 @@ using AgentComponentBus.Systems;
 using WorldGeneration.Utils;
 using Vaerydian.Sessions;
 using Vaerydian.Maps;
+using Vaerydian.ACB;
 
 
 namespace Vaerydian.Screens
@@ -152,6 +153,8 @@ namespace Vaerydian.Screens
             spriteBatch = new SpriteBatch(this.ScreenManager.GraphicsDevice);
 
             ecsInstance = new ECSInstance();
+
+            ComponentMapper.ECSInstance = ecsInstance;
 
             gameContainer = ScreenManager.GameContainer;
 
@@ -324,7 +327,8 @@ namespace Vaerydian.Screens
             //get geometry map
             //geometry = (GeometryMap)geometryMapper.get(ecsInstance.TagManager.getEntityByTag("GEOMETRY"));
 
-            //issue bus loads
+            //setup bus components
+            bus.addComponent(new ComponentRegisterArgs(new PathFinder(), "PATH_FINDER"));
 
             //launch bus
             Thread thread = new Thread(bus.run);

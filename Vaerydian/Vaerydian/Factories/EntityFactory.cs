@@ -519,13 +519,39 @@ namespace Vaerydian.Factories
 
         }
 
+        public void createSonicProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
+        {
+            Entity e = e_EcsInstance.create();
+
+            e_EcsInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
+            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
+            Sprite sprite = new Sprite("sonic_attack", "sonic_attack", 32, 32, 0, 0);
+            sprite.SpriteAnimation = new SpriteAnimation(4, 16);
+            sprite.ShouldSystemAnimate = true;
+            e_EcsInstance.EntityManager.addComponent(e, sprite);
+            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+            
+            Projectile projectile = new Projectile(duration);
+            projectile.Originator = originator;
+            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            
+            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+            e_EcsInstance.EntityManager.addComponent(e, transform);
+
+            if (light != null)
+                e_EcsInstance.EntityManager.addComponent(e, light);
+
+            e_EcsInstance.refresh(e);
+
+        }
+
         public void createCollidingProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
         {
             Entity e = e_EcsInstance.create();
 
             e_EcsInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
             e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
+            e_EcsInstance.EntityManager.addComponent(e,  new Sprite("projectile", "projectile", 32, 32, 0, 0));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
             
             Projectile projectile = new Projectile(duration);

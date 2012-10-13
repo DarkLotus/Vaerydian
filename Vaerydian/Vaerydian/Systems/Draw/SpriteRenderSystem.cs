@@ -59,7 +59,7 @@ namespace Vaerydian.Systems.Draw
             //pre-load all known textures
             for (int i = 0; i < entities.Size(); i++)
             {
-                sprite = (Sprite) s_SpriteMapper.get(entities.Get(i));
+                sprite = (Sprite)s_SpriteMapper.get(entities.Get(i));
                 texName = sprite.TextureName;
                 if(!s_Textures.ContainsKey(texName))
                     s_Textures.Add(texName, s_Container.ContentManager.Load<Texture2D>(texName));
@@ -109,6 +109,9 @@ namespace Vaerydian.Systems.Draw
                     s_Color = Color.Red;
                 }
             }
+
+            if(sprite.ShouldSystemAnimate)
+                sprite.Column = sprite.SpriteAnimation.updateFrame(e_ECSInstance.ElapsedTime);
 
             s_SpriteBatch.Begin();
 

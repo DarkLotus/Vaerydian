@@ -48,7 +48,8 @@ namespace Vaerydian
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             this.IsFixedTimeStep = true;
-            //graphics.PreferMultiSampling = true;
+            //this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            graphics.PreferMultiSampling = true;
             
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));

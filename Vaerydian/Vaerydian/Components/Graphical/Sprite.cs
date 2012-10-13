@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
+using Vaerydian.Utils;
 
 
 namespace Vaerydian.Components.Graphical
@@ -116,6 +117,24 @@ namespace Vaerydian.Components.Graphical
             get { return s_Color; }
             set { s_Color = value; }
         }
+
+        private SpriteAnimation s_SpriteAnimation = new SpriteAnimation(0, 0);
+
+        public SpriteAnimation SpriteAnimation
+        {
+            get { return s_SpriteAnimation; }
+            set { s_SpriteAnimation = value; }
+        }
+
+        private bool s_ShouldSystemAnimate = false;
+
+        public bool ShouldSystemAnimate
+        {
+            get { return s_ShouldSystemAnimate; }
+            set { s_ShouldSystemAnimate = value; }
+        }
+
+
 
     }
 }

@@ -12,6 +12,13 @@ namespace Vaerydian.Components.Spatials
     public class Position : IComponent
     {
         private static int p_TypeID;
+
+        public static int TypeID
+        {
+            get { return Position.p_TypeID; }
+            set { Position.p_TypeID = value; }
+        }
+
         private int p_EntityID;
 
         private Vector2 p_Position;

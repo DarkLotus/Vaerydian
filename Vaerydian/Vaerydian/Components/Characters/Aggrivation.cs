@@ -10,6 +10,12 @@ namespace Vaerydian.Components.Characters
     class Aggrivation : IComponent
     {
         private static int a_TypeID;
+
+        public static int TypeID
+        {
+            get { return Aggrivation.a_TypeID; }
+            set { Aggrivation.a_TypeID = value; }
+        }
         private int a_EntityID;
 
         public Aggrivation() { }
