@@ -8,26 +8,33 @@ namespace Vaerydian.Utils
 {
     delegate void Delegate(Object[] parameters);
 
-    delegate void Proxy<T>(T argument) where T : struct, IComparable, IConvertible, IFormattable;
+    delegate void Proxy<T>(T argument);
 
-    class EventProxy<EState> where EState : struct, IComparable, IConvertible, IFormattable
+    delegate R Proxy<T,R>(T argument);
+
+    class EventProxy<PType>// where EState : struct, IComparable, IConvertible, IFormattable
     {
-        event Proxy<EState> StateChange;
+        event Proxy<PType> StateChange;
 
-        public void invoke(EState state)
+        public void invoke(PType state)
         {
             if (StateChange != null)
                 StateChange(state);
         }
 
-        public void bind(Proxy<EState> _delegate)
+        public void bind(Proxy<PType> _delegate)
         {
             StateChange += _delegate;
         }
 
-        public void unbind(Proxy<EState> _delegate)
+        public void unbind(Proxy<PType> _delegate)
         {
             StateChange -= _delegate;
+        }
+
+        public void unbind()
+        {
+            StateChange = null;
         }
     }
 
@@ -38,6 +45,7 @@ namespace Vaerydian.Utils
         private Delegate s_Delegate;
 
         private Dictionary<TTrigger, EventProxy<TState>> s_TransitionEvent = new Dictionary<TTrigger, EventProxy<TState>>();
+
         private Dictionary<TTrigger, TState> s_TransitionState = new Dictionary<TTrigger, TState>();
 
         public State(TState state, Delegate _delegate)
@@ -68,6 +76,7 @@ namespace Vaerydian.Utils
     class StateMachine<TState, TTrigger> where TState : struct, IComparable, IConvertible, IFormattable
     {
         private TState s_State;
+
         private Dictionary<TState, State<TState, TTrigger>> s_States = new Dictionary<TState, State<TState, TTrigger>>();
 
         public StateMachine(TState baseState, Delegate _delegate, TTrigger trigger)
@@ -103,15 +112,16 @@ namespace Vaerydian.Utils
             s_States[originState].defineStateChange(new EventProxy<TState>(), trigger, desinationState, onStateChange<TState>);
         }
 
-        public void changeState(TTrigger trigger)
+        public TState changeState(TTrigger trigger)
         {
-            s_States[s_State].changeState(trigger);
+            s_States[s_State].changeState(trigger); 
+            return s_State;
         }
 
-        public void setState(TState state)
+        public TState State
         {
-            s_State = state;
+            get { return s_State; }
+            set { s_State = value; }
         }
-
     }
 }

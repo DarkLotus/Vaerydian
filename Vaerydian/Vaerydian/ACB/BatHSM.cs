@@ -15,28 +15,49 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.ACB
 {
+    enum EnemyState
+    {
+        Idle,
+        Wandering,
+        Investigating,
+        Following,
+        Attacking,
+        Fleeing
+    }
+
+
     class BatHSM : BusComponent
     {
 
         private static ECSInstance b_ECSInstance;
 
-        private StateMachine<PathState, String> b_StateMachine;
+        private StateMachine<EnemyState, short> b_StateMachine;
 
         private const short PARAM_AGENT = 0;
         private const short PARAM_COMPONENTS = 1;
         private const short PARAM_PATH = 2;
         private const short PARAM_AGGRO = 3;
 
+        private const short SM_TO_IDLE = 0;
+        private const short SM_TO_WANDERING = 1;
+        private const short SM_TO_INVESTIGATING = 2;
+        private const short SM_TO_FOLLOWING = 3;
+        private const short SM_TO_ATTACKING = 4;
+        private const short SM_TO_FLEEING = 5;
+
         public BatHSM(ECSInstance ecsInstance)
         {
             b_ECSInstance = ecsInstance;
 
-            b_StateMachine = new StateMachine<PathState, String>(PathState.Idle, whenIdle, "BASE");
-            b_StateMachine.addState(PathState.FollowPath, (Object[] parameters) => { });
-            b_StateMachine.addState(PathState.PathFound, whenPathFound);
-            b_StateMachine.addState(PathState.DoPathing, whenDoPathing);
-            b_StateMachine.addState(PathState.PathFailed, (Object[] parameters) => { });
-            b_StateMachine.addState(PathState.ReadyToPath, (Object[] parameters) => { });
+            //initialize state machine
+            b_StateMachine = new StateMachine<EnemyState, short>(EnemyState.Idle, whenIdle, SM_TO_IDLE);
+            
+            //define states
+            b_StateMachine.addState(EnemyState.Wandering, whenWandering);
+            b_StateMachine.addState(EnemyState.Investigating, whenInvestigating);
+            b_StateMachine.addState(EnemyState.Following, whenFollowing);
+            b_StateMachine.addState(EnemyState.Attacking, whenAttacking);
+            b_StateMachine.addState(EnemyState.Fleeing, whenFleeing);
         }
 
         protected override Bag<IComponent> requestRetrievePacakge(Agent agent)
@@ -56,69 +77,49 @@ namespace Vaerydian.ACB
             Path path = (Path)components.Get(Path.TypeID);
             Aggrivation aggro = (Aggrivation)components.Get(Aggrivation.TypeID);
 
-            b_StateMachine.setState(path.PathState);
-
             b_StateMachine.evaluate(agent, components, path, aggro);
 
             return components;
         }
 
         /// <summary>
-        /// called when pathstate is idle
+        /// called when idle
         /// </summary>
         /// <param name="parameters"></param>
-        private static void whenIdle(Object[] parameters) { }//do nothing
-
+        private void whenIdle(Object[] parameters) { }//do nothing
 
         /// <summary>
-        /// called when path state is path found
+        /// called when wandering
         /// </summary>
         /// <param name="parameters"></param>
-        private static void whenPathFound(Object[] parameters)
-        {
-            Bag<IComponent> components = (Bag<IComponent>)parameters[PARAM_COMPONENTS];
-            Path path = (Path)parameters[PARAM_PATH];
-
-            AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
-            
-            //FIX: needs to use the correct following path
-            behavior.Behavior = new FollowPath();
-
-            //update pathstate
-            path.PathState = PathState.FollowPath;
-        }
+        private void whenWandering(Object[] parameters) { }
 
         /// <summary>
-        /// called when path state is do pathing
+        /// called when investigating
         /// </summary>
         /// <param name="parameters"></param>
-        private static void whenDoPathing(Object[] parameters)
-        {
-            Aggrivation aggro = (Aggrivation)parameters[PARAM_AGGRO];
+        private void whenInvestigating(Object[] parameters) { }
 
-            //don't continue 
-            if (aggro.HateList.Count < 1)
-                return;
+        /// <summary>
+        /// called when following
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void whenFollowing(Object[] parameters) { }
 
-            //FIX: this requires adjustment when hatelists are fixed
-            aggro.Target = aggro.HateList[0];
+        /// <summary>
+        /// called when attacking
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void whenAttacking(Object[] parameters) { }
 
-            Bag<IComponent> components = (Bag<IComponent>)parameters[PARAM_COMPONENTS];
-            Path path = (Path)parameters[PARAM_PATH];
-
-            Position position = (Position)components.Get(Position.TypeID);
-            Position target = ComponentMapper.get<Position>(aggro.Target);
-
-            path.Start = position.Pos;
-            path.Finish = target.Pos;
-
-            path.Map = ComponentMapper.get<GameMap>(b_ECSInstance.TagManager.getEntityByTag("MAP"));
-            
-            //update pathstate
-            path.PathState = PathState.ReadyToPath;
-        }
-
+        /// <summary>
+        /// called when fleeing
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void whenFleeing(Object[] parameters) { }
         
-
     }
+
+
+
 }

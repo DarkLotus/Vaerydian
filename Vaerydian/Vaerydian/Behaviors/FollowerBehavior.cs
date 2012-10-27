@@ -350,11 +350,13 @@ namespace Vaerydian.Behaviors
         /// <returns></returns>
         private bool hasTargetMoved()
         {
+            return s_TargetPreviousPosition != s_TargetCurrentPosition;
+            /*
             if (s_TargetPreviousPosition != s_TargetCurrentPosition)
             {
                 return true;
             }
-            return false;
+            return false;*/
         }
 
         private bool hasNewPath()
