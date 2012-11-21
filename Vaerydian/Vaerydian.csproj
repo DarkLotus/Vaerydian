@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3420B0B-FD40-47AD-8D0B-ABA340C627C4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vaerydian</RootNamespace>
+    <AssemblyName>Vaerydian</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACB\BatHSM.cs" />
+    <Compile Include="ACB\PathFinder.cs" />
+    <Compile Include="Behaviors\Actions\FindPathAction.cs" />
+    <Compile Include="Behaviors\CharacterBehavior.cs" />
+    <Compile Include="Behaviors\FollowerBehavior.cs" />
+    <Compile Include="Behaviors\FollowPath.cs" />
+    <Compile Include="Behaviors\WanderingEnemyBehavior.cs" />
+    <Compile Include="Characters\Abilities\Ability.cs" />
+    <Compile Include="Characters\Attributes\AttributeStat.cs" />
+    <Compile Include="Characters\Experience\Knowledge.cs" />
+    <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
+    <Compile Include="Characters\Factions\Faction.cs" />
+    <Compile Include="Characters\PlayerHolder.cs" />
+    <Compile Include="Characters\Skills\Skill.cs" />
+    <Compile Include="Components\Actions\Attack.cs" />
+    <Compile Include="Components\Actions\Damage.cs" />
+    <Compile Include="Components\Actions\Interactable.cs" />
+    <Compile Include="Components\Actions\MeleeAction.cs" />
+    <Compile Include="Components\Actions\Projectile.cs" />
+    <Compile Include="Components\Audio\Audio.cs" />
+    <Compile Include="Components\Characters\Aggrivation.cs" />
+    <Compile Include="Components\Characters\AiBehavior.cs" />
+    <Compile Include="Components\Characters\Attributes.cs" />
+    <Compile Include="Components\Characters\Award.cs" />
+    <Compile Include="Components\Characters\Factions.cs" />
+    <Compile Include="Components\Characters\Health.cs" />
+    <Compile Include="Components\Characters\Information.cs" />
+    <Compile Include="Components\Characters\Knowledges.cs" />
+    <Compile Include="Components\Characters\Life.cs" />
+    <Compile Include="Components\Characters\Skills.cs" />
+    <Compile Include="Components\Dbg\MapDebug.cs" />
+    <Compile Include="Components\Graphical\FloatingText.cs" />
+    <Compile Include="Components\Graphical\GeometryMap.cs" />
+    <Compile Include="Components\Graphical\Light.cs" />
+    <Compile Include="Components\Graphical\Sprite.cs" />
+    <Compile Include="Components\Graphical\ViewPort.cs" />
+    <Compile Include="Components\Items\Armor.cs" />
+    <Compile Include="Components\Items\Equipment.cs" />
+    <Compile Include="Components\Items\Item.cs" />
+    <Compile Include="Components\Items\Weapon.cs" />
+    <Compile Include="Components\Spatials\Heading.cs" />
+    <Compile Include="Components\Spatials\MousePosition.cs" />
+    <Compile Include="Components\Spatials\Position.cs" />
+    <Compile Include="Components\Spatials\SpatialPartition.cs" />
+    <Compile Include="Components\Spatials\Transform.cs" />
+    <Compile Include="Components\Spatials\Velocity.cs" />
+    <Compile Include="Components\Utils\BoundingPolygon.cs" />
+    <Compile Include="Components\Utils\CameraFocus.cs" />
+    <Compile Include="Components\Utils\Controllable.cs" />
+    <Compile Include="Components\Utils\GameMap.cs" />
+    <Compile Include="Components\Utils\MapCollidable.cs" />
+    <Compile Include="Components\Utils\Path.cs" />
+    <Compile Include="Components\Utils\StateContainer.cs" />
+    <Compile Include="Components\Utils\Trigger.cs" />
+    <Compile Include="Factories\AgentFactory.cs" />
+    <Compile Include="Factories\AnimationFactory.cs" />
+    <Compile Include="Factories\EntityFactory.cs" />
+    <Compile Include="Factories\ItemFactory.cs" />
+    <Compile Include="Factories\MapFactory.cs" />
+    <Compile Include="Factories\NPCFactory.cs" />
+    <Compile Include="Factories\UIFactory.cs" />
+    <Compile Include="Factories\UtilFactory.cs" />
+    <Compile Include="GameContainer.cs" />
+    <Compile Include="Maps\MapEngine.cs" />
+    <Compile Include="Maps\MapState.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
+    <Compile Include="Screens\LoadingScreen.cs" />
+    <Compile Include="Screens\NewLoadingScreen.cs" />
+    <Compile Include="Screens\Screen.cs" />
+    <Compile Include="Screens\ScreenManager.cs" />
+    <Compile Include="Screens\StartScreen.cs" />
+    <Compile Include="Screens\WorldScreen.cs" />
+    <Compile Include="Sessions\GameSession.cs" />
+    <Compile Include="Systems\Draw\AnimationSystem.cs" />
+    <Compile Include="Systems\Draw\DeferredSystem.cs" />
+    <Compile Include="Systems\Draw\FloatingTextDisplaySystem.cs" />
+    <Compile Include="Systems\Draw\HealthBarRenderSystem.cs" />
+    <Compile Include="Systems\Draw\MapDepthSystem.cs" />
+    <Compile Include="Systems\Draw\MapNormalSystem.cs" />
+    <Compile Include="Systems\Draw\MapSystem.cs" />
+    <Compile Include="Systems\Draw\QuadTreeDebugRender.cs" />
+    <Compile Include="Systems\Draw\ShadingSystem.cs" />
+    <Compile Include="Systems\Draw\SpriteDepthSystem.cs" />
+    <Compile Include="Systems\Draw\SpriteNormalSystem.cs" />
+    <Compile Include="Systems\Draw\SpriteRenderSystem.cs" />
+    <Compile Include="Systems\Update\AttackSystem.cs" />
+    <Compile Include="Systems\Update\AudioSystem.cs" />
+    <Compile Include="Systems\Update\AwardSystem.cs" />
+    <Compile Include="Systems\Update\BehaviorSystem.cs" />
+    <Compile Include="Systems\Update\CameraFocusSystem.cs" />
+    <Compile Include="Systems\Update\DamageSystem.cs" />
+    <Compile Include="Systems\Update\HealthSystem.cs" />
+    <Compile Include="Systems\Update\LifeSystem.cs" />
+    <Compile Include="Systems\Update\MapCollisionSystem.cs" />
+    <Compile Include="Systems\Update\MeleeSystem.cs" />
+    <Compile Include="Systems\Update\MousePointerSystem.cs" />
+    <Compile Include="Systems\Update\PlayerInputSystem.cs" />
+    <Compile Include="Systems\Update\ProjectileSystem.cs" />
+    <Compile Include="Systems\Update\TriggerSystem.cs" />
+    <Compile Include="UI\ButtonMenu.cs" />
+    <Compile Include="UI\DialogTimer.cs" />
+    <Compile Include="UI\HpLabelUpdater.cs" />
+    <Compile Include="Utils\AStarPathing.cs" />
+    <Compile Include="Utils\AttackType.cs" />
+    <Compile Include="Utils\BinaryHeap.cs" />
+    <Compile Include="Utils\Bone.cs" />
+    <Compile Include="Utils\Character.cs" />
+    <Compile Include="Utils\CollisionDetect.cs" />
+    <Compile Include="Utils\DamageType.cs" />
+    <Compile Include="Utils\HeapCell.cs" />
+    <Compile Include="Utils\KeyFrame.cs" />
+    <Compile Include="Utils\Polygon.cs" />
+    <Compile Include="Utils\QuadNode.cs" />
+    <Compile Include="Utils\QuadTree.cs" />
+    <Compile Include="Utils\Skeleton.cs" />
+    <Compile Include="Utils\SkillNames.cs" />
+    <Compile Include="Utils\SpriteAnimation.cs" />
+    <Compile Include="Utils\StateMachine.cs" />
+    <Compile Include="Utils\SupportedInteractions.cs" />
+    <Compile Include="Utils\VectorHelper.cs" />
+    <Compile Include="Utils\WeaponEnums.cs" />
+    <Compile Include="VaerydianGame.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AgentComponentBus">
+      <HintPath>..\..\AgentComponentBus\AgentComponentBus\bin\Release\AgentComponentBus.dll</HintPath>
+    </Reference>
+    <Reference Include="BehaviorLibrary">
+      <HintPath>..\..\..\workspace\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ECSFramework">
+      <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse">
+      <HintPath>..\..\Glimpse\Glimpse\bin\Release\Glimpse.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Windows">
+      <HintPath>..\..\..\GitHub\MonoGame\MonoGame.Framework\bin\Release\MonoGame.Framework.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="WorldGeneration">
+      <HintPath>..\..\..\workspace\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
