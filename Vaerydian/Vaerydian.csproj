@@ -167,7 +167,7 @@
       <HintPath>..\..\AgentComponentBus\AgentComponentBus\bin\Release\AgentComponentBus.dll</HintPath>
     </Reference>
     <Reference Include="BehaviorLibrary">
-      <HintPath>..\..\..\workspace\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
+      <HintPath>..\..\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
     </Reference>
     <Reference Include="ECSFramework">
       <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
@@ -180,7 +180,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="WorldGeneration">
-      <HintPath>..\..\..\workspace\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+      <HintPath>..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
