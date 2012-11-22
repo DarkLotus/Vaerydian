@@ -409,7 +409,7 @@ namespace Vaerydian.Behaviors
         {
             s_currentPath = findPath.getPath();
 
-            GameMap map = (GameMap)s_GameMapMapper.get(s_Map);
+            //GameMap map = (GameMap)s_GameMapMapper.get(s_Map);
 
             s_MapDebug = s_EcsInstance.TagManager.getEntityByTag("MAP_DEBUG");
             s_Debug = (MapDebug)s_MapDebugMapper.get(s_MapDebug);

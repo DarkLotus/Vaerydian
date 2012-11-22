@@ -17,6 +17,9 @@ using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Actions;
 using Vaerydian.Components.Graphical;
+using AgentComponentBus.Components.ACB;
+using AgentComponentBus.Components.ECS;
+using AgentComponentBus.Core;
 
 namespace Vaerydian.Factories
 {
@@ -45,11 +48,31 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(16)));
             n_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             n_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals", 32, 32, 0, 0));
-            n_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new FollowerBehavior(e, target, distance, n_EcsInstance)));
+            n_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new FollowPath(e, target, distance, n_EcsInstance)));
             n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
             n_EcsInstance.EntityManager.addComponent(e, new Transform());
             n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
+            n_EcsInstance.EntityManager.addComponent(e, new Path());
+
+            //setup pathing agent
+            BusAgent busAgent = new BusAgent();
+            busAgent.Agent = new Agent();
+            busAgent.Agent.Entity = e;
+
+            Activity activity = new Activity();
+            activity.ActivityName = "activity1";
+            activity.ComponentName = "PATH_FINDER";
+            activity.InitialActivity = true;
+            activity.NextActivity = "activity1";
+
+            AgentProcess process = new AgentProcess();
+            process.ProcessName = "path process";
+            process.Activities.Add(activity.ActivityName, activity);
+
+            busAgent.Agent.AgentProcess = process;
+
+            n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
             //create info
             Information info = new Information();

@@ -17,9 +17,7 @@ namespace Vaerydian.Components.Utils
         Idle,
         DoPathing,
         PathFound,
-        PathFailed,
-        ReadyToPath,
-        FollowPath
+        PathFailed
     }
 
     class Path : IComponent
@@ -110,6 +108,14 @@ namespace Vaerydian.Components.Utils
         {
             get { return p_FoundPath; }
             set { p_FoundPath = value; }
+        }
+
+        private AStarPathing p_Pathing;
+
+        public AStarPathing Pathing
+        {
+            get { return p_Pathing; }
+            set { p_Pathing = value; }
         }
 
     }

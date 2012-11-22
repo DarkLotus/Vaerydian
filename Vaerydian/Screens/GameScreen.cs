@@ -230,6 +230,7 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Information());
             ecsInstance.ComponentManager.registerComponentType(new Aggrivation());
 			ecsInstance.ComponentManager.registerComponentType(new Audio());
+            ecsInstance.ComponentManager.registerComponentType(new Vaerydian.Components.Utils.Path());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
