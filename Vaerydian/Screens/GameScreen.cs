@@ -351,8 +351,10 @@ namespace Vaerydian.Screens
 
             ecsInstance.cleanUp();
 
+            
             bus.shutdown();
             taskWorker.shutdown();
+            ResourcePool.cleanup();
 
             GC.Collect();
         }

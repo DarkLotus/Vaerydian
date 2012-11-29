@@ -129,12 +129,16 @@ namespace Vaerydian.Behaviors
             
             ParallelSequence pSeqA = new ParallelSequence(initPathfinder, calcPath);
 
-            ParallelSelector pSelA = new ParallelSelector(new Inverter(targetMoved), new Inverter(reset), calcPath);
+            
+
+            ParallelSelector pSelA = new ParallelSelector(new Inverter(targetMoved), new Inverter(reachedTarget), new Inverter(reset), calcPath);
+            //ParallelSelector pSelA = new ParallelSelector(new Inverter(targetMoved));//, new Inverter(reset), calcPath);
             ParallelSelector pSelB = new ParallelSelector(new Inverter(pathFound), getPath);
             ParallelSelector pSelC = new ParallelSelector(new Inverter(isNewPath), setPath);
             ParallelSelector pSelD = new ParallelSelector(new Inverter(reachedCell), getNextCell);
             ParallelSelector pSelE = new ParallelSelector(reachedTarget, moveToCell);
-            
+            //ParallelSequence pSeqC = new ParallelSequence(pSelE, reset, calcPath);
+
 
             ParallelSequence pSeqB = new ParallelSequence(new Inverter(tooClose), updatePosition, pSelA, pSelB, pSelC, pSelD, pSelE, animate);
 
@@ -368,6 +372,10 @@ namespace Vaerydian.Behaviors
         private BehaviorReturnCode setNewPath()
         {
             f_currentPathCell = 0;
+            
+            if (s_currentPath.Count < 1)
+                return BehaviorReturnCode.Failure;
+            
             s_CurrentCell = s_currentPath[f_currentPathCell];
             f_newPath = false;
             return BehaviorReturnCode.Success;
@@ -380,6 +388,10 @@ namespace Vaerydian.Behaviors
         private BehaviorReturnCode getNextPathCell()
         {
             f_currentPathCell++;
+            
+            if (f_currentPathCell >= s_currentPath.Count)
+                return BehaviorReturnCode.Failure;
+
             s_CurrentCell = s_currentPath[f_currentPathCell];
             return BehaviorReturnCode.Success;
         }
@@ -401,7 +413,7 @@ namespace Vaerydian.Behaviors
         private bool hasPathBeenFound()
         {
             Path path = (Path)f_PathMapper.get(f_ThisEntity);
-            return path.PathState == PathState.PathFound ? true : false;
+            return (path.PathState == PathState.PathFound ? true : false) && (path.FoundPath != null);
         }
 
         /// <summary>
@@ -411,7 +423,13 @@ namespace Vaerydian.Behaviors
         private BehaviorReturnCode getCurrentPath()
         {
             Path path = (Path)f_PathMapper.get(f_ThisEntity);
+
+            
             s_currentPath = path.FoundPath;
+            
+            return BehaviorReturnCode.Success;
+
+
             //s_currentPath = findPath.getPath();
 
             //GameMap map = (GameMap)s_GameMapMapper.get(s_Map);
@@ -423,9 +441,10 @@ namespace Vaerydian.Behaviors
             s_Debug.ClosedSet = findPath.getClosedSet();
             s_Debug.OpenSet = findPath.getOpenSet();
             s_Debug.Blocking = findPath.getBlockingSet();
-            s_Debug.Path = s_currentPath;*/
+            s_Debug.Path = s_currentPath;
 
             return BehaviorReturnCode.Success;
+            */
         }
 
         /// <summary>
@@ -446,7 +465,7 @@ namespace Vaerydian.Behaviors
             //float dist = Vector2.Distance(meVec, celVec- s_Center);
             float dist = Vector2.Distance(meVec, celVec);
 
-            if (dist <= meVel.Vel)
+            if (dist <= s_Offset.Length())//meVel.Vel)
                 return true;
             return false;
         }
@@ -479,10 +498,17 @@ namespace Vaerydian.Behaviors
         {
             f_newPath = true;
             Path path = (Path)f_PathMapper.get(f_ThisEntity);
-            
-            path.PathState = PathState.DoPathing;
 
-            return BehaviorReturnCode.Success;
+            switch(path.PathState)
+            {
+                case PathState.PathFound:
+                    return BehaviorReturnCode.Success;
+                case PathState.PathFailed:
+                    return BehaviorReturnCode.Failure;
+                default:
+                    path.PathState = PathState.DoPathing;
+                    return BehaviorReturnCode.Running;
+            }
         }
 
         private BehaviorReturnCode resetPathfinder()

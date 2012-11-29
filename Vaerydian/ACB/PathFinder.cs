@@ -38,14 +38,18 @@ namespace Vaerydian.ACB
                 return components;
 
             //dont run if you've already run...
-            if (path.HasRun)
-                return components;
-            else
+            if (!path.HasRun)
                 path.Pathing = new AStarPathing(path.Start, path.Finish, path.Map);
 
-            while (!path.Pathing.Failed && !path.Pathing.IsFound && (path.PathState == PathState.DoPathing))
+            //while (!path.Pathing.Failed && !path.Pathing.IsFound && (path.PathState == PathState.DoPathing))
+            //{
+            //    path.Pathing.findPath();
+            //}
+
+            if (!path.Pathing.Failed && !path.Pathing.IsFound && path.PathState == PathState.DoPathing)
             {
                 path.Pathing.findPath();
+                path.HasRun = true;
             }
 
             if (path.Pathing.Failed)

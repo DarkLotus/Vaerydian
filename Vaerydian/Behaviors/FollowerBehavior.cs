@@ -367,6 +367,10 @@ namespace Vaerydian.Behaviors
         private BehaviorReturnCode setNewPath()
         {
             s_currentPathCell = 0;
+
+            if (s_currentPath.Count < 1)
+                return BehaviorReturnCode.Failure;
+
             s_CurrentCell = s_currentPath[s_currentPathCell];
             s_newPath = false;
             return BehaviorReturnCode.Success;

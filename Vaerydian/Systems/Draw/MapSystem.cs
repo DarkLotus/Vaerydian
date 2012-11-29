@@ -284,9 +284,9 @@ namespace Vaerydian.Systems.Draw
                 case TerrainType.CAVE_ENTRANCE:
                     return new Color(255, 0, 0);
                 case TerrainType.CAVE_WALL:
-                    return new Color(64, 64, 64);
+                    return new Color(120, 54, 29);//64, 64, 64);
                 case TerrainType.CAVE_FLOOR:
-                    return new Color(128, 128, 128);
+                    return new Color(211, 158, 78);//128, 128, 128);
                 default:
                     return Color.Red;
             }
