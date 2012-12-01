@@ -12,6 +12,7 @@ using Vaerydian.Behaviors;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Utils;
+using Microsoft.Xna.Framework;
 
 namespace Vaerydian.ACB
 {
@@ -31,24 +32,18 @@ namespace Vaerydian.ACB
 
         private static ECSInstance b_ECSInstance;
 
-        private StateMachine<EnemyState, short> b_StateMachine;
+        //private StateMachine<EnemyState, short> b_StateMachine;
 
         private const short PARAM_AGENT = 0;
         private const short PARAM_COMPONENTS = 1;
         private const short PARAM_PATH = 2;
         private const short PARAM_AGGRO = 3;
 
-        private const short SM_TO_IDLE = 0;
-        private const short SM_TO_WANDERING = 1;
-        private const short SM_TO_INVESTIGATING = 2;
-        private const short SM_TO_FOLLOWING = 3;
-        private const short SM_TO_ATTACKING = 4;
-        private const short SM_TO_FLEEING = 5;
-
         public BatHSM(ECSInstance ecsInstance)
         {
             b_ECSInstance = ecsInstance;
 
+            /*
             //initialize state machine
             b_StateMachine = new StateMachine<EnemyState, short>(EnemyState.Idle, whenIdle, SM_TO_IDLE);
             
@@ -58,6 +53,7 @@ namespace Vaerydian.ACB
             b_StateMachine.addState(EnemyState.Following, whenFollowing);
             b_StateMachine.addState(EnemyState.Attacking, whenAttacking);
             b_StateMachine.addState(EnemyState.Fleeing, whenFleeing);
+            */
         }
 
         protected override Bag<IComponent> requestRetrievePacakge(Agent agent)
@@ -66,21 +62,21 @@ namespace Vaerydian.ACB
             
             components.Set(AiBehavior.TypeID, new AiBehavior());
             components.Set(Aggrivation.TypeID, new Aggrivation());
-            components.Set(Path.TypeID,new Path());
             components.Set(Position.TypeID, new Position());
-            components.Set(StateContainer<EnemyState, short>.TypeID, new StateContainer<EnemyState, short>());
+            components.Set(StateContainer<EnemyState, EnemyState>.TypeID, new StateContainer<EnemyState, EnemyState>());
 
             return components;
         }
 
         protected override Bag<IComponent> runProcess(Agent agent, Bag<IComponent> components)
         {
-            Path path = (Path)components.Get(Path.TypeID);
-            Aggrivation aggro = (Aggrivation)components.Get(Aggrivation.TypeID);
-            StateContainer<EnemyState, short> stateContainer = (StateContainer<EnemyState, short>)components.Get(StateContainer<EnemyState, short>.TypeID);
+            //retrieve state container
+            StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
 
-            stateContainer.StateMachine.evaluate(agent, components, path, aggro);
-            
+            //evaluate state machine
+            if(stateContainer != null)
+                stateContainer.StateMachine.evaluate(agent, components);// aggro);
+
             return components;
         }
 
@@ -88,13 +84,42 @@ namespace Vaerydian.ACB
         /// called when idle
         /// </summary>
         /// <param name="parameters"></param>
-        public static void whenIdle(Object[] parameters) { }//do nothing
+        public static void whenIdle(Object[] parameters) 
+        {
+            Bag<IComponent> components = (Bag<IComponent>)parameters[1];
+            StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
+
+            //change to wandering state
+            stateContainer.StateMachine.changeState(EnemyState.Wandering);
+        }
 
         /// <summary>
         /// called when wandering
         /// </summary>
         /// <param name="parameters"></param>
-        public static void whenWandering(Object[] parameters) { }
+        public static void whenWandering(Object[] parameters) 
+        {
+            Agent agent = (Agent)parameters[0];
+            Bag<IComponent> components = (Bag<IComponent>) parameters[1];
+
+            
+            Aggrivation aggro = (Aggrivation)components.Get(Aggrivation.TypeID);
+            Position ePos = (Position)components.Get(Position.TypeID);
+
+            if (aggro.Target != null)
+            {
+                Position tPos = ComponentMapper.get<Position>(aggro.Target);
+                float dist = Vector2.Distance(ePos.Pos, tPos.Pos);
+                if ( dist >= 200f)
+                {
+                    AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
+                    behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, b_ECSInstance);
+
+                    StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
+                    stateContainer.StateMachine.changeState(EnemyState.Following);
+                }
+            }
+        }
 
         /// <summary>
         /// called when investigating
@@ -106,7 +131,29 @@ namespace Vaerydian.ACB
         /// called when following
         /// </summary>
         /// <param name="parameters"></param>
-        public static void whenFollowing(Object[] parameters) { }
+        public static void whenFollowing(Object[] parameters) 
+        {
+            Agent agent = (Agent)parameters[0];
+            Bag<IComponent> components = (Bag<IComponent>)parameters[1];
+
+
+            Aggrivation aggro = (Aggrivation)components.Get(Aggrivation.TypeID);
+            Position ePos = (Position)components.Get(Position.TypeID);
+
+            if (aggro.Target != null)
+            {
+                Position tPos = ComponentMapper.get<Position>(aggro.Target);
+                float dist = Vector2.Distance(ePos.Pos, tPos.Pos);
+                if (dist < 100f)
+                {
+                    AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
+                    behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, b_ECSInstance);
+
+                    StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
+                    stateContainer.StateMachine.changeState(EnemyState.Wandering);
+                }
+            }
+        }
 
         /// <summary>
         /// called when attacking

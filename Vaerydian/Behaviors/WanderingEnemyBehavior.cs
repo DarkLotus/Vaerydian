@@ -53,6 +53,7 @@ namespace Vaerydian.Behaviors
         private ComponentMapper w_EquipmentMapper;
         private ComponentMapper w_ItemMapper;
         private ComponentMapper w_WeaponMapper;
+        private ComponentMapper w_AggroMapper;
 
         private const int STATE_INITIALIZE = 0;
         private const int STATE_WANDER = 1;
@@ -207,6 +208,7 @@ namespace Vaerydian.Behaviors
             w_EquipmentMapper = new ComponentMapper(new Equipment(), ecsInstance);
             w_ItemMapper = new ComponentMapper(new Item(), ecsInstance);
             w_WeaponMapper = new ComponentMapper(new Weapon(), ecsInstance);
+            w_AggroMapper = new ComponentMapper(new Aggrivation(), ecsInstance);
         }
 
         public override BehaviorReturnCode Behave()
@@ -325,6 +327,10 @@ namespace Vaerydian.Behaviors
                         {
                             //go hostile against it
                             w_Target = locals[i];
+
+                            Aggrivation aggro = (Aggrivation)w_AggroMapper.get(w_ThisEntity);
+                            aggro.Target = w_Target;
+
                             return true;
                         }
                         else
@@ -371,7 +377,7 @@ namespace Vaerydian.Behaviors
         /// <returns>elapsed time</returns>
         private int elapsedTime()
         {
-            return w_ECSInstance.ElapsedTime;
+            return w_ECSInstance.ElapsedTime;// -w_Random.Next(200);
         }
 
         /// <summary>

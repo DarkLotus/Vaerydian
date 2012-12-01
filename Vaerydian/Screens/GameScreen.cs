@@ -93,6 +93,7 @@ namespace Vaerydian.Screens
 
         private Bus bus;
         private TaskWorker taskWorker;
+        private Thread busThread, twThread;
 
         private EntityFactory entityFactory;
         private NPCFactory npcFactory;
@@ -160,10 +161,13 @@ namespace Vaerydian.Screens
 
             //instantiate the bus
             bus = new Bus();
+            bus.initialize();
             bus.UpdateIntervalTime = 32;
             bus.MaxUpdatesPerCycle = 10;
             
+
             taskWorker = new TaskWorker();
+            taskWorker.initialize();
             taskWorker.MaxTasksPerCycle = 10;
             taskWorker.MaxCommitsPerCycle = 10;
             taskWorker.MaxRetrievesPerCycle = 10;
@@ -231,6 +235,7 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Aggrivation());
 			ecsInstance.ComponentManager.registerComponentType(new Audio());
             ecsInstance.ComponentManager.registerComponentType(new Vaerydian.Components.Utils.Path());
+            ecsInstance.ComponentManager.registerComponentType(new StateContainer<EnemyState, EnemyState>());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -332,13 +337,13 @@ namespace Vaerydian.Screens
 
             //setup bus components
             bus.addComponent(new ComponentRegisterArgs(new PathFinder(), "PATH_FINDER"));
-            bus.addComponent(new ComponentRegisterArgs(new BatHSM(ecsInstance), "BAT_HSM"));
+            bus.addComponent(new ComponentRegisterArgs(new BatHSM(ecsInstance), "BAT_HSBM"));
 
             //launch bus
-            Thread thread = new Thread(bus.run);
-            thread.Start();
+            busThread = new Thread(bus.run);
+            busThread.Start();
 
-            Thread twThread = new Thread(taskWorker.run);
+            twThread = new Thread(taskWorker.run);
             twThread.Start();
                 
         }
@@ -354,6 +359,10 @@ namespace Vaerydian.Screens
             
             bus.shutdown();
             taskWorker.shutdown();
+
+            busThread.Join();
+            twThread.Join();
+
             ResourcePool.cleanup();
 
             GC.Collect();

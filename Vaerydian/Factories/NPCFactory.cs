@@ -20,6 +20,7 @@ using Vaerydian.Components.Graphical;
 using AgentComponentBus.Components.ACB;
 using AgentComponentBus.Components.ECS;
 using AgentComponentBus.Core;
+using Vaerydian.ACB;
 
 namespace Vaerydian.Factories
 {
@@ -172,6 +173,43 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
             n_EcsInstance.EntityManager.addComponent(e, new Transform());
             n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
+
+            //create state machine
+            StateMachine<EnemyState,EnemyState> stateMachine = new StateMachine<EnemyState, EnemyState>(EnemyState.Idle, BatHSM.whenIdle, EnemyState.Idle);
+
+            //define states
+            stateMachine.addState(EnemyState.Wandering, BatHSM.whenWandering);
+            stateMachine.addState(EnemyState.Following, BatHSM.whenFollowing);
+            
+            //define transitions
+            stateMachine.addStateChange(EnemyState.Idle, EnemyState.Wandering, EnemyState.Wandering);
+            stateMachine.addStateChange(EnemyState.Wandering, EnemyState.Following, EnemyState.Following);
+            stateMachine.addStateChange(EnemyState.Following, EnemyState.Wandering, EnemyState.Wandering);
+
+            StateContainer<EnemyState, EnemyState> stateContainer = new StateContainer<EnemyState, EnemyState>();
+            stateContainer.StateMachine = stateMachine;
+
+            n_EcsInstance.EntityManager.addComponent(e, stateContainer);
+            
+
+            //create ACB component
+            BusAgent busAgent = new BusAgent();
+            busAgent.Agent = new Agent();
+            busAgent.Agent.Entity = e;
+
+            Activity activity = new Activity();
+            activity.ActivityName = "activity1";
+            activity.ComponentName = "BAT_HSBM";
+            activity.InitialActivity = true;
+            activity.NextActivity = "activity1";
+
+            AgentProcess process = new AgentProcess();
+            process.ProcessName = "bat hsbm";
+            process.Activities.Add(activity.ActivityName, activity);
+
+            busAgent.Agent.AgentProcess = process;
+
+            n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
             AnimationFactory animFactory = new AnimationFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, animFactory.createBatAnimation());

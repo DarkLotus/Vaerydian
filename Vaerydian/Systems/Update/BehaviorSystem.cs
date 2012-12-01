@@ -38,14 +38,14 @@ namespace Vaerydian.Systems.Update
 
         protected override void process(Entity entity)
         {
-            AiBehavior behavior = (AiBehavior)b_BehaviorMapper.get(entity);
+            AiBehavior aiBehavior = (AiBehavior)b_BehaviorMapper.get(entity);
             Life life = (Life)b_LifeMapper.get(entity);
             if (life.IsAlive)
-                behavior.Behavior.Behave();
+                aiBehavior.Behavior.Behave();
             else
             {
-                if (!behavior.Behavior.IsClean)
-                    behavior.Behavior.deathCleanup();
+                if (!aiBehavior.Behavior.IsClean)
+                    aiBehavior.Behavior.deathCleanup();
             }
         }
 

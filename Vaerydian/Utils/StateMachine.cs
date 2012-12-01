@@ -6,38 +6,74 @@ using System.Reflection;
 
 namespace Vaerydian.Utils
 {
+    /// <summary>
+    /// universal delegate with 0-many parameters contained within an object array
+    /// </summary>
+    /// <param name="parameters">array of object parameters</param>
     delegate void Delegate(Object[] parameters);
 
+    /// <summary>
+    /// delegate of that uses an argument of type T
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="argument"></param>
     delegate void Proxy<T>(T argument);
 
-    delegate R Proxy<T,R>(T argument);
+    //delegate R Proxy<T,R>(T argument);
 
-    class EventProxy<PType>// where EState : struct, IComparable, IConvertible, IFormattable
+    /// <summary>
+    /// dynamic event wrapper proxy class. allows creation of events on the fly. Used to trigger state changes
+    /// </summary>
+    /// <typeparam name="PType"></typeparam>
+    class EventProxy<PType>
     {
-        event Proxy<PType> StateChange;
+        /// <summary>
+        /// create a proxy event of PType
+        /// </summary>
+        private event Proxy<PType> StateChange;
 
+        /// <summary>
+        /// trigger the state change
+        /// </summary>
+        /// <param name="state"></param>
         public void invoke(PType state)
         {
             if (StateChange != null)
                 StateChange(state);
         }
 
+        /// <summary>
+        /// bind a delegate to the state change event
+        /// </summary>
+        /// <param name="_delegate">proxy delegate to be bound</param>
         public void bind(Proxy<PType> _delegate)
         {
             StateChange += _delegate;
         }
 
+        /// <summary>
+        /// ubind a delegate to the state change event
+        /// </summary>
+        /// <param name="_delegate"></param>
         public void unbind(Proxy<PType> _delegate)
         {
             StateChange -= _delegate;
         }
 
+        /// <summary>
+        /// unbinds all state change delegates
+        /// </summary>
         public void unbind()
         {
             StateChange = null;
         }
     }
 
+    /// <summary>
+    /// represents a single state in the state machine
+    /// </summary>
+    /// <typeparam name="TState"></typeparam>
+    /// <typeparam name="TTrigger"></typeparam>
     class State<TState, TTrigger> where TState : struct, IComparable, IConvertible, IFormattable
     {
         private TState s_ThisState;
@@ -65,6 +101,12 @@ namespace Vaerydian.Utils
         {
             if (s_TransitionEvent.ContainsKey(trigger))
                 s_TransitionEvent[trigger].invoke(s_TransitionState[trigger]);
+#if DEBUG
+            else
+            {
+                Console.Error.WriteLine("Trigger Not Defined For Current State - State: {0} Trigger: {1}", s_ThisState.ToString(), trigger.ToString());
+            }
+#endif
         }
 
         public void invoke(Object[] parameters)
