@@ -46,11 +46,12 @@ namespace Vaerydian
             graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = true;
-            this.IsFixedTimeStep = true;
+            graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
             //this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
-            graphics.PreferMultiSampling = true;
-            
+            graphics.PreferMultiSampling = false;
+            this.IsMouseVisible = false;
+
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
 
@@ -102,9 +103,9 @@ namespace Vaerydian
             FontManager.LoadContent();
 
             NewLoadingScreen.Load(screenManager, false, new StartScreen());
-
+#if DEBUG
             Console.Out.WriteLine("GAME LOADED...");
-
+#endif
             base.LoadContent();
         }
 
@@ -120,9 +121,9 @@ namespace Vaerydian
             {
                 screenManager.removeScreen(screenManager.Screens[i]);
             }
-
+#if DEBUG
             Console.Out.WriteLine("GAME QUITTING...");
-
+#endif
             GC.Collect();
         }
 
@@ -135,6 +136,8 @@ namespace Vaerydian
         {
             //update all input
             InputManager.Update();
+
+            
 
             if (InputManager.YesExit)
             {

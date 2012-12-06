@@ -16,6 +16,7 @@ using Vaerydian.Factories;
 using Glimpse.Input;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Graphical;
+using Vaerydian.Components.Characters;
 
 namespace Vaerydian.Systems.Update
 {
@@ -28,7 +29,7 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper p_HeadingMapper;
         private ComponentMapper p_LightMapper;
         private ComponentMapper p_TransformMapper;
-        private ComponentMapper p_SpriteMapper;
+        private ComponentMapper p_CharacterMapper;
         private ComponentMapper p_SpatialMapper;
 
         private Entity p_Camera;
@@ -70,7 +71,7 @@ namespace Vaerydian.Systems.Update
             p_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
             p_LightMapper = new ComponentMapper(new Light(), e_ECSInstance);
             p_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
-            p_SpriteMapper = new ComponentMapper(new Sprite(), e_ECSInstance);
+            p_CharacterMapper = new ComponentMapper(new Character(), e_ECSInstance);
             p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
         }
 
@@ -90,7 +91,7 @@ namespace Vaerydian.Systems.Update
             Heading heading = (Heading)p_HeadingMapper.get(entity);
             Position mPosition = (Position)p_PositionMapper.get(p_Mouse);
             Transform transform = (Transform)p_TransformMapper.get(entity);
-            Sprite sprite = (Sprite)p_SpriteMapper.get(entity);
+            Character character = (Character)p_CharacterMapper.get(entity);
             SpatialPartition spatial = (SpatialPartition)p_SpatialMapper.get(p_Spatial);
 
             if (p_FirstRun)
@@ -108,7 +109,7 @@ namespace Vaerydian.Systems.Update
             int dirCount = 0;
 
             //reset animation
-            sprite.Column = 0;
+            //sprite.Column = 0;
             p_Moved = false;
 
             //toggle light?
@@ -189,7 +190,7 @@ namespace Vaerydian.Systems.Update
             test.Normalize();
 
             float angle = VectorHelper.getAngle(new Vector2(1,0), test);
-
+            /*
             if (angle >= 0.393f && angle < 1.178f) { sprite.Row = MOVE_UPRIGHT; }
             else if (angle >= 1.178f && angle < 1.963f) { sprite.Row = MOVE_UP; }
             else if (angle >= 1.963f && angle < 2.749f) { sprite.Row = MOVE_UPLEFT; }
@@ -201,7 +202,10 @@ namespace Vaerydian.Systems.Update
 
             if(p_Moved)
                 sprite.Column = p_Movement.updateFrame(e_ECSInstance.ElapsedTime);
+            */
 
+            if (p_Moved)
+                character.CurrentAnimtaion = "moving";
 
             //transform.Rotation = getAngle(pos, mPosition.getPosition());
 
@@ -292,6 +296,7 @@ namespace Vaerydian.Systems.Update
             if (!p_Moved)
             {
                 p_Movement.reset();
+                character.CurrentAnimtaion = "idle";
             }
             else
             {

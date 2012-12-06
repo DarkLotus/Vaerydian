@@ -56,7 +56,10 @@ namespace Vaerydian.Factories
             //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Controllable());
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
+            //e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
+
+            AnimationFactory af = new AnimationFactory(e_EcsInstance);
+            e_EcsInstance.EntityManager.addComponent(e, af.createPlayerAnimation());
             e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
@@ -160,8 +163,9 @@ namespace Vaerydian.Factories
             //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
             e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
             e_EcsInstance.EntityManager.addComponent(e, new Controllable());
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals", 32, 32, 0, 0));
-            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
+            //e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
+            AnimationFactory af = new AnimationFactory(e_EcsInstance);
+            e_EcsInstance.EntityManager.addComponent(e, af.createPlayerAnimation()); e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
             e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             e_EcsInstance.EntityManager.addComponent(e, new Heading());
             //e_EcsInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
