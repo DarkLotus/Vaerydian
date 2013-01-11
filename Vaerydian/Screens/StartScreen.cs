@@ -184,13 +184,13 @@ namespace Vaerydian.Screens
 
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-            parameters[GameScreen.GAMESCREEN_SEED] = 42;
+            parameters[GameScreen.GAMESCREEN_SEED] = 4;
             parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = 10;
             parameters[GameScreen.GAMESCREEN_RETURNING] = false;
             parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
             
             //load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.CAVE,parameters));
+            NewLoadingScreen.Load(this.ScreenManager, false, new GameScreen(true,MapType.CAVE,parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)

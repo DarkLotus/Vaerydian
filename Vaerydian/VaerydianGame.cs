@@ -39,15 +39,20 @@ namespace Vaerydian
         private int elapsed;
         private int count = 0;
         private float avg;
+		private bool changeRez = true;
 
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 480;
+            
+			this.Window.AllowUserResizing = true;
+
+			graphics.PreferredBackBufferHeight = 480;
             graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;
-            this.IsFixedTimeStep = false;
+            this.IsFixedTimeStep = true;
+
             //this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             graphics.PreferMultiSampling = false;
             this.IsMouseVisible = false;
@@ -145,6 +150,9 @@ namespace Vaerydian
                 this.Exit();
             }
 
+			if(InputManager.isKeyToggled(Keys.F1))
+				this.changeRez = true;
+
             //calculate ms/s
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             count++;
@@ -163,13 +171,23 @@ namespace Vaerydian
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw (GameTime gameTime)
+		{
 
-            base.Draw(gameTime);
+			base.Draw (gameTime);
 
-            if (InputManager.YesExit)
-                return;
+			if (InputManager.YesExit)
+				return;
+
+			if (changeRez) 
+			{
+				graphics.PreferredBackBufferHeight = 480;
+            	graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
+
+				graphics.ApplyChanges();
+
+				changeRez = false;
+			}
             
             //begin the sprite batch
             spriteBatch.Begin();

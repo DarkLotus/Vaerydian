@@ -217,7 +217,7 @@ namespace Vaerydian.Systems.Update
             Interactable interactee = (Interactable)a_InteractMapper.get(attack.Defender);
 
             //only do if interaction supported
-            if (interactor != null && interactor != null)
+            if (interactee != null && interactor != null)
             {
                 //only skill-up if you can
                 if (interactor.SupportedInteractions.MAY_ADVANCE &&
