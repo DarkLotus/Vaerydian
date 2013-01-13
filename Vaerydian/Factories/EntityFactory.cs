@@ -95,7 +95,8 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
+			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Bat, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             e_EcsInstance.EntityManager.addComponent(e, knowledges);
@@ -128,7 +129,7 @@ namespace Vaerydian.Factories
             e_EcsInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Player);
-            Faction enemy = new Faction(-10, FactionType.TestMob);
+            Faction enemy = new Faction(-10, FactionType.Wilderness);
             Faction ally = new Faction(100, FactionType.Ally);
             
             Factions factions = new Factions();

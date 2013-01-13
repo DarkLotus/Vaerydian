@@ -80,7 +80,7 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST FOLLOWER";
-            info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
+            info.CreatureGeneralGroup = CreatureGeneralGroup.Bat;
             info.CreatureVariationGroup = CreatureVariationGroup.None;
             info.CreatureUniqueGroup = CreatureUniqueGroup.None;
             n_EcsInstance.EntityManager.addComponent(e, info);
@@ -142,7 +142,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Ally);
-            Faction enemy = new Faction(-10, FactionType.TestMob);
+            Faction enemy = new Faction(-10, FactionType.Wilderness);
             Faction player = new Faction(100, FactionType.Player);
 
             Factions factions = new Factions();
@@ -161,13 +161,12 @@ namespace Vaerydian.Factories
         }
 
 
-        public void createWanderingEnemy(Vector2 position, int skillLevel)
+        public void createBatEnemy(Vector2 position, int skillLevel)
         {
             Entity e = n_EcsInstance.create();
 
             n_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(16)));
             n_EcsInstance.EntityManager.addComponent(e, new Velocity(3f));
-            //n_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\herr_von_speck_sheet", "characters\\normals\\herr_von_speck_sheet_normals", 32, 32, 0, 0));
             n_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new WanderingEnemyBehavior(e, n_EcsInstance)));
             n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
             n_EcsInstance.EntityManager.addComponent(e, new Heading());
@@ -217,7 +216,7 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST WANDERER";
-            info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
+            info.CreatureGeneralGroup = CreatureGeneralGroup.Bat;
             info.CreatureVariationGroup = CreatureVariationGroup.None; 
             info.CreatureUniqueGroup = CreatureUniqueGroup.None;
             n_EcsInstance.EntityManager.addComponent(e, info);
@@ -242,11 +241,10 @@ namespace Vaerydian.Factories
             ItemFactory iFactory = new ItemFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            
-
             //setup experiences
             Knowledges knowledges = new Knowledges();
             knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
+			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Bat, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
@@ -279,7 +277,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, skills);
 
             //setup factions
-            Faction faction = new Faction(100,FactionType.TestMob);
+            Faction faction = new Faction(100,FactionType.Wilderness);
             Faction player = new Faction(-10, FactionType.Player);
             Faction ally = new Faction(-10, FactionType.Ally);
             Factions factions = new Factions();
@@ -319,7 +317,7 @@ namespace Vaerydian.Factories
 
                     if (!map.Map.Terrain[x, y].IsBlocking)
                     {
-                        createWanderingEnemy(new Vector2(x * 32, y * 32), skillLevel);
+                        createBatEnemy(new Vector2(x * 32, y * 32), skillLevel);
                         placed = true;
                     }
 

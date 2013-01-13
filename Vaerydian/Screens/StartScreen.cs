@@ -201,7 +201,7 @@ namespace Vaerydian.Screens
 
             //load the world screen
             //LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
-			NewLoadingScreen.Load(this.ScreenManager,true,new WorldScreen());
+			NewLoadingScreen.Load(this.ScreenManager,false,new WorldScreen());
         }
 
         private void OnMouseClickExit(IControl control, InterfaceArgs args)

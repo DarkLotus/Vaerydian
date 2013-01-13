@@ -8,7 +8,7 @@ namespace Vaerydian.Characters.Factions
     public enum FactionType
     {
         Player,
-        TestMob,
+        Wilderness,
         Ally
     }
 

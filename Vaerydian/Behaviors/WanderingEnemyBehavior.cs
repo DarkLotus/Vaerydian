@@ -161,14 +161,14 @@ namespace Vaerydian.Behaviors
             ParallelSequence wanderSeq = new ParallelSequence(new Inverter(new Timer(elapsedTime, 250, detectedHostile)), walkOrCorrect, move, animate);
             //ParallelSequence wanderSeq = new ParallelSequence(new Inverter(detectedHostile), walkOrCorrect, move, animate);
             
-            //wander or change to pursue state
+            //wander or change to pursue state88
             ParallelSelector wanderSel2 = new ParallelSelector(wanderSeq, new Inverter(setPursue));
 
             //move towards your target
             ParallelSequence moveTowards = new ParallelSequence(towardsHeading, move, animate);
             
             //move away from your target
-            ParallelSequence moveAway = new ParallelSequence(awayHeading, move, animate);
+            ParallelSequence moveAway = new ParallelSequence(new Timer(elapsedTime,250,awayHeading), move, animate);
             
             //if too far from your target, move towards it
             ParallelSelector moveTooFar = new ParallelSelector(new Inverter(tooFar), moveTowards);
@@ -186,7 +186,7 @@ namespace Vaerydian.Behaviors
             ParallelSequence pursAttackSeq2 = new ParallelSequence(healthSel, pursAttackSeq1);
 
             //flee sequence, while unhealthy, flee
-            ParallelSequence fleeSeq = new ParallelSequence(new Inverter(healthy), deadTargetSel, awayHeading, move, animate);
+            ParallelSequence fleeSeq = new ParallelSequence(new Inverter(healthy), deadTargetSel, new Timer(elapsedTime,250,awayHeading), move, animate);
             ParallelSelector fleeSel = new ParallelSelector(fleeSeq, setStateWander);
 
             //setup root selector
@@ -481,10 +481,13 @@ namespace Vaerydian.Behaviors
             Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
             Position position = (Position)w_PositionMapper.get(w_ThisEntity);
             Position tPosition = (Position)w_PositionMapper.get(w_Target);
-
+			MapCollidable collide = (MapCollidable) w_ColidableMapper.get (w_ThisEntity);
+			
+			
             Vector2 dir = (tPosition.Pos) - (position.Pos);
-
-            //dir = VectorHelper.rotateVector(dir, (float)w_Random.NextDouble());
+			
+			if(collide.Collided)
+            	dir = Vector2.Negate(collide.ResponseVector);//VectorHelper.rotateVector(, (float)w_Random.NextDouble());
 
             dir.Normalize();
 
@@ -492,6 +495,28 @@ namespace Vaerydian.Behaviors
 
             return BehaviorReturnCode.Success;
         }
+		
+		private BehaviorReturnCode fleeFromTarget()
+		{
+			Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
+            Position position = (Position)w_PositionMapper.get(w_ThisEntity);
+            Position tPosition = (Position)w_PositionMapper.get(w_Target);
+			MapCollidable collide = (MapCollidable) w_ColidableMapper.get (w_ThisEntity);
+			
+            Vector2 dir = (tPosition.Pos) - (position.Pos);
+			
+			if(collide.Collided)
+				dir = Vector2.Negate(collide.ResponseVector);
+			
+            dir = VectorHelper.rotateVectorRadians(dir, (float)(w_Random.NextDouble()*(Math.PI/2f)));
+
+            dir.Normalize();
+
+            heading.setHeading(Vector2.Negate(dir));
+
+            return BehaviorReturnCode.Success;
+			
+		}
 
         /// <summary>
         /// move using the entities heading
@@ -652,7 +677,6 @@ namespace Vaerydian.Behaviors
 
             UIFactory uif = new UIFactory(w_ECSInstance);
             uif.createTimedDialogWindow(w_ThisEntity, "SCREEE!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
-
 
             return BehaviorReturnCode.Success;
         }

@@ -7,7 +7,8 @@ namespace Vaerydian.Characters.Experience
 {
     public enum CreatureGeneralGroup
     {
-        Human
+        Human,
+		Bat
     }
 
     public enum CreatureVariationGroup

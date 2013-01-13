@@ -48,12 +48,12 @@ namespace Vaerydian
 			this.Window.AllowUserResizing = true;
 
 			graphics.PreferredBackBufferHeight = 480;
-            graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
+            graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 16f/9f);
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = true;
 
-            //this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            //this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 16);
             graphics.PreferMultiSampling = false;
             this.IsMouseVisible = false;
 

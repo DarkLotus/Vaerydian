@@ -320,7 +320,7 @@ namespace Vaerydian.Systems.Update
             {
 
                 NPCFactory ef = new NPCFactory(e_ECSInstance);
-                ef.createWanderingEnemy(mPosition.Pos + mPosition.Offset - new Vector2(16),15);
+                ef.createBatEnemy(mPosition.Pos + mPosition.Offset - new Vector2(16),15);
 
             }
 

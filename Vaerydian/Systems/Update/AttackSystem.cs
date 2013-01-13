@@ -169,8 +169,8 @@ namespace Vaerydian.Systems.Update
             int atkSkill = attSkills.SkillSet[SkillName.Melee].Value;
             int defSkill = defSkills.SkillSet[SkillName.Avoidance].Value;
 
-            Information infoDef = (Information)a_InfoMapper.get(attack.Attacker);
-            Information infoAtk = (Information)a_InfoMapper.get(attack.Defender);
+            Information infoDef = (Information)a_InfoMapper.get(attack.Defender);
+            Information infoAtk = (Information)a_InfoMapper.get(attack.Attacker);
 
             //dont continue if you dont have info
             if (infoDef == null || infoAtk == null)
@@ -338,8 +338,8 @@ namespace Vaerydian.Systems.Update
             int defSkill = defSkills.SkillSet[SkillName.Avoidance].Value;
 
 
-            Information infoDef = (Information)a_InfoMapper.get(attack.Attacker);
-            Information infoAtk = (Information)a_InfoMapper.get(attack.Defender);
+            Information infoDef = (Information)a_InfoMapper.get(attack.Defender);
+            Information infoAtk = (Information)a_InfoMapper.get(attack.Attacker);
 
             //dont continue if you dont have info
             if (infoDef == null || infoAtk == null)
