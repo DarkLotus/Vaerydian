@@ -68,7 +68,8 @@ namespace Vaerydian.Systems.Draw
             m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
 
             //m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various");
-            m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\noise");
+            //m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\noise");
+			m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\default");
 
             m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
         }

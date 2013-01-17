@@ -190,7 +190,7 @@ namespace Vaerydian.Screens
             parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
             
             //load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, false, new GameScreen(true,MapType.CAVE,parameters));
+            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WORLD,parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)
