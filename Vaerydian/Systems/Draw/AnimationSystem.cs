@@ -74,6 +74,8 @@ namespace Vaerydian.Systems.Draw
             a_SpriteBatch.Begin();
 
             float fade = 1;
+			
+			//FIX this to come from a component, not calc'd here
             a_Color = Color.White;
 
             if (life != null)

@@ -112,7 +112,7 @@ namespace Vaerydian.UI
                 button.Caller = b_Caller;
                 button.ECSInstance = b_ECSInstance;
                 button.Bounds = new Rectangle(b_Position.X + b_border, b_Position.Y + b_border + i * (b_Height + b_Spacing), b_Width, b_Height);
-
+				
                 //b_Canvas.Controls.Add(button);
                 b_Buttons.Add(button);
             }

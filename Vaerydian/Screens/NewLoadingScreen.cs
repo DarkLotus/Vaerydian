@@ -18,8 +18,6 @@ namespace Vaerydian
 
 		private static Screen n_Screen;
 
-		//private static bool n_IsLoadingSlow;
-
 		private static bool n_DoneLoading = false;
 
 		private Thread n_BackgroundThread;
@@ -30,7 +28,7 @@ namespace Vaerydian
 
         private Rectangle n_BackgroundRect;
 
-		private NewLoadingScreen (ScreenManager manager, Screen screen)
+		private NewLoadingScreen(ScreenManager manager, Screen screen)
 		{
 			NewLoadingScreen.n_ScreenManager = manager;
 			NewLoadingScreen.n_Screen = screen;
@@ -42,10 +40,9 @@ namespace Vaerydian
 			n_BackgroundThread = new Thread(handleSlowLoading);
 			n_BackgroundThread.IsBackground = true;
 			n_BackgroundThread.Start();
-
 		}
 
-		public static void Load (ScreenManager manager, bool isLoadingSlow, Screen screen)
+		public static void Load(ScreenManager manager, bool isLoadingSlow, Screen screen)
 		{
 			screen.ScreenManager = manager;
 			screen.ScreenManager.Game.Content = manager.Game.Content;
@@ -69,32 +66,31 @@ namespace Vaerydian
 
 		private void stop ()
 		{
-			n_ScreenManager.removeScreen (this);
-			n_ScreenManager.addLoadedScreen (n_Screen);
+			n_ScreenManager.removeScreen(this);
+			n_ScreenManager.addLoadedScreen(n_Screen);
 
 			if (n_BackgroundThread != null) {
 				n_BackgroundThread.Join();
 			}
 		}
 
-
-		public override void Initialize ()
+		public override void Initialize()
 		{
-			base.Initialize ();
+			base.Initialize();
 		}
 
-		public override void LoadContent ()
+		public override void LoadContent()
 		{
-			base.LoadContent ();
+			base.LoadContent();
 
 			n_SpriteBatch = n_ScreenManager.SpriteBatch;
 
-            n_LoadingTexture = this.ScreenManager.Game.Content.Load<Texture2D>("Title");
+			n_LoadingTexture = n_ScreenManager.Game.Content.Load<Texture2D>("Title");
 		}
 
-		public override void Update (GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
-			base.Update (gameTime);
+			base.Update(gameTime);
 
 			if (!n_DoneLoading) {
 				//do stuff
@@ -104,7 +100,7 @@ namespace Vaerydian
 			}
 		}
 
-		public override void Draw (GameTime gameTime)
+		public override void Draw(GameTime gameTime)
 		{
 			base.Draw (gameTime);
 

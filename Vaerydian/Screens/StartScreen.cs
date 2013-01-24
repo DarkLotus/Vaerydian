@@ -64,7 +64,7 @@ namespace Vaerydian.Screens
 
             int border = 10;
             int spacing = 5;
-            int height = 50;
+            int height = 38;
             int width = 100;
             Point screen = new Point(s_Container.GraphicsDevice.Viewport.Width,s_Container.GraphicsDevice.Viewport.Height);
             Point location = new Point(screen.X / 2 - (width + 2 * border) / 2, screen.Y / 2);
@@ -85,7 +85,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[0].Transparency = 1f; //0.75f;
             s_ButtonMenu.Buttons[0].Border = 10;
             s_ButtonMenu.Buttons[0].FontName = "General";
-            s_ButtonMenu.Buttons[0].AutoSize = true;
+            s_ButtonMenu.Buttons[0].AutoSize = false;
             s_ButtonMenu.Buttons[0].CenterText = true;
             s_ButtonMenu.Buttons[0].Text = "New Game";
             s_ButtonMenu.Buttons[0].NormalTextColor = Color.White;
@@ -100,7 +100,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[1].Transparency = 1f;
             s_ButtonMenu.Buttons[1].Border = 10;
             s_ButtonMenu.Buttons[1].FontName = "General";
-            s_ButtonMenu.Buttons[1].AutoSize = true;
+            s_ButtonMenu.Buttons[1].AutoSize = false;
             s_ButtonMenu.Buttons[1].CenterText = true;
             s_ButtonMenu.Buttons[1].Text = "World Gen";
             s_ButtonMenu.Buttons[1].NormalTextColor = Color.White;
@@ -115,7 +115,7 @@ namespace Vaerydian.Screens
             s_ButtonMenu.Buttons[2].Transparency = 1f;
             s_ButtonMenu.Buttons[2].Border = 10;
             s_ButtonMenu.Buttons[2].FontName = "General";
-            s_ButtonMenu.Buttons[2].AutoSize = true;
+            s_ButtonMenu.Buttons[2].AutoSize = false;
             s_ButtonMenu.Buttons[2].CenterText = true;
             s_ButtonMenu.Buttons[2].Text = "Exit Game";
             s_ButtonMenu.Buttons[2].NormalTextColor = Color.White;
@@ -201,7 +201,7 @@ namespace Vaerydian.Screens
 
             //load the world screen
             //LoadingScreen.Load(this.ScreenManager, true, new WorldScreen());
-			NewLoadingScreen.Load(this.ScreenManager,false,new WorldScreen());
+			NewLoadingScreen.Load(this.ScreenManager,true,new WorldScreen());
         }
 
         private void OnMouseClickExit(IControl control, InterfaceArgs args)

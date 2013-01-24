@@ -40,21 +40,26 @@ namespace Vaerydian
         private int count = 0;
         private float avg;
 		private bool changeRez = true;
+		private int height = 480;
+		private int width = 854;
 
         public VaerydianGame()
         {
             graphics = new GraphicsDeviceManager(this);
             
 			this.Window.AllowUserResizing = true;
-
-			graphics.PreferredBackBufferHeight = 480;
-            graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 16f/9f);
+			
+			graphics.PreferredBackBufferHeight = height;
+            graphics.PreferredBackBufferWidth = width;
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;
             //this.IsFixedTimeStep = true;
 			//this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 16);
             graphics.PreferMultiSampling = false;
-            this.IsMouseVisible = false;
+            graphics.ApplyChanges();
+			
+			
+			this.IsMouseVisible = false;
 
             // add a gamer-services component, which is required for the storage APIs
             //Components.Add(new GamerServicesComponent(this));
@@ -141,8 +146,6 @@ namespace Vaerydian
             //update all input
             InputManager.Update();
 
-            
-
             if (InputManager.YesExit)
             {
                 //UnloadContent();
@@ -151,7 +154,17 @@ namespace Vaerydian
 
 			if(InputManager.isKeyToggled(Keys.F1))
 				this.changeRez = true;
+			
+			if (changeRez) 
+			{
+				graphics.PreferredBackBufferHeight = height;
+	            graphics.PreferredBackBufferWidth = width;
 
+				graphics.ApplyChanges();
+
+				changeRez = false;
+			}
+			
             //calculate ms/s
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             count++;
@@ -178,15 +191,7 @@ namespace Vaerydian
 			if (InputManager.YesExit)
 				return;
 
-			if (changeRez) 
-			{
-				graphics.PreferredBackBufferHeight = 480;
-            	graphics.PreferredBackBufferWidth = (int) (graphics.PreferredBackBufferHeight * 1.6);
 
-				graphics.ApplyChanges();
-
-				changeRez = false;
-			}
             
             //begin the sprite batch
             spriteBatch.Begin();
