@@ -161,6 +161,7 @@
     <Compile Include="Utils\VectorHelper.cs" />
     <Compile Include="Utils\WeaponEnums.cs" />
     <Compile Include="VaerydianGame.cs" />
+    <Compile Include="UI\BasicWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
