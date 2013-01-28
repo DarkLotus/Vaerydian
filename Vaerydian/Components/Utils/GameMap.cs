@@ -75,13 +75,17 @@ namespace Vaerydian.Components.Utils
             g_TypeID = typeId;
         }
 
-        public Terrain getTerrain(int x, int y)
-        {
-
-            if ((x < g_Map.XSize) && (y < g_Map.YSize) && (x >= 0) && (y >= 0))
-                return g_Map.Terrain[x, y];
-            else
-                return null;// new CaveTerrain();
+        public Terrain getTerrain (int x, int y)
+		{
+			try {
+				if ((x < g_Map.XSize) && (y < g_Map.YSize) && (x >= 0) && (y >= 0))
+					return g_Map.Terrain [x, y];
+				else
+					return null;
+			} catch (Exception) {
+				Console.Error.WriteLine("ERROR IN RETRIEVING TERRAIN - x: {0} | y: {1} | mapX: {2} | mapY: {3}",x,y,g_Map.XSize, g_Map.YSize);
+				return null;
+			}
         }
     }
 }
