@@ -217,7 +217,7 @@ namespace Vaerydian.Factories
             u_EcsInstance.refresh(e);
 		}
 
-		public void createStatWindow(Entity caller, Point position, Point dimensions, int buttonHeight)
+		public Entity createStatWindow(Entity caller, Point position, Point dimensions, int buttonHeight)
 		{
 			Entity e = u_EcsInstance.create();
 
@@ -279,6 +279,8 @@ namespace Vaerydian.Factories
             u_EcsInstance.ComponentManager.addComponent(e, ui);
 
             u_EcsInstance.refresh(e);
+
+			return e;
 		}
 
 		private void destroyUI(IControl sender, InterfaceArgs args)

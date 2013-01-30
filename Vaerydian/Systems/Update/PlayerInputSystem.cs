@@ -61,6 +61,9 @@ namespace Vaerydian.Systems.Update
 
         private Random rand = new Random();
 
+		private bool p_StatWindowOpen = false;
+		private Entity p_StatWindow;
+
         public PlayerInputSystem() : base() { }
 
         public override void initialize()
@@ -336,9 +339,17 @@ namespace Vaerydian.Systems.Update
 
             if (InputManager.isKeyToggled(Keys.B))
             {
-				UIFactory uf = new UIFactory(e_ECSInstance);
+				if(!p_StatWindowOpen){
+					UIFactory uf = new UIFactory(e_ECSInstance);
 
-				uf.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
+					p_StatWindow = uf.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
+
+					p_StatWindowOpen = true;
+				}else
+				{
+					e_ECSInstance.deleteEntity(p_StatWindow);
+					p_StatWindowOpen = false;
+				}
             }
 
         }
