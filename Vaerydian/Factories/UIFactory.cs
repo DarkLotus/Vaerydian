@@ -222,12 +222,16 @@ namespace Vaerydian.Factories
 			Entity e = u_EcsInstance.create();
 
 			BasicWindow window = new BasicWindow(e, caller, u_EcsInstance, position, dimensions, buttonHeight);
+
+			//initialize the window
 			window.init();
 
+			//setup background frame
 			window.Frame.BackgroundColor = Color.Black;
 			window.Frame.BackgroundName = "dialog_bubble";
 			window.Frame.Transparency = 0.5f;
 
+			//setup close button
 			window.Button.NormalTextureName = "test_dialog";
             window.Button.PressedTextureName = "test_dialog2";
             window.Button.MouseOverTextureName = "test_dialog2";
@@ -249,10 +253,27 @@ namespace Vaerydian.Factories
 			window.preAssemble();
 
 			//add any custom controls here to window.Canvas
+			GLabel label = new GLabel();
+			label.Owner = e;
+			label.Caller = caller;
+			label.ECSInstance = u_EcsInstance;
+			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,window.Form.Bounds.Top + 40, 300,20);
+			label.Text = "stuffs";
+			label.FontName = "General";
+			label.Border = 0;
+			label.TextColor = Color.White;
+			label.BackgroundName = "dialog_bubble";
+			label.BackgroundColor = Color.Black;
+			label.BackgroundTransparency = 0.5f;
+			label.Updating += labelUpdate;
+
+			//add controls to canvas
+			window.Canvas.Controls.Add(label);
 
 			//final assemble
 			window.assemble();
 
+			//create the UI component and assign it to the entity
 			UserInterface ui = new UserInterface(window.Form);
 
             u_EcsInstance.ComponentManager.addComponent(e, ui);
@@ -263,6 +284,26 @@ namespace Vaerydian.Factories
 		private void destroyUI(IControl sender, InterfaceArgs args)
 		{
 			sender.ECSInstance.deleteEntity(sender.Owner);
+		}
+
+		private void labelUpdate(IControl sender, InterfaceArgs args)
+		{
+			Vaerydian.Components.Characters.Skills skills = ComponentMapper.get<Vaerydian.Components.Characters.Skills>(sender.Caller);
+			Vaerydian.Components.Characters.Attributes attributes = ComponentMapper.get<Vaerydian.Components.Characters.Attributes>(sender.Caller);
+
+			GLabel label = (GLabel) sender;
+			label.Text = "Skills" + "\n" +
+					     "  Range: " + skills.SkillSet[Vaerydian.Utils.SkillName.Ranged].Value + "\n" +
+						 "  Melee: " + skills.SkillSet[Vaerydian.Utils.SkillName.Melee].Value + "\n" +
+					     "  Avoidance: " + skills.SkillSet[Vaerydian.Utils.SkillName.Avoidance].Value + "\n"+
+						 "\n" +
+						 "Attributes" + "\n" +
+						 "  Endurance: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Endurance] + "\n" +
+						 "  Mind: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Mind] + "\n" +
+						 "  Muscle: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Muscle] + "\n" +
+						 "  Perception: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Perception] + "\n" +
+						 "  Personality: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Personality] + "\n" +
+						 "  Quickness: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Quickness];
 		}
     }
 }
