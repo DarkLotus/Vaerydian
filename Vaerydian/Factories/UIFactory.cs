@@ -216,5 +216,53 @@ namespace Vaerydian.Factories
 
             u_EcsInstance.refresh(e);
 		}
+
+		public void createStatWindow(Entity caller, Point position, Point dimensions, int buttonHeight)
+		{
+			Entity e = u_EcsInstance.create();
+
+			BasicWindow window = new BasicWindow(e, caller, u_EcsInstance, position, dimensions, buttonHeight);
+			window.init();
+
+			window.Frame.BackgroundColor = Color.Black;
+			window.Frame.BackgroundName = "dialog_bubble";
+			window.Frame.Transparency = 0.5f;
+
+			window.Button.NormalTextureName = "test_dialog";
+            window.Button.PressedTextureName = "test_dialog2";
+            window.Button.MouseOverTextureName = "test_dialog2";
+            window.Button.Color = Color.Gray;
+            window.Button.Transparency = 1f;
+            window.Button.Border = 0;
+            window.Button.FontName = "General";
+            window.Button.AutoSize = false;
+            window.Button.CenterText = true;
+            window.Button.Text = "Close Window";
+            window.Button.NormalTextColor = Color.White;
+            window.Button.MouseOverTextColor = Color.Yellow;
+            window.Button.PressedTextColor = Color.Red;
+
+			//setup window delete
+			window.Button.MouseClick += destroyUI;
+
+			//pre-assemble window
+			window.preAssemble();
+
+			//add any custom controls here to window.Canvas
+
+			//final assemble
+			window.assemble();
+
+			UserInterface ui = new UserInterface(window.Form);
+
+            u_EcsInstance.ComponentManager.addComponent(e, ui);
+
+            u_EcsInstance.refresh(e);
+		}
+
+		private void destroyUI(IControl sender, InterfaceArgs args)
+		{
+			sender.ECSInstance.deleteEntity(sender.Owner);
+		}
     }
 }

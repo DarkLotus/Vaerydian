@@ -19,19 +19,101 @@ namespace Vaerydian
 		private Point b_Position;
 		private Point b_Dimensions;
 		private int b_ButtonHeight = 10;
-		
-		public BasicWindow (Entity owner, Entity caller, ECSInstance ecsInstance, Point position, Point dimensions, int buttonWidth	)
+
+		/// <summary>
+		/// creates a base window UI control
+		/// </summary>
+		/// <param name='owner'>
+		/// Owning entity
+		/// </param>
+		/// <param name='caller'>
+		/// Calling entity
+		/// </param>
+		/// <param name='ecsInstance'>
+		/// ECSInstance entities are from
+		/// </param>
+		/// <param name='position'>
+		/// Position to display the window
+		/// </param>
+		/// <param name='dimensions'>
+		/// Dimensions of the window
+		/// </param>
+		/// <param name='buttonHeight'>
+		/// Height of the top button
+		/// </param>
+		public BasicWindow (Entity owner, Entity caller, ECSInstance ecsInstance, Point position, Point dimensions, int buttonHeight)
 		{
 			b_Owner = owner;
 			b_Caller = caller;
 			b_ECSInstance = ecsInstance;
 			b_Position = position;
 			b_Dimensions = dimensions;
-			b_ButtonHeight = buttonWidth;
+			b_ButtonHeight = buttonHeight;
 		}
-		
-		
-		
+
+		/// <summary>
+		/// underlying form of base window
+		/// </summary>
+		/// <value>
+		/// GForm value
+		/// </value>
+		public GForm Form {
+			get {
+				return b_Form;
+			}
+			set {
+				b_Form = value;
+			}
+		}
+
+		/// <summary>
+		/// underlying canvas of base window
+		/// </summary>
+		/// <value>
+		/// GCanvas value
+		/// </value>
+		public GCanvas Canvas {
+			get {
+				return b_Canvas;
+			}
+			set {
+				b_Canvas = value;
+			}
+		}
+
+		/// <summary>
+		/// underlying frame of base window
+		/// </summary>
+		/// <value>
+		/// GFrame value
+		/// </value>
+		public GFrame Frame {
+			get {
+				return b_Frame;
+			}
+			set {
+				b_Frame = value;
+			}
+		}
+
+		/// <summary>
+		/// underlying button of base window
+		/// </summary>
+		/// <value>
+		/// GButton value
+		/// </value>
+		public GButton Button {
+			get {
+				return b_Button;
+			}
+			set {
+				b_Button = value;
+			}
+		}
+
+		/// <summary>
+		/// Initialize the base controls
+		/// </summary>
 		public void init()
 		{
 			b_Form = new GForm();
@@ -45,17 +127,38 @@ namespace Vaerydian
 			b_Canvas.Caller = b_Caller;
 			b_Canvas.ECSInstance = b_ECSInstance;
 			b_Canvas.Bounds = new Rectangle(b_Position.X,b_Position.Y,b_Dimensions.X,b_Dimensions.Y);
-			
+
+			b_Frame = new GFrame();
+			b_Frame.Owner = b_Owner;
+			b_Frame.Caller = b_Caller;
+			b_Frame.ECSInstance = b_ECSInstance;
+			b_Frame.Bounds = new Rectangle(b_Position.X,b_Position.Y,b_Dimensions.X,b_Dimensions.Y);
+
 			b_Button = new GButton();
 			b_Button.Owner = b_Owner;
 			b_Button.Caller = b_Caller;
 			b_Button.ECSInstance = b_ECSInstance;
 			b_Button.Bounds = new Rectangle(b_Position.X,b_Position.Y,b_Dimensions.X,b_ButtonHeight);
 		}
-		
+
+		/// <summary>
+		/// Pre-assemble the controls (base frame and button)
+		/// </summary>
+		public void preAssemble ()
+		{
+			b_Canvas.Controls.Add(b_Frame);
+			b_Canvas.Controls.Add(b_Button);
+		}
+
+		/// <summary>
+		/// Assemble into the form.
+		/// </summary>
 		public void assemble()
 		{
+			b_Form.CanvasControls.Add(b_Canvas);
 		}
+
+
 	}
 }
 

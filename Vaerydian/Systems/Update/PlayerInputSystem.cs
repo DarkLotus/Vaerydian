@@ -336,15 +336,9 @@ namespace Vaerydian.Systems.Update
 
             if (InputManager.isKeyToggled(Keys.B))
             {
-                Entity e = e_ECSInstance.create();
+				UIFactory uf = new UIFactory(e_ECSInstance);
 
-                AgentComponentBus.Components.ECS.BusAgent agent = new AgentComponentBus.Components.ECS.BusAgent();
-                agent.Agent = new AgentComponentBus.Core.Agent();
-                agent.Agent.Entity = e;
-
-                e_ECSInstance.EntityManager.addComponent(e, agent);
-
-                e_ECSInstance.refresh(e);
+				uf.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
             }
 
         }
