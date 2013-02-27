@@ -138,6 +138,8 @@ namespace Vaerydian.Screens
 
         private short g_MapType;
 
+		private long prevCycles, currentCycles, elapsedCycles;
+
         public GameScreen() { }
 
         public GameScreen(bool firstLoad, short mapType, object[] parameters)
@@ -485,6 +487,10 @@ namespace Vaerydian.Screens
             busRegistrationSystem.process();
             busCommitSystem.process();
             busRetrieveSystem.process();
+
+			prevCycles = currentCycles;
+			currentCycles = taskWorker.Cycles;
+			elapsedCycles = currentCycles - prevCycles;
         }
 
         public override void Draw(GameTime gameTime)
@@ -543,6 +549,7 @@ namespace Vaerydian.Screens
             spriteBatch.Begin();
 
             spriteBatch.DrawString(FontManager.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
+			spriteBatch.DrawString(FontManager.Fonts["General"], "TCycles/Frame: " + elapsedCycles, new Vector2(0, 28), Color.Red);
 
             spriteBatch.End();
 

@@ -162,6 +162,7 @@
     <Compile Include="Utils\WeaponEnums.cs" />
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="UI\BasicWindow.cs" />
+    <Compile Include="Utils\JsonManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -182,6 +183,9 @@
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>..\..\MonoGame\MonoGame.Framework\bin\Linux\Release\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="fastJSON">
+      <HintPath>..\..\..\Libs\fastJSON\fastJSON\bin\Release\fastJSON.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
