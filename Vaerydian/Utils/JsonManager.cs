@@ -12,15 +12,17 @@ namespace Vaerydian
 
 		public JsonManager ()
 		{
+			j_JSON = fastJSON.JSON.Instance;
+			j_JSON.Parameters.EnableAnonymousTypes = true;
 		}
 
 		public Dictionary<string,object> jsonToDict (string json)
 		{
-			return j_JSON.Parse(json);
+			return (Dictionary<string,object>) j_JSON.Parse(json);
 		}
 
 
-		private string loadJSON (String filename)
+		public string loadJSON (String filename)
 		{
 			try {
 				FileStream fs = new FileStream (filename, FileMode.Open);
@@ -37,7 +39,7 @@ namespace Vaerydian
 			return "";
 		}
 
-		private bool saveJSON (String filename, String json)
+		public bool saveJSON (String filename, String json)
 		{
 			try {
 				FileStream fs = new FileStream (filename, FileMode.Create);

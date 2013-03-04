@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 
 using Vaerydian.Factories;
 using Vaerydian.UI;
+using Vaerydian.Utils;
 
 using Glimpse.Controls;
 using Glimpse.Components;
@@ -16,6 +17,7 @@ using Glimpse.Systems;
 using Glimpse.Input;
 using Microsoft.Xna.Framework.Input;
 using WorldGeneration.Utils;
+
 
 namespace Vaerydian.Screens
 {
@@ -31,6 +33,9 @@ namespace Vaerydian.Screens
         private GFrame s_Frame;
 
         private UIFactory s_UIFactory;
+
+		private JsonManager s_JsonManager;
+		private string s_json;
 
         public StartScreen() { }
 
@@ -49,6 +54,9 @@ namespace Vaerydian.Screens
 
             //setup factory
             s_UIFactory = new UIFactory(s_ECSInstance, s_Container);
+
+			//setup json manager
+			s_JsonManager = new JsonManager();
         }
 
         public override void LoadContent()
@@ -133,6 +141,9 @@ namespace Vaerydian.Screens
 
             s_ECSInstance.refresh(e);
 
+			//load the json start screen file
+			s_json = s_JsonManager.loadJSON("./Content/json/StartScreen.v");
+
             //create mouse pointer
             s_Frame = s_UIFactory.createMousePointer(InputManager.getMousePositionPoint(), 10, 10, "pointer", OnMousePointerUpdate);
 
@@ -182,12 +193,17 @@ namespace Vaerydian.Screens
             //dispose of this screen
             this.ScreenManager.removeScreen(this);
 
+			//read-in json to a dictionary
+			var jsonDict = s_JsonManager.jsonToDict(s_json);
+
+			Console.Error.WriteLine(s_json);
+
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-            parameters[GameScreen.GAMESCREEN_SEED] = 4;
-            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = 10;
-            parameters[GameScreen.GAMESCREEN_RETURNING] = false;
-            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
+			parameters[GameScreen.GAMESCREEN_SEED] = Convert.ToInt32(jsonDict["seed"]);
+            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = Convert.ToInt32(jsonDict["skill_level"]);
+            parameters[GameScreen.GAMESCREEN_RETURNING] = jsonDict["returning"];
+            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = jsonDict["last_player_position"];
             
             //load the world screen
             NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WORLD,parameters));
