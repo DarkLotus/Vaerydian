@@ -21,6 +21,7 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Graphical;
+using Vaerydian.Characters;
 
 using Vaerydian.Factories;
 using Vaerydian.Systems;
@@ -108,7 +109,7 @@ namespace Vaerydian.Screens
         private Texture2D debugTex;
         private Random rand = new Random();
 
-        private GameMap map;
+        private GameMap g_Map;
         private Entity player;
 
         private MapState mapState;
@@ -120,6 +121,8 @@ namespace Vaerydian.Screens
         public const int GAMESCREEN_LAST_PLAYER_POSITION = 3;
 
         public static bool PLAYER_IS_DEAD = false;
+
+		private JsonManager g_JsonManager = new JsonManager();
 
         /// <summary>
         /// current loading message
@@ -252,49 +255,47 @@ namespace Vaerydian.Screens
             geometryMapper = new ComponentMapper(new GeometryMap(), ecsInstance);
         }
 
-        public override void LoadContent()
-        {
-            base.LoadContent();
+        public override void LoadContent ()
+		{
+			base.LoadContent ();
 
-            //debugTex = ScreenManager.Game.Content.Load<Texture2D>("temperature");
-            //debugTex = gameContainer.ContentManager.Load<Texture2D>("temperature");
+			//debugTex = ScreenManager.Game.Content.Load<Texture2D>("temperature");
+			//debugTex = gameContainer.ContentManager.Load<Texture2D>("temperature");
 
-            Console.Out.WriteLine("LOADING LEVEL...");
+			Console.Out.WriteLine ("LOADING LEVEL...");
 
-            switch(g_MapType)
-            {
-                case MapType.WORLD:
-                    if (g_FirstLoad)
-                    {
-                        map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters[GAMESCREEN_SEED]);
-                        GameSession.WorldMap = map;
-                    }
-                    else
-                    {
-                        map = mapFactory.recreateWorldMap(GameSession.WorldMap);
-                        GameSession.WorldMap = map;
-                    }
-                    break;
-                case MapType.CAVE:
-                    map = mapFactory.createRandomCaveMap(100, 100, 45, true, 50000, 4, (int)g_Parameters[GAMESCREEN_SEED]);
-                    break;
-                default:
-                    map = mapFactory.createWorldMap(0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters[GAMESCREEN_SEED]);
-                    break;
-            }
+			switch (g_MapType) {
+			case MapType.WORLD:
+				if (g_FirstLoad) {
+					g_Map = mapFactory.createWorldMap (0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters [GAMESCREEN_SEED]);
+					GameSession.WorldMap = g_Map;
+				} else {
+					g_Map = mapFactory.recreateWorldMap (GameSession.WorldMap);
+					GameSession.WorldMap = g_Map;
+				}
+				break;
+			case MapType.CAVE:
+				g_Map = mapFactory.createRandomCaveMap (100, 100, 45, true, 50000, 4, (int)g_Parameters [GAMESCREEN_SEED]);
+				break;
+			default:
+				g_Map = mapFactory.createWorldMap (0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters [GAMESCREEN_SEED]);
+				break;
+			}
 
-            if (g_FirstLoad)
-                player = entityFactory.createPlayer((int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
-            else
-                if((bool) g_Parameters[GAMESCREEN_RETURNING])
-                    player = entityFactory.recreatePlayer(GameSession.PlayerState, (Position) g_Parameters[GAMESCREEN_LAST_PLAYER_POSITION]);
-                else
-                    player = entityFactory.recreatePlayer(GameSession.PlayerState, new Position(mapFactory.findSafeLocation(map),new Vector2(16,16)));
+			if (g_FirstLoad)
+				player = entityFactory.createPlayer ((int)g_Parameters [GAMESCREEN_SKILLLEVEL]);
+			else {
+				if ((bool)g_Parameters [GAMESCREEN_RETURNING])
+					player = entityFactory.recreatePlayer (GameSession.PlayerState, (Position)g_Parameters [GAMESCREEN_LAST_PLAYER_POSITION]);
+				else {
+					player = entityFactory.recreatePlayer (GameSession.PlayerState, new Position (mapFactory.findSafeLocation (g_Map), new Vector2 (16, 16)));
+				}
+			}
 
 
             mapState = new MapState();
-            mapState.MapType = map.Map.MapType;
-            mapState.Seed = map.Map.Seed;
+            mapState.MapType = g_Map.Map.MapType;
+            mapState.Seed = g_Map.Map.Seed;
             mapState.SkillLevel = (int)g_Parameters[GAMESCREEN_SKILLLEVEL];
             
 
@@ -304,7 +305,7 @@ namespace Vaerydian.Screens
             uiFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
             if(!g_FirstLoad && mapState.MapType != MapType.WORLD)
-                npcFactory.createWandererTrigger(20, map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
+                npcFactory.createWandererTrigger(20, g_Map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
 
             //create map debug
             entityFactory.createMapDebug();
@@ -370,70 +371,75 @@ namespace Vaerydian.Screens
             GC.Collect();
         }
 
-        public override void hasFocusUpdate(GameTime gameTime)
-        {
-            base.hasFocusUpdate(gameTime);
+        public override void hasFocusUpdate (GameTime gameTime)
+		{
+			base.hasFocusUpdate (gameTime);
 
-            //check to see if escape was recently pressed
-            if (InputManager.isKeyToggled(Keys.Escape))
-            {
-                this.ScreenManager.removeScreen(this);
-                NewLoadingScreen.Load(this.ScreenManager, false, new StartScreen());
-            }
+			//check to see if escape was recently pressed
+			if (InputManager.isKeyToggled (Keys.Escape)) {
+				this.ScreenManager.removeScreen (this);
+				NewLoadingScreen.Load (this.ScreenManager, false, new StartScreen ());
+			}
 
-            if (InputManager.isKeyToggled(Keys.Enter))
-            {
-                Console.Out.WriteLine("CHANGING LEVEL...");
+			if (InputManager.isKeyToggled (Keys.Enter)) {
+				Console.Out.WriteLine ("CHANGING LEVEL...");
 
-                //set skill level
-                Skills skills = new Skills();
-                int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent(player, skills.getTypeId())).SkillSet[Utils.SkillName.Ranged].Value;
+				//set skill level
+				Skills skills = new Skills ();
+				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [Utils.SkillName.Ranged].Value;
                 
-                //set seed
-                Position pos = new Position();
-                pos = (Position)ecsInstance.ComponentManager.getComponent(player, pos.getTypeId());
-                int x = (int)(pos.Pos.X + pos.Offset.X) / 32;
-                int y = (int)(pos.Pos.Y + pos.Offset.Y) / 32;
+				//set seed
+				Position pos = new Position ();
+				pos = (Position)ecsInstance.ComponentManager.getComponent (player, pos.getTypeId ());
+				int x = (int)(pos.Pos.X + pos.Offset.X) / 32;
+				int y = (int)(pos.Pos.Y + pos.Offset.Y) / 32;
 
-                /* WILL HELP DETECT ENTRANCES LATER
+				/* WILL HELP DETECT ENTRANCES LATER
                 if (map.Map.Terrain[x,y].TerrainType != TerrainType.CAVE_ENTRANCE)
                     return;
                  */
 
-                mapState.LastPlayerPosition = pos;
+				mapState.LastPlayerPosition = pos;
 
-                GameSession.MapStack.Push(mapState);
+				GameSession.MapStack.Push (mapState);
 
-                //setup the parameters for the new zone
-                object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-                parameters[GameScreen.GAMESCREEN_SEED] =  x * y + x + y;
-                parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = mapState.SkillLevel + 5;//skilllevel + 5;
-                parameters[GameScreen.GAMESCREEN_RETURNING] = false;
-                parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
+				//setup the parameters for the new zone
+				object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
+				parameters [GameScreen.GAMESCREEN_SEED] = x * y + x + y + (int)g_Parameters [GAMESCREEN_SEED];
+				parameters [GameScreen.GAMESCREEN_SKILLLEVEL] = mapState.SkillLevel + 5;//skilllevel + 5;
+				parameters [GameScreen.GAMESCREEN_RETURNING] = false;
+				parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
 
-                this.ScreenManager.removeScreen(this);
-                NewLoadingScreen.Load(this.ScreenManager, false, new GameScreen(false, MapType.CAVE,parameters));
+				this.ScreenManager.removeScreen (this);
+				NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType.CAVE, parameters));
 
-            }
+			}
 
-            //return to previous map
-            if(InputManager.isKeyToggled(Keys.F12))
-            {
-                if (GameSession.MapStack.Count == 0)
-                    return;
+			//return to previous map
+			if (InputManager.isKeyToggled (Keys.F12)) {
+				if (GameSession.MapStack.Count == 0)
+					return;
 
-                MapState state = GameSession.MapStack.Pop();
+				MapState state = GameSession.MapStack.Pop ();
 
-                //setup the parameters for the previous zone
-                object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-                parameters[GameScreen.GAMESCREEN_SEED] = state.Seed;
-                parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = state.SkillLevel;
-                parameters[GameScreen.GAMESCREEN_RETURNING] = true;
-                parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = state.LastPlayerPosition;
+				//setup the parameters for the previous zone
+				object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
+				parameters [GameScreen.GAMESCREEN_SEED] = state.Seed;
+				parameters [GameScreen.GAMESCREEN_SKILLLEVEL] = state.SkillLevel;
+				parameters [GameScreen.GAMESCREEN_RETURNING] = true;
+				parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = state.LastPlayerPosition;
 
-                this.ScreenManager.removeScreen(this);
-                NewLoadingScreen.Load(this.ScreenManager,true, new GameScreen(false,state.MapType,parameters));
-            }
+				this.ScreenManager.removeScreen (this);
+				NewLoadingScreen.Load (this.ScreenManager, true, new GameScreen (false, state.MapType, parameters));
+			}
+
+			if (InputManager.isKeyToggled (Keys.F6)) {
+				string json = g_JsonManager.objToJsonString(g_Map);
+				g_JsonManager.saveJSON("./map_"+g_Parameters[GAMESCREEN_SEED] +".v",json);
+
+				json = g_JsonManager.objToJsonString(GameSession.PlayerState);
+				g_JsonManager.saveJSON("./player.v",json);
+			}
 
             if (PLAYER_IS_DEAD)
             {
