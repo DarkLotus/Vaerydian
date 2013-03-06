@@ -142,7 +142,7 @@ namespace Vaerydian.Screens
             s_ECSInstance.refresh(e);
 
 			//load the json start screen file
-			s_json = s_JsonManager.loadJSON("./Content/json/StartScreen.v");
+			s_json = s_JsonManager.loadJSON("./Content/json/start_screen.v");
 
             //create mouse pointer
             s_Frame = s_UIFactory.createMousePointer(InputManager.getMousePositionPoint(), 10, 10, "pointer", OnMousePointerUpdate);
@@ -200,9 +200,9 @@ namespace Vaerydian.Screens
 
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-			parameters[GameScreen.GAMESCREEN_SEED] = Convert.ToInt32(jsonDict["seed"]);
-            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = Convert.ToInt32(jsonDict["skill_level"]);
-            parameters[GameScreen.GAMESCREEN_RETURNING] = jsonDict["returning"];
+			parameters[GameScreen.GAMESCREEN_SEED] = (int)(long)jsonDict["seed"];
+            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = (int)(long)jsonDict["skill_level"];
+            parameters[GameScreen.GAMESCREEN_RETURNING] = (bool)jsonDict["returning"];
             parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = jsonDict["last_player_position"];
             
             //load the world screen

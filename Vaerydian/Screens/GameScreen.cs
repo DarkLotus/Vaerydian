@@ -123,6 +123,7 @@ namespace Vaerydian.Screens
         public static bool PLAYER_IS_DEAD = false;
 
 		private JsonManager g_JsonManager = new JsonManager();
+		private string g_MapTypeJson;
 
         /// <summary>
         /// current loading message
@@ -264,10 +265,22 @@ namespace Vaerydian.Screens
 
 			Console.Out.WriteLine ("LOADING LEVEL...");
 
+			g_MapTypeJson = g_JsonManager.loadJSON("./Content/json/map_params.v");
+			var map_params = g_JsonManager.jsonToDict(g_MapTypeJson);
+			var world_params = (Dictionary<string,object>) map_params["WORLD"];
+			var cave_params = (Dictionary<string,object>) map_params["CAVE"];
+
 			switch (g_MapType) {
 			case MapType.WORLD:
 				if (g_FirstLoad) {
-					g_Map = mapFactory.createWorldMap (0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters [GAMESCREEN_SEED]);
+					g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
+					                                   (int)(long)world_params["world_params_y"],
+					                                   (int)(long)world_params["world_params_dx"],
+					                                   (int)(long)world_params["world_params_dy"],
+					                                   (float)(double)world_params["world_params_z"],
+					                                   (int)(long)world_params["world_params_xsize"],
+					                                   (int)(long)world_params["world_params_ysize"],
+					                                   (int)g_Parameters [GAMESCREEN_SEED]);
 					GameSession.WorldMap = g_Map;
 				} else {
 					g_Map = mapFactory.recreateWorldMap (GameSession.WorldMap);
@@ -275,10 +288,23 @@ namespace Vaerydian.Screens
 				}
 				break;
 			case MapType.CAVE:
-				g_Map = mapFactory.createRandomCaveMap (100, 100, 45, true, 50000, 4, (int)g_Parameters [GAMESCREEN_SEED]);
+				g_Map = mapFactory.createRandomCaveMap ((int)(long)cave_params["cave_params_x"],
+				                                        (int)(long)cave_params["cave_params_y"],
+				                                        (int)(long)cave_params["cave_params_prob"],
+				                                        (bool)cave_params["cave_params_cell_op_spec"],
+				                                        (int)(long)cave_params["cave_params_iter"],
+				                                        (int)(long)cave_params["cave_params_neighbors"],
+				                                        (int)g_Parameters [GAMESCREEN_SEED]);
 				break;
 			default:
-				g_Map = mapFactory.createWorldMap (0, 0, (int)(480 * 1.6), 480, 5f, (int)(480 * 1.6), 480, (int)g_Parameters [GAMESCREEN_SEED]);
+				g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
+					                               (int)(long)world_params["world_params_y"],
+					                               (int)(long)world_params["world_params_dx"],
+					                               (int)(long)world_params["world_params_dy"],
+					                               (float)(double)world_params["world_params_z"],
+					                               (int)(long)world_params["world_params_xsize"],
+					                               (int)(long)world_params["world_params_ysize"],
+					                               (int)g_Parameters [GAMESCREEN_SEED]);
 				break;
 			}
 
