@@ -206,7 +206,7 @@ namespace Vaerydian.Screens
             parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = jsonDict["last_player_position"];
             
             //load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WORLD,parameters));
+            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WILDERNESS,parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)

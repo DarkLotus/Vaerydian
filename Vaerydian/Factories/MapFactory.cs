@@ -7,9 +7,9 @@ using ECSFramework;
 
 using Vaerydian.Components;
 
-using WorldGeneration.Cave;
+//using WorldGeneration.Cave;
 using WorldGeneration.Utils;
-using WorldGeneration.World;
+//using WorldGeneration.World;
 using WorldGeneration.Generators;
 using Vaerydian.Components.Utils;
 using Microsoft.Xna.Framework;
@@ -35,20 +35,34 @@ namespace Vaerydian.Factories
             m_EcsInstance = ecsInstance;
         }
 
-        public void createWorld()
-        {
-            WorldGenerator wg = new WorldGenerator();
-            //wg.generateNewWorld(0, 0, 512, 512, 4, 100, rand.Next(100));
+		public GameMap createRandomForestMap (int x, int y, int prob, short baseTerrain, short blockingTerrain, int seed)
+		{
+			Map map = MapMaker.create(x,y);
 
-            Entity e = m_EcsInstance.create();
+			object[] parameters = new object[ForestGen.FOREST_PARAMS_SIZE];
 
-            m_EcsInstance.EntityManager.addComponent(e, new GameMap(wg.getMap()));
+			parameters[ForestGen.FOREST_PARAMS_X] = x;
+			parameters[ForestGen.FOREST_PARAMS_Y] = y;
+			parameters[ForestGen.FOREST_PARAMS_PROB] = prob;
+			parameters[ForestGen.FOREST_PARAMS_BASE_TERRAIN] = baseTerrain;
+			parameters[ForestGen.FOREST_PARAMS_BLOCKING_TERRAIN] = blockingTerrain;
+			parameters[ForestGen.FOREST_PARAMS_SEED] = seed;
+
+			MapMaker.Parameters = parameters;
+
+			MapMaker.generate(map,MapType.WILDERNESS);
+
+			GameMap gameMap = new GameMap(map);
+
+			Entity e = m_EcsInstance.create();
+            m_EcsInstance.EntityManager.addComponent(e, gameMap);
 
             m_EcsInstance.TagManager.tagEntity("MAP", e);
 
             m_EcsInstance.refresh(e);
 
-        }
+            return gameMap;
+		}
 
                 /// <summary>
         /// creates a random map with the following parameters

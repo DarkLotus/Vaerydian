@@ -296,6 +296,14 @@ namespace Vaerydian.Screens
 				                                        (int)(long)cave_params["cave_params_neighbors"],
 				                                        (int)g_Parameters [GAMESCREEN_SEED]);
 				break;
+			case MapType.WILDERNESS:
+				g_Map = mapFactory.createRandomForestMap(100,
+				                                         100,
+				                                         75,
+				                                         TerrainType.FOREST_FLOOR,
+				                                         TerrainType.FOREST_TREE,
+				                                         (int) g_Parameters[GAMESCREEN_SEED]);
+				break;
 			default:
 				g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
 					                               (int)(long)world_params["world_params_y"],

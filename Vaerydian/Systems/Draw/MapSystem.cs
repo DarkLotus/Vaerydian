@@ -288,6 +288,10 @@ namespace Vaerydian.Systems.Draw
                     return new Color(120, 54, 29);//64, 64, 64);
                 case TerrainType.CAVE_FLOOR:
                     return new Color(211, 158, 78);//128, 128, 128);
+				case TerrainType.FOREST_FLOOR:
+					return new Color(153,153,0);
+				case TerrainType.FOREST_TREE:
+					return new Color(0,153,0);
                 default:
                     return Color.Red;
             }

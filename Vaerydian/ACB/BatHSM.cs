@@ -34,26 +34,10 @@ namespace Vaerydian.ACB
 
         //private StateMachine<EnemyState, short> b_StateMachine;
 
-        private const short PARAM_AGENT = 0;
-        private const short PARAM_COMPONENTS = 1;
-        private const short PARAM_PATH = 2;
-        private const short PARAM_AGGRO = 3;
 
         public BatHSM(ECSInstance ecsInstance)
         {
             b_ECSInstance = ecsInstance;
-
-            /*
-            //initialize state machine
-            b_StateMachine = new StateMachine<EnemyState, short>(EnemyState.Idle, whenIdle, SM_TO_IDLE);
-            
-            //define states
-            b_StateMachine.addState(EnemyState.Wandering, whenWandering);
-            b_StateMachine.addState(EnemyState.Investigating, whenInvestigating);
-            b_StateMachine.addState(EnemyState.Following, whenFollowing);
-            b_StateMachine.addState(EnemyState.Attacking, whenAttacking);
-            b_StateMachine.addState(EnemyState.Fleeing, whenFleeing);
-            */
         }
 
         protected override Bag<IComponent> requestRetrievePacakge(Agent agent)
