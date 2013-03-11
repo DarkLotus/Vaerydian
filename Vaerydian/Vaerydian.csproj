@@ -162,9 +162,9 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="UI\BasicWindow.cs" />
     <Compile Include="Utils\JsonManager.cs" />
-    <Compile Include="Utils\AbilityUtils.cs" />
     <Compile Include="Components\Actions\Action.cs" />
     <Compile Include="Systems\Update\ActionSystem.cs" />
+    <Compile Include="Utils\ActionUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
