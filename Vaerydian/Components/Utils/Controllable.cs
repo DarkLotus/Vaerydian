@@ -24,6 +24,8 @@ namespace Vaerydian.Components.Utils
             return c_TypeID;
         }
 
+		public static int TypeId{ get { return c_TypeID; } set { c_TypeID = value; } }
+
         public void setEntityId(int entityId)
         {
             c_EntityID = entityId;

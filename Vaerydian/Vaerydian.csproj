@@ -45,7 +45,6 @@
     <Compile Include="Behaviors\FollowerBehavior.cs" />
     <Compile Include="Behaviors\FollowPath.cs" />
     <Compile Include="Behaviors\WanderingEnemyBehavior.cs" />
-    <Compile Include="Characters\Abilities\Ability.cs" />
     <Compile Include="Characters\Attributes\AttributeStat.cs" />
     <Compile Include="Characters\Experience\Knowledge.cs" />
     <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
@@ -163,6 +162,9 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="UI\BasicWindow.cs" />
     <Compile Include="Utils\JsonManager.cs" />
+    <Compile Include="Utils\AbilityUtils.cs" />
+    <Compile Include="Components\Actions\Action.cs" />
+    <Compile Include="Systems\Update\ActionSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -171,9 +173,6 @@
     </Reference>
     <Reference Include="BehaviorLibrary">
       <HintPath>..\..\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="ECSFramework">
-      <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse">
       <HintPath>..\..\Glimpse\Glimpse\bin\Release\Glimpse.dll</HintPath>
@@ -186,6 +185,9 @@
     </Reference>
     <Reference Include="WorldGeneration">
       <HintPath>..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="ECSFramework">
+      <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

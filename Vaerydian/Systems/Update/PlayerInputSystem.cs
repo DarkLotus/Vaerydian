@@ -189,11 +189,12 @@ namespace Vaerydian.Systems.Update
                 position.Pos = pos + head * vel;
             }
 
+			/*
             Vector2 test = (mPosition.Pos + mPosition.Offset) - pos;
             test.Normalize();
 
             float angle = VectorHelper.getAngle(new Vector2(1,0), test);
-            /*
+            
             if (angle >= 0.393f && angle < 1.178f) { sprite.Row = MOVE_UPRIGHT; }
             else if (angle >= 1.178f && angle < 1.963f) { sprite.Row = MOVE_UP; }
             else if (angle >= 1.963f && angle < 2.749f) { sprite.Row = MOVE_UPLEFT; }
