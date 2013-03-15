@@ -195,18 +195,20 @@ namespace Vaerydian.Screens
 
 			//read-in json to a dictionary
 			var jsonDict = s_JsonManager.jsonToDict(s_json);
+			var startLevel = (Dictionary<string,object>) jsonDict["start_level"];
+			var mapTypes = (Dictionary<string,object>) jsonDict["map_types"];
 
 			Console.Error.WriteLine(s_json);
 
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-			parameters[GameScreen.GAMESCREEN_SEED] = (int)(long)jsonDict["seed"];
-            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = (int)(long)jsonDict["skill_level"];
-            parameters[GameScreen.GAMESCREEN_RETURNING] = (bool)jsonDict["returning"];
-            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = jsonDict["last_player_position"];
-            
-            //load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,MapType.WILDERNESS,parameters));
+			parameters[GameScreen.GAMESCREEN_SEED] = (int)(long)startLevel["seed"];
+            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = (int)(long)startLevel["skill_level"];
+            parameters[GameScreen.GAMESCREEN_RETURNING] = (bool)startLevel["returning"];
+            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = startLevel["last_player_position"];
+
+			//load the world screen
+            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,(short)(long)mapTypes[(string)startLevel["map_type"]],parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)
