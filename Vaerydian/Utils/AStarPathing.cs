@@ -434,6 +434,7 @@ namespace Vaerydian.Utils
             }
         }
 
+		//FIX: this needs to be fixed, a vector is unneeded here, as an x and y position is all that is required
         private bool cellIsBlocking(Vector2 position)
         {
             Terrain terrain;
