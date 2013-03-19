@@ -295,44 +295,44 @@ namespace Vaerydian.Utils
                         //check UL cell
                         if ((i == -1 && j == -1))
                         {
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X, (int)cell.Position.Y - 1)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X + 1, (int)newCell.Position.Y)))
+                            if (cellIsBlocking((int)cell.Position.X, (int)cell.Position.Y - 1) &&
+                                cellIsBlocking((int)newCell.Position.X + 1, (int)newCell.Position.Y))
                                 continue;
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X-1, (int)cell.Position.Y)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X, (int)newCell.Position.Y+1)))
+                            if (cellIsBlocking((int)cell.Position.X-1, (int)cell.Position.Y) &&
+                                cellIsBlocking((int)newCell.Position.X, (int)newCell.Position.Y+1))
                                 continue;
                         }
 
                         //check LL cell
                         if ((i == -1 && j == 1))
                         {
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X-1, (int)cell.Position.Y)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X, (int)newCell.Position.Y-1)))
+                            if (cellIsBlocking((int)cell.Position.X-1, (int)cell.Position.Y) &&
+                                cellIsBlocking((int)newCell.Position.X, (int)newCell.Position.Y-1))
                                 continue;
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X, (int)cell.Position.Y+1)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X+1, (int)newCell.Position.Y)))
+                            if (cellIsBlocking((int)cell.Position.X, (int)cell.Position.Y+1) &&
+                                cellIsBlocking((int)newCell.Position.X+1, (int)newCell.Position.Y))
                                 continue;
                         }
 
                         //check LR cell
                         if ((i == 1) && (j == 1))
                         {
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X, (int)cell.Position.Y+1)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X-1, (int)newCell.Position.Y)))
+                            if (cellIsBlocking((int)cell.Position.X, (int)cell.Position.Y+1) &&
+                                cellIsBlocking((int)newCell.Position.X-1, (int)newCell.Position.Y))
                                 continue;
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X+1, (int)cell.Position.Y)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X, (int)newCell.Position.Y-1)))
+                            if (cellIsBlocking((int)cell.Position.X+1, (int)cell.Position.Y) &&
+                                cellIsBlocking((int)newCell.Position.X, (int)newCell.Position.Y-1))
                                 continue;
                         }
 
                         //check UR cell
                         if ((i == 1) && (j == -1))
                         {
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X + 1, (int)cell.Position.Y)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X, (int)newCell.Position.Y + 1)))
+                            if (cellIsBlocking((int)cell.Position.X + 1, (int)cell.Position.Y) &&
+                                cellIsBlocking((int)newCell.Position.X, (int)newCell.Position.Y + 1))
                                 continue;
-                            if (cellIsBlocking(new Vector2((int)cell.Position.X, (int)cell.Position.Y - 1)) &&
-                                cellIsBlocking(new Vector2((int)newCell.Position.X - 1, (int)newCell.Position.Y)))
+                            if (cellIsBlocking((int)cell.Position.X, (int)cell.Position.Y - 1) &&
+                                cellIsBlocking((int)newCell.Position.X - 1, (int)newCell.Position.Y))
                                 continue;
                         }
                         
@@ -434,11 +434,11 @@ namespace Vaerydian.Utils
             }
         }
 
-		//FIX: this needs to be fixed, a vector is unneeded here, as an x and y position is all that is required
-        private bool cellIsBlocking(Vector2 position)
+
+        private bool cellIsBlocking(int x, int y)
         {
             Terrain terrain;
-            terrain = a_GameMap.getTerrain((int)position.X, (int)position.Y);
+            terrain = a_GameMap.getTerrain(x, y);
             //is terrain valid?
             if (terrain == null)
                 return true;
