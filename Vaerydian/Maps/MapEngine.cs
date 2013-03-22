@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using WorldGeneration;
-using WorldGeneration.World;
 using WorldGeneration.Utils;
 using Vaerydian.Screens;
+using Vaerydian.Components.Utils;
 
 namespace Vaerydian.Maps
 {
@@ -45,7 +45,16 @@ namespace Vaerydian.Maps
 
         public static MapEngine Instance { get { return me_Instance; } }
 
+		private Map map;
 
+		public Map Map {
+			get {
+				return map;
+			}
+			set {
+				map = value;
+			}
+		}
         Random rand = new Random();
 
         /// <summary>
@@ -65,19 +74,6 @@ namespace Vaerydian.Maps
         /// the curent view on the screen
         /// </summary>
         public ViewPort ViewPort { get { return me_ViewPort; } set { me_ViewPort = value; } }
-
-        /// <summary>
-        /// World Generator
-        /// </summary>
-        private WorldGenerator me_WorldGenerator = new WorldGenerator();
-        /// <summary>
-        /// World Generator
-        /// </summary>
-        public WorldGenerator WorldGenerator
-        {
-            get { return me_WorldGenerator; }
-            set { me_WorldGenerator = value; }
-        }
 
         /// <summary>
         /// Size of Tiles
@@ -270,7 +266,7 @@ namespace Vaerydian.Maps
                 for (int y = yStart; y <= yFinish; y++)
                 {
                     //get the terrain at this cell
-                    terrain = me_WorldGenerator.WorldTerrainMap[x, y];
+                    terrain = map.Terrain[x, y];
 
                     if (me_ShowTemperature)
                     {

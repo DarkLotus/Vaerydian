@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-using WorldGeneration.World;
 using WorldGeneration.Utils;
 
 using Glimpse.Input;
@@ -110,7 +109,7 @@ namespace Vaerydian.Screens
 
             MapMaker.generate(map, MapType.WORLD);
 
-            w_MapEngine.WorldGenerator.WorldTerrainMap = map.Terrain;
+			w_MapEngine.Map = map;
             //end quick test hack
 
             //w_MapEngine.WorldGenerator.generateNewWorld(0, 0, w_MapEngine.XTiles, w_MapEngine.YTiles, 5f, w_MapEngine.XTiles, w_MapEngine.YTiles, new Random().Next());

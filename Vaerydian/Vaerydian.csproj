@@ -25,7 +25,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -183,11 +182,11 @@
     <Reference Include="fastJSON">
       <HintPath>..\..\..\Libs\fastJSON\fastJSON\bin\Release\fastJSON.dll</HintPath>
     </Reference>
-    <Reference Include="WorldGeneration">
-      <HintPath>..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
-    </Reference>
     <Reference Include="ECSFramework">
       <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldGeneration">
+      <HintPath>..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

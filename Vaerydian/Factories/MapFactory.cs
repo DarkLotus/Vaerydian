@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using ECSFramework;
 
 using Vaerydian.Components;
-
-//using WorldGeneration.Cave;
-using WorldGeneration.Utils;
-//using WorldGeneration.World;
-using WorldGeneration.Generators;
 using Vaerydian.Components.Utils;
+
+using WorldGeneration.Utils;
+using WorldGeneration.Generators;
+
 using Microsoft.Xna.Framework;
+
 
 
 namespace Vaerydian.Factories
@@ -34,6 +33,33 @@ namespace Vaerydian.Factories
         {
             m_EcsInstance = ecsInstance;
         }
+
+		public GameMap createRandomDungeonMap (int x, int y,int features, int seed)
+		{
+			Map map = MapMaker.create(x,y);
+
+			object[] parameters = new object[DungeonGen.DUNGEON_PARAMS_SIZE];
+
+			parameters[DungeonGen.DUNGEON_PARAMS_XSIZE] = x;
+			parameters[DungeonGen.DUNGEON_PARAMS_YSIZE] = y;
+			parameters[DungeonGen.DUNGEON_PARAMS_SEED] = seed;
+			parameters[DungeonGen.DUNGEON_PARAMS_FEATURE_COUNT] = features;
+
+			MapMaker.Parameters = parameters;
+
+			MapMaker.generate(map,MapType.DUNGEON);
+
+			GameMap gameMap = new GameMap(map);
+
+			Entity e = m_EcsInstance.create();
+            m_EcsInstance.EntityManager.addComponent(e, gameMap);
+
+            m_EcsInstance.TagManager.tagEntity("MAP", e);
+
+            m_EcsInstance.refresh(e);
+
+            return gameMap;
+		}
 
 		public GameMap createRandomForestMap (int x, int y, int prob, short baseTerrain, short blockingTerrain, int seed)
 		{

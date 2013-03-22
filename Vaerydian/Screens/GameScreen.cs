@@ -304,6 +304,9 @@ namespace Vaerydian.Screens
 				                                         TerrainType.FOREST_TREE,
 				                                         (int) g_Parameters[GAMESCREEN_SEED]);
 				break;
+			case MapType.DUNGEON:
+				g_Map = mapFactory.createRandomDungeonMap(100,100,200, (int) g_Parameters[GAMESCREEN_SEED]);
+				break;
 			default:
 				g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
 					                               (int)(long)world_params["world_params_y"],

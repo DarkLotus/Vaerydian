@@ -222,78 +222,88 @@ namespace Vaerydian.Systems.Draw
         {
             switch (terrain.TerrainType)
             {
-                case TerrainType.LAND_ARCTIC_DESERT:
-                    return new Color(204, 204, 255);
-                case TerrainType.LAND_DESERT:
-                    return new Color(204, 204, 0);
-                case TerrainType.LAND_SCORCHED:
-                    return new Color(153, 102, 51);
-                case TerrainType.LAND_SNOW_PLAINS:
-                    return Color.White;
-                case TerrainType.LAND_TUNDRA:
-                    return new Color(53, 111, 53);
-                case TerrainType.LAND_TAIGA:
-                    return new Color(24, 72, 48);
-                case TerrainType.LAND_TEMPERATE_GRASSLAND:
-                    return new Color(153, 255, 102);
-                case TerrainType.LAND_SHRUBLAND:
-                    return new Color(102, 153, 0);
-                case TerrainType.LAND_SAVANA:
-                    return new Color(204, 255, 102);
-                case TerrainType.LAND_TEMPERATE_FOREST:
-                    return new Color(0, 153, 0);
-                case TerrainType.LAND_TROPICAL_FOREST:
-                    return new Color(102, 255, 51);
-                case TerrainType.LAND_GLACIER:
-                    return new Color(153, 255, 204);
-                case TerrainType.LAND_MARSH:
-                    return new Color(33, 101, 67);
-                case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
-                    return new Color(0, 102, 0);
-                case TerrainType.LAND_HYBOREAN_RIMELAND:
-                    return new Color(204, 255, 255);
-                case TerrainType.LAND_BOG:
-                    return new Color(51, 51, 0);
-                case TerrainType.LAND_SWAMP:
-                    return new Color(0, 51, 0);
-                case TerrainType.LAND_TROPICAL_RAIN_FOREST:
-                    return new Color(0, 128, 0);
-                case TerrainType.OCEAN_ICE:
-                    return new Color(204, 255, 255);
-                case TerrainType.OCEAN_COAST:
-                    return new Color(255, 255, 153);
-                case TerrainType.OCEAN_LITTORAL:
-                    return new Color(51, 153, 255);
-                case TerrainType.OCEAN_SUBLITTORAL:
-                    return new Color(0, 102, 255);
-                case TerrainType.OCEAN_ABYSSAL:
-                    return new Color(0, 51, 204);
-                case TerrainType.MOUNTAIN_FOOTHILL:
-                    return new Color(57, 69, 43);
-                case TerrainType.MOUNTAIN_LOWLAND:
-                    return new Color(79, 95, 59);
-                case TerrainType.MOUNTAIN_HIGHLAND:
-                    return new Color(115, 123, 105);
-                case TerrainType.MOUNTAIN_CASCADE:
-                    return new Color(150, 150, 150);
-                case TerrainType.MOUNTAIN_DRY_PEAK:
-                    return new Color(192, 192, 192);
-                case TerrainType.MOUNTAIN_SNOWY_PEAK:
-                    return new Color(221, 221, 221);
-                case TerrainType.BASE_RIVER:
-                    return new Color(0, 102, 102);
-                case TerrainType.CAVE_ENTRANCE:
-                    return new Color(255, 0, 0);
-                case TerrainType.CAVE_WALL:
-                    return new Color(120, 54, 29);//64, 64, 64);
-                case TerrainType.CAVE_FLOOR:
-                    return new Color(211, 158, 78);//128, 128, 128);
-				case TerrainType.FOREST_FLOOR:
-					return new Color(153,153,0);
-				case TerrainType.FOREST_TREE:
-					return new Color(0,153,0);
-                default:
-                    return Color.Red;
+            case TerrainType.LAND_ARCTIC_DESERT:
+                return new Color(204, 204, 255);
+            case TerrainType.LAND_DESERT:
+                return new Color(204, 204, 0);
+            case TerrainType.LAND_SCORCHED:
+                return new Color(153, 102, 51);
+            case TerrainType.LAND_SNOW_PLAINS:
+                return Color.White;
+            case TerrainType.LAND_TUNDRA:
+                return new Color(53, 111, 53);
+            case TerrainType.LAND_TAIGA:
+                return new Color(24, 72, 48);
+            case TerrainType.LAND_TEMPERATE_GRASSLAND:
+                return new Color(153, 255, 102);
+            case TerrainType.LAND_SHRUBLAND:
+                return new Color(102, 153, 0);
+            case TerrainType.LAND_SAVANA:
+                return new Color(204, 255, 102);
+            case TerrainType.LAND_TEMPERATE_FOREST:
+                return new Color(0, 153, 0);
+            case TerrainType.LAND_TROPICAL_FOREST:
+                return new Color(102, 255, 51);
+            case TerrainType.LAND_GLACIER:
+                return new Color(153, 255, 204);
+            case TerrainType.LAND_MARSH:
+                return new Color(33, 101, 67);
+            case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
+                return new Color(0, 102, 0);
+            case TerrainType.LAND_HYBOREAN_RIMELAND:
+                return new Color(204, 255, 255);
+            case TerrainType.LAND_BOG:
+                return new Color(51, 51, 0);
+            case TerrainType.LAND_SWAMP:
+                return new Color(0, 51, 0);
+            case TerrainType.LAND_TROPICAL_RAIN_FOREST:
+                return new Color(0, 128, 0);
+            case TerrainType.OCEAN_ICE:
+                return new Color(204, 255, 255);
+            case TerrainType.OCEAN_COAST:
+                return new Color(255, 255, 153);
+            case TerrainType.OCEAN_LITTORAL:
+                return new Color(51, 153, 255);
+            case TerrainType.OCEAN_SUBLITTORAL:
+                return new Color(0, 102, 255);
+            case TerrainType.OCEAN_ABYSSAL:
+                return new Color(0, 51, 204);
+            case TerrainType.MOUNTAIN_FOOTHILL:
+                return new Color(57, 69, 43);
+            case TerrainType.MOUNTAIN_LOWLAND:
+                return new Color(79, 95, 59);
+            case TerrainType.MOUNTAIN_HIGHLAND:
+                return new Color(115, 123, 105);
+            case TerrainType.MOUNTAIN_CASCADE:
+                return new Color(150, 150, 150);
+            case TerrainType.MOUNTAIN_DRY_PEAK:
+                return new Color(192, 192, 192);
+            case TerrainType.MOUNTAIN_SNOWY_PEAK:
+                return new Color(221, 221, 221);
+            case TerrainType.BASE_RIVER:
+                return new Color(0, 102, 102);
+            case TerrainType.CAVE_ENTRANCE:
+                return new Color(255, 0, 0);
+            case TerrainType.CAVE_WALL:
+                return new Color(120, 54, 29);//64, 64, 64);
+            case TerrainType.CAVE_FLOOR:
+                return new Color(211, 158, 78);//128, 128, 128);
+			case TerrainType.FOREST_FLOOR:
+				return new Color(153,153,0);
+			case TerrainType.FOREST_TREE:
+				return new Color(0,153,0);
+			case TerrainType.DUNGEON_EARTH:
+				return new Color(100,100,100);
+			case TerrainType.DUNGEON_WALL:
+				return new Color(180,180,180);
+			case TerrainType.DUNGEON_BEDROCK:
+				return new Color(64,64,64);
+			case TerrainType.DUNGEON_CORRIDOR:
+				return new Color(153,153,0);
+			case TerrainType.DUNGEON_FLOOR:
+				return new Color(211, 158, 78);
+            default:
+                return Color.Red;
             }
         }
     }
