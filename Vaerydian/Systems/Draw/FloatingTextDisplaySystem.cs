@@ -104,7 +104,7 @@ namespace Vaerydian.Systems.Draw
                 fade = (1f - (text.ElapsedTime - half) / half);
             
 
-            d_SpriteBatch.Begin();
+            d_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
             
             //background
             d_SpriteBatch.DrawString(d_Font, text.Text, pos - origin + new Vector2(1, 0), Color.Black * fade);

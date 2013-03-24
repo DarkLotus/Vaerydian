@@ -243,7 +243,7 @@ namespace Vaerydian.Screens
                 statusPosition.Y = statusPosition.Y + 40;
  
                 // Draw the text.  
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
                 spriteBatch.Draw(l_LoadingTexture, l_BackgroundRect, Color.DimGray);
 

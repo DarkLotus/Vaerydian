@@ -4,7 +4,7 @@
     "skill_level" : 10,
     "returning" : false,
     "last_player_position" : null,
-    "map_type" : "WORLD"
+    "map_type" : "DUNGEON"
   },
   "map_types":{
     "CAVE": 0,

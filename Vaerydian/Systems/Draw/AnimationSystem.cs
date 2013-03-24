@@ -71,7 +71,7 @@ namespace Vaerydian.Systems.Draw
             ViewPort viewPort = (ViewPort)a_ViewportMapper.get(a_Camera);
             Life life = (Life)a_LifeMapper.get(entity);
 
-            a_SpriteBatch.Begin();
+            a_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             float fade = 1;
 			

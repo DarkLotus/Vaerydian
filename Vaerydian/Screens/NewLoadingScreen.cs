@@ -117,7 +117,7 @@ namespace Vaerydian
             Vector2 statusPosition = (viewportSize - StatusMessageSize) / 2;
             statusPosition.Y = statusPosition.Y + 40;
 
-			n_SpriteBatch.Begin();
+			n_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             n_SpriteBatch.Draw(n_LoadingTexture, n_BackgroundRect, Color.DimGray);
 

@@ -113,7 +113,7 @@ namespace Vaerydian.Systems.Draw
             if(sprite.ShouldSystemAnimate)
                 sprite.Column = sprite.SpriteAnimation.updateFrame(e_ECSInstance.ElapsedTime);
 
-            s_SpriteBatch.Begin();
+            s_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             //s_SpriteBatch.Draw(s_Textures[sprite.getTextureName()], pos+center , null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None,0f);
             if (transform != null)

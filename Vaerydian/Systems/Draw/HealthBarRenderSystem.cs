@@ -74,7 +74,7 @@ namespace Vaerydian.Systems.Draw
             //construct the drawing region rectangle
             Rectangle rect = new Rectangle((int)(pos.X-origin.X),(int)(pos.Y - 10 -origin.Y),max,5);
 
-            h_SpriteBatch.Begin();
+            h_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             //draw the health bar
             h_SpriteBatch.Draw(h_Texture, rect, Color.Red);

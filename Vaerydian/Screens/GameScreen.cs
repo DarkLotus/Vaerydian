@@ -589,7 +589,7 @@ namespace Vaerydian.Screens
             //run debug systems
             //quadTreeDebugRenderSystem.process();
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             spriteBatch.DrawString(FontManager.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
 			spriteBatch.DrawString(FontManager.Fonts["General"], "TCycles/Frame: " + elapsedCycles, new Vector2(0, 28), Color.Red);

@@ -93,7 +93,9 @@ namespace Vaerydian.Systems.Draw
             //updateView(origin, center, m_ViewPort.getDimensions());
             updateView(map.Map,origin,dimensions);
 
-            m_SpriteBatch.Begin();
+			m_SpriteBatch.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+
+			m_SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             //iterate through current viewable tiles
             for (int x = m_xStart; x <= m_xFinish; x++)

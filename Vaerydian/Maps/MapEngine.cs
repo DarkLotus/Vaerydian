@@ -256,7 +256,7 @@ namespace Vaerydian.Maps
         /// <param name="spriteBatch">the spriteBatch to render with</param>
         public void DrawMap(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             Terrain terrain;
 
