@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-using WorldGeneration.Utils;
+using Vaerydian.Utils;
 
 using Glimpse.Input;
-using WorldGeneration.Generators;
+using Vaerydian.Generators;
 
 namespace Vaerydian.Screens
 {

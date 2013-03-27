@@ -6,8 +6,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using WorldGeneration;
-using WorldGeneration.Utils;
+using Vaerydian;
+using Vaerydian.Utils;
 using Vaerydian.Screens;
 using Vaerydian.Components.Utils;
 

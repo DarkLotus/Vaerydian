@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 
 using ECSFramework;
-
-using WorldGeneration.Utils;
-
 using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Utils

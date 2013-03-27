@@ -36,7 +36,7 @@ using Glimpse.Managers;
 using AgentComponentBus.Core;
 using AgentComponentBus.Components.ECS;
 using AgentComponentBus.Systems;
-using WorldGeneration.Utils;
+using Vaerydian.Utils;
 using Vaerydian.Sessions;
 using Vaerydian.Maps;
 using Vaerydian.ACB;

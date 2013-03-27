@@ -5,7 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using WorldGeneration.Utils;
+using Vaerydian.Utils;
 
 using Vaerydian.Components;
 using Vaerydian.Components.Utils;

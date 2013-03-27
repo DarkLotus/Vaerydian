@@ -10,7 +10,7 @@ using ECSFramework;
 
 
 //using WorldGeneration.Cave;
-using WorldGeneration.Utils;
+using Vaerydian.Utils;
 
 using Vaerydian.Components;
 using Vaerydian.Components.Dbg;

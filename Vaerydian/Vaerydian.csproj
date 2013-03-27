@@ -15,9 +15,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -26,7 +26,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -164,6 +164,18 @@
     <Compile Include="Components\Actions\Action.cs" />
     <Compile Include="Systems\Update\ActionSystem.cs" />
     <Compile Include="Utils\ActionUtils.cs" />
+    <Compile Include="Generators\CaveGen.cs" />
+    <Compile Include="Generators\DungeonGen.cs" />
+    <Compile Include="Generators\ForestGen.cs" />
+    <Compile Include="Generators\WorldGen.cs" />
+    <Compile Include="Utils\DynamicSwitch.cs" />
+    <Compile Include="Utils\Map.cs" />
+    <Compile Include="Utils\MapHelper.cs" />
+    <Compile Include="Utils\MapMaker.cs" />
+    <Compile Include="Utils\MapType.cs" />
+    <Compile Include="Utils\ObjectType.cs" />
+    <Compile Include="Utils\Terrain.cs" />
+    <Compile Include="Utils\TerrainType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -185,8 +197,8 @@
     <Reference Include="ECSFramework">
       <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
     </Reference>
-    <Reference Include="WorldGeneration">
-      <HintPath>..\..\WorldGeneration\WorldGeneration\bin\Release\WorldGeneration.dll</HintPath>
+    <Reference Include="LibNoise">
+      <HintPath>..\..\..\Libs\LibNoise\LibNoise\bin\Release\LibNoise.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -197,4 +209,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Generators\" />
+  </ItemGroup>
 </Project>

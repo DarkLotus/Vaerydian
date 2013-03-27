@@ -7,8 +7,8 @@ using ECSFramework;
 using Vaerydian.Components;
 using Vaerydian.Components.Utils;
 
-using WorldGeneration.Utils;
-using WorldGeneration.Generators;
+using Vaerydian.Utils;
+using Vaerydian.Generators;
 
 using Microsoft.Xna.Framework;
 

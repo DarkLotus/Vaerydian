@@ -16,7 +16,7 @@ using Glimpse.Components;
 using Glimpse.Systems;
 using Glimpse.Input;
 using Microsoft.Xna.Framework.Input;
-using WorldGeneration.Utils;
+using Vaerydian.Utils;
 
 
 namespace Vaerydian.Screens
