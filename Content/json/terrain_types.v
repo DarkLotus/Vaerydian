@@ -9,8 +9,8 @@
     "TRIGGER":6,
   },
   "terrain_defs" :[
-    {"name" : "NOTHING", "id": 0, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "passible" : true, "effect": "NONE", "type": "NOTHING" },
-    {"name" : "BASE_LAND", "id": 1, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "passible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "NOTHING", "id": 0, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "NOTHING" },
+    {"name" : "BASE_LAND", "id": 1, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "BASE_OCEAN", "id": 2, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "BASE_MOUNTAIN", "id": 3, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "BASE_RIVER", "id": 4, "texture" : "terrain\\default", "texture_offset" : [0,0],  "color":[255,255,255],"ispassible" : true, "effect": "NONE", "type": "FLOOR" },
