@@ -176,6 +176,7 @@
     <Compile Include="Utils\ObjectType.cs" />
     <Compile Include="Utils\Terrain.cs" />
     <Compile Include="Utils\TerrainType.cs" />
+    <Compile Include="Utils\JsonObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

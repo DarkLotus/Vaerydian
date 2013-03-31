@@ -30,6 +30,10 @@ namespace Vaerydian
 			return (Dictionary<string,object>) j_JSON.Parse(json);
 		}
 
+		public JsonObject jsonToJsonObject(string json){
+			return new JsonObject (jsonToDict(json));
+		}
+
 		/// <summary>
 		/// Loads a json file
 		/// </summary>

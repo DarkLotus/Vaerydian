@@ -200,15 +200,19 @@ namespace Vaerydian.Screens
 
 			Console.Error.WriteLine(s_json);
 
+			JsonObject json = s_JsonManager.jsonToJsonObject (s_json);
+
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-			parameters[GameScreen.GAMESCREEN_SEED] = (int)(long)startLevel["seed"];
-            parameters[GameScreen.GAMESCREEN_SKILLLEVEL] = (int)(long)startLevel["skill_level"];
-            parameters[GameScreen.GAMESCREEN_RETURNING] = (bool)startLevel["returning"];
-            parameters[GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = startLevel["last_player_position"];
+			parameters [GameScreen.GAMESCREEN_SEED] = json ["start_level", "seed"].asInt ();  //(int)(long)startLevel["seed"];
+			parameters [GameScreen.GAMESCREEN_SKILLLEVEL] = json ["start_level", "skill_level"].asInt ();//(int)(long)startLevel["skill_level"];
+			parameters [GameScreen.GAMESCREEN_RETURNING] = json ["start_level", "returning"].asBool ();//(bool)startLevel["returning"];
+			parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;//startLevel["last_player_position"];
 
+
+			//(short)(long)mapTypes[(string)startLevel["map_type"]]
 			//load the world screen
-            NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,(short)(long)mapTypes[(string)startLevel["map_type"]],parameters));
+			NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,json ["map_types", json ["start_level", "map_type"].asString ()].asShort (),parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)
