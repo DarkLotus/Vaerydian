@@ -194,9 +194,9 @@ namespace Vaerydian.Screens
             this.ScreenManager.removeScreen(this);
 
 			//read-in json to a dictionary
-			var jsonDict = s_JsonManager.jsonToDict(s_json);
-			var startLevel = (Dictionary<string,object>) jsonDict["start_level"];
-			var mapTypes = (Dictionary<string,object>) jsonDict["map_types"];
+			//var jsonDict = s_JsonManager.jsonToDict(s_json);
+			//var startLevel = (Dictionary<string,object>) jsonDict["start_level"];
+			//var mapTypes = (Dictionary<string,object>) jsonDict["map_types"];
 
 			Console.Error.WriteLine(s_json);
 

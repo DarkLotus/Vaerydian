@@ -57,6 +57,17 @@ namespace Vaerydian
 			return (bool)j_InternalObject;
 		}
 
+		public List<T> asList<T>(){
+			List<object> objList = (List<object>) j_InternalObject;
+			List<T> returnList = new List<T> ();
+			
+			for (int i = 0; i < objList.Count; i++) {
+				returnList.Add((T) objList[i]);
+			}
+			
+			return returnList;
+		}
+
 	}
 }
 
