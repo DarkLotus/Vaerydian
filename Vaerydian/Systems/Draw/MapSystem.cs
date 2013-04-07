@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,14 +64,14 @@ namespace Vaerydian.Systems.Draw
             m_MapDebug = e_ECSInstance.TagManager.getEntityByTag("MAP_DEBUG");
             m_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
 
-            m_RectDict.Add(TerrainType.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
-            m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
+            m_RectDict.Add(TerrainType_Old.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
+            m_RectDict.Add(TerrainType_Old.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
 
             //m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various");
             //m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\noise");
 			m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\default");
 
-            m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
+            m_TileSize = m_RectDict[TerrainType_Old.CAVE_WALL].Width;
         }
 
         protected override void cleanUp(Bag<Entity> entities) { }
@@ -224,85 +224,85 @@ namespace Vaerydian.Systems.Draw
         {
             switch (terrain.TerrainType)
             {
-            case TerrainType.LAND_ARCTIC_DESERT:
+            case TerrainType_Old.LAND_ARCTIC_DESERT:
                 return new Color(204, 204, 255);
-            case TerrainType.LAND_DESERT:
+            case TerrainType_Old.LAND_DESERT:
                 return new Color(204, 204, 0);
-            case TerrainType.LAND_SCORCHED:
+            case TerrainType_Old.LAND_SCORCHED:
                 return new Color(153, 102, 51);
-            case TerrainType.LAND_SNOW_PLAINS:
+            case TerrainType_Old.LAND_SNOW_PLAINS:
                 return Color.White;
-            case TerrainType.LAND_TUNDRA:
+            case TerrainType_Old.LAND_TUNDRA:
                 return new Color(53, 111, 53);
-            case TerrainType.LAND_TAIGA:
+            case TerrainType_Old.LAND_TAIGA:
                 return new Color(24, 72, 48);
-            case TerrainType.LAND_TEMPERATE_GRASSLAND:
+            case TerrainType_Old.LAND_TEMPERATE_GRASSLAND:
                 return new Color(153, 255, 102);
-            case TerrainType.LAND_SHRUBLAND:
+            case TerrainType_Old.LAND_SHRUBLAND:
                 return new Color(102, 153, 0);
-            case TerrainType.LAND_SAVANA:
+            case TerrainType_Old.LAND_SAVANA:
                 return new Color(204, 255, 102);
-            case TerrainType.LAND_TEMPERATE_FOREST:
+            case TerrainType_Old.LAND_TEMPERATE_FOREST:
                 return new Color(0, 153, 0);
-            case TerrainType.LAND_TROPICAL_FOREST:
+            case TerrainType_Old.LAND_TROPICAL_FOREST:
                 return new Color(102, 255, 51);
-            case TerrainType.LAND_GLACIER:
+            case TerrainType_Old.LAND_GLACIER:
                 return new Color(153, 255, 204);
-            case TerrainType.LAND_MARSH:
+            case TerrainType_Old.LAND_MARSH:
                 return new Color(33, 101, 67);
-            case TerrainType.LAND_TEMPERATE_RAIN_FOREST:
+            case TerrainType_Old.LAND_TEMPERATE_RAIN_FOREST:
                 return new Color(0, 102, 0);
-            case TerrainType.LAND_HYBOREAN_RIMELAND:
+            case TerrainType_Old.LAND_HYBOREAN_RIMELAND:
                 return new Color(204, 255, 255);
-            case TerrainType.LAND_BOG:
+            case TerrainType_Old.LAND_BOG:
                 return new Color(51, 51, 0);
-            case TerrainType.LAND_SWAMP:
+            case TerrainType_Old.LAND_SWAMP:
                 return new Color(0, 51, 0);
-            case TerrainType.LAND_TROPICAL_RAIN_FOREST:
+            case TerrainType_Old.LAND_TROPICAL_RAIN_FOREST:
                 return new Color(0, 128, 0);
-            case TerrainType.OCEAN_ICE:
+            case TerrainType_Old.OCEAN_ICE:
                 return new Color(204, 255, 255);
-            case TerrainType.OCEAN_COAST:
+            case TerrainType_Old.OCEAN_COAST:
                 return new Color(255, 255, 153);
-            case TerrainType.OCEAN_LITTORAL:
+            case TerrainType_Old.OCEAN_LITTORAL:
                 return new Color(51, 153, 255);
-            case TerrainType.OCEAN_SUBLITTORAL:
+            case TerrainType_Old.OCEAN_SUBLITTORAL:
                 return new Color(0, 102, 255);
-            case TerrainType.OCEAN_ABYSSAL:
+            case TerrainType_Old.OCEAN_ABYSSAL:
                 return new Color(0, 51, 204);
-            case TerrainType.MOUNTAIN_FOOTHILL:
+            case TerrainType_Old.MOUNTAIN_FOOTHILL:
                 return new Color(57, 69, 43);
-            case TerrainType.MOUNTAIN_LOWLAND:
+            case TerrainType_Old.MOUNTAIN_LOWLAND:
                 return new Color(79, 95, 59);
-            case TerrainType.MOUNTAIN_HIGHLAND:
+            case TerrainType_Old.MOUNTAIN_HIGHLAND:
                 return new Color(115, 123, 105);
-            case TerrainType.MOUNTAIN_CASCADE:
+            case TerrainType_Old.MOUNTAIN_CASCADE:
                 return new Color(150, 150, 150);
-            case TerrainType.MOUNTAIN_DRY_PEAK:
+            case TerrainType_Old.MOUNTAIN_DRY_PEAK:
                 return new Color(192, 192, 192);
-            case TerrainType.MOUNTAIN_SNOWY_PEAK:
+            case TerrainType_Old.MOUNTAIN_SNOWY_PEAK:
                 return new Color(221, 221, 221);
-            case TerrainType.BASE_RIVER:
+            case TerrainType_Old.BASE_RIVER:
                 return new Color(0, 102, 102);
-            case TerrainType.CAVE_ENTRANCE:
+            case TerrainType_Old.CAVE_ENTRANCE:
                 return new Color(255, 0, 0);
-            case TerrainType.CAVE_WALL:
+            case TerrainType_Old.CAVE_WALL:
                 return new Color(120, 54, 29);//64, 64, 64);
-            case TerrainType.CAVE_FLOOR:
+            case TerrainType_Old.CAVE_FLOOR:
                 return new Color(211, 158, 78);//128, 128, 128);
-			case TerrainType.FOREST_FLOOR:
+			case TerrainType_Old.FOREST_FLOOR:
 				return new Color(153,153,0);
-			case TerrainType.FOREST_TREE:
+			case TerrainType_Old.FOREST_TREE:
 				return new Color(0,153,0);
-			case TerrainType.DUNGEON_EARTH:
+			case TerrainType_Old.DUNGEON_EARTH:
 				return new Color(100,100,100);
-			case TerrainType.DUNGEON_WALL:
+			case TerrainType_Old.DUNGEON_WALL:
 				return new Color(180,180,180);
-			case TerrainType.DUNGEON_BEDROCK:
+			case TerrainType_Old.DUNGEON_BEDROCK:
 				return new Color(64,64,64);
-			case TerrainType.DUNGEON_CORRIDOR:
+			case TerrainType_Old.DUNGEON_CORRIDOR:
 				return new Color(153,153,0);
-			case TerrainType.DUNGEON_FLOOR:
+			case TerrainType_Old.DUNGEON_FLOOR:
 				return new Color(211, 158, 78);
             default:
                 return Color.Red;

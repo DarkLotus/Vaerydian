@@ -8,7 +8,7 @@ namespace Vaerydian.Utils
     /// <summary>
     /// the possible types of maps that can be made
     /// </summary>
-    public class MapType
+    public class MapType_Old
     {
         public const short CAVE = 0;
         public const short DUNGEON = 1;
@@ -20,6 +20,5 @@ namespace Vaerydian.Utils
         public const short NEXUS = 7;
         public const short WORLD = 8;
         public const short WILDERNESS = 9;
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -271,7 +271,7 @@ namespace Vaerydian.Screens
 			var cave_params = (Dictionary<string,object>) map_params["CAVE"];
 
 			switch (g_MapType) {
-			case MapType.WORLD:
+			case MapType_Old.WORLD:
 				if (g_FirstLoad) {
 					g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
 					                                   (int)(long)world_params["world_params_y"],
@@ -287,7 +287,7 @@ namespace Vaerydian.Screens
 					GameSession.WorldMap = g_Map;
 				}
 				break;
-			case MapType.CAVE:
+			case MapType_Old.CAVE:
 				g_Map = mapFactory.createRandomCaveMap ((int)(long)cave_params["cave_params_x"],
 				                                        (int)(long)cave_params["cave_params_y"],
 				                                        (int)(long)cave_params["cave_params_prob"],
@@ -296,15 +296,15 @@ namespace Vaerydian.Screens
 				                                        (int)(long)cave_params["cave_params_neighbors"],
 				                                        (int)g_Parameters [GAMESCREEN_SEED]);
 				break;
-			case MapType.WILDERNESS:
+			case MapType_Old.WILDERNESS:
 				g_Map = mapFactory.createRandomForestMap(100,
 				                                         100,
 				                                         75,
-				                                         TerrainType.FOREST_FLOOR,
-				                                         TerrainType.FOREST_TREE,
+				                                         TerrainType_Old.FOREST_FLOOR,
+				                                         TerrainType_Old.FOREST_TREE,
 				                                         (int) g_Parameters[GAMESCREEN_SEED]);
 				break;
-			case MapType.DUNGEON:
+			case MapType_Old.DUNGEON:
 				g_Map = mapFactory.createRandomDungeonMap(100,100,200, (int) g_Parameters[GAMESCREEN_SEED]);
 				break;
 			default:
@@ -341,7 +341,7 @@ namespace Vaerydian.Screens
 
             uiFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
-            if(!g_FirstLoad && mapState.MapType != MapType.WORLD)
+            if(!g_FirstLoad && mapState.MapType != MapType_Old.WORLD)
                 npcFactory.createWandererTrigger(20, g_Map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
 
             //create map debug
@@ -448,7 +448,7 @@ namespace Vaerydian.Screens
 				parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
 
 				this.ScreenManager.removeScreen (this);
-				NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType.CAVE, parameters));
+				NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType_Old.CAVE, parameters));
 
 			}
 

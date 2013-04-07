@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,7 +107,7 @@ namespace Vaerydian.Screens
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate(map, MapType.WORLD);
+            MapMaker.generate(map, MapType_Old.WORLD);
 
 			w_MapEngine.Map = map;
             //end quick test hack

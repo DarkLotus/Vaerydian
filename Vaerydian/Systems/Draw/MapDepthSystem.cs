@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -111,7 +111,7 @@ namespace Vaerydian.Systems.Draw
                     pos = new Vector2(x * m_TileSize, y * m_TileSize);
 
 
-                    if(c_CaveTerrain.TerrainType == TerrainType.CAVE_WALL)
+                    if(c_CaveTerrain.TerrainType == TerrainType_Old.CAVE_WALL)
                         m_SpriteBatch.Draw(m_DepthTex, pos, null, m_DepthMask[countWallNeighbors(x, y, map)], 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
                     else
                         m_SpriteBatch.Draw(m_DepthTex, pos, null, Color.White, 0f, origin, new Vector2(1), SpriteEffects.None, 0f);
@@ -163,7 +163,7 @@ namespace Vaerydian.Systems.Draw
                     if (temp == null)
                         continue;
 
-                    if (temp.TerrainType == TerrainType.CAVE_WALL)
+                    if (temp.TerrainType == TerrainType_Old.CAVE_WALL)
                         count++;
                 }
             }

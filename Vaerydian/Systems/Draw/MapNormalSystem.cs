@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,12 +65,12 @@ namespace Vaerydian.Systems.Draw
             m_MapDebug = e_ECSInstance.TagManager.getEntityByTag("MAP_DEBUG");
             m_Geometry = e_ECSInstance.TagManager.getEntityByTag("GEOMETRY");
 
-            m_RectDict.Add(TerrainType.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
-            m_RectDict.Add(TerrainType.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
+            m_RectDict.Add(TerrainType_Old.CAVE_FLOOR, new Rectangle(19 * 32, 10 * 32, 32, 32));
+            m_RectDict.Add(TerrainType_Old.CAVE_WALL, new Rectangle(18 * 32, 13 * 32, 32, 32));
 
             m_Texture = m_Container.ContentManager.Load<Texture2D>("terrain\\various_normals");
 
-            m_TileSize = m_RectDict[TerrainType.CAVE_WALL].Width;
+            m_TileSize = m_RectDict[TerrainType_Old.CAVE_WALL].Width;
         }
 
         protected override void cleanUp(Bag<Entity> entities) { }

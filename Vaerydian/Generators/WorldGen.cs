@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -173,7 +173,7 @@ namespace Vaerydian.Generators
             map.Seed = seed;
 
             //initialize the map
-            MapHelper.floodInitializeAll( map, TerrainType.NOTHING);
+            MapHelper.floodInitializeAll( map, TerrainType_Old.NOTHING);
 
             w_Perlin.Seed = seed;
             w_Perlin.Frequency = 4;
@@ -227,12 +227,12 @@ namespace Vaerydian.Generators
 
         private static void defineCaves(Terrain terrain, params object[] args)
         {
-            if (terrain.TerrainType == TerrainType.MOUNTAIN_FOOTHILL &&
+            if (terrain.TerrainType == TerrainType_Old.MOUNTAIN_FOOTHILL &&
                terrain.Rainfall >= 0.5f)
             {
                 if (w_Rand.NextDouble() > 0.99)
                 {
-                    terrain.TerrainType = TerrainType.CAVE_ENTRANCE;
+                    terrain.TerrainType = TerrainType_Old.CAVE_ENTRANCE;
                     terrain.ObjectType = ObjectType.TRANSITION;
                 }
             }
@@ -264,17 +264,17 @@ namespace Vaerydian.Generators
             terrain.Height = height > 1f ? 1f : height;
 
             //set base to land
-            terrain.TerrainType = TerrainType.BASE_LAND;
+            terrain.TerrainType = TerrainType_Old.BASE_LAND;
             terrain.Moisture = MOISTURE_LAND;
 
             if (terrain.Height <= HEIGHT_OCEAN)
             {
-                terrain.TerrainType = TerrainType.BASE_OCEAN;
+                terrain.TerrainType = TerrainType_Old.BASE_OCEAN;
                 terrain.Moisture = MOISTURE_OCEAN;
             }
             if (terrain.Height >= HEIGHT_MOUNTAIN)
             {
-                terrain.TerrainType = TerrainType.BASE_MOUNTAIN;
+                terrain.TerrainType = TerrainType_Old.BASE_MOUNTAIN;
                 terrain.Moisture = MOISTURE_MOUNTAIN;
             }
 
@@ -456,152 +456,152 @@ namespace Vaerydian.Generators
 
         private static void buildBiomes( Terrain terrain, params object[] args)
         {
-            if (terrain.TerrainType == TerrainType.BASE_OCEAN)
+            if (terrain.TerrainType == TerrainType_Old.BASE_OCEAN)
             {
                 if (terrain.Temperature <= 0.10 && terrain.Height > -0.15)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_ICE;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_ICE;
                     return;
                 }
                 else if (terrain.Height > 0.085 && terrain.Height <= HEIGHT_OCEAN)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_COAST;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_COAST;
                     return;
                 }
                 else if (terrain.Height > 0.05)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_LITTORAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_LITTORAL;
                     return;
                 }
                 else if (terrain.Height > -0.15)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_SUBLITTORAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_SUBLITTORAL;
                     return;
                 }
                 else
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_ABYSSAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_ABYSSAL;
                     return;
                 }
             }
-            else if (terrain.TerrainType == TerrainType.BASE_LAND)
+            else if (terrain.TerrainType == TerrainType_Old.BASE_LAND)
             {
                 if (((terrain.Temperature >= 0f) && (terrain.Temperature < 0.40f) &&
                     (terrain.Rainfall >= 0) && (terrain.Rainfall < 0.15f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_ARCTIC_DESERT;
+                    terrain.TerrainType = TerrainType_Old.LAND_ARCTIC_DESERT;
                 }
                 else if (((terrain.Temperature >= 0.3f) && (terrain.Temperature < 0.75f) &&
                    (terrain.Rainfall >= 0) && (terrain.Rainfall < 0.15f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_DESERT;
+                    terrain.TerrainType = TerrainType_Old.LAND_DESERT;
                 }
                 else if (((terrain.Temperature >= 0.75f) && (terrain.Temperature <= 1f) &&
                    (terrain.Rainfall >= 0) && (terrain.Rainfall < 0.15f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_SCORCHED;
+                    terrain.TerrainType = TerrainType_Old.LAND_SCORCHED;
                 }
                 else if (((terrain.Temperature >= 0f) && (terrain.Temperature < 0.15f) &&
                     (terrain.Rainfall >= 0.15f) && (terrain.Rainfall < 0.65f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_SNOW_PLAINS;
+                    terrain.TerrainType = TerrainType_Old.LAND_SNOW_PLAINS;
                 }
                 else if (((terrain.Temperature >= 0.15f) && (terrain.Temperature < 0.45f) &&
                     (terrain.Rainfall >= 0.15f) && (terrain.Rainfall < 0.40f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TUNDRA;
+                    terrain.TerrainType = TerrainType_Old.LAND_TUNDRA;
                 }
                 else if (((terrain.Temperature >= 0.15f) && (terrain.Temperature < 0.45f) &&
                    (terrain.Rainfall >= 0.40f) && (terrain.Rainfall < 0.65f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TAIGA;
+                    terrain.TerrainType = TerrainType_Old.LAND_TAIGA;
                 }
                 else if (((terrain.Temperature >= 0.45f) && (terrain.Temperature < 0.80f) &&
                    (terrain.Rainfall >= 0.15f) && (terrain.Rainfall < 0.30f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TEMPERATE_GRASSLAND;
+                    terrain.TerrainType = TerrainType_Old.LAND_TEMPERATE_GRASSLAND;
                 }
                 else if (((terrain.Temperature >= 0.45f) && (terrain.Temperature < 0.80f) &&
                    (terrain.Rainfall >= 0.30f) && (terrain.Rainfall < 0.45f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_SHRUBLAND;
+                    terrain.TerrainType = TerrainType_Old.LAND_SHRUBLAND;
                 }
                 else if (((terrain.Temperature >= 0.80f) && (terrain.Temperature <= 1f) &&
                    (terrain.Rainfall >= 0.15) && (terrain.Rainfall < 0.45f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_SAVANA;
+                    terrain.TerrainType = TerrainType_Old.LAND_SAVANA;
                 }
                 else if (((terrain.Temperature >= 0.45f) && (terrain.Temperature < 0.85f) &&
                    (terrain.Rainfall >= 0.45f) && (terrain.Rainfall < 0.65f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TEMPERATE_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TEMPERATE_FOREST;
                 }
                 else if (((terrain.Temperature >= 0.85f) && (terrain.Temperature <= 1f) &&
                     (terrain.Rainfall >= 0.45f) && (terrain.Rainfall < 0.75f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TROPICAL_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TROPICAL_FOREST;
                 }
                 else if (((terrain.Temperature >= 0f) && (terrain.Temperature < 0.20f) &&
                     (terrain.Rainfall >= 0.65f) && (terrain.Rainfall < 0.85f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_GLACIER;
+                    terrain.TerrainType = TerrainType_Old.LAND_GLACIER;
                 }
                 else if (((terrain.Temperature >= 0.20f) && (terrain.Temperature < 0.50f) &&
                 (terrain.Rainfall >= 0.65f) && (terrain.Rainfall < 0.85f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_MARSH;
+                    terrain.TerrainType = TerrainType_Old.LAND_MARSH;
                 }
                 else if (((terrain.Temperature >= 0.50f) && (terrain.Temperature < 0.85f) &&
                    (terrain.Rainfall >= 0.65f) && (terrain.Rainfall < 0.85f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TEMPERATE_RAIN_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TEMPERATE_RAIN_FOREST;
                 }
                 else if (((terrain.Temperature >= 0f) && (terrain.Temperature < 0.25f) &&
                    (terrain.Rainfall >= 0.85f) && (terrain.Rainfall <= 1f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_HYBOREAN_RIMELAND;
+                    terrain.TerrainType = TerrainType_Old.LAND_HYBOREAN_RIMELAND;
                 }
                 else if (((terrain.Temperature >= 0.25f) && (terrain.Temperature < 0.55f) &&
                     (terrain.Rainfall >= 0.85f) && (terrain.Rainfall <= 1f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_BOG;
+                    terrain.TerrainType = TerrainType_Old.LAND_BOG;
                 }
                 else if (((terrain.Temperature >= 0.55f) && (terrain.Temperature < 0.85f) &&
                    (terrain.Rainfall >= 0.85f) && (terrain.Rainfall <= 1f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_SWAMP;
+                    terrain.TerrainType = TerrainType_Old.LAND_SWAMP;
                 }
                 else if (((terrain.Temperature >= 0.85f) && (terrain.Temperature <= 1f) &&
                     (terrain.Rainfall >= 0.75f) && (terrain.Rainfall <= 1f)))
                 {
-                    terrain.TerrainType = TerrainType.LAND_TROPICAL_RAIN_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TROPICAL_RAIN_FOREST;
                 }
             }
-            else if (terrain.TerrainType == TerrainType.BASE_MOUNTAIN)
+            else if (terrain.TerrainType == TerrainType_Old.BASE_MOUNTAIN)
             {
                 if (terrain.Height >= 0.6f && terrain.Height < 0.7f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_FOOTHILL;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_FOOTHILL;
                 }
                 else if (terrain.Height >= 0.7f && terrain.Height < 0.8f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_LOWLAND;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_LOWLAND;
                 }
                 else if (terrain.Height >= 0.8f && terrain.Height < 0.9f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_HIGHLAND;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_HIGHLAND;
                 }
                 else if (terrain.Height >= 0.9f && terrain.Height < 0.99f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_CASCADE;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_CASCADE;
                 }
                 else if (terrain.Height >= 0.99f && terrain.Height <= 1f && terrain.Rainfall < 0.5f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_DRY_PEAK;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_DRY_PEAK;
                 }
                 else if (terrain.Height >= 0.99f && terrain.Height <= 1f && terrain.Rainfall >= 0.5f)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_SNOWY_PEAK;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_SNOWY_PEAK;
                 }
             }
         }
@@ -610,102 +610,102 @@ namespace Vaerydian.Generators
         private static void buildBiomesOLD( Terrain terrain, params object[] args)
         {
             //check if base type is ocean
-            if (terrain.TerrainType == TerrainType.BASE_OCEAN)
+            if (terrain.TerrainType == TerrainType_Old.BASE_OCEAN)
             {
                 if (terrain.Temperature <= 0.10)// && terrain.Height > -0.25)// && terrain.Rainfall > 0.65)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_ICE;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_ICE;
                     return;
                 }
                 else if (terrain.Height > 0.05)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_LITTORAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_LITTORAL;
                     return;
                 }
                 else if (terrain.Height > -0.15)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_SUBLITTORAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_SUBLITTORAL;
                     return;
                 }
                 else
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_ABYSSAL;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_ABYSSAL;
                     return;
                 }
 
             }//check if base type is land
-            else if (terrain.TerrainType == TerrainType.BASE_LAND)
+            else if (terrain.TerrainType == TerrainType_Old.BASE_LAND)
             {
 
                 if (terrain.Temperature <= 0.15)
                 {
-                    terrain.TerrainType = TerrainType.LAND_TUNDRA;
+                    terrain.TerrainType = TerrainType_Old.LAND_TUNDRA;
                     return;
                 }
                 else if (terrain.Temperature <= 0.25f && terrain.Height < 0.5)
                 {
-                    terrain.TerrainType = TerrainType.LAND_TAIGA;
+                    terrain.TerrainType = TerrainType_Old.LAND_TAIGA;
                     return;
                 }
                 else if (terrain.Temperature > 0.35f && terrain.Rainfall > 0.65f && terrain.Height < 0.2)
                 {
-                    terrain.TerrainType = TerrainType.LAND_SWAMP;
+                    terrain.TerrainType = TerrainType_Old.LAND_SWAMP;
                     return;
                 }
                 else if (terrain.Height > 0.1 && terrain.Height <= 0.125)
                 {
-                    terrain.TerrainType = TerrainType.OCEAN_COAST;
+                    terrain.TerrainType = TerrainType_Old.OCEAN_COAST;
                     return;
                 }
                 else if (terrain.Rainfall <= 0.10)// && terrain.Temperature >.45)
                 {
-                    terrain.TerrainType = TerrainType.LAND_SCORCHED;
+                    terrain.TerrainType = TerrainType_Old.LAND_SCORCHED;
                     return;
                 }
                 else if (terrain.Rainfall > 0.10 && terrain.Rainfall <= 0.25)
                 {
-                    terrain.TerrainType = TerrainType.LAND_SAVANA;
+                    terrain.TerrainType = TerrainType_Old.LAND_SAVANA;
                     return;
                 }
                 else if (terrain.Temperature > 0.7f && terrain.Rainfall > 0.35f)
                 {
-                    terrain.TerrainType = TerrainType.LAND_TROPICAL_RAIN_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TROPICAL_RAIN_FOREST;
                     return;
                 }
                 else if (terrain.Temperature > 0.25f && terrain.Rainfall > 0.25f)
                 {
-                    terrain.TerrainType = TerrainType.LAND_TEMPERATE_FOREST;
+                    terrain.TerrainType = TerrainType_Old.LAND_TEMPERATE_FOREST;
                     return;
                 }
                 else
                 {
-                    terrain.TerrainType = TerrainType.LAND_SAVANA;
+                    terrain.TerrainType = TerrainType_Old.LAND_SAVANA;
                     return;
                 }
 
 
             }//check if base type is mountain
-            else if (terrain.TerrainType == TerrainType.BASE_MOUNTAIN)
+            else if (terrain.TerrainType == TerrainType_Old.BASE_MOUNTAIN)
             {
 
                 if (terrain.Height < 0.6 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.25)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_FOOTHILL;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_FOOTHILL;
                     return;
                 }
                 else if (terrain.Height < 0.7 && terrain.Rainfall > 0.25 && terrain.Temperature > 0.15)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_LOWLAND;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_LOWLAND;
                     return;
                 }
                 else if (terrain.Height >= 0.7 || terrain.Temperature < 0.1)// && terrain.Rainfall > 0.15)
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_CASCADE;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_CASCADE;
                     return;
                 }
                 else
                 {
-                    terrain.TerrainType = TerrainType.MOUNTAIN_HIGHLAND;
+                    terrain.TerrainType = TerrainType_Old.MOUNTAIN_HIGHLAND;
                     return;
                 }
             }

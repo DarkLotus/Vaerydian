@@ -1,4 +1,5 @@
 {
+  "_comment":"Terrain Types are static, they are here to show options availablewwww",
   "terrain_types":{
     "NOTHING":0,
     "BOUNDARY":1,
@@ -37,12 +38,12 @@
     {"name" : "LAND_ARTIC_DESERT", "id": 4, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[204, 204, 255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "LAND_GLACIER", "id": 4, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[153, 255, 204], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "LAND_HYBOREAN_RIMELAND", "id": 4, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[204, 255, 255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAUN_FOOTHIL", "id": 300, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAIN_LOWLAND", "id": 301, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAIN_HIGHLAND", "id": 302, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAIN_CASCADE", "id": 303, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAIN_DRY_PEAK", "id": 304, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
-    {"name" : "MOUNTAIN_SNOWY_PEAK", "id": 305, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAUN_FOOTHIL", "id": 300, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[57, 69, 43], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAIN_LOWLAND", "id": 301, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[79, 95, 59], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAIN_HIGHLAND", "id": 302, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[115, 123, 105], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAIN_CASCADE", "id": 303, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[150, 150, 150], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAIN_DRY_PEAK", "id": 304, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[192, 192, 192], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
+    {"name" : "MOUNTAIN_SNOWY_PEAK", "id": 305, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[221, 221, 221], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "MOUNTAIN_VOLCANO", "id": 306, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
     {"name" : "", "id": 4, "texture" : "terrain\\default", "texture_offset" : [0,0], "color":[255,255,255], "ispassible" : true, "effect": "NONE", "type": "FLOOR" },
   ]

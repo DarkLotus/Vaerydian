@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -111,12 +111,12 @@ namespace Vaerydian.Generators
             //randomly set it
             if (c_Random.Next(100) <= prob)
             {
-                terrain.TerrainType = TerrainType.CAVE_WALL;
+                terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                 terrain.IsBlocking = true;
             }
             else
             {
-                terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                 terrain.IsBlocking = false;
             }
         }
@@ -136,7 +136,7 @@ namespace Vaerydian.Generators
         {
 
             //initialize
-            MapHelper.floodInitializeAll( map, TerrainType.CAVE_WALL);
+            MapHelper.floodInitializeAll( map, TerrainType_Old.CAVE_WALL);
 
             //set the seed
             map.Seed = seed;
@@ -146,7 +146,7 @@ namespace Vaerydian.Generators
             MapHelper.floodAllOp( map, setBlocking); 
 
             //set floor
-            MapHelper.floodFillSpecificOp( map, 1, 1, x - 1, y - 1, TerrainType.CAVE_FLOOR, setNotBlocking);
+            MapHelper.floodFillSpecificOp( map, 1, 1, x - 1, y - 1, TerrainType_Old.CAVE_FLOOR, setNotBlocking);
 
             //randomize map
             MapHelper.floodSpecificOp( map, 1, 1, x - 1, y - 1, setRandom, prob);
@@ -163,30 +163,30 @@ namespace Vaerydian.Generators
 
                 if (h)
                 {
-                    if (MapHelper.countOfType(rX, rY, map, TerrainType.CAVE_WALL) > n)
+                    if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
                     {
-                        terrain.TerrainType = TerrainType.CAVE_WALL;
+                        terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         terrain.IsBlocking = true;
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
-                        terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                        terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         terrain.IsBlocking = false;
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
                 else
                 {
-                    if (MapHelper.countOfType(rX, rY, map, TerrainType.CAVE_WALL) > n)
+                    if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
                     {
-                        terrain.TerrainType = TerrainType.CAVE_FLOOR;
+                        terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         terrain.IsBlocking = false;
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
-                        terrain.TerrainType = TerrainType.CAVE_WALL;
+                        terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         terrain.IsBlocking = true;
                         map.Terrain[rX, rY] = terrain;
                     }

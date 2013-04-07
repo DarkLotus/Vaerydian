@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vaerydian.Utils
 {
-    public static class TerrainType
+    public static class TerrainType_Old
     {
         //default
         public const short NOTHING = 0;

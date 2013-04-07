@@ -16,11 +16,17 @@ using Glimpse.Components;
 using Glimpse.Systems;
 using Glimpse.Input;
 using Microsoft.Xna.Framework.Input;
-using Vaerydian.Utils;
 
 
 namespace Vaerydian.Screens
 {
+	public struct StartDefs{
+		public int Seed;
+		public int SkillLevel;
+		public bool Returning;
+		public MapType MapType;
+	}
+
     class StartScreen : Screen
     {
         private ECSInstance s_ECSInstance;
@@ -193,26 +199,15 @@ namespace Vaerydian.Screens
             //dispose of this screen
             this.ScreenManager.removeScreen(this);
 
-			//read-in json to a dictionary
-			//var jsonDict = s_JsonManager.jsonToDict(s_json);
-			//var startLevel = (Dictionary<string,object>) jsonDict["start_level"];
-			//var mapTypes = (Dictionary<string,object>) jsonDict["map_types"];
-
-			Console.Error.WriteLine(s_json);
-
-			JsonObject json = s_JsonManager.jsonToJsonObject (s_json);
-
             //setup new game parameters
             object[] parameters = new object[GameScreen.GAMESCREEN_PARAM_SIZE];
-			parameters [GameScreen.GAMESCREEN_SEED] = json ["start_level", "seed"].asInt ();  //(int)(long)startLevel["seed"];
-			parameters [GameScreen.GAMESCREEN_SKILLLEVEL] = json ["start_level", "skill_level"].asInt ();//(int)(long)startLevel["skill_level"];
-			parameters [GameScreen.GAMESCREEN_RETURNING] = json ["start_level", "returning"].asBool ();//(bool)startLevel["returning"];
-			parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;//startLevel["last_player_position"];
+			parameters [GameScreen.GAMESCREEN_SEED] = GameConfig.StartDefs.Seed;
+			parameters [GameScreen.GAMESCREEN_SKILLLEVEL] = GameConfig.StartDefs.SkillLevel;
+			parameters [GameScreen.GAMESCREEN_RETURNING] = false;
+			parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
 
-
-			//(short)(long)mapTypes[(string)startLevel["map_type"]]
 			//load the world screen
-			NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,json ["map_types", json ["start_level", "map_type"].asString ()].asShort (),parameters));
+			NewLoadingScreen.Load(this.ScreenManager, true, new GameScreen(true,GameConfig.StartDefs.MapType.ID,parameters));
         }
 
         private void OnMouseClickWorldGen(IControl control, InterfaceArgs args)

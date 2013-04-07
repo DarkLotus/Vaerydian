@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,25 +50,25 @@ namespace Vaerydian.Utils
             //call appropriate generator and generate the map
             switch (type)
             {
-                case MapType.CAVE:
+                case MapType_Old.CAVE:
                     return CaveGen.generate( map, m_Params);
-                case MapType.CITY:
+                case MapType_Old.CITY:
                     break;
-                case MapType.DUNGEON:
+                case MapType_Old.DUNGEON:
 					return DungeonGen.generate(map,m_Params);
-                case MapType.FORT:
+                case MapType_Old.FORT:
                     break;
-                case MapType.OUTPOST:
+                case MapType_Old.OUTPOST:
                     break;
-                case MapType.NEXUS:
+                case MapType_Old.NEXUS:
                     break;
-                case MapType.TOWER:
+                case MapType_Old.TOWER:
                     break;
-                case MapType.TOWN:
+                case MapType_Old.TOWN:
                     break;
-                case MapType.WORLD:
+                case MapType_Old.WORLD:
                     return WorldGen.generate( map, m_Params);
-                case MapType.WILDERNESS:
+                case MapType_Old.WILDERNESS:
 					return ForestGen.generate(map, m_Params);
                 default:
                     return false;//no map created
@@ -86,25 +86,25 @@ namespace Vaerydian.Utils
             {
                 switch (m_CurrentMapType)
                 {
-                    case MapType.CAVE:
+                    case MapType_Old.CAVE:
                         return CaveGen.StatusMessage;
-                    case MapType.CITY:
+                    case MapType_Old.CITY:
                         break;
-                    case MapType.DUNGEON:
+                    case MapType_Old.DUNGEON:
 						return DungeonGen.StatusMessage;
-                    case MapType.FORT:
+                    case MapType_Old.FORT:
                         break;
-                    case MapType.OUTPOST:
+                    case MapType_Old.OUTPOST:
                         break;
-                    case MapType.NEXUS:
+                    case MapType_Old.NEXUS:
                         break;
-                    case MapType.TOWER:
+                    case MapType_Old.TOWER:
                         break;
-                    case MapType.TOWN:
+                    case MapType_Old.TOWN:
                         break;
-                    case MapType.WORLD:
+                    case MapType_Old.WORLD:
                         return WorldGen.StatusMessage;
-					case MapType.WILDERNESS:
+					case MapType_Old.WILDERNESS:
 						return ForestGen.StatusMessage;
                     default:
                         return m_StatusMessage;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -47,7 +47,7 @@ namespace Vaerydian.Factories
 
 			MapMaker.Parameters = parameters;
 
-			MapMaker.generate(map,MapType.DUNGEON);
+			MapMaker.generate(map,MapType_Old.DUNGEON);
 
 			GameMap gameMap = new GameMap(map);
 
@@ -76,7 +76,7 @@ namespace Vaerydian.Factories
 
 			MapMaker.Parameters = parameters;
 
-			MapMaker.generate(map,MapType.WILDERNESS);
+			MapMaker.generate(map,MapType_Old.WILDERNESS);
 
 			GameMap gameMap = new GameMap(map);
 
@@ -116,7 +116,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
             
-            MapMaker.generate(map, MapType.CAVE);
+            MapMaker.generate(map, MapType_Old.CAVE);
 
             GameMap gameMap = new GameMap(map);
 
@@ -147,7 +147,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate( map, MapType.WORLD);
+            MapMaker.generate( map, MapType_Old.WORLD);
 
             GameMap gameMap = new GameMap(map);
 

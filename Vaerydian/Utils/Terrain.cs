@@ -2,11 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 
 
 namespace Vaerydian.Utils
 {
+	public struct TerrainType{
+		public string Name;
+		public short ID;
+	}
+
+	public struct TerrainDef{
+		public string Name;
+		public short ID;
+		public string Texture;
+		public Point TextureOffset;
+		public Color Color;
+		public bool IsPassible;
+		public short Effect;
+		public TerrainType Type;
+	}
+
     /// <summary>
     /// holds information about a cell's terrain
     /// </summary>

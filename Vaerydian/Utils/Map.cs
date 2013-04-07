@@ -5,6 +5,17 @@ using System.Text;
 
 namespace Vaerydian.Utils
 {
+	public struct MapType
+	{
+		public string Name;
+		public short ID;
+	}
+
+	public struct MapDef{
+		public string Name;
+		public short ID;
+	}
+
     public class Map
     {
                 

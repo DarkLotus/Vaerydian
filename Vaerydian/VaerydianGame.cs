@@ -111,6 +111,9 @@ namespace Vaerydian
 
             FontManager.LoadContent();
 
+			if (!GameConfig.loadConfig ())
+				InputManager.YesExit = true;
+
             NewLoadingScreen.Load(screenManager, false, new StartScreen());
 #if DEBUG
             Console.Out.WriteLine("GAME LOADED...");
