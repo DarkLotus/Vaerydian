@@ -123,7 +123,6 @@ namespace Vaerydian.Screens
         public static bool PLAYER_IS_DEAD = false;
 
 		private JsonManager g_JsonManager = new JsonManager();
-		private string g_MapTypeJson;
 
         /// <summary>
         /// current loading message
@@ -265,11 +264,8 @@ namespace Vaerydian.Screens
 
 			Console.Out.WriteLine ("LOADING LEVEL...");
 
-			g_MapTypeJson = g_JsonManager.loadJSON("./Content/json/map_params.v");
-			var map_params = g_JsonManager.jsonToDict(g_MapTypeJson);
-			var world_params = (Dictionary<string,object>) map_params["WORLD"];
-			var cave_params = (Dictionary<string,object>) map_params["CAVE"];
-			JsonObject jo = g_JsonManager.jsonToJsonObject (g_MapTypeJson);
+			string json = g_JsonManager.loadJSON("./Content/json/map_params.v");
+			JsonObject jo = g_JsonManager.jsonToJsonObject (json);
 
 
 			switch (g_MapType) {
