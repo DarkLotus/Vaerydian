@@ -46,9 +46,33 @@ namespace Vaerydian
 			return true;
 		}
 
+		public static Dictionary<string, DamageType> DamageTypes = new Dictionary<string, DamageType>();
+		public static Dictionary<string, DamageDef> DamageDefs = new Dictionary<string, DamageDef>();
+
+		private static bool loadDamage(){
+			DamageTypes.Add ("NONE", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("SLASHING", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("CRUSHING", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("PIERCING", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("ICE", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("FIRE", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("EARTH", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("WIND", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("WATER", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("LIGHT", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("DARK", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("CHAOS", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("ORDER", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("POISON", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("DISEASE", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("ARCANE", new DamageType{Name = "", ID = 0});			
+			DamageTypes.Add ("MENTAL", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("SONIC", new DamageType{Name = "", ID = 0});
+
+			return true;
+		}
 
 		public static Dictionary<string, ActionType> ActionTypes = new Dictionary<string, ActionType>();
-		public static Dictionary<string, DamageType> DamageTypes = new Dictionary<string, DamageType>();
 		public static Dictionary<string, ImpactType> ImpactTypes = new Dictionary<string, ImpactType>();
 		public static Dictionary<string, ModifyType> ModifyTypes = new Dictionary<string, ModifyType>();
 		public static Dictionary<string, ModifyDuration> ModifyDurations = new Dictionary<string, ModifyDuration>();
@@ -67,19 +91,7 @@ namespace Vaerydian
 			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
 			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
 
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+
 
 
 
@@ -102,7 +114,7 @@ namespace Vaerydian
 				}
 
 			}catch(Exception e){
-				Console.Error.WriteLine("" + e.ToString());
+				Console.Error.WriteLine("ERROR: failed to load actions:" + e.ToString());
 				return false;
 			}
 

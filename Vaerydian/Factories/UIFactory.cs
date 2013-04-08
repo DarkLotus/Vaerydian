@@ -228,7 +228,7 @@ namespace Vaerydian.Factories
 
 			//setup background frame
 			window.Frame.BackgroundColor = Color.Black;
-			window.Frame.BackgroundName = "dialog_bubble";
+			window.Frame.BackgroundName = "frame";
 			window.Frame.Transparency = 0.5f;
 
 			//setup close button
@@ -257,12 +257,13 @@ namespace Vaerydian.Factories
 			label.Owner = e;
 			label.Caller = caller;
 			label.ECSInstance = u_EcsInstance;
-			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,window.Form.Bounds.Top + 40, 300,20);
+			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,window.Form.Bounds.Top + 40, dimensions.X - 40,dimensions.Y-60);
+			label.AutoSize = false;
 			label.Text = "stuffs";
 			label.FontName = "General";
 			label.Border = 0;
 			label.TextColor = Color.White;
-			label.BackgroundName = "dialog_bubble";
+			label.BackgroundName = "frame";
 			label.BackgroundColor = Color.Black;
 			label.BackgroundTransparency = 0.5f;
 			label.Updating += labelUpdate;

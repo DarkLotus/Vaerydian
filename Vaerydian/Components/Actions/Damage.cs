@@ -9,6 +9,16 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Actions
 {
+	public struct DamageType{
+		public string Name;
+		public short ID;
+	}
+
+	public struct DamageDef{
+		public string Name;
+		public short ID;
+	}
+
     class Damage : IComponent
     {
         private static int d_TypeID;

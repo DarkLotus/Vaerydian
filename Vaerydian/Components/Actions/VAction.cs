@@ -9,7 +9,7 @@ namespace Vaerydian.Components.Actions
 		public short ID;
 		public ActionType ActionType;
 		public ImpactType ImpactType;
-		public DamageType DamageType;
+		public DamageDef DamageDef;
 		public ModifyType ModifyType;
 		public ModifyDuration ModifyDurtion;
 		public CreateType CreateType;
@@ -22,11 +22,6 @@ namespace Vaerydian.Components.Actions
 	}
 
 	public struct ImpactType{
-		public string Name;
-		public short ID;
-	}
-
-	public struct DamageType{
 		public string Name;
 		public short ID;
 	}
