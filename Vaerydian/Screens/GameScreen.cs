@@ -269,18 +269,20 @@ namespace Vaerydian.Screens
 			var map_params = g_JsonManager.jsonToDict(g_MapTypeJson);
 			var world_params = (Dictionary<string,object>) map_params["WORLD"];
 			var cave_params = (Dictionary<string,object>) map_params["CAVE"];
+			JsonObject jo = g_JsonManager.jsonToJsonObject (g_MapTypeJson);
+
 
 			switch (g_MapType) {
 			case MapType_Old.WORLD:
 				if (g_FirstLoad) {
-					g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
-					                                   (int)(long)world_params["world_params_y"],
-					                                   (int)(long)world_params["world_params_dx"],
-					                                   (int)(long)world_params["world_params_dy"],
-					                                   (float)(double)world_params["world_params_z"],
-					                                   (int)(long)world_params["world_params_xsize"],
-					                                   (int)(long)world_params["world_params_ysize"],
-					                                   (int)g_Parameters [GAMESCREEN_SEED]);
+					g_Map = mapFactory.createWorldMap(jo["WORLD","x"].asInt(),
+					                                  jo["WORLD","y"].asInt(),
+					                                  jo["WORLD","dx"].asInt(),
+					                                  jo["WORLD","dy"].asInt(),
+					                                  jo["WORLD","z"].asFloat(),
+					                                  jo["WORLD","xsize"].asInt(),
+					                                  jo["WORLD","ysize"].asInt(),
+					                                  (int) g_Parameters[GAMESCREEN_SEED]);
 					GameSession.WorldMap = g_Map;
 				} else {
 					g_Map = mapFactory.recreateWorldMap (GameSession.WorldMap);
@@ -288,13 +290,13 @@ namespace Vaerydian.Screens
 				}
 				break;
 			case MapType_Old.CAVE:
-				g_Map = mapFactory.createRandomCaveMap ((int)(long)cave_params["cave_params_x"],
-				                                        (int)(long)cave_params["cave_params_y"],
-				                                        (int)(long)cave_params["cave_params_prob"],
-				                                        (bool)cave_params["cave_params_cell_op_spec"],
-				                                        (int)(long)cave_params["cave_params_iter"],
-				                                        (int)(long)cave_params["cave_params_neighbors"],
-				                                        (int)g_Parameters [GAMESCREEN_SEED]);
+				g_Map = mapFactory.createRandomCaveMap(jo["CAVE","x"].asInt (),
+				                                       jo["CAVE","y"].asInt (),
+				                                       jo["CAVE","prob"].asInt (),
+				                                       jo["CAVE","cell_op_spec"].asBool (),
+				                                       jo["CAVE","iter"].asInt (),
+				                                       jo["CAVE","neighbors"].asInt (),
+				                                       (int)g_Parameters[GAMESCREEN_SEED]);
 				break;
 			case MapType_Old.WILDERNESS:
 				g_Map = mapFactory.createRandomForestMap(100,
@@ -308,14 +310,14 @@ namespace Vaerydian.Screens
 				g_Map = mapFactory.createRandomDungeonMap(100,100,200, (int) g_Parameters[GAMESCREEN_SEED]);
 				break;
 			default:
-				g_Map = mapFactory.createWorldMap ((int)(long)world_params["world_params_x"], 
-					                               (int)(long)world_params["world_params_y"],
-					                               (int)(long)world_params["world_params_dx"],
-					                               (int)(long)world_params["world_params_dy"],
-					                               (float)(double)world_params["world_params_z"],
-					                               (int)(long)world_params["world_params_xsize"],
-					                               (int)(long)world_params["world_params_ysize"],
-					                               (int)g_Parameters [GAMESCREEN_SEED]);
+				g_Map = mapFactory.createWorldMap(jo["WORLD","x"].asInt(),
+				                                  jo["WORLD","y"].asInt(),
+				                                  jo["WORLD","dx"].asInt(),
+				                                  jo["WORLD","dy"].asInt(),
+				                                  jo["WORLD","z"].asFloat(),
+				                                  jo["WORLD","xsize"].asInt(),
+				                                  jo["WORLD","ysize"].asInt(),
+				                                  (int) g_Parameters[GAMESCREEN_SEED]);
 				break;
 			}
 
