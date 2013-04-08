@@ -19,6 +19,12 @@ namespace Vaerydian
 			if (!GameConfig.loadEffects ())
 				return false;
 
+			if (!GameConfig.loadDamageTypes ())
+				return false;
+
+			if (!GameConfig.LoadDamageDefs ())
+				return false;
+
 			if (!GameConfig.loadTerrainTypes ())
 				return false;
 
@@ -47,28 +53,54 @@ namespace Vaerydian
 		}
 
 		public static Dictionary<string, DamageType> DamageTypes = new Dictionary<string, DamageType>();
+
+		private static bool loadDamageTypes(){
+			DamageTypes.Add ("NONE", new DamageType{Name="NONE",ID=0});
+			DamageTypes.Add ("SLASHING", new DamageType{Name="SLASHING",ID=1});
+			DamageTypes.Add ("CRUSHING", new DamageType{Name="CRUSHING",ID=2});
+			DamageTypes.Add ("PIERCING", new DamageType{Name="PIERCING",ID=3});
+			DamageTypes.Add ("ICE", new DamageType{Name="ICE",ID=4});
+			DamageTypes.Add ("FIRE", new DamageType{Name="FIRE",ID=5});
+			DamageTypes.Add ("EARTH", new DamageType{Name="EARTH",ID=6});
+			DamageTypes.Add ("WIND", new DamageType{Name="WIND",ID=7});
+			DamageTypes.Add ("WATER", new DamageType{Name="WATER",ID=8});
+			DamageTypes.Add ("LIGHT", new DamageType{Name="LIGHT",ID=9});
+			DamageTypes.Add ("DARK", new DamageType{Name="DARK",ID=10});
+			DamageTypes.Add ("CHAOS", new DamageType{Name="CHAOS",ID=11});
+			DamageTypes.Add ("ORDER", new DamageType{Name="ORDER",ID=12});
+			DamageTypes.Add ("POISON", new DamageType{Name="POISON",ID=13});
+			DamageTypes.Add ("DISASE", new DamageType{Name="DISASE",ID=14});
+			DamageTypes.Add ("ARCANE", new DamageType{Name="ARCANE",ID=15});
+			DamageTypes.Add ("MENTAL", new DamageType{Name="MENTAL",ID=16});
+			DamageTypes.Add ("SONIC", new DamageType{Name="SONIC",ID=17});
+
+			return true;
+		}
+
 		public static Dictionary<string, DamageDef> DamageDefs = new Dictionary<string, DamageDef>();
 
-		private static bool loadDamage(){
-			DamageTypes.Add ("NONE", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("SLASHING", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("CRUSHING", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("PIERCING", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("ICE", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("FIRE", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("EARTH", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("WIND", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("WATER", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("LIGHT", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("DARK", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("CHAOS", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("ORDER", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("POISON", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("DISEASE", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("ARCANE", new DamageType{Name = "", ID = 0});			
-			DamageTypes.Add ("MENTAL", new DamageType{Name = "", ID = 0});
-			DamageTypes.Add ("SONIC", new DamageType{Name = "", ID = 0});
-
+		private static bool LoadDamageDefs(){
+			try{
+				string json = g_JM.loadJSON("./Content/json/damage.v");
+				JsonObject jo = g_JM.jsonToJsonObject(json);
+				
+				List<Dictionary<string,object>> dDefs = jo ["damage_defs"].asList<Dictionary<string,object>> ();
+				
+				foreach(Dictionary<string,object> dict in dDefs){
+					jo = new JsonObject(dict);
+					
+					DamageDef dDef;
+					dDef.Name = jo["name"].asString();
+					dDef.ID = jo["id"].asShort();
+					
+					DamageDefs.Add(dDef.Name,dDef);
+				}
+				
+			}catch(Exception e){
+				Console.Error.WriteLine("ERROR: failed to load damage defs:\n" + e.ToString());
+				return false;
+			}
+			
 			return true;
 		}
 
@@ -105,7 +137,7 @@ namespace Vaerydian
 				string json = g_JM.loadJSON("./Content/json/actions.v");
 				JsonObject jo = g_JM.jsonToJsonObject(json);
 
-				List<Dictionary<string,object>> aDefs = jo ["actiop_defs"].asList<Dictionary<string,object>> ();
+				List<Dictionary<string,object>> aDefs = jo ["action_defs"].asList<Dictionary<string,object>> ();
 
 				foreach(Dictionary<string,object> dict in aDefs){
 					jo = new JsonObject(dict);
