@@ -37,15 +37,7 @@ namespace Vaerydian.Components.Actions
             i_TypeID = typeId;
         }
 
-        private SupportedInteractions i_SupportedInteractions = new SupportedInteractions();
-
-        public SupportedInteractions SupportedInteractions
-        {
-            get { return i_SupportedInteractions; }
-            set { i_SupportedInteractions = value; }
-        }
-
-
-
+        public SupportedInteractions SupportedInteractions = new SupportedInteractions();
+		        
     }
 }

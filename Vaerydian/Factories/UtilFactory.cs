@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +58,7 @@ namespace Vaerydian.Factories
         /// <param name="type"></param>
         /// <param name="target"></param>
         /// <param name="pos"></param>
-        public void createDirectDamage(int amount, DamageType type, Entity target,Position pos)
+        public void createDirectDamage(int amount, DamageType_Old type, Entity target,Position pos)
         {
             Entity e = u_EcsInstance.create();
 

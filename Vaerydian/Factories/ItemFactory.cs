@@ -34,7 +34,7 @@ namespace Vaerydian.Factories
 
             Item item = new Item("TestMeleeWeapon", 0, 100);
 
-            Weapon weapon = new Weapon(10, 5, 0, 48, WeaponType.Melee, DamageType.Common);
+            Weapon weapon = new Weapon(10, 5, 0, 48, WeaponType.Melee, DamageType_Old.Common);
             weapon.MeleeWeaponType = MeleeWeaponType.Sword;
 
             i_EcsInstance.EntityManager.addComponent(e, item);
@@ -50,7 +50,7 @@ namespace Vaerydian.Factories
 
             Item item = new Item("TestRangedWeapon", 0, 100);
 
-            Weapon weapon = new Weapon(5, 5, 100, 300, WeaponType.Ranged, DamageType.Common);
+            Weapon weapon = new Weapon(5, 5, 100, 300, WeaponType.Ranged, DamageType_Old.Common);
             weapon.RangedWeaponType = RangedWeaponType.Blaster;
 
             i_EcsInstance.EntityManager.addComponent(e, item);

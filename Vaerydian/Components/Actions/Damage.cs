@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,11 +56,11 @@ namespace Vaerydian.Components.Actions
             set { d_DamageClass = value; }
         }
 
-        private DamageType d_DamageType;
+        private DamageType_Old d_DamageType;
         /// <summary>
         /// type of damage
         /// </summary>
-        public DamageType DamageType
+        public DamageType_Old DamageType
         {
             get { return d_DamageType; }
             set { d_DamageType = value; }

@@ -17,7 +17,7 @@ namespace Vaerydian
 
 		public override void initialize ()
 		{
-			a_ActionMapper = new ComponentMapper(new Action(), e_ECSInstance);
+			a_ActionMapper = new ComponentMapper (new VAction (), e_ECSInstance);
 		}
 
 		protected override void preLoadContent (Bag<Entity> entities)
@@ -27,7 +27,7 @@ namespace Vaerydian
 
 		protected override void process (Entity entity)
 		{
-			Action action = (Action) a_ActionMapper.get(entity);
+			VAction action = (VAction) a_ActionMapper.get(entity);
 
 			action.doAction();
 		}
@@ -40,7 +40,7 @@ namespace Vaerydian
 		protected override void cleanUp (Bag<Entity> entities)
 		{
 			for(int i = 0; i < entities.Size();i++){
-				Action action = (Action) a_ActionMapper.get (entities[i]);
+				VAction action = (VAction) a_ActionMapper.get (entities[i]);
 				action.removeActions();
 			}
 		}

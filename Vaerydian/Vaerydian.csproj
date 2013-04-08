@@ -145,7 +145,6 @@
     <Compile Include="Utils\Bone.cs" />
     <Compile Include="Utils\Character.cs" />
     <Compile Include="Utils\CollisionDetect.cs" />
-    <Compile Include="Utils\DamageType.cs" />
     <Compile Include="Utils\HeapCell.cs" />
     <Compile Include="Utils\KeyFrame.cs" />
     <Compile Include="Utils\Polygon.cs" />
@@ -161,7 +160,6 @@
     <Compile Include="VaerydianGame.cs" />
     <Compile Include="UI\BasicWindow.cs" />
     <Compile Include="Utils\JsonManager.cs" />
-    <Compile Include="Components\Actions\Action.cs" />
     <Compile Include="Systems\Update\ActionSystem.cs" />
     <Compile Include="Utils\ActionUtils.cs" />
     <Compile Include="Generators\CaveGen.cs" />
@@ -178,6 +176,8 @@
     <Compile Include="GameConfig.cs" />
     <Compile Include="Utils\TerrainType_Old.cs" />
     <Compile Include="Utils\MapType_Old.cs" />
+    <Compile Include="Utils\DamageType_Old.cs" />
+    <Compile Include="Components\Actions\VAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

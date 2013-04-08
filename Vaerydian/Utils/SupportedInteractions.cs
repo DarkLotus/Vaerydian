@@ -14,24 +14,15 @@ namespace Vaerydian.Utils
     }*/
     
     
-    public class SupportedInteractions
+    public struct SupportedInteractions
     {
-        public SupportedInteractions() { }
-
-        public bool PROJECTILE_COLLIDABLE = false;
-
-        public bool DESTROYABLE = false;
-
-        public bool ATTACKABLE = false;
-
-        public bool MELEE_ACTIONABLE = false;
-
-        public bool AWARDS_VICTORY = false;
-
-        public bool MAY_RECEIVE_VICTORY = false;
-
-        public bool CAUSES_ADVANCEMENT = false;
-
-        public bool MAY_ADVANCE = false;
+        public bool PROJECTILE_COLLIDABLE;
+        public bool DESTROYABLE;
+        public bool ATTACKABLE;
+        public bool MELEE_ACTIONABLE;
+        public bool AWARDS_VICTORY;
+        public bool MAY_RECEIVE_VICTORY;
+        public bool CAUSES_ADVANCEMENT;
+        public bool MAY_ADVANCE;
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +23,7 @@ namespace Vaerydian.Components.Items
         /// <param name="max">weapon's max range</param>
         /// <param name="weaponType">type of weapon</param>
         /// <param name="damageType">weapon's damage type</param>
-        public Weapon(int lethality, int speed, float min, float max, WeaponType weaponType, DamageType damageType)
+        public Weapon(int lethality, int speed, float min, float max, WeaponType weaponType, DamageType_Old damageType)
         {
             w_Lethality = lethality;
             w_MinRange = min;
@@ -91,12 +91,12 @@ namespace Vaerydian.Components.Items
             set { w_MaxRange = value; }
         }
 
-        private DamageType w_DamageType;
+        private DamageType_Old w_DamageType;
 
         /// <summary>
         /// damage type of weapon
         /// </summary>
-        public DamageType DamageType
+        public DamageType_Old DamageType
         {
             get { return w_DamageType; }
             set { w_DamageType = value; }

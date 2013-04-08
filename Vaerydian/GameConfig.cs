@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 
 using Vaerydian.Utils;
 using Vaerydian.Screens;
+using Vaerydian.Components.Actions;
 
 namespace Vaerydian
 {
@@ -41,6 +42,70 @@ namespace Vaerydian
 		private static bool loadEffects(){
 
 			Effects.Add ("NONE", 0);
+
+			return true;
+		}
+
+
+		public static Dictionary<string, ActionType> ActionTypes = new Dictionary<string, ActionType>();
+		public static Dictionary<string, DamageType> DamageTypes = new Dictionary<string, DamageType>();
+		public static Dictionary<string, ImpactType> ImpactTypes = new Dictionary<string, ImpactType>();
+		public static Dictionary<string, ModifyType> ModifyTypes = new Dictionary<string, ModifyType>();
+		public static Dictionary<string, ModifyDuration> ModifyDurations = new Dictionary<string, ModifyDuration>();
+		public static Dictionary<string, CreateType> CreateTypes = new Dictionary<string, CreateType>();
+		public static Dictionary<string, DestoryType> DestroyTypes = new Dictionary<string, DestoryType>();
+
+		private static bool loadActions(){
+			ActionTypes.Add ("DAMAGE", new ActionType{Name = "", ID = 0});
+			ActionTypes.Add ("MODIFY", new ActionType{Name = "", ID = 0});
+			ActionTypes.Add ("CREATE", new ActionType{Name = "", ID = 0});
+			ActionTypes.Add ("DESTROY", new ActionType{Name = "", ID = 0});
+
+			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
+			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
+			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
+			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
+			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
+
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+			DamageTypes.Add ("", new DamageType{Name = "", ID = 0});
+
+
+
+			return true;
+		}
+
+		public static Dictionary<string, ActionDef> ActionDefs = new Dictionary<string, ActionDef>();
+
+		private static bool loadActionDefs(){
+			try{
+				string json = g_JM.loadJSON("./Content/json/actions.v");
+				JsonObject jo = g_JM.jsonToJsonObject(json);
+
+				List<Dictionary<string,object>> aDefs = jo ["actiop_defs"].asList<Dictionary<string,object>> ();
+
+				foreach(Dictionary<string,object> dict in aDefs){
+					jo = new JsonObject(dict);
+
+					ActionDef aDef;
+				}
+
+			}catch(Exception e){
+				Console.Error.WriteLine("" + e.ToString());
+				return false;
+			}
+
 
 			return true;
 		}
