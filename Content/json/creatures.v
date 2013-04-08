@@ -1,8 +1,8 @@
 {
-  "effect_defs":[
+  "creature_defs":[
     {
       "name":"NONE",
-      "id": 0
+      "id":0
     }
   ]
 }

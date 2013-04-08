@@ -14,7 +14,7 @@
   },
   "damage_types" : {
     "NONE": 0,
-	"SLASHING":1,
+    "SLASHING":1,
     "CRUSHING":2,
     "PIERCING":3,
     "ICE": 4,
@@ -29,7 +29,8 @@
     "POISON": 13,
     "DISEASE": 14,
     "ARCANE": 15,
-    "MENTAL": 13
+    "MENTAL": 16,
+    "SONIC" : 17
   },
   "modify_types" : {
     "NONE": 0,
@@ -60,9 +61,49 @@
     "FEATURE" : 4
   },
   "action_defs":[
-    {"name":"NONE","id":0, "action_type:":"", "impact_type":"", "damage_type":"", "modify_type":"", "modify_duration": "", "creation_type":"", "destroy_type":""},
-    {"name":"PLAYER_MELEE","id":0, "action_type:":"DAMAGE", "impact_type":"CONE", "damage_type":"SLASHING", "modify_type":"NONE", "modify_duration": "NONE", "creation_type":"NONE", "destroy_type":"NONE"},
-    {"name":"PLAYER_RANGED","id":0, "action_type:":"DAMAGE", "impact_type":"DIRECT", "damage_type":"", "modify_type":"", "modify_duration": "", "creation_type":"", "destroy_type":""},
-    {"name":"BAT_SONIC","id":0, "action_type:":"DAMAGE", "impact_type":"DIRECT", "damage_type":"", "modify_type":"", "modify_duration": "", "creation_type":"", "destroy_type":""},
+    {
+      "name":"NONE",
+      "id":0,
+      "action_type:":"NONE",
+      "impact_type":"NONE",
+      "damage_type":"NONE",
+      "modify_type":"NONE",
+      "modify_duration": "NONE",
+      "creation_type":"NONE",
+      "destroy_type":"NONE"
+    },
+    {
+      "name":"PLAYER_MELEE",
+      "id":0,
+      "action_type:":"DAMAGE",
+      "impact_type":"CONE",
+      "damage_type":"SLASHING",
+      "modify_type":"NONE",
+      "modify_duration": "NONE",
+      "creation_type":"NONE",
+      "destroy_type":"NONE"
+    },
+    {
+      "name":"PLAYER_RANGED",
+      "id":0,
+      "action_type:":"DAMAGE",
+      "impact_type":"DIRECT",
+      "damage_type":"PIERCING",
+      "modify_type":"NONE",
+      "modify_duration": "NONE",
+      "creation_type":"NONE",
+      "destroy_type":"NONE"
+    },
+    {
+      "name":"BAT_SONIC",
+      "id":0,
+      "action_type:":"DAMAGE",
+      "impact_type":"DIRECT",
+      "damage_type":"SONIC",
+      "modify_type":"NONE",
+      "modify_duration": "NONE",
+      "creation_type":"NONE",
+      "destroy_type":"NONE"
+    }
   ]
 }

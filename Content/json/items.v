@@ -1,0 +1,11 @@
+{
+  "item_type":{
+  },
+  "item_defs":[
+    { 
+      "name":"NONE",
+      "id":0,
+      "item_type":"NONE"
+    }
+  ]
+}
