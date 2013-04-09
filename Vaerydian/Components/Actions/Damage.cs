@@ -17,6 +17,7 @@ namespace Vaerydian.Components.Actions
 	public struct DamageDef{
 		public string Name;
 		public short ID;
+		public DamageType DamageType;
 	}
 
     class Damage : IComponent
