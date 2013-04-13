@@ -6,25 +6,21 @@ using System.Collections.Generic;
 
 namespace Vaerydian
 {
-	public class ActionFactory
+	public static class ActionFactory
 	{
-		private ECSInstance a_ECSInstance;
+		public static ECSInstance ECSInstance;
 		
-		public ActionFactory(ECSInstance ecsInstance)
-		{
-			a_ECSInstance = ecsInstance;
-		}
 
-		public Entity createAction(ActionDef aDef){
+		public static Entity createAction(ActionDef aDef){
 
-			Entity e = a_ECSInstance.create ();
+			Entity e = ActionFactory.ECSInstance.create ();
 
 			VAction action = new VAction ();
 			action.ActionDef = aDef;
 
-			a_ECSInstance.EntityManager.addComponent (e, action);
+			ActionFactory.ECSInstance.EntityManager.addComponent (e, action);
 
-			a_ECSInstance.refresh (e);
+			ActionFactory.ECSInstance.refresh (e);
 
 			return e;
 		}

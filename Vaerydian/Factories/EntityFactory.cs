@@ -29,52 +29,41 @@ using Vaerydian.Sessions;
 
 namespace Vaerydian.Factories
 {
-    class EntityFactory
+    static class EntityFactory
     {
-        private ECSInstance e_EcsInstance;
-        private static GameContainer e_Container;
-        private Random rand = new Random();
+        public static ECSInstance ECSInstance;
+        public static GameContainer GameContainer;
+        private static Random rand = new Random();
 
-        public EntityFactory(ECSInstance ecsInstance, GameContainer container)
+        public static Entity createPlayer(int skillLevel)
         {
-            e_EcsInstance = ecsInstance;
-            e_Container = container;
-        }
+            Entity e = ECSInstance.create();
+            ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
+            //ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
+			ECSInstance.EntityManager.addComponent(e, new Velocity(4f));
+			ECSInstance.EntityManager.addComponent(e, new Controllable());
+            //ECSInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
 
-        public EntityFactory(ECSInstance ecsInstance) 
-        {
-            e_EcsInstance = ecsInstance;
-        }
-
-        public Entity createPlayer(int skillLevel)
-        {
-            Entity e = e_EcsInstance.create();
-            e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
-            //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
-            e_EcsInstance.EntityManager.addComponent(e, new Controllable());
-            //e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
-
-            AnimationFactory af = new AnimationFactory(e_EcsInstance);
-            e_EcsInstance.EntityManager.addComponent(e, af.createPlayerAnimation());
-            e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
-            //e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
-            e_EcsInstance.EntityManager.addComponent(e, new Heading());
-            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
-            e_EcsInstance.EntityManager.addComponent(e, new Transform());
+            
+			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation());
+			ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
+            //ECSInstance.EntityManager.addComponent(e, new MapCollidable());
+			ECSInstance.EntityManager.addComponent(e, new Heading());
+			ECSInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
             info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
             info.CreatureVariationGroup = CreatureVariationGroup.None;
             info.CreatureUniqueGroup = CreatureUniqueGroup.None;
             info.Name = "PLAYER";
-            e_EcsInstance.EntityManager.addComponent(e, info);
+			ECSInstance.EntityManager.addComponent(e, info);
 
             //create life
             Life life = new Life();
             life.IsAlive = true;
             life.DeathLongevity = 1000;
-            e_EcsInstance.EntityManager.addComponent(e, life);
+			ECSInstance.EntityManager.addComponent(e, life);
 
             //create interactions
             Interactable interact = new Interactable();
@@ -84,11 +73,11 @@ namespace Vaerydian.Factories
             interact.SupportedInteractions.MAY_ADVANCE = true;
             interact.SupportedInteractions.CAUSES_ADVANCEMENT = false;
             interact.SupportedInteractions.AWARDS_VICTORY = false;
-            e_EcsInstance.EntityManager.addComponent(e, interact);
+			ECSInstance.EntityManager.addComponent(e, interact);
 
             //create test equipment
-            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
-            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+            ItemFactory iFactory = new ItemFactory(ECSInstance);
+			ECSInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
@@ -96,7 +85,7 @@ namespace Vaerydian.Factories
             knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Bat, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
-            e_EcsInstance.EntityManager.addComponent(e, knowledges);
+			ECSInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
             Attributes attributes = new Attributes();
@@ -107,13 +96,13 @@ namespace Vaerydian.Factories
             attributes.AttributeSet.Add(AttributeType.Perception, skillLevel);
             attributes.AttributeSet.Add(AttributeType.Personality, skillLevel);
             attributes.AttributeSet.Add(AttributeType.Quickness, skillLevel);
-            e_EcsInstance.EntityManager.addComponent(e, attributes);
+			ECSInstance.EntityManager.addComponent(e, attributes);
 
             //create health
 			Health health = new Health(attributes.AttributeSet[AttributeType.Endurance] * 5);// new Health(5000);//
 			health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
             health.RecoveryRate = 1000;
-            e_EcsInstance.EntityManager.addComponent(e, health);
+			ECSInstance.EntityManager.addComponent(e, health);
 
             //setup skills
             Skills skills = new Skills();
@@ -123,7 +112,7 @@ namespace Vaerydian.Factories
             skills.SkillSet.Add(SkillName.Avoidance, skill);
             skill = new Skill("Melee", skillLevel, SkillType.Offensive);
             skills.SkillSet.Add(SkillName.Melee, skill);
-            e_EcsInstance.EntityManager.addComponent(e, skills);
+			ECSInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Player);
             Faction enemy = new Faction(-10, FactionType.Wilderness);
@@ -133,7 +122,7 @@ namespace Vaerydian.Factories
             factions.OwnerFaction = faction;
             factions.KnownFactions.Add(enemy.FactionType, enemy);
             factions.KnownFactions.Add(ally.FactionType, ally);
-            e_EcsInstance.EntityManager.addComponent(e, factions);
+			ECSInstance.EntityManager.addComponent(e, factions);
 
             GameSession.PlayerState = new PlayerState();
             GameSession.PlayerState.Attributes = attributes;
@@ -145,29 +134,28 @@ namespace Vaerydian.Factories
             GameSession.PlayerState.Life = life;
             GameSession.PlayerState.Skills = skills;
 
-            e_EcsInstance.TagManager.tagEntity("PLAYER", e);
+			ECSInstance.TagManager.tagEntity("PLAYER", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
 
 			return e;
 
         }
 
-        public Entity recreatePlayer(PlayerState playerHolder, Position position)
+        public static Entity recreatePlayer(PlayerState playerHolder, Position position)
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, position);
-            //e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(4f));
-            e_EcsInstance.EntityManager.addComponent(e, new Controllable());
-            //e_EcsInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
-            AnimationFactory af = new AnimationFactory(e_EcsInstance);
-            e_EcsInstance.EntityManager.addComponent(e, af.createPlayerAnimation()); e_EcsInstance.EntityManager.addComponent(e, new CameraFocus(75));
-            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
-            e_EcsInstance.EntityManager.addComponent(e, new Heading());
-            //e_EcsInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
-            e_EcsInstance.EntityManager.addComponent(e, new Transform());
+			ECSInstance.EntityManager.addComponent(e, position);
+            //ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
+			ECSInstance.EntityManager.addComponent(e, new Velocity(4f));
+			ECSInstance.EntityManager.addComponent(e, new Controllable());
+            //ECSInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
+			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation()); ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
+			ECSInstance.EntityManager.addComponent(e, new MapCollidable());
+			ECSInstance.EntityManager.addComponent(e, new Heading());
+            //ECSInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             /* LIKELY NOT NEEDED
             GameSession.PlayerState.Attributes.setEntityId(e.Id);
@@ -180,95 +168,95 @@ namespace Vaerydian.Factories
             GameSession.PlayerState.Skills.setEntityId(e.Id);
             */
 
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Information);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Life);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Interactable);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Information);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Life);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Interactable);
 
-            ItemFactory iFactory = new ItemFactory(e_EcsInstance);
-            e_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+            ItemFactory iFactory = new ItemFactory(ECSInstance);
+			ECSInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Knowledges);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Attributes);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Health);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Skills);
-            e_EcsInstance.EntityManager.addComponent(e, playerHolder.Factions);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Knowledges);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Attributes);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Health);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Skills);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Factions);
 
-            e_EcsInstance.TagManager.tagEntity("PLAYER", e);
+			ECSInstance.TagManager.tagEntity("PLAYER", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
 
             return e;
         }
 
-        public void createCamera()
+        public static void createCamera()
         {
-            Entity e = e_EcsInstance.create();
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(5f));
-            //e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(576, 360f), new Vector2(1152, 720)));
-            e_EcsInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(0, 0), new Vector2(e_Container.GraphicsDevice.Viewport.Width, e_Container.GraphicsDevice.Viewport.Height)));
+			Entity e = ECSInstance.create();
+			ECSInstance.EntityManager.addComponent(e, new Velocity(5f));
+            //ECSInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(576, 360f), new Vector2(1152, 720)));
+			ECSInstance.EntityManager.addComponent(e, new ViewPort(new Vector2(0, 0), new Vector2(EntityFactory.GameContainer.GraphicsDevice.Viewport.Width, EntityFactory.GameContainer.GraphicsDevice.Viewport.Height)));
 
-            e_EcsInstance.TagManager.tagEntity("CAMERA", e);
+			ECSInstance.TagManager.tagEntity("CAMERA", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
            
         }
 
-        public void createMousePointer()
+        public static void createMousePointer()
         {
-            Entity e = e_EcsInstance.create();
-            e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
-            e_EcsInstance.EntityManager.addComponent(e, new MousePosition());
-            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 75, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
-            e_EcsInstance.EntityManager.addComponent(e, new Transform());
+			Entity e = ECSInstance.create();
+			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
+			ECSInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
+			ECSInstance.EntityManager.addComponent(e, new MousePosition());
+			ECSInstance.EntityManager.addComponent(e, createLight(true, 75, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
+			ECSInstance.EntityManager.addComponent(e, new Transform());
 
-            e_EcsInstance.TagManager.tagEntity("MOUSE", e);
+			ECSInstance.TagManager.tagEntity("MOUSE", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
         }
 
  		
-        public void createMapDebug()
+        public static void createMapDebug()
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, new MapDebug());
+			ECSInstance.EntityManager.addComponent(e, new MapDebug());
 
-            e_EcsInstance.TagManager.tagEntity("MAP_DEBUG", e);
+			ECSInstance.TagManager.tagEntity("MAP_DEBUG", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
 
         }
 
 
-        public Entity createGeometryMap()
+        public static Entity createGeometryMap()
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
             GeometryMap geometry = new GeometryMap();
 
-            PresentationParameters pp = e_Container.SpriteBatch.GraphicsDevice.PresentationParameters;
+            PresentationParameters pp = GameContainer.SpriteBatch.GraphicsDevice.PresentationParameters;
             int width = pp.BackBufferWidth;
             int height = pp.BackBufferHeight;
             SurfaceFormat format = pp.BackBufferFormat;
 
-            geometry.ColorMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
-            geometry.NormalMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
-            geometry.DepthMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height);
-            geometry.ShadingMap = new RenderTarget2D(e_Container.SpriteBatch.GraphicsDevice, width, height, false, format, pp.DepthStencilFormat, pp.MultiSampleCount, RenderTargetUsage.DiscardContents);
+            geometry.ColorMap = new RenderTarget2D(GameContainer.SpriteBatch.GraphicsDevice, width, height);
+            geometry.NormalMap = new RenderTarget2D(GameContainer.SpriteBatch.GraphicsDevice, width, height);
+            geometry.DepthMap = new RenderTarget2D(GameContainer.SpriteBatch.GraphicsDevice, width, height);
+            geometry.ShadingMap = new RenderTarget2D(GameContainer.SpriteBatch.GraphicsDevice, width, height, false, format, pp.DepthStencilFormat, pp.MultiSampleCount, RenderTargetUsage.DiscardContents);
 
             geometry.AmbientColor = new Vector4(.1f, .1f, .1f, .1f);
 
-            e_EcsInstance.EntityManager.addComponent(e, geometry);
+			ECSInstance.EntityManager.addComponent(e, geometry);
 
-            e_EcsInstance.TagManager.tagEntity("GEOMETRY", e);
+			ECSInstance.TagManager.tagEntity("GEOMETRY", e);
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
 
             return e;
         }
 
-        public Light createLight(bool enabled, int radius, Vector3 position, float power, Vector4 color)
+        public static Light createLight(bool enabled, int radius, Vector3 position, float power, Vector4 color)
         {
             Light light = new Light();
 
@@ -281,122 +269,122 @@ namespace Vaerydian.Factories
             return light;
         }
 
-        public void createStandaloneLight(bool enabled, int radius, Vector3 position, float power, Vector4 color)
+        public static void createStandaloneLight(bool enabled, int radius, Vector3 position, float power, Vector4 color)
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, createLight(enabled, radius, position, power, color));
-            e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(position.X, position.Y),Vector2.Zero));
+			ECSInstance.EntityManager.addComponent(e, createLight(enabled, radius, position, power, color));
+			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(position.X, position.Y),Vector2.Zero));
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
         }
 
-        public void createRandomLight()
+        public static void createRandomLight()
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
             
 
             Vector3 pos = new Vector3(rand.Next(100*25), rand.Next(100*25), 50);
 
             //1152, 720
-            e_EcsInstance.EntityManager.addComponent(e, createLight(true, 
+			ECSInstance.EntityManager.addComponent(e, createLight(true, 
                                                         rand.Next(100)+100,
                                                         pos, 
                                                         (float)rand.NextDouble()*.5f+0.5f,
                                                         new Vector4((float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble())));
-            e_EcsInstance.EntityManager.addComponent(e, new Position(new Vector2(pos.X, pos.Y), Vector2.Zero));
+			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(pos.X, pos.Y), Vector2.Zero));
 
-            e_EcsInstance.refresh(e);
+			ECSInstance.refresh(e);
 
         }
 
-        public void createSonicProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
+        public static void createSonicProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
         {
-            Entity e = e_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
-            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
+			ECSInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
+			ECSInstance.EntityManager.addComponent(e, new Heading(heading));
             Sprite sprite = new Sprite("sonic_attack", "sonic_attack", 32, 32, 0, 0);
             sprite.SpriteAnimation = new SpriteAnimation(4, 16);
             sprite.ShouldSystemAnimate = true;
-            e_EcsInstance.EntityManager.addComponent(e, sprite);
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+			ECSInstance.EntityManager.addComponent(e, sprite);
+            ECSInstance.EntityManager.addComponent(e, new Velocity(velocity));
             
             Projectile projectile = new Projectile(duration);
             projectile.Originator = originator;
-            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            ECSInstance.EntityManager.addComponent(e, projectile);
             
-            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
-            e_EcsInstance.EntityManager.addComponent(e, transform);
+            ECSInstance.EntityManager.addComponent(e, new MapCollidable());
+            ECSInstance.EntityManager.addComponent(e, transform);
 
             if (light != null)
-                e_EcsInstance.EntityManager.addComponent(e, light);
+                ECSInstance.EntityManager.addComponent(e, light);
 
-            e_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
         }
 
-        public void createCollidingProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
+        public static void createCollidingProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
         {
-            Entity e = e_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
-            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
-            e_EcsInstance.EntityManager.addComponent(e,  new Sprite("projectile", "projectile", 32, 32, 0, 0));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+            ECSInstance.EntityManager.addComponent(e, new Position(start,new Vector2(16)));
+            ECSInstance.EntityManager.addComponent(e, new Heading(heading));
+            ECSInstance.EntityManager.addComponent(e,  new Sprite("projectile", "projectile", 32, 32, 0, 0));
+            ECSInstance.EntityManager.addComponent(e, new Velocity(velocity));
             
             Projectile projectile = new Projectile(duration);
             projectile.Originator = originator;
-            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            ECSInstance.EntityManager.addComponent(e, projectile);
             
-            e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
-            e_EcsInstance.EntityManager.addComponent(e, transform);
+            ECSInstance.EntityManager.addComponent(e, new MapCollidable());
+            ECSInstance.EntityManager.addComponent(e, transform);
 
             if (light != null)
-                e_EcsInstance.EntityManager.addComponent(e, light);
+                ECSInstance.EntityManager.addComponent(e, light);
 
-            e_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
         }
 
-        public void createProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
+        public static void createProjectile(Vector2 start, Vector2 heading, float velocity, int duration, Light light, Transform transform, Entity originator)
         {
-            Entity e = e_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
-            e_EcsInstance.EntityManager.addComponent(e, new Position(start, new Vector2(16)));
-            e_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
-            e_EcsInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
-            e_EcsInstance.EntityManager.addComponent(e, new Velocity(velocity));
+            ECSInstance.EntityManager.addComponent(e, new Position(start, new Vector2(16)));
+            ECSInstance.EntityManager.addComponent(e, new Heading(heading));
+            ECSInstance.EntityManager.addComponent(e, new Sprite("projectile", "projectile", 32, 32, 0, 0));
+            ECSInstance.EntityManager.addComponent(e, new Velocity(velocity));
 
             Projectile projectile = new Projectile(duration);
             projectile.Originator = originator;
-            e_EcsInstance.EntityManager.addComponent(e, projectile);
+            ECSInstance.EntityManager.addComponent(e, projectile);
             
-            e_EcsInstance.EntityManager.addComponent(e, transform);
-            //e_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+            ECSInstance.EntityManager.addComponent(e, transform);
+            //ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 
             if (light != null)
-                e_EcsInstance.EntityManager.addComponent(e, light);
+                ECSInstance.EntityManager.addComponent(e, light);
 
-            e_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
         }
 
-        public void createSpatialPartition(Vector2 ul, Vector2 lr, int tiers)
+        public static void createSpatialPartition(Vector2 ul, Vector2 lr, int tiers)
         {
-            Entity e = e_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             SpatialPartition spatial = new SpatialPartition();
 
             spatial.QuadTree = new QuadTree<Entity>(ul, lr);
             spatial.QuadTree.buildQuadTree(tiers);
 
-            e_EcsInstance.EntityManager.addComponent(e, spatial);
+            ECSInstance.EntityManager.addComponent(e, spatial);
 
-            e_EcsInstance.TagManager.tagEntity("SPATIAL", e);
+            ECSInstance.TagManager.tagEntity("SPATIAL", e);
 
-            e_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
 

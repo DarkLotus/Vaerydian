@@ -11,17 +11,11 @@ using AgentComponentBus.Components.ACB;
 
 namespace Vaerydian.Factories
 {
-    class AgentFactory
+	static class AgentFactory
     {
-        private ECSInstance a_ECSInstance;
+		public static ECSInstance ECSInstance;
 
-        public AgentFactory(ECSInstance ecsInstance)
-        {
-            a_ECSInstance = ecsInstance;
-        }
-
-
-        public BusAgent createBatAgent(Entity entity)
+		public static BusAgent createBatAgent(Entity entity)
         {
             BusAgent agent = new BusAgent();
 

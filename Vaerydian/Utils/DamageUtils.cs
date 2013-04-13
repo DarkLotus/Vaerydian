@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Vaerydian.Characters.Attributes;
+using Vaerydian.Characters.Experience;
+
 namespace Vaerydian.Utils
 {
     public enum DamageClass
@@ -26,6 +29,11 @@ namespace Vaerydian.Utils
 		public short ID;
 		public DamageType DamageType;
 		public DamageBasis DamageBasis;
+		public int Min;
+		public int Max;
+		public SkillName SkillName;
+		public AttributeStat Attribute;
+		public Knowledge Knowledge;
 	}
 
     public enum DamageType

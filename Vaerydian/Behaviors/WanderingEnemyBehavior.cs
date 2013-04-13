@@ -554,8 +554,7 @@ namespace Vaerydian.Behaviors
         /// <returns></returns>
         private BehaviorReturnCode fireAtTarget()
         {
-            EntityFactory ef = new EntityFactory(w_ECSInstance);
-            
+          
             Position position = (Position) w_PositionMapper.get(w_ThisEntity);
             Position enemy = (Position) w_PositionMapper.get(w_Target);
             Heading heading = (Heading)w_HeadingMapper.get(w_ThisEntity);
@@ -574,7 +573,7 @@ namespace Vaerydian.Behaviors
             trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
             trans.RotationOrigin = new Vector2(16);
 
-            ef.createSonicProjectile(pos + dir * 16, dir, 10, 1000, ef.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
+			EntityFactory.createSonicProjectile(pos + dir * 16, dir, 10, 1000, EntityFactory.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
 
             UtilFactory uf = new UtilFactory(w_ECSInstance);
             uf.createSound("audio\\effects\\fire", true, 0.5f);

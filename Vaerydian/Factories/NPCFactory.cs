@@ -152,8 +152,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, factions);
 
 
-            EntityFactory ef = new EntityFactory(n_EcsInstance);
-            n_EcsInstance.EntityManager.addComponent(e, ef.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1, 1, 1, 1)));
+			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1, 1, 1, 1)));
 
 
             n_EcsInstance.refresh(e);
@@ -210,8 +209,7 @@ namespace Vaerydian.Factories
 
             n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
-            AnimationFactory animFactory = new AnimationFactory(n_EcsInstance);
-            n_EcsInstance.EntityManager.addComponent(e, animFactory.createBatAnimation());
+            n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createBatAnimation());
 
             //create info
             Information info = new Information();
@@ -290,8 +288,7 @@ namespace Vaerydian.Factories
             Aggrivation aggro = new Aggrivation();
             n_EcsInstance.EntityManager.addComponent(e, aggro);
 
-            EntityFactory ef = new EntityFactory(n_EcsInstance);
-            n_EcsInstance.EntityManager.addComponent(e, ef.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
+			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
 
             n_EcsInstance.GroupManager.addEntityToGroup("WANDERERS", e);
 

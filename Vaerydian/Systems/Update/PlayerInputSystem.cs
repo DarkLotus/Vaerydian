@@ -256,8 +256,6 @@ namespace Vaerydian.Systems.Update
             {
                 p_LastFired = 0;
 
-                EntityFactory ef = new EntityFactory(e_ECSInstance);
-
                 Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
 
                 dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
@@ -271,7 +269,7 @@ namespace Vaerydian.Systems.Update
                 trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
                 trans.RotationOrigin = new Vector2(16);
 
-                ef.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, ef.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+				EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
                 
                 UtilFactory uf = new UtilFactory(e_ECSInstance);
                 uf.createSound("audio\\effects\\fire", true, 0.5f);

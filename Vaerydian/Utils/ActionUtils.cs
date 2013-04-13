@@ -2,6 +2,7 @@ using System;
 using ECSFramework;
 using Vaerydian.Components.Actions;
 using Vaerydian.Utils;
+using Vaerydian.Factories;
 
 namespace Vaerydian.Utils
 {
@@ -79,7 +80,7 @@ namespace Vaerydian.Utils
 			aPack.Target = target;
 			aPack.ActionDef = aDef;
 
-			switch (aPack.ActionDef) {
+			switch (aPack.ActionDef.ActionType) {
 			case ActionType.DAMAGE:
 				doDamageAction(aPack);
 				break;
@@ -94,7 +95,7 @@ namespace Vaerydian.Utils
 			}
 		}
 
-		public static void doDamageAction(ActionPackage aPack){
+		private static void doDamageAction(ActionPackage aPack){
 			switch (aPack.ActionDef.DamageDef.DamageBasis) {
 			case DamageBasis.ATTRIBUTE:
 				break;
@@ -107,7 +108,7 @@ namespace Vaerydian.Utils
 			case DamageBasis.SKILL:
 				break;
 			case DamageBasis.STATIC:
-
+				doStaticDamage(aPack);
 				break;
 			default:
 				return;
@@ -149,7 +150,11 @@ namespace Vaerydian.Utils
 
 		public static float getDamage(float overhit, float attackSkill, float attackAttribute,
 			                              float lethality, float mitigation, float absorbValue){
-				return (overhit + 1f) * (attackSkill/5 + attackAttribute/4) * (lethality/mitigation) - absorbValue/10;
+			return (overhit + 1f) * (attackSkill/5 + attackAttribute/4) * (lethality/mitigation) - absorbValue/10;
+		}
+
+		private static void doStaticDamage(ActionPackage aPack){
+
 		}
 		
 	}

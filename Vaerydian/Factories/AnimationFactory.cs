@@ -11,17 +11,12 @@ using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Factories
 {
-    class AnimationFactory
+    static class AnimationFactory
     {
 
-        private ECSInstance a_EcsInstance;
+        public static ECSInstance ECSInstance;
 
-        public AnimationFactory(ECSInstance ecsInstance) 
-        {
-            a_EcsInstance = ecsInstance;
-        }
-
-        public Character createBatAnimation()
+        public static Character createBatAnimation()
         {
             Character bat = new Character();
 
@@ -77,7 +72,7 @@ namespace Vaerydian.Factories
             return bat;
         }
 
-        public Character createPlayerAnimation()
+        public static Character createPlayerAnimation()
         {
             Character player = new Character();
 
@@ -90,7 +85,7 @@ namespace Vaerydian.Factories
             return player;
         }
 
-        public Skeleton createStandingSkeleton()
+        public static Skeleton createStandingSkeleton()
         {
             Skeleton standing = new Skeleton();
 

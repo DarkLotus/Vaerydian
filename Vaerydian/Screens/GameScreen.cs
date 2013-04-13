@@ -96,7 +96,7 @@ namespace Vaerydian.Screens
         private TaskWorker taskWorker;
         private Thread busThread, twThread;
 
-        private EntityFactory entityFactory;
+        //private EntityFactory entityFactory;
         private NPCFactory npcFactory;
         private UIFactory uiFactory;
         private MapFactory mapFactory;
@@ -163,6 +163,13 @@ namespace Vaerydian.Screens
             ComponentMapper.ECSInstance = ecsInstance;
 
             gameContainer = ScreenManager.GameContainer;
+
+			//setup factories
+			AnimationFactory.ECSInstance = ecsInstance;
+			ActionFactory.ECSInstance = ecsInstance;
+			AgentFactory.ECSInstance = ecsInstance;
+			EntityFactory.ECSInstance = ecsInstance;
+			EntityFactory.GameContainer = gameContainer;
 
             //instantiate the bus
             bus = new Bus();
@@ -246,7 +253,6 @@ namespace Vaerydian.Screens
             ecsInstance.SystemManager.initializeSystems();
 
             //create the entity factory
-            entityFactory = new EntityFactory(ecsInstance, gameContainer);
             npcFactory = new NPCFactory(ecsInstance);
             uiFactory = new UIFactory(ecsInstance,gameContainer);
             mapFactory = new MapFactory(ecsInstance, gameContainer);
@@ -318,12 +324,12 @@ namespace Vaerydian.Screens
 			}
 
 			if (g_FirstLoad)
-				player = entityFactory.createPlayer ((int)g_Parameters [GAMESCREEN_SKILLLEVEL]);
+				player = EntityFactory.createPlayer ((int)g_Parameters [GAMESCREEN_SKILLLEVEL]);
 			else {
 				if ((bool)g_Parameters [GAMESCREEN_RETURNING])
-					player = entityFactory.recreatePlayer (GameSession.PlayerState, (Position)g_Parameters [GAMESCREEN_LAST_PLAYER_POSITION]);
+					player = EntityFactory.recreatePlayer (GameSession.PlayerState, (Position)g_Parameters [GAMESCREEN_LAST_PLAYER_POSITION]);
 				else {
-					player = entityFactory.recreatePlayer (GameSession.PlayerState, new Position (mapFactory.findSafeLocation (g_Map), new Vector2 (16, 16)));
+					player = EntityFactory.recreatePlayer (GameSession.PlayerState, new Position (mapFactory.findSafeLocation (g_Map), new Vector2 (16, 16)));
 				}
 			}
 
@@ -334,8 +340,8 @@ namespace Vaerydian.Screens
             mapState.SkillLevel = (int)g_Parameters[GAMESCREEN_SKILLLEVEL];
             
 
-            entityFactory.createCamera();
-            entityFactory.createMousePointer();
+			EntityFactory.createCamera();
+			EntityFactory.createMousePointer();
 
             uiFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
@@ -343,7 +349,7 @@ namespace Vaerydian.Screens
                 npcFactory.createWandererTrigger(20, g_Map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
 
             //create map debug
-            entityFactory.createMapDebug();
+			EntityFactory.createMapDebug();
             
             //create lights
             /*
@@ -361,7 +367,7 @@ namespace Vaerydian.Screens
             //entityFactory.createGeometryMap();
 
             //create spatialpartition
-            entityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
+			EntityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
 
 
             //early entity reslove
