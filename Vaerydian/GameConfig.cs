@@ -19,9 +19,6 @@ namespace Vaerydian
 			if (!GameConfig.loadEffects ())
 				return false;
 
-			if (!GameConfig.loadDamageTypes ())
-				return false;
-
 			if (!GameConfig.LoadDamageDefs ())
 				return false;
 
@@ -52,31 +49,6 @@ namespace Vaerydian
 			return true;
 		}
 
-		public static Dictionary<string, DamageType> DamageTypes = new Dictionary<string, DamageType>();
-
-		private static bool loadDamageTypes(){
-			DamageTypes.Add ("NONE", new DamageType{Name="NONE",ID=0});
-			DamageTypes.Add ("SLASHING", new DamageType{Name="SLASHING",ID=1});
-			DamageTypes.Add ("CRUSHING", new DamageType{Name="CRUSHING",ID=2});
-			DamageTypes.Add ("PIERCING", new DamageType{Name="PIERCING",ID=3});
-			DamageTypes.Add ("ICE", new DamageType{Name="ICE",ID=4});
-			DamageTypes.Add ("FIRE", new DamageType{Name="FIRE",ID=5});
-			DamageTypes.Add ("EARTH", new DamageType{Name="EARTH",ID=6});
-			DamageTypes.Add ("WIND", new DamageType{Name="WIND",ID=7});
-			DamageTypes.Add ("WATER", new DamageType{Name="WATER",ID=8});
-			DamageTypes.Add ("LIGHT", new DamageType{Name="LIGHT",ID=9});
-			DamageTypes.Add ("DARK", new DamageType{Name="DARK",ID=10});
-			DamageTypes.Add ("CHAOS", new DamageType{Name="CHAOS",ID=11});
-			DamageTypes.Add ("ORDER", new DamageType{Name="ORDER",ID=12});
-			DamageTypes.Add ("POISON", new DamageType{Name="POISON",ID=13});
-			DamageTypes.Add ("DISASE", new DamageType{Name="DISASE",ID=14});
-			DamageTypes.Add ("ARCANE", new DamageType{Name="ARCANE",ID=15});
-			DamageTypes.Add ("MENTAL", new DamageType{Name="MENTAL",ID=16});
-			DamageTypes.Add ("SONIC", new DamageType{Name="SONIC",ID=17});
-
-			return true;
-		}
-
 		public static Dictionary<string, DamageDef> DamageDefs = new Dictionary<string, DamageDef>();
 
 		private static bool LoadDamageDefs(){
@@ -89,9 +61,10 @@ namespace Vaerydian
 				foreach(Dictionary<string,object> dict in dDefs){
 					jo = new JsonObject(dict);
 					
-					DamageDef dDef;
+					DamageDef dDef = default(DamageDef);
 					dDef.Name = jo["name"].asString();
 					dDef.ID = jo["id"].asShort();
+					dDef.DamageType = jo["damage_type"].asEnum<DamageType>();
 					
 					DamageDefs.Add(dDef.Name,dDef);
 				}
@@ -104,31 +77,6 @@ namespace Vaerydian
 			return true;
 		}
 
-		public static Dictionary<string, ActionType> ActionTypes = new Dictionary<string, ActionType>();
-		public static Dictionary<string, ImpactType> ImpactTypes = new Dictionary<string, ImpactType>();
-		public static Dictionary<string, ModifyType> ModifyTypes = new Dictionary<string, ModifyType>();
-		public static Dictionary<string, ModifyDuration> ModifyDurations = new Dictionary<string, ModifyDuration>();
-		public static Dictionary<string, CreateType> CreateTypes = new Dictionary<string, CreateType>();
-		public static Dictionary<string, DestoryType> DestroyTypes = new Dictionary<string, DestoryType>();
-
-		private static bool loadActions(){
-			ActionTypes.Add ("DAMAGE", new ActionType{Name = "", ID = 0});
-			ActionTypes.Add ("MODIFY", new ActionType{Name = "", ID = 0});
-			ActionTypes.Add ("CREATE", new ActionType{Name = "", ID = 0});
-			ActionTypes.Add ("DESTROY", new ActionType{Name = "", ID = 0});
-
-			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
-			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
-			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
-			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
-			ImpactTypes.Add ("", new ImpactType{Name = "", ID = 0});
-
-
-
-
-
-			return true;
-		}
 
 		public static Dictionary<string, ActionDef> ActionDefs = new Dictionary<string, ActionDef>();
 
@@ -143,6 +91,9 @@ namespace Vaerydian
 					jo = new JsonObject(dict);
 
 					ActionDef aDef;
+					aDef.Name = jo["name"].asString();
+					aDef.ID = jo["id"].asShort();
+					aDef.ActionType = jo["action_type"].asEnum<ActionType>();
 				}
 
 			}catch(Exception e){

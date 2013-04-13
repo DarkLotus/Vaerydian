@@ -22,7 +22,8 @@
   "damage_defs":[
     {
       "name":"NONE",
-      "id":0
+      "id":0,
+      "damage_type": "NONE"
     }
   ]
 }

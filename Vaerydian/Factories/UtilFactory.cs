@@ -58,7 +58,7 @@ namespace Vaerydian.Factories
         /// <param name="type"></param>
         /// <param name="target"></param>
         /// <param name="pos"></param>
-        public void createDirectDamage(int amount, DamageType_Old type, Entity target,Position pos)
+        public void createDirectDamage(int amount, DamageType type, Entity target,Position pos)
         {
             Entity e = u_EcsInstance.create();
 
@@ -66,7 +66,7 @@ namespace Vaerydian.Factories
 
             damage.DamageAmount = amount;
             damage.Target = target;
-            damage.DamageClass = DamageClass.Direct;
+            damage.DamageClass = DamageClass.DIRECT;
             damage.DamageType = type;
             damage.Lifespan = 500;//.5 second
 

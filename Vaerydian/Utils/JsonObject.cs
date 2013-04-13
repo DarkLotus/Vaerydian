@@ -68,6 +68,10 @@ namespace Vaerydian
 			return returnList;
 		}
 
+		public T asEnum<T>(){
+			return (T) Enum.Parse (typeof(T), (string)j_InternalObject);
+		}
+
 	}
 }
 

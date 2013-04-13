@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,12 +51,12 @@ namespace Vaerydian.Systems.Update
             {
                 switch (damage.DamageClass)
                 {
-                    case DamageClass.Direct:
+                    case DamageClass.DIRECT:
                         handleDirectDamage(damage);
                         break;
-                    case DamageClass.OverTime:
+                    case DamageClass.OVERTIME:
                         break;
-                    case DamageClass.AreaOfEffect:
+                    case DamageClass.AREA:
                         break;
                     default:
                         break;

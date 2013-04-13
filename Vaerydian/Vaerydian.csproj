@@ -176,8 +176,9 @@
     <Compile Include="GameConfig.cs" />
     <Compile Include="Utils\TerrainType_Old.cs" />
     <Compile Include="Utils\MapType_Old.cs" />
-    <Compile Include="Utils\DamageType_Old.cs" />
     <Compile Include="Components\Actions\VAction.cs" />
+    <Compile Include="Factories\ActionFactory.cs" />
+    <Compile Include="Utils\DamageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -7,8 +7,6 @@ using ECSFramework;
 
 using Vaerydian.Utils;
 
-
-
 namespace Vaerydian.Components.Actions
 {
     class Attack : IComponent

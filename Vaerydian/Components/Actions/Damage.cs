@@ -9,23 +9,6 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Actions
 {
-	public struct DamageType{
-		public string Name;
-		public short ID;
-	}
-
-	public struct DamageBasis{
-		public string Name;
-		public int ID;
-	}
-
-	public struct DamageDef{
-		public string Name;
-		public short ID;
-		public DamageType DamageType;
-		public DamageBasis DamageBasis;
-	}
-
     class Damage : IComponent
     {
         private static int d_TypeID;
@@ -73,11 +56,11 @@ namespace Vaerydian.Components.Actions
             set { d_DamageClass = value; }
         }
 
-        private DamageType_Old d_DamageType;
+        private DamageType d_DamageType;
         /// <summary>
         /// type of damage
         /// </summary>
-        public DamageType_Old DamageType
+        public DamageType DamageType
         {
             get { return d_DamageType; }
             set { d_DamageType = value; }

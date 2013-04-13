@@ -1,6 +1,7 @@
 using System;
 
 using ECSFramework;
+using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Actions
 {
@@ -16,34 +17,51 @@ namespace Vaerydian.Components.Actions
 		public DestoryType DestoryType;
 	}
 
-	public struct ActionType{
-		public string Name;
-		public short ID;
+	public enum ActionType{
+		DAMAGE = 0,
+		MODIFY = 1,
+		CREATE = 2,
+		DESTROY = 3
 	}
 
-	public struct ImpactType{
-		public string Name;
-		public short ID;
+	public enum ImpactType{
+		NONE = 0,
+		DIRECT = 1,
+		AREA = 2,
+		CONE = 3,
+		OVERTIME = 4	
 	}
 
-	public struct ModifyType{
-		public string Name;
-		public short ID;
+	public enum ModifyType{
+		NONE = 0,
+		SKILL = 1,
+		ABILITY = 2,
+		MECHANIC = 3,
+		ATTRIBUTE = 4,
+		KNOWLEDGE = 5,
 	}
 
-	public struct ModifyDuration{
-		public string Name;
-		public short ID;
+	public enum ModifyDuration{
+		NONE = 0,
+		TEMPORARY = 1,
+		PERMANENT = 2,
+		LOCATION = 3
 	}
 
-	public struct CreateType{
-		public string Name;
-		public short ID;
+	public enum CreateType{
+		NONE = 0,
+		OBJECT = 1,
+		CHARACTER = 2,
+		ITEM = 3,
+		FEATURE = 4
 	}
 
-	public struct DestoryType{
-		public string Name;
-		public short ID;
+	public enum DestoryType{
+		NONE = 0,
+		OBJECT = 1,
+		CHARACTER = 2,
+		ITEM = 3,
+		FEATURE = 4
 	}
 
 	public delegate void PerformAction(Entity owner, Entity target);

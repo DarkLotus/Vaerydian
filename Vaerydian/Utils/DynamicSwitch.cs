@@ -11,7 +11,7 @@ namespace Vaerydian.Utils
 	/// <summary>
 	/// Dyanmic switch creates a programatic switch structure that is redefinable at runtime.
 	/// </summary>
-	public class DyanmicSwitch<T>{
+	public class DynamicSwitch<T>{
 		
 		private Dictionary<T,SwitchCase<T>> d_SwitchDict = new Dictionary<T,SwitchCase<T>>();
 		private SwitchCase<T> d_Default = null;
