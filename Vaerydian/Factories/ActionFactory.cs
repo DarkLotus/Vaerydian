@@ -20,46 +20,13 @@ namespace Vaerydian
 			Entity e = a_ECSInstance.create ();
 
 			VAction action = new VAction ();
+			action.ActionDef = aDef;
 
 			a_ECSInstance.EntityManager.addComponent (e, action);
-
 
 			a_ECSInstance.refresh (e);
 
 			return e;
-		}
-
-		public void doSomething(Dictionary<string, TerrainDef> tDefs){
-			DynamicSwitch<string> ds = new DynamicSwitch<string>();
-
-			foreach (string tDefName in tDefs.Keys) {
-				ds.addCase(tDefName, (string s) =>{
-
-
-
-					return;
-				});
-			}
-
-		}
-
-		public void blah(){}
-
-		public void assignAction(VAction action, ActionDef aDef){
-
-			switch (aDef.ActionType) {
-			case ActionType.DAMAGE:
-				break;
-			case ActionType.MODIFY:
-				break;
-			case ActionType.CREATE:
-				break;
-			case ActionType.DESTROY:
-				break;
-			default:
-				break;
-			}
-
 		}
 	}
 }

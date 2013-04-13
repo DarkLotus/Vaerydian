@@ -15,11 +15,10 @@ namespace Vaerydian.Utils
 	public enum DamageBasis{
 		NONE = 0,
 		STATIC = 1,
-		VARIABLE = 2,
-		ATTRIBUTE = 3,
-		SKILL = 4,
-		KNOWLEDGE = 5,
-		ITEM = 6,
+		ATTRIBUTE = 2,
+		SKILL = 3,
+		KNOWLEDGE = 4,
+		ITEM = 5,
 	}
 	
 	public struct DamageDef{
@@ -31,29 +30,31 @@ namespace Vaerydian.Utils
 
     public enum DamageType
     {
-        NONE,
-		SLASHING,
-		CRUSHING,
-		PIERCING,
-		ICE,
-		FIRE,
-		EARTH,
-		WIND,
-		WATER,
-		LIGHT,
-		DARK,
-		CHAOS,
-		ORDER,
-		POISON,
-		DISEASE,
-		ARCANE,
-		MENTAL,
-		SONIC
+        NONE = 0,
+		SLASHING = 1,
+		CRUSHING = 2,
+		PIERCING = 3,
+		ICE = 4,
+		FIRE = 5,
+		EARTH = 6,
+		WIND = 7,
+		WATER = 8,
+		LIGHT = 9,
+		DARK = 10,
+		CHAOS = 11,
+		ORDER = 12,
+		POISON = 13,
+		DISEASE = 14,
+		ARCANE  = 15,
+		MENTAL = 16,
+		SONIC = 17
     }
 
 	static class DamageUtils{
 
-		public static int calcumateDamage(){
+
+
+		public static int calculateDamage(){
 			return -1;
 		}
 

@@ -30,6 +30,8 @@ namespace Vaerydian
 			VAction action = (VAction) a_ActionMapper.get(entity);
 
 			action.doAction();
+
+			e_ECSInstance.deleteEntity (entity);
 		}
 
 		protected override void removed (Entity entity)
@@ -39,10 +41,7 @@ namespace Vaerydian
 
 		protected override void cleanUp (Bag<Entity> entities)
 		{
-			for(int i = 0; i < entities.Size();i++){
-				VAction action = (VAction) a_ActionMapper.get (entities[i]);
-				action.removeActions();
-			}
+			//do nothing for now
 		}
 
 		private void foo(){}
