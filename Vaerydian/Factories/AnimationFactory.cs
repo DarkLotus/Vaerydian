@@ -18,6 +18,27 @@ namespace Vaerydian.Factories
 
 		public static Character createCharacter(string character){
 
+			CharacterDef cDef = GameConfig.CharacterDefs[character];
+			Character c = new Character ();
+			c.CurrentAnimtaion = cDef.CurrentAnimation;
+			c.CurrentSkeleton = cDef.CurrentSkeleton;
+
+			foreach (SkeletalDef sDef in cDef.SkeletalDefs) {
+				Skeleton skel = new Skeleton();
+
+				foreach(BoneDef bDef in sDef.BoneDefs){
+
+					Bone bone = new Bone();
+					bone.TextureName = bDef.Texture;
+					bone.Origin = bDef.Origin;
+					bone.Rotation = bDef.Rotation;
+					bone.RotationOrigin = bDef.RotationOrigin;
+					bone.AnimationTime = bDef.Time;
+
+
+				}
+			}
+
 			return null;
 		}
 
