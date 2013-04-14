@@ -143,7 +143,6 @@
     <Compile Include="Utils\AttackType.cs" />
     <Compile Include="Utils\BinaryHeap.cs" />
     <Compile Include="Utils\Bone.cs" />
-    <Compile Include="Utils\Character.cs" />
     <Compile Include="Utils\CollisionDetect.cs" />
     <Compile Include="Utils\HeapCell.cs" />
     <Compile Include="Utils\KeyFrame.cs" />
@@ -179,6 +178,7 @@
     <Compile Include="Components\Actions\VAction.cs" />
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Utils\DamageUtils.cs" />
+    <Compile Include="Components\Utils\Character.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

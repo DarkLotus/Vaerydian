@@ -8,9 +8,9 @@ namespace Vaerydian.Utils
 {
     class KeyFrame
     {
-        public KeyFrame(int keyTime, Vector2 keyPosition, float keyRotation)
+        public KeyFrame(float keyTime, Vector2 keyPosition, float keyRotation)
         {
-            k_KeyTime = keyTime;
+            k_KeyPercent = keyTime;
             k_KeyPosition = keyPosition;
             k_KeyRotation = keyRotation;
         }
@@ -31,12 +31,12 @@ namespace Vaerydian.Utils
             set { k_KeyRotation = value; }
         }
 
-        private int k_KeyTime = 0;
+        private float k_KeyPercent = 0;
 
-        public int KeyTime
+        public float KeyPercent
         {
-            get { return k_KeyTime; }
-            set { k_KeyTime = value; }
+            get { return k_KeyPercent; }
+            set { k_KeyPercent = value; }
         }
 
     }

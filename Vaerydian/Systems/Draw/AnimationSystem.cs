@@ -7,12 +7,13 @@ using Microsoft.Xna.Framework;
 
 using ECSFramework;
 
-using Vaerydian.Components.Characters;
+using Vaerydian.Components.Utils;
 using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Utils;
 
 using Microsoft.Xna.Framework.Graphics;
+using Vaerydian.Components.Characters;
 
 
 namespace Vaerydian.Systems.Draw
@@ -119,8 +120,8 @@ namespace Vaerydian.Systems.Draw
             {
                 if (i > 0)
                 {
-                    if (bone.ElapsedTime <= bone.Animations[animation][i].KeyTime && bone.ElapsedTime > bone.Animations[animation][i - 1].KeyTime)
-                        return bone.Origin + tweenKeyFramesPosition(bone.Animations[animation][i - 1], bone.Animations[animation][i], bone.ElapsedTime);
+                    if (bone.ElapsedTime <= bone.Animations[animation][i].KeyPercent * bone.AnimationTime && bone.ElapsedTime > bone.Animations[animation][i - 1].KeyPercent)
+                        return bone.Origin + tweenKeyFramesPosition(bone, bone.Animations[animation][i - 1], bone.Animations[animation][i], bone.ElapsedTime);
                 }
             }
 
@@ -129,11 +130,11 @@ namespace Vaerydian.Systems.Draw
         }
 
 
-        private Vector2 tweenKeyFramesPosition(KeyFrame a, KeyFrame b, int time)
+        private Vector2 tweenKeyFramesPosition(Bone bone, KeyFrame a, KeyFrame b, int time)
         {
-            int timeBetweenFrames = b.KeyTime - a.KeyTime;
-            int timeAfterA = time - a.KeyTime;
-            float percentTween = (float)timeAfterA / (float)timeBetweenFrames;
+            float timeBetweenFrames = b.KeyPercent * bone.AnimationTime - a.KeyPercent * bone.AnimationTime;
+            float timeAfterA = time - a.KeyPercent * bone.AnimationTime;
+            float percentTween = timeAfterA / timeBetweenFrames;
 
             Vector2 aToB = b.KeyPosition - a.KeyPosition;
 
@@ -146,19 +147,19 @@ namespace Vaerydian.Systems.Draw
             {
                 if (i > 0)
                 {
-                    if (bone.ElapsedTime <= bone.Animations[animation][i].KeyTime && bone.ElapsedTime > bone.Animations[animation][i - 1].KeyTime)
-                        return tweenKeyFramesRotation(bone.Animations[animation][i - 1], bone.Animations[animation][i], bone.ElapsedTime);
+                    if (bone.ElapsedTime <= bone.Animations[animation][i].KeyPercent * bone.AnimationTime && bone.ElapsedTime > bone.Animations[animation][i - 1].KeyPercent)
+                        return tweenKeyFramesRotation(bone, bone.Animations[animation][i - 1], bone.Animations[animation][i], bone.ElapsedTime);
                 }
             }
             return bone.Rotation;
         }
 
 
-        private float tweenKeyFramesRotation(KeyFrame a, KeyFrame b, int time)
+        private float tweenKeyFramesRotation(Bone bone, KeyFrame a, KeyFrame b, int time)
         {
-            int timeBetweenFrames = b.KeyTime - a.KeyTime;
-            int timeAfterA = time - a.KeyTime;
-            float percentTween = (float)timeAfterA / (float)timeBetweenFrames;
+            float timeBetweenFrames = b.KeyPercent * bone.AnimationTime - a.KeyPercent * bone.AnimationTime;
+            float timeAfterA = time - a.KeyPercent * bone.AnimationTime;
+            float percentTween = timeAfterA / timeBetweenFrames;
 
             float aToB = b.KeyRotation - a.KeyRotation;
 

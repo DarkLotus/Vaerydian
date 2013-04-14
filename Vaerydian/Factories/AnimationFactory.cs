@@ -5,7 +5,7 @@ using System.Text;
 
 using ECSFramework;
 
-using Vaerydian.Components.Characters;
+using Vaerydian.Components.Utils;
 using Vaerydian.Utils;
 using Microsoft.Xna.Framework;
 
@@ -33,7 +33,7 @@ namespace Vaerydian.Factories
             head.AnimationTime = 500;
             List<KeyFrame> headFly = new List<KeyFrame>();
             headFly.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            headFly.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            headFly.Add(new KeyFrame(1, Vector2.Zero, 0f));
             head.Animations.Add("fly", headFly);
 
             wingL.TextureName = "characters\\bat_wing";
@@ -43,9 +43,9 @@ namespace Vaerydian.Factories
             wingL.AnimationTime = 500;
             List<KeyFrame> wingLFly = new List<KeyFrame>();
             wingLFly.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            wingLFly.Add(new KeyFrame(150, Vector2.Zero, -.5f));
-            wingLFly.Add(new KeyFrame(350, Vector2.Zero, .5f));
-            wingLFly.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            wingLFly.Add(new KeyFrame(0.33f, Vector2.Zero, -.5f));
+            wingLFly.Add(new KeyFrame(0.66f, Vector2.Zero, .5f));
+            wingLFly.Add(new KeyFrame(1, Vector2.Zero, 0f));
             wingL.Animations.Add("fly", wingLFly);
 
             wingR.TextureName = "characters\\bat_wing";
@@ -55,9 +55,9 @@ namespace Vaerydian.Factories
             wingR.AnimationTime = 500;
             List<KeyFrame> wingRFly = new List<KeyFrame>();
             wingRFly.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            wingRFly.Add(new KeyFrame(150, Vector2.Zero, .5f));
-            wingRFly.Add(new KeyFrame(350, Vector2.Zero, -.5f));
-            wingRFly.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            wingRFly.Add(new KeyFrame(0.33f, Vector2.Zero, .5f));
+            wingRFly.Add(new KeyFrame(0.66f, Vector2.Zero, -.5f));
+            wingRFly.Add(new KeyFrame(1, Vector2.Zero, 0f));
             wingR.Animations.Add("fly", wingRFly);
 
 
@@ -103,9 +103,9 @@ namespace Vaerydian.Factories
             head.AnimationTime = 500;
             List<KeyFrame> headIdle = new List<KeyFrame>();
             headIdle.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            headIdle.Add(new KeyFrame(200, new Vector2(0, 1f), 0f));
-            headIdle.Add(new KeyFrame(250, new Vector2(0, 2f), 0f));
-            headIdle.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            headIdle.Add(new KeyFrame(.4f, new Vector2(0, 1f), 0f));
+            headIdle.Add(new KeyFrame(.5f, new Vector2(0, 2f), 0f));
+            headIdle.Add(new KeyFrame(1, Vector2.Zero, 0f));
             head.Animations.Add("idle", headIdle);
             head.Animations.Add("moving", headIdle);
 
@@ -116,9 +116,9 @@ namespace Vaerydian.Factories
             torso.AnimationTime = 500;
             List<KeyFrame> torsoIdle = new List<KeyFrame>();
             torsoIdle.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            torsoIdle.Add(new KeyFrame(200, new Vector2(0, .75f), 0f));
-            torsoIdle.Add(new KeyFrame(250, new Vector2(0, 1f), 0f));
-            torsoIdle.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            torsoIdle.Add(new KeyFrame(.4f, new Vector2(0, .75f), 0f));
+            torsoIdle.Add(new KeyFrame(.5f, new Vector2(0, 1f), 0f));
+            torsoIdle.Add(new KeyFrame(1, Vector2.Zero, 0f));
             torso.Animations.Add("idle", torsoIdle);
             torso.Animations.Add("moving", torsoIdle);
 
@@ -129,16 +129,16 @@ namespace Vaerydian.Factories
             lArm.AnimationTime = 500;
             List<KeyFrame> lArmIdle = new List<KeyFrame>();
             lArmIdle.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            lArmIdle.Add(new KeyFrame(200, new Vector2(0, 1f), 0f));
-            lArmIdle.Add(new KeyFrame(250, new Vector2(0, 2f), 0f));
-            lArmIdle.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            lArmIdle.Add(new KeyFrame(.4f, new Vector2(0, 1f), 0f));
+            lArmIdle.Add(new KeyFrame(.5f, new Vector2(0, 2f), 0f));
+            lArmIdle.Add(new KeyFrame(1, Vector2.Zero, 0f));
             lArm.Animations.Add("idle", lArmIdle);
             List<KeyFrame> lArmMoving = new List<KeyFrame>();
             lArmMoving.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            lArmMoving.Add(new KeyFrame(100, new Vector2(0,1f), 0f));
-            lArmMoving.Add(new KeyFrame(250, Vector2.Zero, 0f));
-            lArmMoving.Add(new KeyFrame(400, new Vector2(0, -1f), 0f));
-            lArmMoving.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            lArmMoving.Add(new KeyFrame(.2f, new Vector2(0,1f), 0f));
+            lArmMoving.Add(new KeyFrame(.5f, Vector2.Zero, 0f));
+            lArmMoving.Add(new KeyFrame(.8f, new Vector2(0, -1f), 0f));
+            lArmMoving.Add(new KeyFrame(1, Vector2.Zero, 0f));
             lArm.Animations.Add("moving", lArmMoving);
 
             rArm.TextureName = "characters\\hand";
@@ -148,16 +148,16 @@ namespace Vaerydian.Factories
             rArm.AnimationTime = 500;
             List<KeyFrame> rArmIdle = new List<KeyFrame>();
             rArmIdle.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            rArmIdle.Add(new KeyFrame(200, new Vector2(0, 1f), 0f));
-            rArmIdle.Add(new KeyFrame(250, new Vector2(0, 2f), 0f));
-            rArmIdle.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            rArmIdle.Add(new KeyFrame(.4f, new Vector2(0, 1f), 0f));
+            rArmIdle.Add(new KeyFrame(.5f, new Vector2(0, 2f), 0f));
+            rArmIdle.Add(new KeyFrame(1, Vector2.Zero, 0f));
             rArm.Animations.Add("idle", rArmIdle);
             List<KeyFrame> rArmMoving = new List<KeyFrame>();
             rArmMoving.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            rArmMoving.Add(new KeyFrame(100, new Vector2(0, -1f), 0f));
-            rArmMoving.Add(new KeyFrame(250, Vector2.Zero, 0f));
-            rArmMoving.Add(new KeyFrame(400, new Vector2(0, 1f), 0f));
-            rArmMoving.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            rArmMoving.Add(new KeyFrame(.2f, new Vector2(0, -1f), 0f));
+            rArmMoving.Add(new KeyFrame(.5f, Vector2.Zero, 0f));
+            rArmMoving.Add(new KeyFrame(.8f, new Vector2(0, 1f), 0f));
+            rArmMoving.Add(new KeyFrame(1, Vector2.Zero, 0f));
             rArm.Animations.Add("moving", rArmMoving);
 
             lLeg.TextureName = "characters\\foot";
@@ -167,14 +167,14 @@ namespace Vaerydian.Factories
             lLeg.AnimationTime = 500;
             List<KeyFrame> lLegIdle = new List<KeyFrame>();
             lLegIdle.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            lLegIdle.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            lLegIdle.Add(new KeyFrame(1, Vector2.Zero, 0f));
             lLeg.Animations.Add("idle", lLegIdle);
             List<KeyFrame> lLegMoving = new List<KeyFrame>();
             lLegMoving.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            lLegMoving.Add(new KeyFrame(100, new Vector2(0, -1f), 0f));
-            lLegMoving.Add(new KeyFrame(250, Vector2.Zero, 0f));
-            lLegMoving.Add(new KeyFrame(400, new Vector2(0, 1f), 0f));
-            lLegMoving.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            lLegMoving.Add(new KeyFrame(.2f, new Vector2(0, -1f), 0f));
+            lLegMoving.Add(new KeyFrame(.5f, Vector2.Zero, 0f));
+            lLegMoving.Add(new KeyFrame(.8f, new Vector2(0, 1f), 0f));
+            lLegMoving.Add(new KeyFrame(1, Vector2.Zero, 0f));
             lLeg.Animations.Add("moving", lLegMoving);
 
             rLeg.TextureName = "characters\\foot";
@@ -187,10 +187,10 @@ namespace Vaerydian.Factories
             rLeg.Animations.Add("idle", rLegIdle);
             List<KeyFrame> rLegMoving = new List<KeyFrame>();
             rLegMoving.Add(new KeyFrame(0, Vector2.Zero, 0f));
-            rLegMoving.Add(new KeyFrame(100, new Vector2(0, 1f), 0f));
-            rLegMoving.Add(new KeyFrame(250, Vector2.Zero, 0f));
-            rLegMoving.Add(new KeyFrame(400, new Vector2(0, -1f), 0f));
-            rLegMoving.Add(new KeyFrame(500, Vector2.Zero, 0f));
+            rLegMoving.Add(new KeyFrame(.2f, new Vector2(0, 1f), 0f));
+            rLegMoving.Add(new KeyFrame(.5f, Vector2.Zero, 0f));
+            rLegMoving.Add(new KeyFrame(.8f, new Vector2(0, -1f), 0f));
+            rLegMoving.Add(new KeyFrame(1, Vector2.Zero, 0f));
             rLeg.Animations.Add("moving", rLegMoving);
 
 

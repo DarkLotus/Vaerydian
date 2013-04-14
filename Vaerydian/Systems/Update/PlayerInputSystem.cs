@@ -17,6 +17,7 @@ using Glimpse.Input;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Utils;
 
 namespace Vaerydian.Systems.Update
 {
