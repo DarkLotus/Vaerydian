@@ -16,6 +16,11 @@ namespace Vaerydian.Factories
 
         public static ECSInstance ECSInstance;
 
+		public static Character createCharacter(string character){
+
+			return null;
+		}
+
         public static Character createBatAnimation()
         {
             Character bat = new Character();

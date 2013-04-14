@@ -37,6 +37,9 @@ namespace Vaerydian
 			if (!GameConfig.loadStartDefs ())
 				return false;
 
+			if (!GameConfig.loadCharacterAnimation ())
+				return false;
+
 			return true;
 		}
 
@@ -210,13 +213,13 @@ namespace Vaerydian
 		
 		private static bool loadStartDefs(){
 			try{
-			string json = g_JM.loadJSON ("./Content/json/start_screen.v");
-			JsonObject jo = g_JM.jsonToJsonObject(json);
+				string json = g_JM.loadJSON ("./Content/json/start_screen.v");
+				JsonObject jo = g_JM.jsonToJsonObject(json);
 
-			StartDefs.Seed = jo ["start_level", "seed"].asInt ();  
-			StartDefs.SkillLevel = jo ["start_level", "skill_level"].asInt ();
-			StartDefs.Returning = jo ["start_level", "returning"].asBool ();
-			StartDefs.MapType = MapTypes [jo ["start_level", "map_type"].asString ()];
+				StartDefs.Seed = jo ["start_level", "seed"].asInt ();  
+				StartDefs.SkillLevel = jo ["start_level", "skill_level"].asInt ();
+				StartDefs.Returning = jo ["start_level", "returning"].asBool ();
+				StartDefs.MapType = MapTypes [jo ["start_level", "map_type"].asString ()];
 
 			}catch(Exception e){
 				Console.Error.WriteLine("ERORR: could not load starting settings:\n" + e.ToString());
@@ -224,6 +227,153 @@ namespace Vaerydian
 			}
 			return true;
 		}
+
+		public static Dictionary<string, AnimationDef> AnimationDefs = new Dictionary<string, AnimationDef> ();
+		public static Dictionary<string, SkeletalDef> SkeletalDefs = new Dictionary<string, SkeletalDef> ();
+		public static Dictionary<string, CharacterDef> CharacterDefs = new Dictionary<string, CharacterDef>();
+
+		private static bool loadCharacterAnimation(){
+			try{
+				string json = g_JM.loadJSON("./Content/json/animation.v");
+				JsonObject jo = g_JM.jsonToJsonObject(json);
+
+				//construct all animation defs
+				List<Dictionary<string,object>> aDefs = jo["animation_defs"].asList<Dictionary<string,object>>();
+
+				foreach(Dictionary<string,object> dict in aDefs){
+					jo = new JsonObject(dict);
+
+
+					AnimationDef aDef = default(AnimationDef);
+					aDef.KeyFrameDefs = new List<KeyFrameDef>();
+					aDef.Name = jo["name"].asString();
+
+					List<Dictionary<string,object>> kDefs = jo["key_frames"].asList<Dictionary<string,object>>();
+
+					foreach(Dictionary<string,object> kDict in kDefs){
+						jo = new JsonObject(kDict);
+
+						KeyFrameDef kDef = default(KeyFrameDef);
+						kDef.Percent = jo["percent"].asFloat();
+						kDef.Position = new Vector2(jo["x"].asInt(),jo["y"].asInt());
+						kDef.Rotation = jo["rotation"].asFloat();
+
+						aDef.KeyFrameDefs.Add(kDef);
+					}
+
+					//add to dict
+					AnimationDefs.Add(aDef.Name,aDef);
+				}
+
+				//reset
+				jo = g_JM.jsonToJsonObject(json);
+
+				//add skeletons
+				List<Dictionary<string,object>> sDefs = jo["skeleton_defs"].asList<Dictionary<string,object>>();
+
+				foreach(Dictionary<string, object> dict in sDefs){
+					jo = new JsonObject(dict);
+
+					SkeletalDef sDef = default(SkeletalDef);
+					sDef.BoneDefs = new List<BoneDef>();
+					sDef.Name = jo["name"].asString();
+
+					List<Dictionary<string,object>> bDefs = jo["bones"].asList<Dictionary<string,object>>();
+
+					foreach(Dictionary<string, object> bDict in bDefs){
+						jo = new JsonObject(bDict);
+
+						BoneDef bDef = default(BoneDef);
+						bDef.Animations = new Dictionary<string, AnimationDef>();
+
+						bDef.Name = jo["name"].asString();
+						bDef.Texture = jo["texture"].asString();
+						bDef.Origin = new Vector2(jo["origin_x"].asInt(),jo["origin_y"].asInt());
+						bDef.Rotation = jo["rotation"].asFloat();
+						bDef.RotationOrigin = new Vector2(jo["rotation_x"].asInt(), jo["rotation_y"].asInt());
+						bDef.Time = jo["time"].asInt();
+
+						List<Dictionary<string,object>> animDefs = jo["animations"].asList<Dictionary<string,object>>();
+
+						foreach(Dictionary<string,object> aDict in animDefs){
+							jo = new JsonObject(aDict);
+
+							bDef.Animations.Add(jo["name"].asString(), AnimationDefs[jo["animation_def"].asString()]);
+						}
+
+						sDef.BoneDefs.Add(bDef);
+					}
+
+					SkeletalDefs.Add(sDef.Name, sDef);
+				}
+
+				//reset
+				jo = g_JM.jsonToJsonObject(json);
+				
+				//add character defs
+				List<Dictionary<string,object>> cDefs = jo["character_defs"].asList<Dictionary<string,object>>();
+
+				foreach(Dictionary<string,object> dict in cDefs){
+					jo = new JsonObject(dict);
+
+					CharacterDef cDef = default(CharacterDef);
+					cDef.SkeletalDefs = new List<SkeletalDef>();
+					cDef.Name = jo["name"].asString();
+					cDef.CurrentSkeleton = jo["current_skeleton"].asString();
+					cDef.CurrentAnimation = jo["current_animation"].asString();
+
+					List<Dictionary<string,object>> skDefs = jo["skeletons"].asList<Dictionary<string,object>>();
+
+					foreach(Dictionary<string,object> sDict in skDefs){
+						jo = new JsonObject(sDict);
+
+						cDef.SkeletalDefs.Add(SkeletalDefs[jo["skeleton_def"].asString()]);
+					}
+
+					CharacterDefs.Add(cDef.Name,cDef);
+				}
+
+
+			}catch(Exception e){
+				Console.Error.WriteLine("ERROR: could not load character animations:\n" + e.ToString());
+				return false;
+			}
+
+			return true;
+		}
+	}
+
+	public struct CharacterDef{
+		public string Name;
+		public List<SkeletalDef> SkeletalDefs;
+		public string CurrentSkeleton;
+		public string CurrentAnimation;
+	}
+
+	public struct SkeletalDef{
+		public string Name;
+		public List<BoneDef> BoneDefs;
+	}
+
+	public struct BoneDef{
+		public string Name;
+		public string Texture;
+		public Vector2 Origin;
+		public float Rotation;
+		public Vector2 RotationOrigin;
+		public int Time;
+		public Dictionary<string,AnimationDef> Animations;
+	}
+
+	public struct AnimationDef{
+		public string Name;
+		public List<KeyFrameDef> KeyFrameDefs;
+	}
+
+	public struct KeyFrameDef{
+		public float Percent;
+		public Vector2 Position;
+		public float Rotation;
 	}
 }
 
