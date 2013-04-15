@@ -498,7 +498,7 @@ namespace Vaerydian.Screens
             base.Update(gameTime);
 
 
-            if (InputManager.isKeyToggled(Keys.PrintScreen))
+            if (InputManager.isKeyToggled(Keys.F2))
                 InputManager.YesScreenshot = true;
 
             //update time
@@ -603,9 +603,9 @@ namespace Vaerydian.Screens
 
             if (InputManager.YesScreenshot)
             {
-                saveScreenShot(gameContainer.GraphicsDevice);
-                InputManager.YesScreenshot = false;
-            }
+				InputManager.YesScreenshot = false;
+				saveScreenShot(gameContainer.GraphicsDevice, gameTime);
+			}
 
             //DrawDebugRenderTargets(spriteBatch);
         }
@@ -615,37 +615,31 @@ namespace Vaerydian.Screens
         /// captures and saves the screen of the current graphics device
         /// </summary>
         /// <param name="graphicsDevice"></param>
-        public void saveScreenShot(GraphicsDevice graphicsDevice)
+        public void saveScreenShot(GraphicsDevice graphicsDevice, GameTime time)
         {
-            /*			
-            //setup a color buffer to get the back Buffer's data
-            Color[] colors = new Color[graphicsDevice.PresentationParameters.BackBufferHeight * graphicsDevice.PresentationParameters.BackBufferWidth];
+			RenderTarget2D render = new RenderTarget2D (graphicsDevice,
+			                                           graphicsDevice.PresentationParameters.BackBufferWidth,
+			                                           graphicsDevice.PresentationParameters.BackBufferHeight);
 
-            //place the back bugger data into the color buffer
-            graphicsDevice.GetBackBufferData<Color>(colors);
+			graphicsDevice.SetRenderTarget (render);
 
-            string timestamp = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+			Draw (time);
 
-            //setup the filestream for the screenshot
-            FileStream fs = new FileStream("screenshot_" + timestamp + ".png", FileMode.Create);
+			graphicsDevice.SetRenderTarget (null);
 
-            //setup the texture that will be saved
-            Texture2D picTex = new Texture2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+			string timestamp = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+			FileStream fs;
+			try{
+				fs = new FileStream("screenshot_" + timestamp + ".png", FileMode.Create);
 
-            //set the texture's color data to that of the color buffer
-            picTex.SetData<Color>(colors);
+				render.SaveAsJpeg(fs,render.Width,render.Height);
 
-            //save the texture to a png image file
-            picTex.SaveAsPng(fs, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
-
-            //close the file stream
-            fs.Close();
-
-            GC.Collect();
-             * */
+			}catch(Exception e){
+				Console.Error.WriteLine("ERROR: could not create screenshot:\n" + e.ToString());
+				return;
+			}finally{
+				fs.Close();
+			}
 		}
-
-        
-
-    }
+	}
 }
