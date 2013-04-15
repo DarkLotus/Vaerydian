@@ -241,7 +241,7 @@ namespace Vaerydian.Factories
             window.Button.FontName = "General";
             window.Button.AutoSize = false;
             window.Button.CenterText = true;
-            window.Button.Text = "Close Window";
+            window.Button.Text = "Player Stats";
             window.Button.NormalTextColor = Color.White;
             window.Button.MouseOverTextColor = Color.Yellow;
             window.Button.PressedTextColor = Color.Red;
@@ -257,7 +257,10 @@ namespace Vaerydian.Factories
 			label.Owner = e;
 			label.Caller = caller;
 			label.ECSInstance = u_EcsInstance;
-			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,window.Form.Bounds.Top + 40, dimensions.X - 40,dimensions.Y-60);
+			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,
+			                             window.Form.Bounds.Top + 40,
+			                             dimensions.X - 40,
+			                             dimensions.Y-60);
 			label.AutoSize = false;
 			label.Text = "stuffs";
 			label.FontName = "General";
