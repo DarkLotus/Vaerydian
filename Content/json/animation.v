@@ -38,7 +38,7 @@
 					"origin_x":4,
 					"origin_y":12,
 					"rotation":0.0,
-					"rotation_x":0,
+					"rotation_x":8,
 					"rotation_y":4,
 					"time":500,
 					"animations":[

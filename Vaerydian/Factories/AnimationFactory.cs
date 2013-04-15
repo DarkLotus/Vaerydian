@@ -37,12 +37,15 @@ namespace Vaerydian.Factories
 
 					foreach(string key in bDef.Animations.Keys){
 						List<KeyFrame> list = new List<KeyFrame>();
-						foreach(KeyFrameDef kDef in bDef.Animations[key].KeyFrameDefs){
+
+						for(int i = 0; i < bDef.Animations[key].KeyFrameDefs.Count; i++){
+							KeyFrameDef kDef = bDef.Animations[key].KeyFrameDefs[i];
 							KeyFrame kf = new KeyFrame(kDef.Percent,
 							                           kDef.Position,
 							                           kDef.Rotation);
 							list.Add (kf);
 						}
+
 						bone.Animations.Add(key,list);
 					}
 

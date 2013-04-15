@@ -209,7 +209,7 @@ namespace Vaerydian.Factories
 
             n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
-            n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createBatAnimation());
+			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createCharacter ("BAT"));
 
             //create info
             Information info = new Information();
