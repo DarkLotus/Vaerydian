@@ -118,6 +118,7 @@ namespace Vaerydian.Factories
 
         public static Character createPlayerAnimation()
         {
+			/*
             Character player = new Character();
 
             player.Skeletons.Add("front", createStandingSkeleton());
@@ -127,6 +128,8 @@ namespace Vaerydian.Factories
             player.CurrentAnimtaion = "idle";
 
             return player;
+            */
+			return createCharacter ("PLAYER");
         }
 
         public static Skeleton createStandingSkeleton()

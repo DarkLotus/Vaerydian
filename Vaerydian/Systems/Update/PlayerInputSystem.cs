@@ -210,7 +210,7 @@ namespace Vaerydian.Systems.Update
             */
 
             if (p_Moved)
-                character.CurrentAnimtaion = "moving";
+                character.CurrentAnimtaion = "MOVING";
 
             //transform.Rotation = getAngle(pos, mPosition.getPosition());
 
@@ -299,7 +299,7 @@ namespace Vaerydian.Systems.Update
             if (!p_Moved)
             {
                 p_Movement.reset();
-                character.CurrentAnimtaion = "idle";
+                character.CurrentAnimtaion = "IDLE";
             }
             else
             {

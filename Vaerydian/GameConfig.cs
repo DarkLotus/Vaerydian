@@ -255,7 +255,7 @@ namespace Vaerydian
 
 						KeyFrameDef kDef = default(KeyFrameDef);
 						kDef.Percent = jo["percent"].asFloat();
-						kDef.Position = new Vector2(jo["x"].asInt(),jo["y"].asInt());
+						kDef.Position = new Vector2(jo["x"].asFloat(),jo["y"].asFloat());
 						kDef.Rotation = jo["rotation"].asFloat();
 
 						aDef.KeyFrameDefs.Add(kDef);
