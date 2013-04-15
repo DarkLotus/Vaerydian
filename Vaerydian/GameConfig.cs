@@ -322,12 +322,11 @@ namespace Vaerydian
 					cDef.CurrentSkeleton = jo["current_skeleton"].asString();
 					cDef.CurrentAnimation = jo["current_animation"].asString();
 
-					List<Dictionary<string,object>> skDefs = jo["skeletons"].asList<Dictionary<string,object>>();
+					List<string> skels = jo["skeletons"].asList<string>();
 
-					foreach(Dictionary<string,object> sDict in skDefs){
-						jo = new JsonObject(sDict);
+					foreach(string skel in skels){
 
-						cDef.SkeletalDefs.Add(SkeletalDefs[jo["skeleton_def"].asString()]);
+						cDef.SkeletalDefs.Add (SkeletalDefs[skel]);
 					}
 
 					CharacterDefs.Add(cDef.Name,cDef);

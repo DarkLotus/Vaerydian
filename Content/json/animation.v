@@ -3,14 +3,19 @@
 		{
 			"name": "BAT",
 			"skeletons": [
-				{
-					"name":"NORMAL",
-					"skeleton_def":"BAT_NORMAL"
-				}
+				"BAT_NORMAL"
 			],
-			"current_skeleton":"BAT_NORMAL",
+			"current_skeleton":"NORMAL",
 			"current_animation":"FLY"
 		},
+		{
+			"name" : "PLAYER",
+			"skeletons":[
+				"PLAYER_FRONT"
+			],
+			"current_skeleton":"FRONT"
+			"current_animation":"IDLE"
+		}
 	],
 	"skeleton_defs":[
 		{
@@ -65,6 +70,31 @@
 					]
 				}
 			] 
+		},
+		{
+			"name":"PLAYER_FRONT",
+			"bones":[
+				{
+					"name": "PLAYER_HEAD_FRONT",
+					"texture":"characters\\face",
+					"origin_x":7,
+					"origin_y":0,
+					"rotation":0.0,
+					"rotation_x":0,
+					"rotation_y":0,
+					"time":500,
+					"animations":[
+						{
+							"name": "IDLE",
+							"animation_def":"PLAYER_HEAD_FRONT_IDLE"
+						},
+						{
+							"name": "MOVING",
+							"animation_def":"PLAYER_HEAD_FRONT_IDLE"
+						}
+					]
+				}
+			]
 		}
 	],
 	"animation_defs":[
@@ -93,6 +123,15 @@
 				{"percent":1.0, "x": 0,"y":0,"rotation":0.0}
 			]
 
+		},
+		{
+			"name":"PLAYER_HEAD_FRONT_IDLE",
+			"key_frames":[
+				{"percent":0.0,"x":0,"y":0,"rotation":0.0},
+				{"percent":0.4,"x":0,"y":1,"rotation":0.0},
+				{"percent":0.5,"x":0,"y":2,"rotation":0.0},
+				{"percent":1.0,"x":0,"y":0,"rotation":0.0}
+			]
 		}
 	]
 }

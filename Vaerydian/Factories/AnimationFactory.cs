@@ -51,6 +51,7 @@ namespace Vaerydian.Factories
 					skel.Bones.Add(bone);
 				}
 				c.Skeletons.Add(sDef.Name,skel);
+
 			}
 
 			return c;
