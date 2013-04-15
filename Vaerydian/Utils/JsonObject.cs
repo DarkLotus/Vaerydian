@@ -72,6 +72,33 @@ namespace Vaerydian
 			return (T) Enum.Parse (typeof(T), (string)j_InternalObject);
 		}
 
+		public bool hasEntry(params string[] values){
+			if(values.Length < 1)
+				return false;
+			
+			var val = j_JsonDict;
+			bool retVal = false;
+			
+			for (int i = 0; i < values.Length-1; i++) {
+				
+				if (val.ContainsKey(values [i])){
+					val = (Dictionary<string,object>)val[values [i]];
+					retVal = true;
+					continue;
+				}else{
+					retVal = false;
+					break;
+				}
+			}
+			
+			if (val.ContainsKey (values [values.Length - 1]))
+				retVal = true;
+			else
+				retVal = false;
+			
+			
+			return retVal;
+		}
 	}
 }
 
