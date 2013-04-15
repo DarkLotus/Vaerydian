@@ -35,16 +35,30 @@ namespace Vaerydian.Factories
 					bone.RotationOrigin = bDef.RotationOrigin;
 					bone.AnimationTime = bDef.Time;
 
+					foreach(string key in bDef.Animations.Keys){
+						List<KeyFrame> list = new List<KeyFrame>();
+						foreach(KeyFrameDef kDef in bDef.Animations[key].KeyFrameDefs){
+							KeyFrame kf = new KeyFrame(kDef.Percent,
+							                           kDef.Position,
+							                           kDef.Rotation);
+							list.Add (kf);
+						}
+						bone.Animations.Add(key,list);
+					}
 
+					skel.Bones.Add(bone);
 				}
+				c.Skeletons.Add(sDef.Name,skel);
 			}
 
-			return null;
+			return c;
 		}
 
         public static Character createBatAnimation()
         {
-            Character bat = new Character();
+			return createCharacter ("BAT");
+			/*
+			Character bat = new Character();
 
             Skeleton skeleton = new Skeleton();
 
@@ -96,6 +110,7 @@ namespace Vaerydian.Factories
             bat.CurrentSkeleton = "normal";
 
             return bat;
+			*/
         }
 
         public static Character createPlayerAnimation()

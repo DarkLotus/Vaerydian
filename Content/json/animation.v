@@ -8,7 +8,7 @@
 					"skeleton_def":"BAT_NORMAL"
 				}
 			],
-			"current_skeleton":"NORMAL",
+			"current_skeleton":"BAT_NORMAL",
 			"current_animation":"FLY"
 		},
 	],
