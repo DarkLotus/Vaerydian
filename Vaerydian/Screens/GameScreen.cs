@@ -40,6 +40,7 @@ using Vaerydian.Utils;
 using Vaerydian.Sessions;
 using Vaerydian.Maps;
 using Vaerydian.ACB;
+using Vaerydian.Characters;
 
 
 namespace Vaerydian.Screens
@@ -238,7 +239,7 @@ namespace Vaerydian.Screens
             ecsInstance.ComponentManager.registerComponentType(new Equipment());
             ecsInstance.ComponentManager.registerComponentType(new Armor());
             ecsInstance.ComponentManager.registerComponentType(new Weapon());
-            ecsInstance.ComponentManager.registerComponentType(new Attributes());
+            ecsInstance.ComponentManager.registerComponentType(new Statistics());
             ecsInstance.ComponentManager.registerComponentType(new Skills());
             ecsInstance.ComponentManager.registerComponentType(new Knowledges());
             ecsInstance.ComponentManager.registerComponentType(new Factions());
@@ -427,7 +428,7 @@ namespace Vaerydian.Screens
 
 				//set skill level
 				Skills skills = new Skills ();
-				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [Utils.SkillName.Ranged].Value;
+				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [SkillName.Ranged].Value;
                 
 				//set seed
 				Position pos = new Position ();

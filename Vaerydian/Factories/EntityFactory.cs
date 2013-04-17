@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +8,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 using ECSFramework;
 
-using Vaerydian.Characters.Experience;
-using Vaerydian.Characters.Skills;
-using Vaerydian.Characters.Attributes;
+using Vaerydian.Characters;
+
 using Vaerydian.Components;
 using Vaerydian.Components.Dbg;
 using Vaerydian.Behaviors;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
 
-using Vaerydian.Characters.Factions;
+
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
@@ -88,19 +87,19 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
-            Attributes attributes = new Attributes();
-            attributes.AttributeSet.Add(AttributeType.Focus, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Endurance, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Mind, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Muscle, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Perception, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Personality, skillLevel);
-            attributes.AttributeSet.Add(AttributeType.Quickness, skillLevel);
+            Statistics attributes = new Statistics();
+            attributes.StatisticSet.Add(StatType.Focus, skillLevel);
+            attributes.StatisticSet.Add(StatType.Endurance, skillLevel);
+            attributes.StatisticSet.Add(StatType.Mind, skillLevel);
+            attributes.StatisticSet.Add(StatType.Muscle, skillLevel);
+            attributes.StatisticSet.Add(StatType.Perception, skillLevel);
+            attributes.StatisticSet.Add(StatType.Personality, skillLevel);
+            attributes.StatisticSet.Add(StatType.Quickness, skillLevel);
 			ECSInstance.EntityManager.addComponent(e, attributes);
 
             //create health
-			Health health = new Health(attributes.AttributeSet[AttributeType.Endurance] * 5);// new Health(5000);//
-			health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
+			Health health = new Health(attributes.StatisticSet[StatType.Endurance] * 5);// new Health(5000);//
+			health.RecoveryAmmount = attributes.StatisticSet[StatType.Endurance] / 5;
             health.RecoveryRate = 1000;
 			ECSInstance.EntityManager.addComponent(e, health);
 

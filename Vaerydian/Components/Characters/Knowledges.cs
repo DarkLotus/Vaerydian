@@ -5,7 +5,7 @@ using System.Text;
 
 using ECSFramework;
 
-using Vaerydian.Characters.Experience;
+using Vaerydian.Characters;
 
 namespace Vaerydian.Components.Characters
 {

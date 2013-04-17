@@ -44,12 +44,7 @@
     <Compile Include="Behaviors\FollowerBehavior.cs" />
     <Compile Include="Behaviors\FollowPath.cs" />
     <Compile Include="Behaviors\WanderingEnemyBehavior.cs" />
-    <Compile Include="Characters\Attributes\AttributeStat.cs" />
-    <Compile Include="Characters\Experience\Knowledge.cs" />
-    <Compile Include="Characters\Experience\KnowledgeEnums.cs" />
-    <Compile Include="Characters\Factions\Faction.cs" />
     <Compile Include="Characters\PlayerHolder.cs" />
-    <Compile Include="Characters\Skills\Skill.cs" />
     <Compile Include="Components\Actions\Attack.cs" />
     <Compile Include="Components\Actions\Damage.cs" />
     <Compile Include="Components\Actions\Interactable.cs" />
@@ -58,7 +53,6 @@
     <Compile Include="Components\Audio\Audio.cs" />
     <Compile Include="Components\Characters\Aggrivation.cs" />
     <Compile Include="Components\Characters\AiBehavior.cs" />
-    <Compile Include="Components\Characters\Attributes.cs" />
     <Compile Include="Components\Characters\Award.cs" />
     <Compile Include="Components\Characters\Factions.cs" />
     <Compile Include="Components\Characters\Health.cs" />
@@ -150,7 +144,6 @@
     <Compile Include="Utils\QuadNode.cs" />
     <Compile Include="Utils\QuadTree.cs" />
     <Compile Include="Utils\Skeleton.cs" />
-    <Compile Include="Utils\SkillNames.cs" />
     <Compile Include="Utils\SpriteAnimation.cs" />
     <Compile Include="Utils\StateMachine.cs" />
     <Compile Include="Utils\SupportedInteractions.cs" />
@@ -180,6 +173,12 @@
     <Compile Include="Utils\DamageUtils.cs" />
     <Compile Include="Components\Utils\Character.cs" />
     <Compile Include="Systems\Update\LightSystem.cs" />
+    <Compile Include="Components\Characters\Statistics.cs" />
+    <Compile Include="Characters\Knowledge.cs" />
+    <Compile Include="Characters\KnowledgeEnums.cs" />
+    <Compile Include="Characters\Faction.cs" />
+    <Compile Include="Characters\Skill.cs" />
+    <Compile Include="Characters\Statistic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -215,5 +214,9 @@
   -->
   <ItemGroup>
     <Folder Include="Generators\" />
+    <Folder Include="Characters\Experience\" />
+    <Folder Include="Characters\Factions\" />
+    <Folder Include="Characters\Skills\" />
+    <Folder Include="Characters\Statistics\" />
   </ItemGroup>
 </Project>

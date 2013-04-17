@@ -10,6 +10,7 @@ using Vaerydian.Components;
 using Vaerydian.Factories;
 using Vaerydian.Components.Actions;
 using Vaerydian.Components.Characters;
+using Vaerydian.Characters;
 
 namespace Vaerydian.Systems.Update
 {
@@ -30,7 +31,7 @@ namespace Vaerydian.Systems.Update
         {
             d_DamageMapper = new ComponentMapper(new Damage(), e_ECSInstance);
             d_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
-            d_AttributeMapper = new ComponentMapper(new Attributes(), e_ECSInstance);
+            d_AttributeMapper = new ComponentMapper(new Statistics(), e_ECSInstance);
             d_InteractMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
 
             d_UtilFactory = new UtilFactory(e_ECSInstance);;
@@ -85,7 +86,7 @@ namespace Vaerydian.Systems.Update
                 {
                     if (((Interactable)d_InteractMapper.get(damage.Target)).SupportedInteractions.MAY_ADVANCE)
                     {
-                        int endurance = ((Attributes)d_AttributeMapper.get(damage.Target)).AttributeSet[AttributeType.Endurance];
+                        int endurance = ((Statistics)d_AttributeMapper.get(damage.Target)).StatisticSet[StatType.Endurance];
 
                         if (health.MaxHealth < (endurance * 5))
                         {

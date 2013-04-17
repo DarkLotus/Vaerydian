@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 using ECSFramework;
 
-using Vaerydian.Characters.Experience;
+using Vaerydian.Characters;
 using Vaerydian.Components;
 using Vaerydian.Components.Items;
 using Vaerydian.Components.Utils;
@@ -16,6 +16,7 @@ using Vaerydian.Factories;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Actions;
 using Vaerydian.Components.Characters;
+
 
 namespace Vaerydian.Systems.Update
 {
@@ -48,7 +49,7 @@ namespace Vaerydian.Systems.Update
             a_AttackMapper = new ComponentMapper(new Attack(), e_ECSInstance);
             a_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             a_SkillMapper = new ComponentMapper(new Skills(), e_ECSInstance);
-            a_AttributeMapper = new ComponentMapper(new Attributes(), e_ECSInstance);
+            a_AttributeMapper = new ComponentMapper(new Statistics(), e_ECSInstance);
             a_KnowledgeMapper = new ComponentMapper(new Knowledges(), e_ECSInstance);
             a_EquipmentMapper = new ComponentMapper(new Equipment(), e_ECSInstance);
             a_ItemMapper = new ComponentMapper(new Item(), e_ECSInstance);
@@ -138,17 +139,17 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //get attributes
-            Attributes attAttr = (Attributes)a_AttributeMapper.get(attack.Attacker);
-            Attributes defAttr = (Attributes)a_AttributeMapper.get(attack.Defender);
+            Statistics attAttr = (Statistics)a_AttributeMapper.get(attack.Attacker);
+            Statistics defAttr = (Statistics)a_AttributeMapper.get(attack.Defender);
 
             //dont continue if either of these are null
             if (attAttr == null || defAttr == null)
                 return;
 
-            int perception = attAttr.AttributeSet[AttributeType.Perception];
-            int muscle = attAttr.AttributeSet[AttributeType.Muscle];
-            int quickness = defAttr.AttributeSet[AttributeType.Quickness];
-            int endurance = defAttr.AttributeSet[AttributeType.Endurance];
+            int perception = attAttr.StatisticSet[StatType.Perception];
+            int muscle = attAttr.StatisticSet[StatType.Muscle];
+            int quickness = defAttr.StatisticSet[StatType.Quickness];
+            int endurance = defAttr.StatisticSet[StatType.Endurance];
 
             //get Experience
             Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
@@ -233,13 +234,13 @@ namespace Vaerydian.Systems.Update
                     if (perception < quickness)
                     {
                         if (rand.NextDouble() <= ((double)(quickness - perception) / (double)quickness) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, AttributeType.Perception, 1);
+                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, StatType.Perception, 1);
                     }
 
                     if (muscle < endurance)
                     {
                         if (rand.NextDouble() <= ((double)(endurance - muscle) / (double)endurance) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, AttributeType.Muscle, 1);
+                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, StatType.Muscle, 1);
                     }
                 }
 
@@ -256,14 +257,14 @@ namespace Vaerydian.Systems.Update
                     if (quickness < perception)
                     {
                         if (rand.NextDouble() <= ((double)(perception - quickness) / (double)perception) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, AttributeType.Quickness, 1);
+                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, StatType.Quickness, 1);
                     }
 
 
                     if (endurance < muscle)
                     {
                         if (rand.NextDouble() <= ((double)(muscle - endurance) / (double)muscle) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, AttributeType.Endurance, 1);
+                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, StatType.Endurance, 1);
                     }
                 }
             }
@@ -306,17 +307,17 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //get attributes
-            Attributes attAttr = (Attributes)a_AttributeMapper.get(attack.Attacker);
-            Attributes defAttr = (Attributes)a_AttributeMapper.get(attack.Defender);
+            Statistics attAttr = (Statistics)a_AttributeMapper.get(attack.Attacker);
+            Statistics defAttr = (Statistics)a_AttributeMapper.get(attack.Defender);
 
             //dont continue if either of these are null
             if (attAttr == null || defAttr == null)
                 return;
 
-            int perception = attAttr.AttributeSet[AttributeType.Perception];
-            int quickness = defAttr.AttributeSet[AttributeType.Quickness];
-            int focus = attAttr.AttributeSet[AttributeType.Focus];
-            int endurance = defAttr.AttributeSet[AttributeType.Endurance];
+            int perception = attAttr.StatisticSet[StatType.Perception];
+            int quickness = defAttr.StatisticSet[StatType.Quickness];
+            int focus = attAttr.StatisticSet[StatType.Focus];
+            int endurance = defAttr.StatisticSet[StatType.Endurance];
 
             //get Experience
             Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
@@ -404,13 +405,13 @@ namespace Vaerydian.Systems.Update
                     if (perception < quickness)
                     {
                         if (rand.NextDouble() <= ((double)(quickness - perception) / (double)quickness) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, AttributeType.Perception, 1);
+                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, StatType.Perception, 1);
                     }
 
                     if (focus < endurance)
                     {
                         if(rand.NextDouble() <= ((double)(endurance - focus) / (double) endurance) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, AttributeType.Focus, 1);
+                            a_UtilFactory.createAttributeAward(attack.Defender, attack.Attacker, StatType.Focus, 1);
                     }
                 }
 
@@ -427,14 +428,14 @@ namespace Vaerydian.Systems.Update
                     if (quickness < perception)
                     {
                         if (rand.NextDouble() <= ((double)(perception - quickness) / (double)perception) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, AttributeType.Quickness, 1);
+                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, StatType.Quickness, 1);
                     }
 
 
                     if (endurance < focus)
                     {
                         if (rand.NextDouble() <= ((double)(focus - endurance) / (double)focus) * 0.25)
-                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, AttributeType.Endurance, 1);
+                            a_UtilFactory.createAttributeAward(attack.Attacker, attack.Defender, StatType.Endurance, 1);
                     }
                 }
             }

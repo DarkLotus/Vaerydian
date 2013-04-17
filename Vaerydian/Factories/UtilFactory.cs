@@ -15,6 +15,8 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Characters;
+using Vaerydian.Characters;
+
 
 namespace Vaerydian.Factories
 {
@@ -170,7 +172,7 @@ namespace Vaerydian.Factories
             u_EcsInstance.refresh(e);
         }
 
-        public void createAttributeAward(Entity awarder, Entity receiver, AttributeType attribute, int maxAwardable)
+        public void createAttributeAward(Entity awarder, Entity receiver, StatType attribute, int maxAwardable)
         {
             Entity e = u_EcsInstance.create();
 

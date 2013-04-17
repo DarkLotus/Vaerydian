@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ using ECSFramework;
 
 using Vaerydian.Components.Characters;
 using Vaerydian.Components.Utils;
-using Vaerydian.Characters.Experience;
+using Vaerydian.Characters;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Factories;
 
@@ -38,7 +38,7 @@ namespace Vaerydian.Systems.Update
             v_InfoMapper = new ComponentMapper(new Information(), e_ECSInstance);
             v_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             v_SkillMapper = new ComponentMapper(new Skills(), e_ECSInstance);
-            v_AttributeMapper = new ComponentMapper(new Attributes(), e_ECSInstance);
+            v_AttributeMapper = new ComponentMapper(new Statistics(), e_ECSInstance);
             v_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
 
             v_UIFactory = new UIFactory(e_ECSInstance);
@@ -186,9 +186,9 @@ namespace Vaerydian.Systems.Update
         /// <param name="award"></param>
         private void awardAttributeUp(Award award)
         {
-            Attributes attributes = (Attributes)v_AttributeMapper.get(award.Receiver);
+            Statistics attributes = (Statistics)v_AttributeMapper.get(award.Receiver);
 
-            attributes.AttributeSet[award.AttributeType] += award.MaxAwardable;
+            attributes.StatisticSet[award.AttributeType] += award.MaxAwardable;
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
@@ -198,10 +198,10 @@ namespace Vaerydian.Systems.Update
         private void awardHealthUp(Award award)
         {
             Health health = (Health)v_HealthMapper.get(award.Receiver);
-            Attributes attributes = (Attributes)v_AttributeMapper.get(award.Receiver);
+            Statistics attributes = (Statistics)v_AttributeMapper.get(award.Receiver);
 
             health.MaxHealth += award.MaxAwardable;
-            health.RecoveryAmmount = attributes.AttributeSet[AttributeType.Endurance] / 5;
+            health.RecoveryAmmount = attributes.StatisticSet[StatType.Endurance] / 5;
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)

@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 using ECSFramework;
 using Vaerydian.Utils;
+using Vaerydian.Characters;
 
 namespace Vaerydian.Components.Characters
 {
@@ -105,9 +106,9 @@ namespace Vaerydian.Components.Characters
             set { v_SkillName = value; }
         }
 
-        private AttributeType v_AttributeType;
+        private StatType v_AttributeType;
 
-        public AttributeType AttributeType
+        public StatType AttributeType
         {
             get { return v_AttributeType; }
             set { v_AttributeType = value; }

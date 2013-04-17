@@ -16,7 +16,7 @@ using ECSFramework;
 
 using Vaerydian.Components;
 using Vaerydian.Components.Characters;
-using Vaerydian.Characters.Factions;
+using Vaerydian.Characters;
 using Vaerydian.Utils;
 using Vaerydian.Components.Items;
 using Vaerydian.Factories;

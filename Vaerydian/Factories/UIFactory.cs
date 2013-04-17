@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +14,10 @@ using Microsoft.Xna.Framework.Input;
 using Glimpse.Components;
 using Glimpse.Controls;
 using Glimpse.Input;
+using Vaerydian.Characters;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Graphical;
+
 
 namespace Vaerydian.Factories
 {
@@ -295,21 +297,21 @@ namespace Vaerydian.Factories
 		private void labelUpdate(IControl sender, InterfaceArgs args)
 		{
 			Vaerydian.Components.Characters.Skills skills = ComponentMapper.get<Vaerydian.Components.Characters.Skills>(sender.Caller);
-			Vaerydian.Components.Characters.Attributes attributes = ComponentMapper.get<Vaerydian.Components.Characters.Attributes>(sender.Caller);
+			Vaerydian.Components.Characters.Statistics attributes = ComponentMapper.get<Vaerydian.Components.Characters.Statistics>(sender.Caller);
 
 			GLabel label = (GLabel) sender;
 			label.Text = "Skills" + "\n" +
-					     "  Range: " + skills.SkillSet[Vaerydian.Utils.SkillName.Ranged].Value + "\n" +
-						 "  Melee: " + skills.SkillSet[Vaerydian.Utils.SkillName.Melee].Value + "\n" +
-					     "  Avoidance: " + skills.SkillSet[Vaerydian.Utils.SkillName.Avoidance].Value + "\n"+
+					     "  Range: " + skills.SkillSet[SkillName.Ranged].Value + "\n" +
+						 "  Melee: " + skills.SkillSet[SkillName.Melee].Value + "\n" +
+					     "  Avoidance: " + skills.SkillSet[SkillName.Avoidance].Value + "\n"+
 						 "\n" +
 						 "Attributes" + "\n" +
-						 "  Endurance: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Endurance] + "\n" +
-						 "  Mind: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Mind] + "\n" +
-						 "  Muscle: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Muscle] + "\n" +
-						 "  Perception: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Perception] + "\n" +
-						 "  Personality: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Personality] + "\n" +
-						 "  Quickness: " + attributes.AttributeSet[Vaerydian.Components.Characters.AttributeType.Quickness];
+						 "  Endurance: " + attributes.StatisticSet[StatType.Endurance] + "\n" +
+						 "  Mind: " + attributes.StatisticSet[StatType.Mind] + "\n" +
+						 "  Muscle: " + attributes.StatisticSet[StatType.Muscle] + "\n" +
+						 "  Perception: " + attributes.StatisticSet[StatType.Perception] + "\n" +
+						 "  Personality: " + attributes.StatisticSet[StatType.Personality] + "\n" +
+						 "  Quickness: " + attributes.StatisticSet[StatType.Quickness];
 		}
     }
 }
