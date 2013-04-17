@@ -50,8 +50,8 @@ namespace Vaerydian.Systems.Update
 
                 if (life.IsAlive)
                 {
-                    UtilFactory uf = new UtilFactory(e_ECSInstance);
-                    uf.createSound("audio\\effects\\death", true, 1f);
+                    
+					UtilFactory.createSound("audio\\effects\\death", true, 1f);
 
                     //issue victory
                     Aggrivation aggro = (Aggrivation)h_AggroMapper.get(entity);
@@ -68,7 +68,7 @@ namespace Vaerydian.Systems.Update
                             
                             if(interactor.SupportedInteractions.AWARDS_VICTORY &&
                                interactee.SupportedInteractions.MAY_RECEIVE_VICTORY)
-                                uf.createVictoryAward(entity, receiver, 10);
+								UtilFactory.createVictoryAward(entity, receiver, 10);
                         }
                     }
 

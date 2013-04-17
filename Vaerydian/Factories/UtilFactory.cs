@@ -20,22 +20,11 @@ using Vaerydian.Characters;
 
 namespace Vaerydian.Factories
 {
-    public class UtilFactory
+    public static class UtilFactory
     {
-        private ECSInstance u_EcsInstance;
-        private static GameContainer u_Container;
-        private Random rand = new Random();
-
-        public UtilFactory(ECSInstance ecsInstance, GameContainer container)
-        {
-            u_EcsInstance = ecsInstance;
-            u_Container = container;
-        }
-
-        public UtilFactory(ECSInstance ecsInstance) 
-        {
-            u_EcsInstance = ecsInstance;
-        }
+        public static ECSInstance ECSInstance;
+        public static GameContainer u_Container;
+        private static Random rand = new Random();
 
         /// <summary>
         /// create an attack
@@ -43,13 +32,13 @@ namespace Vaerydian.Factories
         /// <param name="attacker"></param>
         /// <param name="defender"></param>
         /// <param name="attackType"></param>
-        public void createAttack(Entity attacker, Entity defender, AttackType attackType)
+        public static void createAttack(Entity attacker, Entity defender, AttackType attackType)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
-            u_EcsInstance.EntityManager.addComponent(e, new Attack(attacker, defender, attackType));
+            ECSInstance.EntityManager.addComponent(e, new Attack(attacker, defender, attackType));
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
 
@@ -60,9 +49,9 @@ namespace Vaerydian.Factories
         /// <param name="type"></param>
         /// <param name="target"></param>
         /// <param name="pos"></param>
-        public void createDirectDamage(int amount, DamageType type, Entity target,Position pos)
+        public static void createDirectDamage(int amount, DamageType type, Entity target,Position pos)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Damage damage = new Damage();
 
@@ -72,53 +61,53 @@ namespace Vaerydian.Factories
             damage.DamageType = type;
             damage.Lifespan = 500;//.5 second
 
-            u_EcsInstance.EntityManager.addComponent(e, damage);
-            u_EcsInstance.EntityManager.addComponent(e, pos);
+            ECSInstance.EntityManager.addComponent(e, damage);
+            ECSInstance.EntityManager.addComponent(e, pos);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public void createSound(String name, bool play, float volume)
+        public static void createSound(String name, bool play, float volume)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Audio audio = new Audio(name,play,volume);
 
-            u_EcsInstance.EntityManager.addComponent(e, audio);
+            ECSInstance.EntityManager.addComponent(e, audio);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
         }
 
-        public void createFireSound(IUserInterface sender, InterfaceArgs args)
+        public static void createFireSound(IUserInterface sender, InterfaceArgs args)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Audio audio = new Audio("audio\\effects\\fire", true, 1f);
 
-            u_EcsInstance.EntityManager.addComponent(e, audio);
+            ECSInstance.EntityManager.addComponent(e, audio);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public void createSound(String name, bool play, float volume, float pitch)
+        public static void createSound(String name, bool play, float volume, float pitch)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Audio audio = new Audio(name, play, volume, pitch);
 
-            u_EcsInstance.EntityManager.addComponent(e, audio);
+            ECSInstance.EntityManager.addComponent(e, audio);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void createMeleeAction(Vector2 position, Vector2 heading, Transform transform, Entity owner)
+        public static void createMeleeAction(Vector2 position, Vector2 heading, Transform transform, Entity owner)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Sprite sprite = new Sprite("sword", "swordnormal", 32, 32, 0, 0);
 
@@ -129,21 +118,21 @@ namespace Vaerydian.Factories
             action.Lifetime = 250;
             action.Range = 32;
 
-            u_EcsInstance.EntityManager.addComponent(e, new Position(position,new Vector2(16)));
-            u_EcsInstance.EntityManager.addComponent(e, new Heading(heading));
-            u_EcsInstance.EntityManager.addComponent(e, transform);
-            u_EcsInstance.EntityManager.addComponent(e, sprite);
-            u_EcsInstance.EntityManager.addComponent(e, action);
+            ECSInstance.EntityManager.addComponent(e, new Position(position,new Vector2(16)));
+            ECSInstance.EntityManager.addComponent(e, new Heading(heading));
+            ECSInstance.EntityManager.addComponent(e, transform);
+            ECSInstance.EntityManager.addComponent(e, sprite);
+            ECSInstance.EntityManager.addComponent(e, action);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
         /// <summary>
         /// creates a victory entity component
         /// </summary>
-        public void createVictoryAward(Entity awarder, Entity receiver, int maxAwardable)
+        public static void createVictoryAward(Entity awarder, Entity receiver, int maxAwardable)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Award victory = new Award();
             victory.AwardType = AwardType.Victory;
@@ -151,14 +140,14 @@ namespace Vaerydian.Factories
             victory.Receiver = receiver;
             victory.MaxAwardable = maxAwardable;
 
-            u_EcsInstance.EntityManager.addComponent(e, victory);
+            ECSInstance.EntityManager.addComponent(e, victory);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public void createSkillupAward(Entity awarder, Entity receiver, SkillName skill, int maxAwardable)
+        public static void createSkillupAward(Entity awarder, Entity receiver, SkillName skill, int maxAwardable)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Award award = new Award();
             award.AwardType = AwardType.SkillUp;
@@ -167,14 +156,14 @@ namespace Vaerydian.Factories
             award.MaxAwardable = maxAwardable;
             award.SkillName = skill;
 
-            u_EcsInstance.EntityManager.addComponent(e, award);
+            ECSInstance.EntityManager.addComponent(e, award);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public void createAttributeAward(Entity awarder, Entity receiver, StatType attribute, int maxAwardable)
+        public static void createAttributeAward(Entity awarder, Entity receiver, StatType attribute, int maxAwardable)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Award award = new Award();
             award.AwardType = AwardType.Attribute;
@@ -183,23 +172,23 @@ namespace Vaerydian.Factories
             award.MaxAwardable = maxAwardable;
             award.AttributeType = attribute;
 
-            u_EcsInstance.EntityManager.addComponent(e, award);
+            ECSInstance.EntityManager.addComponent(e, award);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public void createHealthAward(Entity receiver, int maxAwardable)
+        public static void createHealthAward(Entity receiver, int maxAwardable)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             Award award = new Award();
             award.AwardType = AwardType.Health;
             award.Receiver = receiver;
             award.MaxAwardable = maxAwardable;
 
-            u_EcsInstance.EntityManager.addComponent(e, award);
+            ECSInstance.EntityManager.addComponent(e, award);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
     }

@@ -575,8 +575,7 @@ namespace Vaerydian.Behaviors
 
 			EntityFactory.createSonicProjectile(pos + dir * 16, dir, 10, 1000, EntityFactory.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
 
-            UtilFactory uf = new UtilFactory(w_ECSInstance);
-            uf.createSound("audio\\effects\\fire", true, 0.5f);
+            UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
 
             return BehaviorReturnCode.Success;
         }

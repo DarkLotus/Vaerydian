@@ -171,6 +171,7 @@ namespace Vaerydian.Screens
 			AgentFactory.ECSInstance = ecsInstance;
 			EntityFactory.ECSInstance = ecsInstance;
 			EntityFactory.GameContainer = gameContainer;
+			UtilFactory.ECSInstance = ecsInstance;
 
             //instantiate the bus
             bus = new Bus();

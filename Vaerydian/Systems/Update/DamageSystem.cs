@@ -23,8 +23,6 @@ namespace Vaerydian.Systems.Update
 
         private Random d_Rand = new Random();
 
-        private UtilFactory d_UtilFactory;
-
         public DamageSystem() { }
 
         public override void initialize()
@@ -34,7 +32,6 @@ namespace Vaerydian.Systems.Update
             d_AttributeMapper = new ComponentMapper(new Statistics(), e_ECSInstance);
             d_InteractMapper = new ComponentMapper(new Interactable(), e_ECSInstance);
 
-            d_UtilFactory = new UtilFactory(e_ECSInstance);;
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -93,7 +90,7 @@ namespace Vaerydian.Systems.Update
 
                             if (d_Rand.NextDouble() <= ((double)(endurance*5) - (double)health.MaxHealth)/(double)(endurance*5))
                             {
-                                d_UtilFactory.createHealthAward(damage.Target, 1);
+                                UtilFactory.createHealthAward(damage.Target, 1);
                             }
                         }
                     }
@@ -103,16 +100,16 @@ namespace Vaerydian.Systems.Update
                     switch (d_Rand.Next(0, 7))
                     {
                         case 1:
-                            d_UtilFactory.createSound("audio\\effects\\hurt", true, 1f);
+                            UtilFactory.createSound("audio\\effects\\hurt", true, 1f);
                             break;
                         case 3:
-                            d_UtilFactory.createSound("audio\\effects\\hurt2", true, 1f);
+                            UtilFactory.createSound("audio\\effects\\hurt2", true, 1f);
                             break;
                         case 5:
-                            d_UtilFactory.createSound("audio\\effects\\hurt3", true, 1f);
+                            UtilFactory.createSound("audio\\effects\\hurt3", true, 1f);
                             break;
                         case 7:
-                            d_UtilFactory.createSound("audio\\effects\\hurt4", true, 1f);
+                            UtilFactory.createSound("audio\\effects\\hurt4", true, 1f);
                             break;
                         default:
                             break;

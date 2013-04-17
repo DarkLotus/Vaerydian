@@ -241,8 +241,6 @@ namespace Vaerydian.Systems.Update
             {
                 p_LastFired = 0;
 
-                UtilFactory uf = new UtilFactory(e_ECSInstance);
-
                 Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;
                 dir.Normalize();
 
@@ -250,7 +248,7 @@ namespace Vaerydian.Systems.Update
                 trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
                 trans.RotationOrigin = new Vector2(0, 16);
 
-                uf.createMeleeAction(pos + dir * 16, dir, trans, entity);
+				UtilFactory.createMeleeAction(pos + dir * 16, dir, trans, entity);
             }
 
             if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
@@ -272,8 +270,7 @@ namespace Vaerydian.Systems.Update
 
 				EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
                 
-                UtilFactory uf = new UtilFactory(e_ECSInstance);
-                uf.createSound("audio\\effects\\fire", true, 0.5f);
+				UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
             } 
 
             if (InputManager.isKeyPressed(Keys.Up))

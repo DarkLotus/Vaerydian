@@ -28,7 +28,6 @@ namespace Vaerydian.Systems.Update
         ComponentMapper m_FactionMapper;
         ComponentMapper m_TransformMapper;
         
-        UtilFactory m_UtilFactory;
         
         Entity m_Spatial;
         Entity m_Mouse;
@@ -46,7 +45,6 @@ namespace Vaerydian.Systems.Update
             m_FactionMapper = new ComponentMapper(new Factions(), e_ECSInstance);
             m_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
 
-            m_UtilFactory = new UtilFactory(e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -131,7 +129,7 @@ namespace Vaerydian.Systems.Update
                                     action.HitByAction.Add(locals[i]);
 
                                     //create melee attack
-                                    m_UtilFactory.createAttack(action.Owner, locals[i], AttackType.Melee);
+                                    UtilFactory.createAttack(action.Owner, locals[i], AttackType.Melee);
 
                                     //destroy melee action
                                     //e_ECSInstance.deleteEntity(entity);

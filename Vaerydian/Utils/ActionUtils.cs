@@ -3,6 +3,7 @@ using ECSFramework;
 using Vaerydian.Components.Actions;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
+using Vaerydian.Components.Spatials;
 
 namespace Vaerydian.Utils
 {
@@ -22,7 +23,8 @@ namespace Vaerydian.Utils
 		DAMAGE = 0,
 		MODIFY = 1,
 		CREATE = 2,
-		DESTROY = 3
+		DESTROY = 3,
+		INTERACT = 4
 	}
 	
 	public enum ImpactType{
@@ -90,6 +92,8 @@ namespace Vaerydian.Utils
 				break;
 			case ActionType.DESTROY:
 				break;
+			case ActionType.INTERACT:
+				break;
 			default:
 				break;
 			}
@@ -140,6 +144,9 @@ namespace Vaerydian.Utils
 		private static void doDestroyAction(ActionPackage aPack){
 		}
 
+		private static void doInteractionAction(ActionPackage aPack){
+		}
+
 		public static float getStatProbability(int skillValue, int attributeValue, float knowledgeValue, int speedValue){
 			return skillValue / 4f + attributeValue / 4f + knowledgeValue + speedValue;
 		}
@@ -154,7 +161,12 @@ namespace Vaerydian.Utils
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){
+			int dmg = new Random ().Next (aPack.ActionDef.DamageDef.Min, aPack.ActionDef.DamageDef.Max);
 
+			UtilFactory.createDirectDamage (dmg,
+			                               aPack.ActionDef.DamageDef.DamageType,
+			                               aPack.Target,
+			                               ComponentMapper.get<Position> (aPack.Target));
 		}
 		
 	}

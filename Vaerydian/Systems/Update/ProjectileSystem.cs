@@ -35,7 +35,6 @@ namespace Vaerydian.Systems.Update
 
         private Entity p_Spatial;
 
-        private UtilFactory p_Factory;
 
         public ProjectileSystem() { }
 
@@ -53,7 +52,7 @@ namespace Vaerydian.Systems.Update
             p_FactionMapper = new ComponentMapper(new Factions(), e_ECSInstance);
             p_LifeMapper = new ComponentMapper(new Life(), e_ECSInstance);
 
-            p_Factory = new UtilFactory(e_ECSInstance);
+
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -133,7 +132,7 @@ namespace Vaerydian.Systems.Update
                                     if (lfactions.OwnerFaction.FactionType == pfactions.OwnerFaction.FactionType)
                                         continue;
 
-                                    p_Factory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
+                                    UtilFactory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
 
 
                                     //destory yourself
@@ -166,8 +165,7 @@ namespace Vaerydian.Systems.Update
                     heading.setHeading(reflect);
                      */
                     
-                    UtilFactory uf = new UtilFactory(e_ECSInstance);
-                    uf.createSound("audio\\effects\\hitwall", true, 0.5f);
+					UtilFactory.createSound("audio\\effects\\hitwall", true, 0.5f);
 
                     e_ECSInstance.deleteEntity(entity);
                 }
