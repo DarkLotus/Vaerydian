@@ -179,6 +179,7 @@
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Utils\DamageUtils.cs" />
     <Compile Include="Components\Utils\Character.cs" />
+    <Compile Include="Systems\Update\LightSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
