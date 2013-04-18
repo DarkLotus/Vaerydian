@@ -326,20 +326,14 @@ namespace Vaerydian.Systems.Update
 
             if (InputManager.isKeyToggled(Keys.U))
             {
-                UIFactory uf = new UIFactory(e_ECSInstance);
-
-                ViewPort camera = (ViewPort)p_ViewPortMapper.get(p_Camera);
-
-
-                uf.createTimedDialogWindow(entity, "Character Dialog Here", mPosition.Pos + mPosition.Offset - camera.getOrigin(), "Player", 3000);
+				ActionDef def = GameConfig.ActionDefs["TEST_DMG"];
+				ActionFactory.createAction(def,entity,entity);
             }
 
             if (InputManager.isKeyToggled(Keys.B))
             {
 				if(!p_StatWindowOpen){
-					UIFactory uf = new UIFactory(e_ECSInstance);
-
-					p_StatWindow = uf.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
+					p_StatWindow = UIFactory.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
 
 					p_StatWindowOpen = true;
 				}else

@@ -83,7 +83,7 @@ namespace Vaerydian.Systems.Update
                 {
                     if (((Interactable)d_InteractMapper.get(damage.Target)).SupportedInteractions.MAY_ADVANCE)
                     {
-                        int endurance = ((Statistics)d_AttributeMapper.get(damage.Target)).StatisticSet[StatType.Endurance];
+                        int endurance = ((Statistics)d_AttributeMapper.get(damage.Target)).StatisticSet[StatType.ENDURANCE];
 
                         if (health.MaxHealth < (endurance * 5))
                         {

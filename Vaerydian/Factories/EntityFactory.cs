@@ -88,29 +88,29 @@ namespace Vaerydian.Factories
 
             //setup attributes
             Statistics attributes = new Statistics();
-            attributes.StatisticSet.Add(StatType.Focus, skillLevel);
-            attributes.StatisticSet.Add(StatType.Endurance, skillLevel);
-            attributes.StatisticSet.Add(StatType.Mind, skillLevel);
-            attributes.StatisticSet.Add(StatType.Muscle, skillLevel);
-            attributes.StatisticSet.Add(StatType.Perception, skillLevel);
-            attributes.StatisticSet.Add(StatType.Personality, skillLevel);
-            attributes.StatisticSet.Add(StatType.Quickness, skillLevel);
+            attributes.StatisticSet.Add(StatType.FOCUS, skillLevel);
+            attributes.StatisticSet.Add(StatType.ENDURANCE, skillLevel);
+            attributes.StatisticSet.Add(StatType.MIND, skillLevel);
+            attributes.StatisticSet.Add(StatType.MUSCLE, skillLevel);
+            attributes.StatisticSet.Add(StatType.PERCEPTION, skillLevel);
+            attributes.StatisticSet.Add(StatType.PERSONALITY, skillLevel);
+            attributes.StatisticSet.Add(StatType.QUICKNESS, skillLevel);
 			ECSInstance.EntityManager.addComponent(e, attributes);
 
             //create health
-			Health health = new Health(attributes.StatisticSet[StatType.Endurance] * 5);// new Health(5000);//
-			health.RecoveryAmmount = attributes.StatisticSet[StatType.Endurance] / 5;
+			Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 5);// new Health(5000);//
+			health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
             health.RecoveryRate = 1000;
 			ECSInstance.EntityManager.addComponent(e, health);
 
             //setup skills
             Skills skills = new Skills();
             Skill skill = new Skill("Ranged", skillLevel, SkillType.Offensive);
-            skills.SkillSet.Add(SkillName.Ranged, skill);
+            skills.SkillSet.Add(SkillName.RANGED, skill);
             skill = new Skill("Avoidance", skillLevel, SkillType.Defensive);
-            skills.SkillSet.Add(SkillName.Avoidance, skill);
+            skills.SkillSet.Add(SkillName.AVOIDANCE, skill);
             skill = new Skill("Melee", skillLevel, SkillType.Offensive);
-            skills.SkillSet.Add(SkillName.Melee, skill);
+            skills.SkillSet.Add(SkillName.MELEE, skill);
 			ECSInstance.EntityManager.addComponent(e, skills);
 
             Faction faction = new Faction(100, FactionType.Player);

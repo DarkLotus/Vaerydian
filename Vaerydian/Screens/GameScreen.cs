@@ -69,6 +69,7 @@ namespace Vaerydian.Screens
         private EntitySystem victorySystem;
         private EntitySystem uiUpdateSystem;
         private EntitySystem triggerSystem;
+		private EntitySystem actionSystem;
         
         //audio
         private EntitySystem audioSystem;
@@ -99,7 +100,6 @@ namespace Vaerydian.Screens
 
         //private EntityFactory entityFactory;
         private NPCFactory npcFactory;
-        private UIFactory uiFactory;
         private MapFactory mapFactory;
 
         private int avg, disp, elapsed;
@@ -172,6 +172,9 @@ namespace Vaerydian.Screens
 			EntityFactory.ECSInstance = ecsInstance;
 			EntityFactory.GameContainer = gameContainer;
 			UtilFactory.ECSInstance = ecsInstance;
+			UtilFactory.Container = gameContainer;
+			UIFactory.ECSInstance = ecsInstance;
+			UIFactory.Container = gameContainer;
 
             //instantiate the bus
             bus = new Bus();
@@ -202,7 +205,8 @@ namespace Vaerydian.Screens
             victorySystem = ecsInstance.SystemManager.setSystem(new AwardSystem(), new Award());
             uiUpdateSystem = ecsInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
             triggerSystem = ecsInstance.SystemManager.setSystem(new TriggerSystem(), new Trigger());
-            
+			actionSystem = ecsInstance.SystemManager.setSystem (new ActionSystem (), new VAction ());
+
             //audio systems
             audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
 
@@ -256,7 +260,6 @@ namespace Vaerydian.Screens
 
             //create the entity factory
             npcFactory = new NPCFactory(ecsInstance);
-            uiFactory = new UIFactory(ecsInstance,gameContainer);
             mapFactory = new MapFactory(ecsInstance, gameContainer);
 
             //setup local geometrymapper
@@ -345,7 +348,7 @@ namespace Vaerydian.Screens
 			EntityFactory.createCamera();
 			EntityFactory.createMousePointer();
 
-            uiFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
+			UIFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
             if(!g_FirstLoad && mapState.MapType != MapType_Old.WORLD)
                 npcFactory.createWandererTrigger(20, g_Map,(int)g_Parameters[GAMESCREEN_SKILLLEVEL]);
@@ -429,7 +432,7 @@ namespace Vaerydian.Screens
 
 				//set skill level
 				Skills skills = new Skills ();
-				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [SkillName.Ranged].Value;
+				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [SkillName.RANGED].Value;
                 
 				//set seed
 				Position pos = new Position ();
@@ -523,6 +526,7 @@ namespace Vaerydian.Screens
             attackSystem.process();
             victorySystem.process();
             triggerSystem.process();
+			actionSystem.process ();
 
             mapCollisionSystem.process();
 

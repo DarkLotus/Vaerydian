@@ -17,9 +17,10 @@ namespace Vaerydian.Characters
 
 	public enum SkillName
 	{
-		Ranged,
-		Melee,
-		Avoidance
+		NONE = 0,
+		RANGED = 1,
+		MELEE = 2,
+		AVOIDANCE = 3
 	}
 
     public class Skill

@@ -27,8 +27,6 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper v_AttributeMapper;
         private ComponentMapper v_HealthMapper;
 
-        private UIFactory v_UIFactory;
-
         public AwardSystem(){ }
         
         public override void initialize()
@@ -41,7 +39,6 @@ namespace Vaerydian.Systems.Update
             v_AttributeMapper = new ComponentMapper(new Statistics(), e_ECSInstance);
             v_HealthMapper = new ComponentMapper(new Health(), e_ECSInstance);
 
-            v_UIFactory = new UIFactory(e_ECSInstance);
         }
         
         protected override void preLoadContent(Bag<Entity> entities)
@@ -126,7 +123,7 @@ namespace Vaerydian.Systems.Update
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    v_UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureGeneralGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureGeneralGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
             //reward variation
             if (recVaration.Value < awdVaration.Value)
@@ -142,7 +139,7 @@ namespace Vaerydian.Systems.Update
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    v_UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureVariationGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureVariationGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
             //reward unique
             if (recUnique.Value < awdUnique.Value)
@@ -158,7 +155,7 @@ namespace Vaerydian.Systems.Update
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    v_UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureUniqueGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureUniqueGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
 
 
@@ -176,7 +173,7 @@ namespace Vaerydian.Systems.Update
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
-                v_UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.SkillName.ToString() + "]", "GENERAL", Color.SkyBlue, 1000, new Position(pos.Pos, pos.Offset));
+                UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.SkillName.ToString() + "]", "GENERAL", Color.SkyBlue, 1000, new Position(pos.Pos, pos.Offset));
 
         }
 
@@ -192,7 +189,7 @@ namespace Vaerydian.Systems.Update
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
-                v_UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.AttributeType.ToString() + "]", "GENERAL", Color.Orange, 1000, new Position(pos.Pos, pos.Offset));
+                UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.AttributeType.ToString() + "]", "GENERAL", Color.Orange, 1000, new Position(pos.Pos, pos.Offset));
         }
 
         private void awardHealthUp(Award award)
@@ -201,11 +198,11 @@ namespace Vaerydian.Systems.Update
             Statistics attributes = (Statistics)v_AttributeMapper.get(award.Receiver);
 
             health.MaxHealth += award.MaxAwardable;
-            health.RecoveryAmmount = attributes.StatisticSet[StatType.Endurance] / 5;
+            health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
-                v_UIFactory.createFloatingText("+" + award.MaxAwardable + " [Max HP]", "GENERAL", Color.Red, 1000, new Position(pos.Pos, pos.Offset));
+                UIFactory.createFloatingText("+" + award.MaxAwardable + " [Max HP]", "GENERAL", Color.Red, 1000, new Position(pos.Pos, pos.Offset));
         }
     }
 }

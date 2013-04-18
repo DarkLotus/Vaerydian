@@ -38,8 +38,6 @@ namespace Vaerydian.Screens
         private ButtonMenu s_ButtonMenu;
         private GFrame s_Frame;
 
-        private UIFactory s_UIFactory;
-
 		private JsonManager s_JsonManager;
 		private string s_json;
 
@@ -53,13 +51,13 @@ namespace Vaerydian.Screens
             s_ECSInstance = new ECSInstance();
             s_Container = ScreenManager.GameContainer;
 
+			UIFactory.Container = ScreenManager.GameContainer;
+			UIFactory.ECSInstance = s_ECSInstance;
+
             //define and init systems
             s_UiUpdateSystem = s_ECSInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
             s_UiDrawSystem = s_ECSInstance.SystemManager.setSystem(new UIDrawSystem(s_Container.ContentManager, s_Container.GraphicsDevice), new UserInterface());
             s_ECSInstance.SystemManager.initializeSystems();
-
-            //setup factory
-            s_UIFactory = new UIFactory(s_ECSInstance, s_Container);
 
 			//setup json manager
 			s_JsonManager = new JsonManager();
@@ -70,7 +68,7 @@ namespace Vaerydian.Screens
             base.LoadContent();
 
             //create backdrop
-            s_UIFactory.createFrame(null, new Point(0, 0), s_Container.GraphicsDevice.Viewport.Height, s_Container.GraphicsDevice.Viewport.Width, "Title");
+            UIFactory.createFrame(null, new Point(0, 0), s_Container.GraphicsDevice.Viewport.Height, s_Container.GraphicsDevice.Viewport.Width, "Title");
 
             
             //create menu
@@ -151,7 +149,7 @@ namespace Vaerydian.Screens
 			s_json = s_JsonManager.loadJSON("./Content/json/start_screen.v");
 
             //create mouse pointer
-            s_Frame = s_UIFactory.createMousePointer(InputManager.getMousePositionPoint(), 10, 10, "pointer", OnMousePointerUpdate);
+            s_Frame = UIFactory.createMousePointer(InputManager.getMousePositionPoint(), 10, 10, "pointer", OnMousePointerUpdate);
 
             //early entity reslove
             s_ECSInstance.resolveEntities();

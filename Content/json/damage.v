@@ -17,13 +17,27 @@
     "DISEASE": 14,
     "ARCANE": 15,
     "MENTAL": 16,
-    "SONIC" : 17
+    "SONIC" : 17,
+	"ACID" : 18
   }, 
   "damage_defs":[
     {
-      "name":"NONE",
-      "id":0,
-      "damage_type": "NONE"
-    }
+		"name":"NONE",
+		"damage_type": "NONE"
+		"damage_basis":"NONE",
+		"min":0,
+		"max":0,
+		"skill_name":"NONE",
+		"stat_type":"NONE"
+    },
+	{
+		"name":"TEST_DMG",
+		"damage_type":"ACID",
+		"damage_basis":"STATIC",
+		"min":5,
+		"max":10,
+		"skill_name":"NONE",
+		"stat_type":"NONE"		
+	}
   ]
 }

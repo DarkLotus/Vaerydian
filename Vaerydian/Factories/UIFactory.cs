@@ -21,22 +21,11 @@ using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Factories
 {
-    public class UIFactory
+    public static class UIFactory
     {
-        private ECSInstance u_EcsInstance;
-        private static GameContainer u_Container;
-        private Random rand = new Random();
-
-        public UIFactory(ECSInstance ecsInstance, GameContainer container)
-        {
-            u_EcsInstance = ecsInstance;
-            u_Container = container;
-        }
-
-        public UIFactory(ECSInstance ecsInstance) 
-        {
-            u_EcsInstance = ecsInstance;
-        }
+        public static ECSInstance ECSInstance;
+        public static GameContainer Container;
+        private static Random rand = new Random();
 
 
         /// <summary>
@@ -47,28 +36,28 @@ namespace Vaerydian.Factories
         /// <param name="origin"></param>
         /// <param name="name"></param>
         /// <param name="duration"></param>
-        public void createTimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
+        public static void createTimedDialogWindow(Entity caller, String dialog, Vector2 origin, String name, int duration)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
-            DialogTimer timer = new DialogTimer(duration,u_EcsInstance);
+            DialogTimer timer = new DialogTimer(duration,ECSInstance);
 
             GForm form = new GForm();
             form.Caller = caller;
             form.Owner = e;
-            form.ECSInstance = u_EcsInstance;
+            form.ECSInstance = ECSInstance;
             form.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 100, 50);
 
             GCanvas canvas = new GCanvas();
             canvas.Caller = caller;
             canvas.Owner = e;
-            canvas.ECSInstance = u_EcsInstance;
+            canvas.ECSInstance = ECSInstance;
             canvas.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 200, 200);
 
             GTextBox textBox = new GTextBox();
             textBox.Caller = caller;
             textBox.Owner = e;
-            textBox.ECSInstance = u_EcsInstance;
+            textBox.ECSInstance = ECSInstance;
             textBox.Bounds = new Rectangle((int)origin.X, (int)origin.Y, 100, 10);
             textBox.FontName = "StartScreen";
             textBox.BackgroundName = "dialog_bubble";
@@ -88,30 +77,30 @@ namespace Vaerydian.Factories
             UserInterface ui = new UserInterface(form);
 
             //assign component and issue refresh
-            u_EcsInstance.EntityManager.addComponent(e, ui);
-            u_EcsInstance.refresh(e);
+            ECSInstance.EntityManager.addComponent(e, ui);
+            ECSInstance.refresh(e);
         }
 
-        public void createFrame(Entity caller, Point Position, int height, int width, string textureName)
+        public static void createFrame(Entity caller, Point Position, int height, int width, string textureName)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             GForm form = new GForm();
             form.Caller = caller;
             form.Owner = e;
-            form.ECSInstance = u_EcsInstance;
+            form.ECSInstance = ECSInstance;
             form.Bounds = new Rectangle(Position.X, Position.Y, width, height);
 
             GCanvas canvas = new GCanvas();
             canvas.Caller = caller;
             canvas.Owner = e;
-            canvas.ECSInstance = u_EcsInstance;
+            canvas.ECSInstance = ECSInstance;
             canvas.Bounds = new Rectangle(Position.X, Position.Y, width, height);
 
             GFrame frame = new GFrame();
             frame.Caller = caller;
             frame.Owner = e;
-            frame.ECSInstance = u_EcsInstance;
+            frame.ECSInstance = ECSInstance;
             frame.Bounds = new Rectangle(Position.X, Position.Y, width, height);
             frame.BackgroundName = textureName;
 
@@ -121,28 +110,28 @@ namespace Vaerydian.Factories
 
             UserInterface ui = new UserInterface(form);
 
-            u_EcsInstance.ComponentManager.addComponent(e, ui);
+            ECSInstance.ComponentManager.addComponent(e, ui);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-        public GFrame createMousePointer(Point position, int width, int height, string textureName, InterfaceHandler handler)
+        public static GFrame createMousePointer(Point position, int width, int height, string textureName, InterfaceHandler handler)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             GForm form = new GForm();
             form.Owner = e;
-            form.ECSInstance = u_EcsInstance;
+            form.ECSInstance = ECSInstance;
             form.Bounds = new Rectangle(position.X, position.Y, width, height);
 
             GCanvas canvas = new GCanvas();
             canvas.Owner = e;
-            canvas.ECSInstance = u_EcsInstance;
+            canvas.ECSInstance = ECSInstance;
             canvas.Bounds = new Rectangle(position.X, position.Y, width, height);
 
             GFrame frame = new GFrame();
             frame.Owner = e;
-            frame.ECSInstance = u_EcsInstance;
+            frame.ECSInstance = ECSInstance;
             frame.Bounds = new Rectangle(position.X, position.Y, width, height);
             frame.BackgroundName = textureName;
 
@@ -154,16 +143,16 @@ namespace Vaerydian.Factories
 
             UserInterface ui = new UserInterface(form);
 
-            u_EcsInstance.ComponentManager.addComponent(e, ui);
+            ECSInstance.ComponentManager.addComponent(e, ui);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
             return frame;
         }
 
-        public void createFloatingText(string text, string font, Color color, int timeToLive, Position position)
+        public static void createFloatingText(string text, string font, Color color, int timeToLive, Position position)
         {
-            Entity e = u_EcsInstance.create();
+            Entity e = ECSInstance.create();
 
             FloatingText fText = new FloatingText();
             fText.Text = text;
@@ -171,32 +160,32 @@ namespace Vaerydian.Factories
             fText.Color = color;
             fText.Lifetime = timeToLive;
 
-            u_EcsInstance.EntityManager.addComponent(e, fText);
-            u_EcsInstance.EntityManager.addComponent(e, position);
+            ECSInstance.EntityManager.addComponent(e, fText);
+            ECSInstance.EntityManager.addComponent(e, position);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
         }
 
-		public void createHitPointLabel(Entity entity, int width, int height, Point position)
+		public static void createHitPointLabel(Entity entity, int width, int height, Point position)
 		{
-			Entity e = u_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-			HpLabelUpdater updater = new HpLabelUpdater(u_EcsInstance);
+			HpLabelUpdater updater = new HpLabelUpdater(ECSInstance);
 
 			GForm form = new GForm();
             form.Owner = e;
-            form.ECSInstance = u_EcsInstance;
+            form.ECSInstance = ECSInstance;
             form.Bounds = new Rectangle(position.X, position.Y, width, height);
 
             GCanvas canvas = new GCanvas();
             canvas.Owner = e;
-            canvas.ECSInstance = u_EcsInstance;
+            canvas.ECSInstance = ECSInstance;
             canvas.Bounds = new Rectangle(position.X, position.Y, width, height);
 
 			GLabel label = new GLabel();
 			label.Owner = e;
 			label.Caller = entity;
-			label.ECSInstance = u_EcsInstance;
+			label.ECSInstance = ECSInstance;
 			label.Bounds = new Rectangle(position.X, position.Y, width, height);
 			label.FontName = "StartScreen";
 			label.Border = 10;
@@ -214,16 +203,16 @@ namespace Vaerydian.Factories
 
 			UserInterface ui = new UserInterface(form);
 
-            u_EcsInstance.ComponentManager.addComponent(e, ui);
+            ECSInstance.ComponentManager.addComponent(e, ui);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 		}
 
-		public Entity createStatWindow(Entity caller, Point position, Point dimensions, int buttonHeight)
+		public static Entity createStatWindow(Entity caller, Point position, Point dimensions, int buttonHeight)
 		{
-			Entity e = u_EcsInstance.create();
+			Entity e = ECSInstance.create();
 
-			BasicWindow window = new BasicWindow(e, caller, u_EcsInstance, position, dimensions, buttonHeight);
+			BasicWindow window = new BasicWindow(e, caller, ECSInstance, position, dimensions, buttonHeight);
 
 			//initialize the window
 			window.init();
@@ -258,7 +247,7 @@ namespace Vaerydian.Factories
 			GLabel label = new GLabel();
 			label.Owner = e;
 			label.Caller = caller;
-			label.ECSInstance = u_EcsInstance;
+			label.ECSInstance = ECSInstance;
 			label.Bounds = new Rectangle(window.Form.Bounds.Left + 20,
 			                             window.Form.Bounds.Top + 40,
 			                             dimensions.X - 40,
@@ -282,36 +271,36 @@ namespace Vaerydian.Factories
 			//create the UI component and assign it to the entity
 			UserInterface ui = new UserInterface(window.Form);
 
-            u_EcsInstance.ComponentManager.addComponent(e, ui);
+            ECSInstance.ComponentManager.addComponent(e, ui);
 
-            u_EcsInstance.refresh(e);
+            ECSInstance.refresh(e);
 
 			return e;
 		}
 
-		private void destroyUI(IControl sender, InterfaceArgs args)
+		private static void destroyUI(IControl sender, InterfaceArgs args)
 		{
 			sender.ECSInstance.deleteEntity(sender.Owner);
 		}
 
-		private void labelUpdate(IControl sender, InterfaceArgs args)
+		private static void labelUpdate(IControl sender, InterfaceArgs args)
 		{
 			Vaerydian.Components.Characters.Skills skills = ComponentMapper.get<Vaerydian.Components.Characters.Skills>(sender.Caller);
 			Vaerydian.Components.Characters.Statistics attributes = ComponentMapper.get<Vaerydian.Components.Characters.Statistics>(sender.Caller);
 
 			GLabel label = (GLabel) sender;
 			label.Text = "Skills" + "\n" +
-					     "  Range: " + skills.SkillSet[SkillName.Ranged].Value + "\n" +
-						 "  Melee: " + skills.SkillSet[SkillName.Melee].Value + "\n" +
-					     "  Avoidance: " + skills.SkillSet[SkillName.Avoidance].Value + "\n"+
+					     "  Range: " + skills.SkillSet[SkillName.RANGED].Value + "\n" +
+						 "  Melee: " + skills.SkillSet[SkillName.MELEE].Value + "\n" +
+					     "  Avoidance: " + skills.SkillSet[SkillName.AVOIDANCE].Value + "\n"+
 						 "\n" +
 						 "Attributes" + "\n" +
-						 "  Endurance: " + attributes.StatisticSet[StatType.Endurance] + "\n" +
-						 "  Mind: " + attributes.StatisticSet[StatType.Mind] + "\n" +
-						 "  Muscle: " + attributes.StatisticSet[StatType.Muscle] + "\n" +
-						 "  Perception: " + attributes.StatisticSet[StatType.Perception] + "\n" +
-						 "  Personality: " + attributes.StatisticSet[StatType.Personality] + "\n" +
-						 "  Quickness: " + attributes.StatisticSet[StatType.Quickness];
+						 "  Endurance: " + attributes.StatisticSet[StatType.ENDURANCE] + "\n" +
+						 "  Mind: " + attributes.StatisticSet[StatType.MIND] + "\n" +
+						 "  Muscle: " + attributes.StatisticSet[StatType.MUSCLE] + "\n" +
+						 "  Perception: " + attributes.StatisticSet[StatType.PERCEPTION] + "\n" +
+						 "  Personality: " + attributes.StatisticSet[StatType.PERSONALITY] + "\n" +
+						 "  Quickness: " + attributes.StatisticSet[StatType.QUICKNESS];
 		}
     }
 }

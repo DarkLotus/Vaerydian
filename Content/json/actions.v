@@ -62,48 +62,24 @@
   },
   "action_defs":[
     {
-      "name":"NONE",
-      "id":0,
-      "action_type:":"NONE",
-      "impact_type":"NONE",
-      "damage_type":"NONE",
-      "modify_type":"NONE",
-      "modify_duration": "NONE",
-      "creation_type":"NONE",
-      "destroy_type":"NONE"
+		"name":"NONE",
+		"action_type":"NONE",
+		"impact_type":"NONE",
+		"damage_def":"NONE",
+		"modify_type":"NONE",
+		"modify_duration": "NONE",
+		"creation_type":"NONE",
+		"destroy_type":"NONE"
     },
-    {
-      "name":"PLAYER_MELEE",
-      "id":0,
-      "action_type:":"DAMAGE",
-      "impact_type":"CONE",
-      "damage_type":"SLASHING",
-      "modify_type":"NONE",
-      "modify_duration": "NONE",
-      "creation_type":"NONE",
-      "destroy_type":"NONE"
-    },
-    {
-      "name":"PLAYER_RANGED",
-      "id":0,
-      "action_type:":"DAMAGE",
-      "impact_type":"DIRECT",
-      "damage_type":"PIERCING",
-      "modify_type":"NONE",
-      "modify_duration": "NONE",
-      "creation_type":"NONE",
-      "destroy_type":"NONE"
-    },
-    {
-      "name":"BAT_SONIC",
-      "id":0,
-      "action_type:":"DAMAGE",
-      "impact_type":"DIRECT",
-      "damage_type":"SONIC",
-      "modify_type":"NONE",
-      "modify_duration": "NONE",
-      "creation_type":"NONE",
-      "destroy_type":"NONE"
-    }
+	{
+		"name":"TEST_DMG",
+		"action_type":"DAMAGE",
+		"impact_type":"DIRECT",
+		"damage_def":"TEST_DMG",
+		"modify_type":"NONE",
+		"modify_duration":"NONE",
+		"creation_type":"NONE",
+		"destroy_type":"NONE"
+	}	
   ]
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Vaerydian.Characters;
+using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Utils
 {
@@ -19,20 +20,17 @@ namespace Vaerydian.Utils
 		STATIC = 1,
 		ATTRIBUTE = 2,
 		SKILL = 3,
-		KNOWLEDGE = 4,
-		ITEM = 5,
+		ITEM = 4,
 	}
 	
 	public struct DamageDef{
 		public string Name;
-		public short ID;
 		public DamageType DamageType;
 		public DamageBasis DamageBasis;
 		public int Min;
 		public int Max;
 		public SkillName SkillName;
-		public Statistic Statistic;
-		public Knowledge Knowledge;
+		public StatType StatType;
 	}
 
     public enum DamageType
@@ -54,12 +52,55 @@ namespace Vaerydian.Utils
 		DISEASE = 14,
 		ARCANE  = 15,
 		MENTAL = 16,
-		SONIC = 17
+		SONIC = 17,
+		ACID = 18
     }
+
 
 	static class DamageUtils{
 
-
+		public static Color getDamageColor(DamageType dType){
+			switch(dType){
+			case DamageType.NONE:
+				return Color.White;
+			case DamageType.ACID:
+				return Color.YellowGreen;
+			case DamageType.ARCANE:
+				return Color.MediumPurple;
+			case DamageType.CHAOS:
+				return Color.DarkMagenta;
+			case DamageType.CRUSHING:
+				return Color.Wheat;
+			case DamageType.DARK:
+				return Color.DarkGray;
+			case DamageType.DISEASE:
+				return Color.SandyBrown;
+			case DamageType.EARTH:
+				return Color.Brown;
+			case DamageType.FIRE:
+				return Color.OrangeRed;
+			case DamageType.ICE:
+				return Color.LightBlue;
+			case DamageType.LIGHT:
+				return Color.LightYellow;
+			case DamageType.MENTAL:
+				return Color.Azure;
+			case DamageType.PIERCING:
+				return Color.Red;
+			case DamageType.POISON:
+				return Color.Green;
+			case DamageType.SLASHING:
+				return Color.Silver;
+			case DamageType.SONIC:
+				return Color.Silver;
+			case DamageType.WATER:
+				return Color.Blue;
+			case DamageType.WIND:
+				return Color.LightGray;
+			default:
+				return Color.White;
+			}
+		}
 
 		public static int calculateDamage(){
 			return -1;

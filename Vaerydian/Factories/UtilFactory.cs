@@ -23,7 +23,7 @@ namespace Vaerydian.Factories
     public static class UtilFactory
     {
         public static ECSInstance ECSInstance;
-        public static GameContainer u_Container;
+        public static GameContainer Container;
         private static Random rand = new Random();
 
         /// <summary>

@@ -5,7 +5,7 @@ using ECSFramework;
 using Vaerydian.Components.Actions;
 using Vaerydian.Utils;
 
-namespace Vaerydian
+namespace Vaerydian.Systems.Update
 {
 	public class ActionSystem : EntityProcessingSystem
 	{
@@ -22,7 +22,7 @@ namespace Vaerydian
 
 		protected override void preLoadContent (Bag<Entity> entities)
 		{
-			throw new System.NotImplementedException ();
+			//throw new System.NotImplementedException ();
 		}
 
 		protected override void process (Entity entity)

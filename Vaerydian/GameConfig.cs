@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Vaerydian.Utils;
 using Vaerydian.Screens;
 using Vaerydian.Components.Actions;
+using Vaerydian.Characters;
 
 namespace Vaerydian
 {
@@ -20,6 +21,9 @@ namespace Vaerydian
 				return false;
 
 			if (!GameConfig.LoadDamageDefs ())
+				return false;
+
+			if (!GameConfig.loadActionDefs ())
 				return false;
 
 			if (!GameConfig.loadTerrainTypes ())
@@ -66,9 +70,12 @@ namespace Vaerydian
 					
 					DamageDef dDef = default(DamageDef);
 					dDef.Name = jo["name"].asString();
-					dDef.ID = jo["id"].asShort();
 					dDef.DamageType = jo["damage_type"].asEnum<DamageType>();
-					
+					dDef.DamageBasis = jo["damage_basis"].asEnum<DamageBasis>();
+					dDef.Min = jo["min"].asInt();
+					dDef.Max = jo["max"].asInt();
+					dDef.SkillName = jo["skill_name"].asEnum<SkillName>();
+					dDef.StatType = jo["stat_type"].asEnum<StatType>();
 					DamageDefs.Add(dDef.Name,dDef);
 				}
 				
@@ -93,10 +100,12 @@ namespace Vaerydian
 				foreach(Dictionary<string,object> dict in aDefs){
 					jo = new JsonObject(dict);
 
-					ActionDef aDef;
+					ActionDef aDef = default(ActionDef);
 					aDef.Name = jo["name"].asString();
-					aDef.ID = jo["id"].asShort();
 					aDef.ActionType = jo["action_type"].asEnum<ActionType>();
+					aDef.DamageDef = DamageDefs[jo["damage_def"].asString()];
+
+					ActionDefs.Add(aDef.Name, aDef);
 				}
 
 			}catch(Exception e){

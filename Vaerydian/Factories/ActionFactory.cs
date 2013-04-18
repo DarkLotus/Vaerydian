@@ -11,12 +11,14 @@ namespace Vaerydian
 		public static ECSInstance ECSInstance;
 		
 
-		public static Entity createAction(ActionDef aDef){
+		public static Entity createAction(ActionDef aDef, Entity owner, Entity Target){
 
 			Entity e = ActionFactory.ECSInstance.create ();
 
 			VAction action = new VAction ();
 			action.ActionDef = aDef;
+			action.Owner = owner;
+			action.Target = Target;
 
 			ActionFactory.ECSInstance.EntityManager.addComponent (e, action);
 

@@ -4,12 +4,12 @@ using Vaerydian.Components.Actions;
 using Vaerydian.Utils;
 using Vaerydian.Factories;
 using Vaerydian.Components.Spatials;
+using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Utils
 {
 	public struct ActionDef{
 		public string Name;
-		public short ID;
 		public ActionType ActionType;
 		public ImpactType ImpactType;
 		public DamageDef DamageDef;
@@ -20,11 +20,12 @@ namespace Vaerydian.Utils
 	}
 	
 	public enum ActionType{
-		DAMAGE = 0,
-		MODIFY = 1,
-		CREATE = 2,
-		DESTROY = 3,
-		INTERACT = 4
+		NONE = 0,
+		DAMAGE = 1,
+		MODIFY = 2,
+		CREATE = 3,
+		DESTROY = 4,
+		INTERACT = 5
 	}
 	
 	public enum ImpactType{
@@ -75,6 +76,8 @@ namespace Vaerydian.Utils
 
 	public static class ActionUtils
 	{
+		private static Random rand = new Random();
+
 		public static void doAction (Entity owner, Entity target, ActionDef aDef)
 		{
 			ActionPackage aPack;
@@ -104,8 +107,6 @@ namespace Vaerydian.Utils
 			case DamageBasis.ATTRIBUTE:
 				break;
 			case DamageBasis.ITEM:
-				break;
-			case DamageBasis.KNOWLEDGE:
 				break;
 			case DamageBasis.NONE:
 				break;
@@ -161,12 +162,20 @@ namespace Vaerydian.Utils
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){
-			int dmg = new Random ().Next (aPack.ActionDef.DamageDef.Min, aPack.ActionDef.DamageDef.Max);
 
+			int dmg = rand.Next (aPack.ActionDef.DamageDef.Min, aPack.ActionDef.DamageDef.Max);
+			Position pos = ComponentMapper.get<Position> (aPack.Target);
 			UtilFactory.createDirectDamage (dmg,
 			                               aPack.ActionDef.DamageDef.DamageType,
 			                               aPack.Target,
-			                               ComponentMapper.get<Position> (aPack.Target));
+			                               pos);
+
+			Position newPos = new Position(pos.Pos + new Vector2(rand.Next(16)+8, 0), Vector2.Zero);
+			UIFactory.createFloatingText("" + dmg,
+			                             "DAMAGE",
+			                             DamageUtils.getDamageColor(aPack.ActionDef.DamageDef.DamageType),
+			                             500,
+			                             newPos);
 		}
 		
 	}

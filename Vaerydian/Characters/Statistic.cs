@@ -7,13 +7,14 @@ namespace Vaerydian.Characters
 {
 	public enum StatType
 	{
-		Muscle,
-		Endurance,
-		Mind,
-		Personality,
-		Quickness,
-		Perception,
-		Focus
+		NONE = 0,
+		MUSCLE = 1,
+		ENDURANCE = 2,
+		MIND = 3,
+		PERSONALITY = 4,
+		QUICKNESS = 5,
+		PERCEPTION = 6,
+		FOCUS = 7
 	}
 
     public class Statistic

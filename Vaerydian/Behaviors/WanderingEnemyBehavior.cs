@@ -655,8 +655,7 @@ namespace Vaerydian.Behaviors
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "(wimper)", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+			UIFactory.createTimedDialogWindow(w_ThisEntity, "(wimper)", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
@@ -673,8 +672,7 @@ namespace Vaerydian.Behaviors
             Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
             ViewPort camera = (ViewPort)w_ViewPortMapper.get(w_Camera);
 
-            UIFactory uif = new UIFactory(w_ECSInstance);
-            uif.createTimedDialogWindow(w_ThisEntity, "SCREEE!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
+			UIFactory.createTimedDialogWindow(w_ThisEntity, "SCREEE!", pos.Pos - camera.getOrigin(), "NPC-" + w_ThisEntity.Id, 1000);
 
             return BehaviorReturnCode.Success;
         }
