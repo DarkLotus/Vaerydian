@@ -634,7 +634,7 @@ namespace Vaerydian.Screens
 			graphicsDevice.SetRenderTarget (null);
 
 			string timestamp = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
-			FileStream fs;
+            FileStream fs = null;
 			try{
 				fs = new FileStream("screenshot_" + timestamp + ".png", FileMode.Create);
 
@@ -644,7 +644,8 @@ namespace Vaerydian.Screens
 				Console.Error.WriteLine("ERROR: could not create screenshot:\n" + e.ToString());
 				return;
 			}finally{
-				fs.Close();
+                if(fs != null)
+				    fs.Close();
 			}
 		}
 	}
