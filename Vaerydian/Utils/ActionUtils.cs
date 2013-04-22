@@ -5,6 +5,9 @@ using Vaerydian.Utils;
 using Vaerydian.Factories;
 using Vaerydian.Components.Spatials;
 using Microsoft.Xna.Framework;
+using Vaerydian.Characters;
+using Vaerydian.Components.Characters;
+using Vaerydian.Components.Items;
 
 namespace Vaerydian.Utils
 {
@@ -159,6 +162,57 @@ namespace Vaerydian.Utils
 		public static float getDamage(float overhit, float attackSkill, float attackAttribute,
 			                              float lethality, float mitigation, float absorbValue){
 			return (overhit + 1f) * (attackSkill/5 + attackAttribute/4) * (lethality/mitigation) - absorbValue/10;
+		}
+
+		private static float getSkill(Entity entity, SkillName skillname){
+			return ComponentMapper.get<Skills> (entity).SkillSet [skillname].Value;
+		}
+
+		private static float getStat(Entity entity, StatType stat){
+			return (float)ComponentMapper.get<Statistics> (entity).StatisticSet [stat];
+		}
+
+		private static Weapon getWeapon(Entity entity){
+			Equipment equip = ComponentMapper.get<Equipment> (entity);
+			return ComponentMapper.get<Weapon> (equip.MeleeWeapon);
+		}
+
+		private static StatType getOppositeStat(StatType stat){
+			switch (stat) {
+			case StatType.ENDURANCE:
+				return StatType.MUSCLE;
+			case StatType.FOCUS:
+				return StatType.PERSONALITY;
+			case StatType.MIND:
+				return StatType.MIND;
+			case StatType.MUSCLE:
+				return StatType.ENDURANCE;
+			case StatType.PERCEPTION:
+				return StatType.QUICKNESS;
+			case StatType.PERSONALITY:
+				return StatType.FOCUS;
+			case StatType.QUICKNESS:
+				return StatType.FOCUS;
+			case StatType.NONE:
+				return StatType.NONE;
+			default:
+				return StatType.NONE;
+			}
+		}
+
+		private static SkillName getOppositeSkill(SkillName skill){
+			return SkillName.NONE;
+		}
+
+		private static void doWeaponDamage(ActionPackage aPack){
+			Weapon aWeapon = ActionUtils.getWeapon (aPack.Owner);
+			Weapon dWeapon = ActionUtils.getWeapon (aPack.Target);
+
+			float aSkill = ActionUtils.getSkill (aPack.Owner, aPack.ActionDef.DamageDef.SkillName);
+			float dSkill = ActionUtils.getSkill (aPack.Target, SkillName.AVOIDANCE);
+
+			float aStat = ActionUtils.getStat (aPack.Owner, aPack.ActionDef.DamageDef.StatType);
+			float dStat = ActionUtils.getStat (aPack.Target, ActionUtils.getOppositeStat (aPack.ActionDef.DamageDef.StatType));
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){
