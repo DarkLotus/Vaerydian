@@ -177,6 +177,16 @@ namespace Vaerydian.Utils
 			return ComponentMapper.get<Weapon> (equip.MeleeWeapon);
 		}
 
+		private static Armor getArmor(Entity entity){
+			Equipment equip = ComponentMapper.get<Equipment> (entity);
+			return ComponentMapper.get<Armor> (equip.Armor);
+		}
+
+		private static float getKnowledge(Entity entity, Entity target){
+			Information info = ComponentMapper.get<Information> (target);
+			return ComponentMapper.get<Knowledges> (entity).GeneralKnowledge [info.CreatureGeneralGroup].Value;
+		}
+
 		private static StatType getOppositeStat(StatType stat){
 			switch (stat) {
 			case StatType.ENDURANCE:
@@ -206,13 +216,29 @@ namespace Vaerydian.Utils
 
 		private static void doWeaponDamage(ActionPackage aPack){
 			Weapon aWeapon = ActionUtils.getWeapon (aPack.Owner);
-			Weapon dWeapon = ActionUtils.getWeapon (aPack.Target);
+			Armor dArmor = ActionUtils.getArmor(aPack.Target);
 
 			float aSkill = ActionUtils.getSkill (aPack.Owner, aPack.ActionDef.DamageDef.SkillName);
 			float dSkill = ActionUtils.getSkill (aPack.Target, SkillName.AVOIDANCE);
 
 			float aStat = ActionUtils.getStat (aPack.Owner, aPack.ActionDef.DamageDef.StatType);
 			float dStat = ActionUtils.getStat (aPack.Target, ActionUtils.getOppositeStat (aPack.ActionDef.DamageDef.StatType));
+
+			float aKnow = ActionUtils.getKnowledge (aPack.Owner, aPack.Target);
+			float dKnow = ActionUtils.getKnowledge (aPack.Target, aPack.Owner);
+
+			float aProb = ActionUtils.getStatProbability (aSkill, aStat, aKnow, aWeapon.Speed);
+			float dProb = ActionUtils.getStatProbability (dSkill, dStat, dKnow, dArmor.Mobility);
+
+			float hitProb = ActionUtils.getHitProbability (dProb, aProb, 1.75f, 0.15f);
+
+			float hit = (float) rand.NextDouble ();
+
+			int dmg = 0;
+
+			if (hit < hitProb) {
+
+			} 
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){
