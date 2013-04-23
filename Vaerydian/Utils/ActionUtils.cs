@@ -118,6 +118,9 @@ namespace Vaerydian.Utils
 			case DamageBasis.STATIC:
 				doStaticDamage(aPack);
 				break;
+			case DamageBasis.WEAPON:
+				doWeaponDamage(aPack);
+				break;
 			default:
 				return;
 			}
@@ -151,7 +154,7 @@ namespace Vaerydian.Utils
 		private static void doInteractionAction(ActionPackage aPack){
 		}
 
-		public static float getStatProbability(int skillValue, int attributeValue, float knowledgeValue, int speedValue){
+		public static float getStatProbability(float skillValue, float attributeValue, float knowledgeValue, float speedValue){
 			return skillValue / 4f + attributeValue / 4f + knowledgeValue + speedValue;
 		}
 
@@ -159,9 +162,29 @@ namespace Vaerydian.Utils
 			return (attacker/(defender+attacker))*max + (defender/(defender+attacker))*min;
 		}
 
-		public static float getDamage(float overhit, float attackSkill, float attackAttribute,
+		public static int getDamage(float hitProb, float attackSkill, float attackAttribute,
 			                              float lethality, float mitigation, float absorbValue){
-			return (overhit + 1f) * (attackSkill/5 + attackAttribute/4) * (lethality/mitigation) - absorbValue/10;
+
+			float hit = (float)rand.NextDouble ();
+
+			int damage = 0;
+
+			if (hit < hitProb) {
+				float overhit = 0f;
+
+				if(hitProb > 1f)
+					overhit = hitProb - 1f;
+
+				int maxdmg = (int)((overhit + 1f) * (attackSkill/5 + attackAttribute/4) * (lethality/mitigation) - absorbValue/10);
+
+				damage = rand.Next(maxdmg/2,maxdmg);
+
+				if(damage<0)
+					damage = 0;
+			}
+
+
+			return damage;
 		}
 
 		private static float getSkill(Entity entity, SkillName skillname){
@@ -174,7 +197,7 @@ namespace Vaerydian.Utils
 
 		private static Weapon getWeapon(Entity entity){
 			Equipment equip = ComponentMapper.get<Equipment> (entity);
-			return ComponentMapper.get<Weapon> (equip.MeleeWeapon);
+			return ComponentMapper.get<Weapon> (equip.RangedWeapon);
 		}
 
 		private static Armor getArmor(Entity entity){
@@ -227,18 +250,39 @@ namespace Vaerydian.Utils
 			float aKnow = ActionUtils.getKnowledge (aPack.Owner, aPack.Target);
 			float dKnow = ActionUtils.getKnowledge (aPack.Target, aPack.Owner);
 
-			float aProb = ActionUtils.getStatProbability (aSkill, aStat, aKnow, aWeapon.Speed);
-			float dProb = ActionUtils.getStatProbability (dSkill, dStat, dKnow, dArmor.Mobility);
+			float aProb = ActionUtils.getStatProbability ((float)aSkill, (float)aStat, aKnow, (float)aWeapon.Speed);
+			float dProb = ActionUtils.getStatProbability ((float)dSkill, (float)dStat, dKnow, (float)dArmor.Mobility);
 
 			float hitProb = ActionUtils.getHitProbability (dProb, aProb, 1.75f, 0.15f);
 
-			float hit = (float) rand.NextDouble ();
+			int damage = ActionUtils.getDamage (hitProb, aSkill, aStat, aWeapon.Lethality, dArmor.Mitigation,
+			                                    ActionUtils.getStat(aPack.Target,StatType.ENDURANCE));
 
-			int dmg = 0;
+			Position pos = ComponentMapper.get<Position> (aPack.Target);
 
-			if (hit < hitProb) {
+			UtilFactory.createDirectDamage (damage,
+			                               aPack.ActionDef.DamageDef.DamageType,
+			                               aPack.Target,
+			                               pos);
 
-			} 
+			Position newPos = new Position(pos.Pos + new Vector2(rand.Next(16)+8, 0), Vector2.Zero);
+
+			if (damage == 0) {
+				UIFactory.createFloatingText ("MISS",
+				                              "DAMAGE",
+				                              Color.White,
+				                              500,
+				                              newPos);
+			} else {
+				UIFactory.createFloatingText ("" + damage,
+			                             "DAMAGE",
+			                             DamageUtils.getDamageColor (aPack.ActionDef.DamageDef.DamageType),
+			                             500,
+			                             newPos);
+			}
+
+			AwardUtils.attemptSkillAward (aPack.Owner, aPack.Target, aSkill, dSkill, aPack.ActionDef.DamageDef.SkillName, 1);
+			AwardUtils.attemptStatAward (aPack.Owner, aPack.Target, aStat, dStat, aPack.ActionDef.DamageDef.StatType, 1);
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){

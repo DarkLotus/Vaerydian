@@ -132,7 +132,9 @@ namespace Vaerydian.Systems.Update
                                     if (lfactions.OwnerFaction.FactionType == pfactions.OwnerFaction.FactionType)
                                         continue;
 
-                                    UtilFactory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
+                                    //UtilFactory.createAttack(projectile.Originator, locals[i], AttackType.Projectile);
+									ActionDef def = GameConfig.ActionDefs["RANGED_DMG"];
+									ActionFactory.createAction(def,projectile.Originator,locals[i]);
 
 
                                     //destory yourself

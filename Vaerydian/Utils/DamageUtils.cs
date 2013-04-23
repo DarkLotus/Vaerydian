@@ -21,6 +21,7 @@ namespace Vaerydian.Utils
 		ATTRIBUTE = 2,
 		SKILL = 3,
 		ITEM = 4,
+		WEAPON = 5
 	}
 	
 	public struct DamageDef{

@@ -179,6 +179,7 @@
     <Compile Include="Characters\Faction.cs" />
     <Compile Include="Characters\Skill.cs" />
     <Compile Include="Characters\Statistic.cs" />
+    <Compile Include="Utils\AwardUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

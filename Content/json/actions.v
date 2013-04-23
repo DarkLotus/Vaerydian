@@ -80,6 +80,16 @@
 		"modify_duration":"NONE",
 		"creation_type":"NONE",
 		"destroy_type":"NONE"
-	}	
+	},
+	{
+		"name":"RANGED_DMG",
+		"action_type":"DAMAGE",
+		"impact_type":"DIRECT",
+		"damage_def":"RANGED_DMG",
+		"modify_type":"NONE",
+		"modify_duration":"NONE",
+		"creation_type":"NONE",
+		"destroy_type":"NONE"
+	}
   ]
 }

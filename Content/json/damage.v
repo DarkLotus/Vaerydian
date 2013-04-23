@@ -38,6 +38,16 @@
 		"max":10,
 		"skill_name":"NONE",
 		"stat_type":"NONE"		
+	},
+	{
+		"name":"RANGED_DMG",
+		"damage_type":"PIERCING",
+		"damage_basis":"WEAPON",
+		"min":0,
+		"max":0,
+		"skill_name":"RANGED",
+		"stat_type":"FOCUS"		
 	}
+
   ]
 }
