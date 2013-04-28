@@ -13,20 +13,43 @@ namespace Vaerydian
 			j_JsonDict = jsonDict;
 		}
 
+		/// <summary>
+		/// changes the internal object to the locationspecified in the index accessor
+		/// </summary>
+		/// <param name="values">location to move the internal object in the json file</param>
 		public JsonObject this [params string[] values] {
 			get{
-				if(values.Length < 1)
-					return null;
+				try{
+					if(values.Length < 1)
+						return null;
 
-				var retVal = j_JsonDict;
+					var retVal = j_JsonDict;
 
-				for(int i = 0; i < values.Length-1; i++){
-					retVal = (Dictionary<string,object>) retVal[values[i]];
+					for(int i = 0; i < values.Length-1; i++){
+						retVal = (Dictionary<string,object>) retVal[values[i]];
+					}
+
+					j_InternalObject = retVal[values[values.Length-1]];
+					return this;
+				}catch(Exception e){
+					Console.Error.WriteLine("ERROR: Couldn't access location: " + stringIndex(values) + "\n"
+					                        + e.ToString());
+					throw e;//re-throw e because the error may need to bubble up.
 				}
-
-				j_InternalObject = retVal[values[values.Length-1]];
-				return this;
 			}
+		}
+
+		/// <summary>
+		/// pretty prints the json index values
+		/// </summary>
+		/// <returns>a pretty string</returns>
+		/// <param name="values">index values</param>
+		private string stringIndex(string[] values){
+			string retstr = "";
+			for (int i = 0; i < values.Length; i++) {
+				retstr += "." + values[i];
+			}
+			return retstr;
 		}
 
 		public short asShort(){
@@ -72,6 +95,11 @@ namespace Vaerydian
 			return (T) Enum.Parse (typeof(T), (string)j_InternalObject);
 		}
 
+		/// <summary>
+		/// checks to see if the index values exist in the current json
+		/// </summary>
+		/// <returns><c>true</c>, if entry exists, <c>false</c> otherwise.</returns>
+		/// <param name="values">index values</param>
 		public bool hasEntry(params string[] values){
 			if(values.Length < 1)
 				return false;
