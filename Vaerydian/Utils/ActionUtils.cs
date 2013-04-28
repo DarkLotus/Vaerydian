@@ -106,6 +106,13 @@ namespace Vaerydian.Utils
 		}
 
 		private static void doDamageAction(ActionPackage aPack){
+
+			Aggrivation aggro = ComponentMapper.get<Aggrivation> (aPack.Target);
+			//check aggro and add if not present
+			if(aggro != null)
+				if (!aggro.HateList.Contains(aPack.Owner))
+				    aggro.HateList.Add(aPack.Owner);
+
 			switch (aPack.ActionDef.DamageDef.DamageBasis) {
 			case DamageBasis.ATTRIBUTE:
 				break;
@@ -283,6 +290,10 @@ namespace Vaerydian.Utils
 
 			AwardUtils.attemptSkillAward (aPack.Owner, aPack.Target, aSkill, dSkill, aPack.ActionDef.DamageDef.SkillName, 1);
 			AwardUtils.attemptStatAward (aPack.Owner, aPack.Target, aStat, dStat, aPack.ActionDef.DamageDef.StatType, 1);
+			AwardUtils.attemptStatAward (aPack.Target, aPack.Owner,
+			                             ActionUtils.getStat(aPack.Target,StatType.ENDURANCE), aStat,
+			                             StatType.ENDURANCE, 1);
+
 		}
 
 		private static void doStaticDamage(ActionPackage aPack){

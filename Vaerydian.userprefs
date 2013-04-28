@@ -1,13 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/ActionUtils.cs">
     <Files>
       <File FileName="Vaerydian/GameConfig.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Systems/Update/AttackSystem.cs" Line="397" Column="1" />
-      <File FileName="Vaerydian/Characters/Statistic.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Components/Items/Equipment.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Utils/ActionUtils.cs" Line="272" Column="44" />
-      <File FileName="Vaerydian/Utils/AwardUtils.cs" Line="11" Column="18" />
+      <File FileName="Vaerydian/Systems/Update/AttackSystem.cs" Line="260" Column="48" />
+      <File FileName="Vaerydian/Utils/ActionUtils.cs" Line="294" Column="30" />
+      <File FileName="Vaerydian/Utils/AwardUtils.cs" Line="28" Column="35" />
+      <File FileName="Vaerydian/Factories/UtilFactory.cs" Line="133" Column="37" />
+      <File FileName="Vaerydian/Systems/Update/HealthSystem.cs" Line="71" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,6 +17,7 @@
             <Node name="Components" expanded="True">
               <Node name="Items" expanded="True" />
             </Node>
+            <Node name="Factories" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Update" expanded="True" />
             </Node>
