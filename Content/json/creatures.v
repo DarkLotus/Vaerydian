@@ -1,8 +1,9 @@
 {
-  "creature_defs":[
-    {
-      "name":"NONE",
-      "id":0
-    }
-  ]
+	"creature_defs":[
+		{
+			"name":"BAT",
+			"character_def":"BAT",
+			"skill_level":0
+		}
+	]
 }

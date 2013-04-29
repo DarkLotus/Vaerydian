@@ -44,6 +44,9 @@ namespace Vaerydian
 			if (!GameConfig.loadCharacterAnimation ())
 				return false;
 
+			if (!GameConfig.loadCreatures ())
+				return false;
+
 			return true;
 		}
 
@@ -349,6 +352,38 @@ namespace Vaerydian
 
 			return true;
 		}
+
+		public static Dictionary<string,CreatureDef> CreatureDefs = new Dictionary<string, CreatureDef> ();
+
+		private static bool loadCreatures(){
+			try{
+				string json = g_JM.loadJSON ("./Content/json/creatures.v");
+				JsonObject jo = g_JM.jsonToJsonObject (json);
+
+				List<Dictionary<string,object>> cDefs = jo ["creature_defs"].asList<Dictionary<string,object>> ();
+
+				foreach (Dictionary<string,object> dict in cDefs) {
+					jo = new JsonObject(dict);
+
+					CreatureDef cDef = default(CreatureDef);
+					cDef.Name = jo["name"].asString();
+					cDef.CharacterDef = CharacterDefs[jo["character_def"].asString()];
+					cDef.SkillLevel = jo["skill_level"].asInt();
+
+					CreatureDefs.Add(cDef.Name,cDef);
+				}
+			}catch(Exception e){
+				Console.Error.WriteLine("ERROR: could not load creatures:\n" + e.ToString());
+				return false;
+			}
+			return true;
+		}
+	}
+
+	public struct CreatureDef{
+		public string Name;
+		public CharacterDef CharacterDef;
+		public int SkillLevel;
 	}
 
 	public struct CharacterDef{
@@ -383,5 +418,7 @@ namespace Vaerydian
 		public Vector2 Position;
 		public float Rotation;
 	}
+
+
 }
 
