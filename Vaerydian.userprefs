@@ -1,24 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Factories/NPCFactory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Characters/PlayerHolder.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Utils/JsonObject.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="291" Column="4" />
-      <File FileName="Vaerydian/VaerydianGame.cs" Line="54" Column="43" />
+      <File FileName="Vaerydian/Characters/PlayerHolder.cs" Line="38" Column="22" />
+      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="170" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
-            <Node name="Characters" expanded="True" />
+            <Node name="Characters" expanded="True">
+              <Node name="PlayerHolder.cs" selected="True" />
+            </Node>
             <Node name="Components" expanded="True">
+              <Node name="Actions" expanded="True" />
+              <Node name="Characters" expanded="True" />
               <Node name="Items" expanded="True" />
             </Node>
-            <Node name="Factories" expanded="True">
-              <Node name="NPCFactory.cs" selected="True" />
-            </Node>
+            <Node name="Factories" expanded="True" />
             <Node name="Screens" expanded="True" />
+            <Node name="Sessions" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />

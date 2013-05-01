@@ -124,7 +124,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, factions);
 
             GameSession.PlayerState = new PlayerState();
-            GameSession.PlayerState.Attributes = attributes;
+            GameSession.PlayerState.Statistics = attributes;
             GameSession.PlayerState.Factions = factions;
             GameSession.PlayerState.Health = health;
             GameSession.PlayerState.Information = info;
@@ -175,7 +175,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
 			ECSInstance.EntityManager.addComponent(e, playerHolder.Knowledges);
-			ECSInstance.EntityManager.addComponent(e, playerHolder.Attributes);
+			ECSInstance.EntityManager.addComponent(e, playerHolder.Statistics);
 			ECSInstance.EntityManager.addComponent(e, playerHolder.Health);
 			ECSInstance.EntityManager.addComponent(e, playerHolder.Skills);
 			ECSInstance.EntityManager.addComponent(e, playerHolder.Factions);

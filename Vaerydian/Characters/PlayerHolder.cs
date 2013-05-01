@@ -43,12 +43,12 @@ namespace Vaerydian.Characters
             set { p_Knowledges = value; }
         }
 
-        private Vaerydian.Components.Characters.Statistics p_Attributes;
+        private Vaerydian.Components.Characters.Statistics p_Statistics;
 
-        public Vaerydian.Components.Characters.Statistics Attributes
+        public Vaerydian.Components.Characters.Statistics Statistics
         {
-            get { return p_Attributes; }
-            set { p_Attributes = value; }
+            get { return p_Statistics; }
+            set { p_Statistics = value; }
         }
 
         private Health p_Health;

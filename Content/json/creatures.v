@@ -4,7 +4,27 @@
 			"name":"BAT",
 			"character_def":"BAT",
 			"skill_level":0,
-			"health":50
+			"information":{
+				"name":"Bat",
+				"general_group":"Bat",
+				"variation_group":"NONE",
+				"unique_group":"NONE"
+			},
+			"interactions_def":"DEFAULT_ENEMY",
+			"equipment":{
+				"weapon_def":"BAT_SONIC",
+				"armor_def":"BAT_ARMOR"
+			},
+			"knowledges":{
+			},
+			"statistics":{
+			},
+			"health":{
+			},
+			"skills":{
+			},
+			"factions":{
+			}			
 		}
 	]
 }
