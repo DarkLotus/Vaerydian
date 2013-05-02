@@ -296,6 +296,7 @@ namespace Vaerydian.Factories
 						 "\n" +
 						 "Attributes" + "\n" +
 						 "  Endurance: " + attributes.StatisticSet[StatType.ENDURANCE] + "\n" +
+						 "  Focus: " + attributes.StatisticSet[StatType.FOCUS] + "\n" +
 						 "  Mind: " + attributes.StatisticSet[StatType.MIND] + "\n" +
 						 "  Muscle: " + attributes.StatisticSet[StatType.MUSCLE] + "\n" +
 						 "  Perception: " + attributes.StatisticSet[StatType.PERCEPTION] + "\n" +

@@ -333,7 +333,7 @@ namespace Vaerydian.Systems.Update
             if (InputManager.isKeyToggled(Keys.B))
             {
 				if(!p_StatWindowOpen){
-					p_StatWindow = UIFactory.createStatWindow(entity, new Point(100,100),new Point(300,300),20);
+					p_StatWindow = UIFactory.createStatWindow(entity, new Point(100,100),new Point(300,315),20);
 
 					p_StatWindowOpen = true;
 				}else

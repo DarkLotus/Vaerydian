@@ -1,17 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Characters/PlayerHolder.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Systems/Update/PlayerInputSystem.cs">
     <Files>
-      <File FileName="Vaerydian/Characters/PlayerHolder.cs" Line="38" Column="22" />
+      <File FileName="Vaerydian/Characters/PlayerHolder.cs" Line="42" Column="41" />
       <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="170" Column="32" />
+      <File FileName="Vaerydian/Factories/UIFactory.cs" Line="211" Column="36" />
+      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="336" Column="92" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
-            <Node name="Characters" expanded="True">
-              <Node name="PlayerHolder.cs" selected="True" />
-            </Node>
+            <Node name="References" expanded="True" />
+            <Node name="Characters" expanded="True" />
             <Node name="Components" expanded="True">
               <Node name="Actions" expanded="True" />
               <Node name="Characters" expanded="True" />
@@ -22,7 +23,9 @@
             <Node name="Sessions" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
-              <Node name="Update" expanded="True" />
+              <Node name="Update" expanded="True">
+                <Node name="PlayerInputSystem.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>
