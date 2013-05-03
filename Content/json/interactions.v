@@ -1,7 +1,26 @@
 {
 	"interaction_defs":[
 		{
-			"name":"NONE"
-		}	
+			"name":"DEFAULT_ENEMY",
+			"projectile_collidable":true,
+			"destroyable":true,
+			"attackable":true,
+			"melee_actionable":true,
+			"awards_victory":true,
+			"may_receive_victory":false,
+			"causes_advancement":true,
+			"may_advance":false
+		},
+		{
+			"name":"PLAYER",
+			"projectile_collidable":true,
+			"destroyable":false,
+			"attackable":true,
+			"melee_actionable":true,
+			"awards_victory":false,
+			"may_receive_victory":true,
+			"causes_advancement":false,
+			"may_advance":true
+		}
 	]
 }

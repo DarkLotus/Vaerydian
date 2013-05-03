@@ -7,17 +7,17 @@ namespace Vaerydian.Characters
 {
     public enum CreatureGeneralGroup
     {
-        Human,
-		Bat
+        HUMAN,
+		BAT
     }
 
     public enum CreatureVariationGroup
     {
-        None
+        NONE
     }
 
     public enum CreatureUniqueGroup
     {
-        None
+        NONE
     }
 }

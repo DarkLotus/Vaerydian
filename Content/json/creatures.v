@@ -6,7 +6,7 @@
 			"skill_level":0,
 			"information":{
 				"name":"Bat",
-				"general_group":"Bat",
+				"general_group":"BAT",
 				"variation_group":"NONE",
 				"unique_group":"NONE"
 			},

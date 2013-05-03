@@ -81,9 +81,9 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST FOLLOWER";
-            info.CreatureGeneralGroup = CreatureGeneralGroup.Bat;
-            info.CreatureVariationGroup = CreatureVariationGroup.None;
-            info.CreatureUniqueGroup = CreatureUniqueGroup.None;
+            info.CreatureGeneralGroup = CreatureGeneralGroup.BAT;
+            info.CreatureVariationGroup = CreatureVariationGroup.NONE;
+            info.CreatureUniqueGroup = CreatureUniqueGroup.NONE;
             n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
@@ -110,9 +110,9 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(val));
-            knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
-            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(val));
+            knowledges.VariationKnowledge.Add(CreatureVariationGroup.NONE, new Knowledge(0));
+            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.NONE, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
@@ -215,9 +215,9 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST WANDERER";
-            info.CreatureGeneralGroup = CreatureGeneralGroup.Bat;
-            info.CreatureVariationGroup = CreatureVariationGroup.None; 
-            info.CreatureUniqueGroup = CreatureUniqueGroup.None;
+            info.CreatureGeneralGroup = CreatureGeneralGroup.BAT;
+            info.CreatureVariationGroup = CreatureVariationGroup.NONE; 
+            info.CreatureUniqueGroup = CreatureUniqueGroup.NONE;
             n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
@@ -242,10 +242,10 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
-			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Bat, new Knowledge(skillLevel));
-            knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
-            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(skillLevel));
+			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.BAT, new Knowledge(skillLevel));
+            knowledges.VariationKnowledge.Add(CreatureVariationGroup.NONE, new Knowledge(0));
+            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.NONE, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes

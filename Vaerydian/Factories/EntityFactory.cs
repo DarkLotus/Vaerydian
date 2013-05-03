@@ -52,9 +52,9 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
-            info.CreatureGeneralGroup = CreatureGeneralGroup.Human;
-            info.CreatureVariationGroup = CreatureVariationGroup.None;
-            info.CreatureUniqueGroup = CreatureUniqueGroup.None;
+            info.CreatureGeneralGroup = CreatureGeneralGroup.HUMAN;
+            info.CreatureVariationGroup = CreatureVariationGroup.NONE;
+            info.CreatureUniqueGroup = CreatureUniqueGroup.NONE;
             info.Name = "PLAYER";
 			ECSInstance.EntityManager.addComponent(e, info);
 
@@ -80,10 +80,10 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Human, new Knowledge(skillLevel));
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.Bat, new Knowledge(skillLevel));
-            knowledges.VariationKnowledge.Add(CreatureVariationGroup.None, new Knowledge(0));
-            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.None, new Knowledge(0));
+			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(skillLevel));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.BAT, new Knowledge(skillLevel));
+            knowledges.VariationKnowledge.Add(CreatureVariationGroup.NONE, new Knowledge(0));
+            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.NONE, new Knowledge(0));
 			ECSInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
