@@ -3,6 +3,8 @@
 		{
 			"name":"BAT",
 			"character_def":"BAT",
+			"behavior_def":"DEFAULT_ENEMY",
+			"acb_def":"DEFAULT_ENEMY",
 			"skill_level":0,
 			"information":{
 				"name":"Bat",
