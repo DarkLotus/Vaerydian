@@ -29,9 +29,6 @@ namespace Vaerydian
 			if (!GameConfig.loadTerrainDefs ())
 				return false;
 
-			if (!GameConfig.loadMapTypes ())
-				return false;
-
 			if (!GameConfig.loadMapDefs ())
 				return false;
 
@@ -156,25 +153,7 @@ namespace Vaerydian
 			return true;
 		}
 
-		public static Dictionary<string,MapType> MapTypes = new Dictionary<string, MapType> ();
-
-		private static bool loadMapTypes(){
-
-			MapTypes.Add ("CAVE", new MapType{Name = "CAVE", ID = 0});
-			MapTypes.Add ("DUNGEON", new MapType{Name = "DUNGEON", ID = 1});
-			MapTypes.Add ("TOWN", new MapType{Name = "TOWN", ID = 2});
-			MapTypes.Add ("CTY", new MapType{Name = "CITY", ID = 3});
-			MapTypes.Add ("TOWER", new MapType{Name = "TOWER", ID = 4});
-			MapTypes.Add ("OUTPOST", new MapType{Name = "OUTPOST", ID = 5});
-			MapTypes.Add ("FORT", new MapType{Name = "FORT", ID = 6});
-			MapTypes.Add ("NEXUS", new MapType{Name = "NEXUS", ID = 7});
-			MapTypes.Add ("WORLD", new MapType{Name = "WORLD", ID = 8});
-			MapTypes.Add ("WILDERNESS", new MapType{Name = "WILDERNESS", ID = 9});
-
-			return true;
-		}
-
-		private static Dictionary<string,MapDef> MapDefs = new Dictionary<string, MapDef>();
+		public static Dictionary<string,MapDef> MapDefs = new Dictionary<string, MapDef>();
 
 		private static bool loadMapDefs(){
 
@@ -211,7 +190,7 @@ namespace Vaerydian
 				StartDefs.Seed = jo ["start_level", "seed"].asInt ();  
 				StartDefs.SkillLevel = jo ["start_level", "skill_level"].asInt ();
 				StartDefs.Returning = jo ["start_level", "returning"].asBool ();
-				StartDefs.MapType = MapTypes [jo ["start_level", "map_type"].asString ()];
+				StartDefs.MapType = jo ["start_level", "map_type"].asEnum<MapType>();
 
 			}catch(Exception e){
 				Console.Error.WriteLine("ERORR: could not load starting settings:\n" + e.ToString());

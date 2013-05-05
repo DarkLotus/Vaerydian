@@ -5,10 +5,19 @@ using System.Text;
 
 namespace Vaerydian.Utils
 {
-	public struct MapType
+	public enum MapType
 	{
-		public string Name;
-		public short ID;
+		NONE = 0,
+		CAVE = 1,
+		DUNGEON = 2,
+		TOWN = 3,
+		CITY = 4,
+		TOWER = 5,
+		OUTPOST = 6,
+		FORT = 7,
+		NEXUS = 8,
+		WORLD = 9,
+		WILDERNESS = 10
 	}
 
 	public struct MapDef{
@@ -46,11 +55,11 @@ namespace Vaerydian.Utils
             set { m_ySize = value; }
         }
 
-        private short m_MapType = 0;
+		private MapType m_MapType = 0;
         /// <summary>
         /// type of map
         /// </summary>
-        public short MapType
+		public MapType MapType
         {
             get { return m_MapType; }
             set { m_MapType = value; }

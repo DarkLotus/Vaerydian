@@ -167,7 +167,6 @@
     <Compile Include="Utils\JsonObject.cs" />
     <Compile Include="GameConfig.cs" />
     <Compile Include="Utils\TerrainType_Old.cs" />
-    <Compile Include="Utils\MapType_Old.cs" />
     <Compile Include="Components\Actions\VAction.cs" />
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Utils\DamageUtils.cs" />

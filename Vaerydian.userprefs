@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/Terrain.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/GameConfig.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="20" Column="34" />
-      <File FileName="Vaerydian/Utils/Terrain.cs" Line="28" Column="23" />
+      <File FileName="Vaerydian/GameConfig.cs" Line="171" Column="35" />
+      <File FileName="Vaerydian/Generators/CaveGen.cs" Line="209" Column="16" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,15 +17,16 @@
               <Node name="Items" expanded="True" />
             </Node>
             <Node name="Factories" expanded="True" />
+            <Node name="Generators" expanded="True" />
+            <Node name="Maps" expanded="True" />
             <Node name="Screens" expanded="True" />
             <Node name="Sessions" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />
             </Node>
-            <Node name="Utils" expanded="True">
-              <Node name="Terrain.cs" selected="True" />
-            </Node>
+            <Node name="Utils" expanded="True" />
+            <Node name="GameConfig.cs" selected="True" />
           </Node>
         </State>
       </Pad>

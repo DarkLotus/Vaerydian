@@ -204,5 +204,10 @@ namespace Vaerydian.Generators
             terrain.Variation += (float)(0.125 - (c_Random.NextDouble() * 0.25));
         }
 
+		//TODO: complete this
+		private static Terrain setTerrain(string mapName, string terrainName){
+			return null;
+		}
+
     }
 }

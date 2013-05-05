@@ -47,7 +47,7 @@ namespace Vaerydian.Factories
 
 			MapMaker.Parameters = parameters;
 
-			MapMaker.generate(map,MapType_Old.DUNGEON);
+			MapMaker.generate(map,MapType.DUNGEON);
 
 			GameMap gameMap = new GameMap(map);
 
@@ -76,7 +76,7 @@ namespace Vaerydian.Factories
 
 			MapMaker.Parameters = parameters;
 
-			MapMaker.generate(map,MapType_Old.WILDERNESS);
+			MapMaker.generate(map,MapType.WILDERNESS);
 
 			GameMap gameMap = new GameMap(map);
 
@@ -116,7 +116,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
             
-            MapMaker.generate(map, MapType_Old.CAVE);
+			MapMaker.generate(map, MapType.CAVE);
 
             GameMap gameMap = new GameMap(map);
 
@@ -147,7 +147,7 @@ namespace Vaerydian.Factories
 
             MapMaker.Parameters = parameters;
 
-            MapMaker.generate( map, MapType_Old.WORLD);
+			MapMaker.generate( map, MapType.WORLD);
 
             GameMap gameMap = new GameMap(map);
 

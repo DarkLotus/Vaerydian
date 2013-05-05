@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Vaerydian.Components.Spatials;
+using Vaerydian.Utils;
 
 namespace Vaerydian.Maps
 {
     class MapState
     {
 
-        private short m_MapType;
+		private MapType m_MapType;
 
-        public short MapType
+        public MapType MapType
         {
             get { return m_MapType; }
             set { m_MapType = value; }
