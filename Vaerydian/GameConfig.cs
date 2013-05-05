@@ -17,16 +17,13 @@ namespace Vaerydian
 
 		public static bool loadConfig(){
 
-			if (!GameConfig.loadEffects ())
+			if (!GameConfig.loadEffectDefs ())
 				return false;
 
 			if (!GameConfig.LoadDamageDefs ())
 				return false;
 
 			if (!GameConfig.loadActionDefs ())
-				return false;
-
-			if (!GameConfig.loadTerrainTypes ())
 				return false;
 
 			if (!GameConfig.loadTerrainDefs ())
@@ -52,7 +49,7 @@ namespace Vaerydian
 
 		public static Dictionary<string, short> Effects = new Dictionary<string, short>();
 
-		private static bool loadEffects(){
+		private static bool loadEffectDefs(){
 
 			Effects.Add ("NONE", 0);
 
@@ -120,23 +117,6 @@ namespace Vaerydian
 			return true;
 		}
 
-		public static Dictionary<string,TerrainType> TerrainTypes = new Dictionary<string, TerrainType> ();
-
-		/// <summary>
-		/// Loads the terrain types.
-		/// </summary>
-		/// <returns><c>true</c>, if terrain types was loaded, <c>false</c> otherwise.</returns>
-		private static bool loadTerrainTypes(){
-			TerrainTypes.Add ("NOTHING", new TerrainType{Name = "NOTHING", ID = 0});
-			TerrainTypes.Add ("BOUNDARY", new TerrainType{Name = "BOUNDARY", ID = 1});
-			TerrainTypes.Add ("FLOOR", new TerrainType{Name = "FLOOR", ID = 2});
-			TerrainTypes.Add ("WALL", new TerrainType{Name = "WALL", ID = 3});
-			TerrainTypes.Add ("DECORATION", new TerrainType{Name = "DECORATION", ID = 4});
-			TerrainTypes.Add ("TRANSITION", new TerrainType{Name = "TRANSITION", ID = 5});
-			TerrainTypes.Add ("TRIGGER", new TerrainType{Name = "TRIGGER", ID = 6});
-			return true;
-		}
-
 		public static Dictionary<string,TerrainDef> TerrainDefs = new Dictionary<string, TerrainDef> ();
 
 		private static bool loadTerrainDefs(){
@@ -159,12 +139,12 @@ namespace Vaerydian
 
 					List<long> tColor = jo["color"].asList<long>();
 					tDef.Color = new Color(tColor[0],tColor[1],tColor[2]);
-					tDef.IsPassible = jo["ispassible"].asBool();
+					tDef.Passible = jo["passible"].asBool();
 
 					//TODO: define effect - after effect is defined
 					tDef.Effect = Effects[jo["effect"].asString()];
 
-					tDef.Type = TerrainTypes[jo["type"].asString()];
+					tDef.TerrainType = jo["type"].asEnum<TerrainType>();
 
 					TerrainDefs.Add(tDef.Name,tDef);
 				}

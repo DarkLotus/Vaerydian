@@ -8,9 +8,14 @@ using Microsoft.Xna.Framework;
 
 namespace Vaerydian.Utils
 {
-	public struct TerrainType{
-		public string Name;
-		public short ID;
+	public enum TerrainType{
+		NOTHING,
+		BOUNDARY,
+		FLOOR,
+		WALL,
+		DECORATION,
+		TRANSITION,
+		TRIGGER
 	}
 
 	public struct TerrainDef{
@@ -19,9 +24,9 @@ namespace Vaerydian.Utils
 		public string Texture;
 		public Point TextureOffset;
 		public Color Color;
-		public bool IsPassible;
+		public bool Passible;
 		public short Effect;
-		public TerrainType Type;
+		public TerrainType TerrainType;
 	}
 
     /// <summary>

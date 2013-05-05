@@ -1,14 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/Terrain.cs">
+    <Files>
+      <File FileName="Vaerydian/GameConfig.cs" Line="20" Column="34" />
+      <File FileName="Vaerydian/Utils/Terrain.cs" Line="28" Column="23" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Characters" expanded="True">
-              <Node name="PlayerHolder.cs" selected="True" />
-            </Node>
+            <Node name="Characters" expanded="True" />
             <Node name="Components" expanded="True">
               <Node name="Actions" expanded="True" />
               <Node name="Characters" expanded="True" />
@@ -21,7 +23,9 @@
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />
             </Node>
-            <Node name="Utils" expanded="True" />
+            <Node name="Utils" expanded="True">
+              <Node name="Terrain.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>

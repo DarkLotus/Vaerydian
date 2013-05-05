@@ -24,7 +24,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "NOTHING"
         },
@@ -41,7 +41,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -58,7 +58,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -75,7 +75,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -92,7 +92,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -109,7 +109,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -126,7 +126,7 @@
                 153,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -143,7 +143,7 @@
                 102,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -160,7 +160,7 @@
                 51,
                 204
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -177,7 +177,7 @@
                 255,
                 153
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -194,7 +194,7 @@
                 102,
                 51
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -211,7 +211,7 @@
                 204,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -228,7 +228,7 @@
                 255,
                 102
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -245,7 +245,7 @@
                 153,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -262,7 +262,7 @@
                 128,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -279,7 +279,7 @@
                 51,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -296,7 +296,7 @@
                 72,
                 48
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -313,7 +313,7 @@
                 111,
                 53
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -330,7 +330,7 @@
                 255,
                 102
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -347,7 +347,7 @@
                 153,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -364,7 +364,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -381,7 +381,7 @@
                 255,
                 51
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -398,7 +398,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -415,7 +415,7 @@
                 101,
                 67
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -432,7 +432,7 @@
                 51,
                 0
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -449,7 +449,7 @@
                 204,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -466,7 +466,7 @@
                 255,
                 204
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -483,7 +483,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -500,7 +500,7 @@
                 69,
                 43
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -517,7 +517,7 @@
                 95,
                 59
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -534,7 +534,7 @@
                 123,
                 105
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -551,7 +551,7 @@
                 150,
                 150
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -568,7 +568,7 @@
                 192,
                 192
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -585,7 +585,7 @@
                 221,
                 221
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -602,7 +602,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
@@ -619,7 +619,7 @@
                 255,
                 255
             ],
-            "ispassible" : true,
+            "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
