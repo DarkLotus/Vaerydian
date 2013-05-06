@@ -12,8 +12,8 @@
     "WILDERNESS": 9
   },
   "map_defs":[
-    {"name":"NONE", "id":0},
-    {"name":"CAVE", "id":1}
+    {"name":"NONE" },
+    {"name":"CAVE" }
   ],
   "map_params":{
     "WORLD" :{

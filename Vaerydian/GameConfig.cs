@@ -168,7 +168,6 @@ namespace Vaerydian
 					MapDef mDef;
 
 					mDef.Name = jo["name"].asString();
-					mDef.ID = jo["id"].asShort();
 
 					MapDefs.Add(mDef.Name,mDef);
 				}

@@ -22,7 +22,6 @@ namespace Vaerydian.Utils
 
 	public struct MapDef{
 		public string Name;
-		public short ID;
 	}
 
     public class Map
