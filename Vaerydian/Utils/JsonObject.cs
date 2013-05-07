@@ -95,6 +95,10 @@ namespace Vaerydian
 			return (T) Enum.Parse (typeof(T), (string)j_InternalObject);
 		}
 
+		public T asObject<T>(){
+			return (T)j_InternalObject;
+		}
+
 		/// <summary>
 		/// checks to see if the index values exist in the current json
 		/// </summary>

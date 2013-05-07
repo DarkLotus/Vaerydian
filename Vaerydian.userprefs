@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/GameConfig.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/JsonObject.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="171" Column="35" />
-      <File FileName="Vaerydian/Generators/CaveGen.cs" Line="209" Column="16" />
+      <File FileName="Vaerydian/GameConfig.cs" Line="224" Column="21" />
+      <File FileName="Vaerydian/Generators/CaveGen.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Utils/Map.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Utils/JsonObject.cs" Line="97" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,8 +27,9 @@
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />
             </Node>
-            <Node name="Utils" expanded="True" />
-            <Node name="GameConfig.cs" selected="True" />
+            <Node name="Utils" expanded="True">
+              <Node name="JsonObject.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
