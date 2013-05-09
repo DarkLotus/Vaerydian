@@ -11,9 +11,49 @@
     "WORLD": 8,
     "WILDERNESS": 9
   },
-  "map_defs":[
-    {"name":"NONE" },
-    {"name":"CAVE" }
+	"map_defs":[
+		{
+			"name":"CAVE_DEFAULT",
+			"type":"CAVE",
+			"tile_maps":[
+				{
+					"mapto":"WALL",
+					"tiles":[
+						{"name":"CAVE_WALL","prob":100}
+					]
+				},
+				{
+					"mapto":"FLOOR",
+					"tiles":[
+						{"name":"CAVE_FLOOR","prob":100}
+					]
+				}
+			]
+	 	},
+		{
+			"name":"DUNGEON_DEFAULT",
+			"type":"DUNGEON",
+			"tile_maps":[
+				{
+					"mapto":"WALL",
+					"tiles":[
+						{"name":"DUNGEON_WALL","prob":100}
+					]
+				},
+				{
+					"mapto":"FLOOR",
+					"tiles":[
+						{"name":"DUNGEON_FLOOR","prob":100}
+					]
+				},
+				{
+					"mapto":"DOOR",
+					"tiles":[
+						{"name":"DUNGEON_DOOR","prob":100}
+					]
+				}
+			]
+	 	}
   ],
   "map_params":{
     "WORLD" :{

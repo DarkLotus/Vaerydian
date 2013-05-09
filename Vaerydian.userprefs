@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/GameConfig.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="189" Column="23" />
+      <File FileName="Vaerydian/GameConfig.cs" Line="174" Column="13" />
       <File FileName="Vaerydian/Generators/CaveGen.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Utils/Map.cs" Line="25" Column="60" />
+      <File FileName="Vaerydian/Utils/Map.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

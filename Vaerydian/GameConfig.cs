@@ -170,21 +170,9 @@ namespace Vaerydian
 
 					mDef.Name = jo["name"].asString();
 
-					List<Dictionary<string,object>> tDefs = jo["tile_defs"].asList<Dictionary<string,object>>();
-					//define terrain mapping
-					foreach(Dictionary<string,object> tDict in tDefs){
-						jo = new JsonObject(tDict);
-
-						List<string> tiles = jo["tiles"].asList<string>();
-						List<TerrainDef> terrain = new List<TerrainDef>();
-
-						//convert to terrain defs
-						foreach(string tile in tiles){
-							terrain.Add(TerrainDefs[tile]);
-						}
-
-						mDef.TerrainDefMap.Add(jo["map_as"].asString(), terrain);
-					}
+					List<Dictionary<string,object>> tDefs = jo["tile_maps"].asList<Dictionary<string,object>>();
+					//TODO:define terrain mapping
+						
 
 					//set the map def
 					MapDefs.Add(mDef.Name,mDef);
