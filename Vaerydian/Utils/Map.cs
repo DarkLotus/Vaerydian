@@ -20,9 +20,15 @@ namespace Vaerydian.Utils
 		WILDERNESS = 10
 	}
 
+	public struct TileDef{
+		public TerrainDef TerrainDef;
+		public int Probability;
+	}
+
 	public struct MapDef{
 		public string Name;
-		public Dictionary<string,List<TerrainDef>> TerrainDefMap;
+		public MapType MapType;
+		public Dictionary<string,List<TileDef>> Tiles;
 	}
 
     public class Map

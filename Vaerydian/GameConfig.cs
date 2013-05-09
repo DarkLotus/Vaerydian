@@ -169,11 +169,36 @@ namespace Vaerydian
 					MapDef mDef = default(MapDef);
 
 					mDef.Name = jo["name"].asString();
+					mDef.MapType = jo["map_type"].asEnum<MapType>();
 
 					List<Dictionary<string,object>> tDefs = jo["tile_maps"].asList<Dictionary<string,object>>();
-					//TODO:define terrain mapping
-						
 
+					//define terrain maps
+					foreach(Dictionary<string,object> tDict in tDefs){
+						jo = new JsonObject(tDict);
+
+						string mapTo = jo["map_to"].asString();
+
+						List<Dictionary<string,object>> tiles = jo["tiles"].asList<Dictionary<string,object>>();
+
+						List<TileDef> tileDefs = new List<TileDef>();
+
+						//define tiles
+						foreach(Dictionary<string,object> tileDict in tiles){
+							jo = new JsonObject(tileDict);
+
+							TileDef tileDef = default(TileDef);
+
+							tileDef.TerrainDef = TerrainDefs[jo["name"].asString()];
+							tileDef.Probability = jo["prob"].asInt();
+
+							tileDefs.Add(tileDef);
+						}
+
+						//store tile reference
+						mDef.Tiles.Add(mapTo,tileDefs);
+					}
+						
 					//set the map def
 					MapDefs.Add(mDef.Name,mDef);
 				}

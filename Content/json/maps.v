@@ -14,16 +14,16 @@
 	"map_defs":[
 		{
 			"name":"CAVE_DEFAULT",
-			"type":"CAVE",
+			"map_type":"CAVE",
 			"tile_maps":[
 				{
-					"mapto":"WALL",
+					"map_to":"WALL",
 					"tiles":[
 						{"name":"CAVE_WALL","prob":100}
 					]
 				},
 				{
-					"mapto":"FLOOR",
+					"map_to":"FLOOR",
 					"tiles":[
 						{"name":"CAVE_FLOOR","prob":100}
 					]
@@ -32,22 +32,22 @@
 	 	},
 		{
 			"name":"DUNGEON_DEFAULT",
-			"type":"DUNGEON",
+			"map_type":"DUNGEON",
 			"tile_maps":[
 				{
-					"mapto":"WALL",
+					"map_to":"WALL",
 					"tiles":[
 						{"name":"DUNGEON_WALL","prob":100}
 					]
 				},
 				{
-					"mapto":"FLOOR",
+					"map_to":"FLOOR",
 					"tiles":[
 						{"name":"DUNGEON_FLOOR","prob":100}
 					]
 				},
 				{
-					"mapto":"DOOR",
+					"map_to":"DOOR",
 					"tiles":[
 						{"name":"DUNGEON_DOOR","prob":100}
 					]
