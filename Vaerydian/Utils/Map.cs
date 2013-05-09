@@ -22,6 +22,7 @@ namespace Vaerydian.Utils
 
 	public struct MapDef{
 		public string Name;
+		public Dictionary<string,List<TerrainDef>> TerrainDefMap;
 	}
 
     public class Map
