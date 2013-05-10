@@ -167,6 +167,7 @@ namespace Vaerydian
 				foreach(Dictionary<string,object> dict in mDefs){
 					jo = new JsonObject(dict);
 					MapDef mDef = default(MapDef);
+					mDef.Tiles = new Dictionary<string, List<TileDef>>();
 
 					mDef.Name = jo["name"].asString();
 					mDef.MapType = jo["map_type"].asEnum<MapType>();

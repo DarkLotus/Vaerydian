@@ -607,6 +607,91 @@
             "type" : "FLOOR"
         },
         {
+            "name" : "CAVE_WALL",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                255,
+                255,
+                255
+            ],
+            "passible" : false,
+            "effect" : "NONE",
+            "type" : "WALL"
+        },
+        {
+            "name" : "CAVE_FLOOR",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                255,
+                255,
+                255
+            ],
+            "passible" : true,
+            "effect" : "NONE",
+            "type" : "FLOOR"
+        },
+        {
+            "name" : "DUNGEON_WALL",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                255,
+                255,
+                255
+            ],
+            "passible" : false,
+            "effect" : "NONE",
+            "type" : "WALL"
+        },
+        {
+            "name" : "DUNGEON_FLOOR",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                255,
+                255,
+                255
+            ],
+            "passible" : true,
+            "effect" : "NONE",
+            "type" : "FLOOR"
+        },
+        {
+            "name" : "DUNGEON_DOOR",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                255,
+                255,
+                255
+            ],
+            "passible" : true,
+            "effect" : "NONE",
+            "type" : "FLOOR"
+        },
+        {
             "name" : "",
             "id" : 4,
             "texture" : "terrain\\default",
