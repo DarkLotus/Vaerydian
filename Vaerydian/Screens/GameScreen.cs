@@ -340,7 +340,7 @@ namespace Vaerydian.Screens
 
 
             mapState = new MapState();
-            mapState.MapType = g_Map.Map.MapType;
+            mapState.MapType = g_Map.Map.MapDef.MapType;
             mapState.Seed = g_Map.Map.Seed;
             mapState.SkillLevel = (int)g_Parameters[GAMESCREEN_SKILLLEVEL];
             

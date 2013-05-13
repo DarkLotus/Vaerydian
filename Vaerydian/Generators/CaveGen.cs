@@ -111,13 +111,15 @@ namespace Vaerydian.Generators
             //randomly set it
             if (c_Random.Next(100) <= prob)
             {
-                terrain.TerrainType = TerrainType_Old.CAVE_WALL;
-                terrain.IsBlocking = true;
+                //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
+                //terrain.IsBlocking = true;
+				terrain = setTerrain( terrain, "CAVE_DEFAULT","WALL");
             }
             else
             {
-                terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
-                terrain.IsBlocking = false;
+                //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
+                //terrain.IsBlocking = false;
+				terrain = setTerrain( terrain, "CAVE_DEFAULT","FLOOR");
             }
         }
 
@@ -205,8 +207,18 @@ namespace Vaerydian.Generators
         }
 
 		//TODO: complete this
-		private static Terrain setTerrain(string mapName, string terrainName){
-			return null;
+		private static Terrain setTerrain( Terrain terrain, string mapName, string terrainName){
+			MapDef mDef = GameConfig.MapDefs [mapName];
+
+			List<TileDef> tiles = mDef.Tiles [terrainName];
+
+			TerrainDef tDef = tiles [c_Random.Next (0, tiles.Count - 1)].TerrainDef;
+
+			terrain.TerrainDef = tDef;
+			terrain.IsBlocking = !tDef.Passible;
+			terrain.TerrainType = tDef.ID;
+
+			return terrain;
 		}
 
     }

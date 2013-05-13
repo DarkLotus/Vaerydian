@@ -44,7 +44,7 @@ namespace Vaerydian.Utils
 		public static bool generate( Map map, MapType type)
         {
             //set type
-            map.MapType = type;
+            map.MapDef.MapType = type;
             m_CurrentMapType = type;
 
             //call appropriate generator and generate the map

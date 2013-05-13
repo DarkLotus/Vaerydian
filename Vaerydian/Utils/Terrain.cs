@@ -44,6 +44,17 @@ namespace Vaerydian.Utils
             set { t_TerrainType = value; }
         }
 
+		private TerrainDef t_TerrainDef;
+
+		public TerrainDef TerrainDef {
+			get {
+				return t_TerrainDef;
+			}
+			set {
+				t_TerrainDef = value;
+			}
+		}
+
         private bool t_IsBlocking;
         /// <summary>
         /// does the terrain block movement

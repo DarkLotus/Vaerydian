@@ -24,6 +24,7 @@ namespace Vaerydian.Systems.Draw
     {
         private Dictionary<short, Rectangle> m_RectDict;
         private Texture2D m_Texture;
+		private Dictionary<string, Texture2D> m_Textures;
         private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewportMapper;
         private ComponentMapper m_PositionMapper;
@@ -73,6 +74,24 @@ namespace Vaerydian.Systems.Draw
 
             m_TileSize = m_RectDict[TerrainType_Old.CAVE_WALL].Width;
         }
+
+		protected override void added (Entity entity)
+		{
+			base.added (entity);
+
+			GameMap map = (GameMap)m_GameMapMapper.get (entity);
+
+			if (map.Map.MapDef.Name != null) {
+				List<TileDef> tiles = map.Map.MapDef.Tiles [map.Map.MapDef.Name];
+
+				foreach (TileDef tDef in tiles) {
+					if (!m_Textures.ContainsKey (tDef.TerrainDef.Texture))
+						m_Textures.Add (tDef.TerrainDef.Texture, 
+					               m_Container.ContentManager.Load<Texture2D> (tDef.TerrainDef.Texture));
+				}
+			}
+
+		}
 
         protected override void cleanUp(Bag<Entity> entities) { }
 

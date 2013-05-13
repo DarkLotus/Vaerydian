@@ -61,15 +61,7 @@ namespace Vaerydian.Utils
             set { m_ySize = value; }
         }
 
-		private MapType m_MapType = 0;
-        /// <summary>
-        /// type of map
-        /// </summary>
-		public MapType MapType
-        {
-            get { return m_MapType; }
-            set { m_MapType = value; }
-        }
+		public MapDef MapDef;
 
         private Terrain[,] m_Terrain;
         /// <summary>
