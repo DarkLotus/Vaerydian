@@ -24,7 +24,7 @@ namespace Vaerydian.Systems.Draw
     {
         private Dictionary<short, Rectangle> m_RectDict;
         private Texture2D m_Texture;
-		private Dictionary<string, Texture2D> m_Textures;
+		private Dictionary<string, Texture2D> m_Textures = new Dictionary<string,Texture2D>();
         private ComponentMapper m_GameMapMapper;
         private ComponentMapper m_ViewportMapper;
         private ComponentMapper m_PositionMapper;
@@ -82,13 +82,18 @@ namespace Vaerydian.Systems.Draw
 			GameMap map = (GameMap)m_GameMapMapper.get (entity);
 
 			if (map.Map.MapDef.Name != null) {
-				List<TileDef> tiles = map.Map.MapDef.Tiles [map.Map.MapDef.Name];
 
-				foreach (TileDef tDef in tiles) {
-					if (!m_Textures.ContainsKey (tDef.TerrainDef.Texture))
-						m_Textures.Add (tDef.TerrainDef.Texture, 
-					               m_Container.ContentManager.Load<Texture2D> (tDef.TerrainDef.Texture));
-				}
+                foreach (String tileDef in map.Map.MapDef.Tiles.Keys)
+                {
+                    List<TileDef> tiles = map.Map.MapDef.Tiles[tileDef];
+
+                    foreach (TileDef tDef in tiles)
+                    {
+                        if (!m_Textures.ContainsKey(tDef.TerrainDef.Texture))
+                            m_Textures.Add(tDef.TerrainDef.Texture,
+                                       m_Container.ContentManager.Load<Texture2D>(tDef.TerrainDef.Texture));
+                    }
+                }
 			}
 
 		}
@@ -132,7 +137,15 @@ namespace Vaerydian.Systems.Draw
                     pos = new Vector2(x*m_TileSize,y*m_TileSize);
 
                     //m_SpriteBatch.Draw(m_Texture, pos-origin, m_RectDict[m_Terrain.TerrainType], Color.White, 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
-                    m_SpriteBatch.Draw(m_Texture, pos - origin, null, getColorVariation(m_Terrain), 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+                    //m_SpriteBatch.Draw(m_Texture, pos - origin, null, getColorVariation(m_Terrain), 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
+
+                    if (m_Terrain.TerrainDef.Texture == null)
+                        continue;
+
+                    m_SpriteBatch.Draw(m_Textures[m_Terrain.TerrainDef.Texture], pos - origin, null,
+                                       m_Terrain.TerrainDef.Color, 0f, new Vector2(0), new Vector2(1),
+                                       SpriteEffects.None, 0f);
+
                 }
             }
 

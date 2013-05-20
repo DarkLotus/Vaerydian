@@ -615,9 +615,9 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                120,
+                54,
+                29
             ],
             "passible" : false,
             "effect" : "NONE",
@@ -632,9 +632,9 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                211,
+                158,
+                0
             ],
             "passible" : true,
             "effect" : "NONE",

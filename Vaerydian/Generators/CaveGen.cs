@@ -137,6 +137,8 @@ namespace Vaerydian.Generators
         public static void generateMap( Map map, int x, int y, int prob, bool h, int iter, int n, int seed)
         {
 
+            map.MapDef = GameConfig.MapDefs["CAVE_DEFAULT"];
+            
             //initialize
             MapHelper.floodInitializeAll( map, TerrainType_Old.CAVE_WALL);
 
@@ -167,14 +169,16 @@ namespace Vaerydian.Generators
                 {
                     if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
                     {
-                        terrain.TerrainType = TerrainType_Old.CAVE_WALL;
-                        terrain.IsBlocking = true;
+                        //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
+                        //terrain.IsBlocking = true;
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
-                        terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
-                        terrain.IsBlocking = false;
+                        //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
+                        //terrain.IsBlocking = false;
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
@@ -182,14 +186,16 @@ namespace Vaerydian.Generators
                 {
                     if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
                     {
-                        terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
-                        terrain.IsBlocking = false;
+                        //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
+                        //terrain.IsBlocking = false;
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
-                        terrain.TerrainType = TerrainType_Old.CAVE_WALL;
-                        terrain.IsBlocking = true;
+                        //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
+                        //terrain.IsBlocking = true;
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }

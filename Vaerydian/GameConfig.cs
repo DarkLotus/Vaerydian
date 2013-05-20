@@ -135,7 +135,7 @@ namespace Vaerydian
 							tDef.TextureOffset = new Point((int)tOff[0], (int)tOff[1]);
 
 					List<long> tColor = jo["color"].asList<long>();
-					tDef.Color = new Color(tColor[0],tColor[1],tColor[2]);
+					tDef.Color = new Color((int) tColor[0],(int)tColor[1],(int)tColor[2]);
 					tDef.Passible = jo["passible"].asBool();
 
 					//TODO: define effect - after effect is defined
