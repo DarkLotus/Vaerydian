@@ -167,35 +167,35 @@ namespace Vaerydian.Generators
 
                 if (h)
                 {
-                    if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
+                    if (MapHelper.countOfType(rX, rY, map, "CAVE_WALL") > n)
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_WALL");
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_FLOOR");
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
                 else
                 {
-                    if (MapHelper.countOfType(rX, rY, map, TerrainType_Old.CAVE_WALL) > n)
+                    if (MapHelper.countOfType(rX, rY, map, "CAVE_WALL") > n)
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_FLOOR");
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "CAVE_WALL");
+                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }

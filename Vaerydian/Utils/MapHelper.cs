@@ -47,6 +47,22 @@ namespace Vaerydian.Utils
             return neighbors;
         }
 
+        public static int countOfType(int x, int y, Map map, string terrainName)
+        {
+            int neighbors = 0;
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (map.Terrain[x + i, y + j].TerrainDef.Name == terrainName)
+                        neighbors++;
+                }
+            }
+
+            return neighbors;
+        }
+
         /// <summary>
         /// initializes a map with new terrain of the given type
         /// </summary>
