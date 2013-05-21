@@ -113,13 +113,13 @@ namespace Vaerydian.Generators
             {
                 //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                 //terrain.IsBlocking = true;
-				terrain = setTerrain( terrain, "CAVE_DEFAULT","WALL");
+                terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
             }
             else
             {
                 //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                 //terrain.IsBlocking = false;
-				terrain = setTerrain( terrain, "CAVE_DEFAULT","FLOOR");
+                terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
             }
         }
 
@@ -140,17 +140,20 @@ namespace Vaerydian.Generators
             map.MapDef = GameConfig.MapDefs["CAVE_DEFAULT"];
             
             //initialize
-            MapHelper.floodInitializeAll( map, TerrainType_Old.CAVE_WALL);
+            //MapHelper.floodInitializeAll( map, TerrainType_Old.CAVE_WALL);
+            MapHelper.floodInitializeAll(map, "WALL");
 
             //set the seed
             map.Seed = seed;
             c_Random = new Random(map.Seed);
+            MapHelper.Random = c_Random;
 
             //fill map as blocking
             MapHelper.floodAllOp( map, setBlocking); 
 
             //set floor
-            MapHelper.floodFillSpecificOp( map, 1, 1, x - 1, y - 1, TerrainType_Old.CAVE_FLOOR, setNotBlocking);
+            //MapHelper.floodFillSpecificOp( map, 1, 1, x - 1, y - 1, TerrainType_Old.CAVE_FLOOR, setNotBlocking);
+            MapHelper.floodFillSpecificOp(map, 1, 1, x - 1, y - 1, "FLOOR", setNotBlocking);
 
             //randomize map
             MapHelper.floodSpecificOp( map, 1, 1, x - 1, y - 1, setRandom, prob);
@@ -171,14 +174,14 @@ namespace Vaerydian.Generators
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "WALL");
+                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
+                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
@@ -188,14 +191,14 @@ namespace Vaerydian.Generators
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
+                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = setTerrain(terrain, "CAVE_DEFAULT", "WALL");
+                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
@@ -212,20 +215,7 @@ namespace Vaerydian.Generators
             terrain.Variation += (float)(0.125 - (c_Random.NextDouble() * 0.25));
         }
 
-		//TODO: complete this
-		private static Terrain setTerrain( Terrain terrain, string mapName, string terrainName){
-			MapDef mDef = GameConfig.MapDefs [mapName];
 
-			List<TileDef> tiles = mDef.Tiles [terrainName];
-
-			TerrainDef tDef = tiles [c_Random.Next (0, tiles.Count - 1)].TerrainDef;
-
-			terrain.TerrainDef = tDef;
-			terrain.IsBlocking = !tDef.Passible;
-			terrain.TerrainType = tDef.ID;
-
-			return terrain;
-		}
 
     }
 }

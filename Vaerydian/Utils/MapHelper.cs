@@ -10,6 +10,7 @@ namespace Vaerydian.Utils
     /// </summary>
     public static class MapHelper
     {
+       
         /// <summary>
         /// operation that is performed on a piece of terrain
         /// </summary>
@@ -22,6 +23,8 @@ namespace Vaerydian.Utils
         /// <param name="terrain">terrain operation is performed against</param>
         /// <param name="args">arguments for operation</param>
         public delegate void Operation( Terrain terrain, params Object[] args);
+
+        public static Random Random = new Random();
 
         /// <summary>
         /// counds the number of neighbors of a cell of a given terrain type
@@ -76,6 +79,19 @@ namespace Vaerydian.Utils
                 {
                     Terrain terrain = new Terrain();
                     terrain.TerrainType = terrainType;
+                    map.Terrain[i, j] = terrain;
+                }
+            }
+        }
+
+        public static void floodInitializeAll(Map map, string tileName)
+        {
+            for (int i = 0; i < map.XSize; i++)
+            {
+                for (int j = 0; j < map.YSize; j++)
+                {
+                    Terrain terrain = new Terrain();
+                    terrain.TerrainDef = MapHelper.getMapTerrainDef(map.MapDef.Name, tileName);//GameConfig.TerrainDefs[terrainDefName];
                     map.Terrain[i, j] = terrain;
                 }
             }
@@ -154,6 +170,18 @@ namespace Vaerydian.Utils
                 {
                     map.Terrain[i, j].TerrainType = terrainType;
                     operation( map.Terrain[i, j]);
+                }
+            }
+        }
+
+        public static void floodFillSpecificOp(Map map, int x, int y, int dx, int dy, string tileName, Operation operation)
+        {
+            for (int i = x; i < dx; i++)
+            {
+                for (int j = y; j < dy; j++)
+                {
+                    map.Terrain[i, j].TerrainDef = MapHelper.getMapTerrainDef(map.MapDef.Name, tileName);
+                    operation(map.Terrain[i, j]);
                 }
             }
         }
@@ -253,6 +281,38 @@ namespace Vaerydian.Utils
         public static float lerp(float a, float b, float x)
         {
             return (a * (1f - x) + b * x);
+        }
+
+        /// <summary>
+        /// sets terrain based on configuration defined map name and terrain name
+        /// </summary>
+        /// <param name="terrain"></param>
+        /// <param name="mapName"></param>
+        /// <param name="tileName"></param>
+        /// <param name="random"></param>
+        /// <returns></returns>
+        public static Terrain setTerrain(Terrain terrain, string mapName, string tileName)
+        {
+            MapDef mDef = GameConfig.MapDefs[mapName];
+
+            List<TileDef> tiles = mDef.Tiles[tileName];
+
+            TerrainDef tDef = tiles[Random.Next(0, tiles.Count - 1)].TerrainDef;
+
+            terrain.TerrainDef = tDef;
+            terrain.IsBlocking = !tDef.Passible;
+            terrain.TerrainType = tDef.ID;
+
+            return terrain;
+        }
+
+        public static TerrainDef getMapTerrainDef(string mapName, string tileName)
+        {
+            MapDef mapDef = GameConfig.MapDefs[mapName];
+
+            List<TileDef> tiles = mapDef.Tiles[tileName];
+
+            return tiles[Random.Next(0, tiles.Count - 1)].TerrainDef;
         }
     }
 }
