@@ -62,13 +62,18 @@ namespace Vaerydian.Generators
 
 		private static void generateMap(Map map, int xSize, int ySize, int seed, int features){
 
-			d_Rand = new Random(seed);
+            map.MapDef = GameConfig.MapDefs["DUNGEON_DEFAULT"];
+            
+            d_Rand = new Random(seed);
+            MapHelper.Random = d_Rand;
 
-			MapHelper.floodInitializeAll(map, TerrainType_Old.DUNGEON_BEDROCK);
+			//MapHelper.floodInitializeAll(map, TerrainType_Old.DUNGEON_BEDROCK);
+            MapHelper.floodInitializeAll(map, "BEDROCK");
 
 			MapHelper.floodAllOp(map,setBlocking);
 
-			MapHelper.floodFillSpecific(map,1,1,xSize-1,ySize-1, TerrainType_Old.DUNGEON_EARTH);
+			//MapHelper.floodFillSpecific(map,1,1,xSize-1,ySize-1, TerrainType_Old.DUNGEON_EARTH);
+            MapHelper.floodFillSpecific(map, 1, 1, xSize - 1, ySize - 1, "EARTH");
 
 			//create dungeon
 			createDungeon(map,xSize,ySize,features);

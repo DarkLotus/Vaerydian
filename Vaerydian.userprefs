@@ -1,16 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/TerrainType_Old.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\GameConfig.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Generators/CaveGen.cs" Line="141" Column="75" />
-      <File FileName="Vaerydian/Utils/Map.cs" Line="54" Column="35" />
-      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="86" Column="5" />
-      <File FileName="Vaerydian/Utils/TerrainType_Old.cs" Line="12" Column="8" />
-      <File FileName="Vaerydian/Components/Utils/GameMap.cs" Line="18" Column="17" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="343" Column="56" />
-      <File FileName="Vaerydian/Utils/MapMaker.cs" Line="47" Column="21" />
-      <File FileName="Vaerydian/Utils/Terrain.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian\GameConfig.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,9 +25,8 @@
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />
             </Node>
-            <Node name="Utils" expanded="True">
-              <Node name="TerrainType_Old.cs" selected="True" />
-            </Node>
+            <Node name="Utils" expanded="True" />
+            <Node name="GameConfig.cs" selected="True" />
           </Node>
         </State>
       </Pad>

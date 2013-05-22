@@ -50,7 +50,7 @@ namespace Vaerydian.Utils
             return neighbors;
         }
 
-        public static int countOfType(int x, int y, Map map, string terrainName)
+        public static int countOfType(int x, int y, Map map, string tileName)
         {
             int neighbors = 0;
 
@@ -58,12 +58,30 @@ namespace Vaerydian.Utils
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (map.Terrain[x + i, y + j].TerrainDef.Name == terrainName)
-                        neighbors++;
+                    List<TileDef> tiles = map.MapDef.Tiles[tileName];
+
+                    foreach (TileDef tile in tiles)
+                    {
+                        if (map.Terrain[x + i, y + j].TerrainDef.Name == tile.TerrainDef.Name)
+                            neighbors++;
+                    }
                 }
             }
 
             return neighbors;
+        }
+
+        public static bool isOfType(Map map, Terrain terrain, string tileName)
+        {
+            List<TileDef> tiles = map.MapDef.Tiles[tileName];
+
+            foreach (TileDef tile in tiles)
+            {
+                if (terrain.TerrainDef.Name == tile.TerrainDef.Name)
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -148,6 +166,17 @@ namespace Vaerydian.Utils
                 for (int j = y; j < dy; j++)
                 {
                     map.Terrain[i, j].TerrainType = terrainType;
+                }
+            }
+        }
+
+        public static void floodFillSpecific(Map map, int x, int y, int dx, int dy, string tileName)
+        {
+            for (int i = x; i < dx; i++)
+            {
+                for (int j = y; j < dy; j++)
+                {
+                    map.Terrain[i, j].TerrainDef = MapHelper.getMapTerrainDef(map.MapDef.Name, tileName);
                 }
             }
         }

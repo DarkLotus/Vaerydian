@@ -107,19 +107,20 @@ namespace Vaerydian.Generators
         private static void setRandom( Terrain terrain, params object[] args)
         {
             int prob = (int)args[0];
+            Map map = (Map)args[1];
             
             //randomly set it
             if (c_Random.Next(100) <= prob)
             {
                 //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                 //terrain.IsBlocking = true;
-                terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
+                terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "WALL");
             }
             else
             {
                 //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                 //terrain.IsBlocking = false;
-                terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
+                terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "FLOOR");
             }
         }
 
@@ -156,7 +157,7 @@ namespace Vaerydian.Generators
             MapHelper.floodFillSpecificOp(map, 1, 1, x - 1, y - 1, "FLOOR", setNotBlocking);
 
             //randomize map
-            MapHelper.floodSpecificOp( map, 1, 1, x - 1, y - 1, setRandom, prob);
+            MapHelper.floodSpecificOp( map, 1, 1, x - 1, y - 1, setRandom, prob, map);
 
             int rX, rY;
 
@@ -170,35 +171,35 @@ namespace Vaerydian.Generators
 
                 if (h)
                 {
-                    if (MapHelper.countOfType(rX, rY, map, "CAVE_WALL") > n)
+                    if (MapHelper.countOfType(rX, rY, map, "WALL") > n)
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
+                        terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
+                        terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }
                 else
                 {
-                    if (MapHelper.countOfType(rX, rY, map, "CAVE_WALL") > n)
+                    if (MapHelper.countOfType(rX, rY, map, "WALL") > n)
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_FLOOR;
                         //terrain.IsBlocking = false;
-                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "FLOOR");
+                        terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "FLOOR");
                         map.Terrain[rX, rY] = terrain;
                     }
                     else
                     {
                         //terrain.TerrainType = TerrainType_Old.CAVE_WALL;
                         //terrain.IsBlocking = true;
-                        terrain = MapHelper.setTerrain(terrain, "CAVE_DEFAULT", "WALL");
+                        terrain = MapHelper.setTerrain(terrain, map.MapDef.Name, "WALL");
                         map.Terrain[rX, rY] = terrain;
                     }
                 }

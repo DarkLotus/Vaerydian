@@ -52,6 +52,24 @@
 						{"name":"DUNGEON_DOOR","prob":100}
 					]
 				}
+				{
+					"map_to":"CORRIDOR",
+					"tiles":[
+						{"name":"DUNGEON_CORRIDOR","prob":100}
+					]
+				}
+				{
+					"map_to":"EARTH",
+					"tiles":[
+						{"name":"DUNGEON_EARTH","prob":100}
+					]
+				}
+				{
+					"map_to":"BEDROCK",
+					"tiles":[
+						{"name":"DUNGEON_BEDROCK","prob":100}
+					]
+				}
 			]
 	 	}
   ],

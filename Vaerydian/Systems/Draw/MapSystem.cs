@@ -140,10 +140,13 @@ namespace Vaerydian.Systems.Draw
                     //m_SpriteBatch.Draw(m_Texture, pos - origin, null, getColorVariation(m_Terrain), 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
 
                     if (m_Terrain.TerrainDef.Texture == null)
+                    {
+                        m_SpriteBatch.Draw(m_Texture, pos - origin, null, getColorVariation(m_Terrain), 0f, new Vector2(0), new Vector2(1), SpriteEffects.None, 0f);
                         continue;
+                    }
 
                     m_SpriteBatch.Draw(m_Textures[m_Terrain.TerrainDef.Texture], pos - origin, null,
-                                       m_Terrain.TerrainDef.Color, 0f, new Vector2(0), new Vector2(1),
+                                       getColorVariation2(m_Terrain), 0f, new Vector2(0), new Vector2(1),
                                        SpriteEffects.None, 0f);
 
                 }
@@ -252,6 +255,19 @@ namespace Vaerydian.Systems.Draw
             return new Color(colVec);
         }
 
+        private Color getColorVariation2(Terrain terrain)
+        {
+
+            Vector3 colVec = terrain.TerrainDef.Color.ToVector3();
+
+            colVec.X *= terrain.Variation;
+            colVec.Y *= terrain.Variation;
+            colVec.Z *= terrain.Variation;
+
+
+            return new Color(colVec);
+        }
+
         private Color getColor(Terrain terrain)
         {
             switch (terrain.TerrainType)
@@ -336,6 +352,8 @@ namespace Vaerydian.Systems.Draw
 				return new Color(153,153,0);
 			case TerrainType_Old.DUNGEON_FLOOR:
 				return new Color(211, 158, 78);
+            case TerrainType_Old.DUNGEON_DOOR:
+                return new Color(150, 75, 0);
             default:
                 return Color.Red;
             }

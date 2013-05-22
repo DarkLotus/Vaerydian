@@ -649,9 +649,9 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                180,
+                180,
+                180
             ],
             "passible" : false,
             "effect" : "NONE",
@@ -666,9 +666,9 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                211,
+                158,
+                78
             ],
             "passible" : true,
             "effect" : "NONE",
@@ -683,16 +683,16 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                150,
+                75,
+                0
             ],
             "passible" : true,
             "effect" : "NONE",
             "type" : "FLOOR"
         },
         {
-            "name" : "",
+            "name" : "DUNGEON_BEDROCK",
             "id" : 4,
             "texture" : "terrain\\default",
             "texture_offset" : [
@@ -700,9 +700,43 @@
                 0
             ],
             "color" : [
-                255,
-                255,
-                255
+                64,
+                64,
+                64
+            ],
+            "passible" : false,
+            "effect" : "NONE",
+            "type" : "FLOOR"
+        },
+		        {
+            "name" : "DUNGEON_EARTH",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                100,
+                100,
+                100
+            ],
+            "passible" : false,
+            "effect" : "NONE",
+            "type" : "FLOOR"
+        },
+		        {
+            "name" : "DUNGEON_CORRIDOR",
+            "id" : 4,
+            "texture" : "terrain\\default",
+            "texture_offset" : [
+                0,
+                0
+            ],
+            "color" : [
+                153,
+                153,
+                0
             ],
             "passible" : true,
             "effect" : "NONE",
