@@ -1,18 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Generators/DungeonGen.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
     <Files>
       <File FileName="Vaerydian/GameConfig.cs" Line="1" Column="1" />
       <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Generators/DungeonGen.cs" Line="55" Column="14" />
       <File FileName="Vaerydian/Utils/MapHelper.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Generators/ForestGen.cs" Line="109" Column="18" />
+      <File FileName="Vaerydian/VaerydianGame.cs" Line="158" Column="13" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="511" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
-            <Node name="Generators" expanded="True">
-              <Node name="DungeonGen.cs" selected="True" />
+            <Node name="Generators" expanded="True" />
+            <Node name="Screens" expanded="True">
+              <Node name="GameScreen.cs" selected="True" />
             </Node>
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />

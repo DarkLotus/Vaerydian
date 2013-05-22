@@ -61,11 +61,14 @@ namespace Vaerydian.Generators
         {
             f_Rand = new Random(seed);
 
-            MapHelper.floodInitializeAll( map, terrainBlockType);
+           // MapHelper.floodInitializeAll( map, terrainBlockType);
+
+			MapHelper.floodInitializeAll (map, "BLOCK");
 
 			MapHelper.floodAllOp(map,setBlocking);
 
-			MapHelper.floodFillSpecificOp(map,1,1,x-1,y-1,terrainBlockType,setNotBlocking);
+			//MapHelper.floodFillSpecificOp(map,1,1,x-1,y-1,terrainBlockType,setNotBlocking);
+			MapHelper.floodFillSpecificOp(map,1,1,x-1,y-1,"BLOCK",setNotBlocking);
 
 			MapHelper.floodSpecificOp(map,1,1,x-1,y-1,foo, prob, terrainBaseType,terrainBlockType);
 
