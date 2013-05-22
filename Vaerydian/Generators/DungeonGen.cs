@@ -128,30 +128,32 @@ namespace Vaerydian.Generators
 					dy = d_Rand.Next(1,ySize-1);
 					direction = -1;
 
+					//MapHelper.isOfTileType(map,map.Terrain[dx,dy], "WALL");
+
 					//if this terrain is part of the already dug dungeon...
-					if(map.Terrain[dx,dy].TerrainType == TerrainType_Old.DUNGEON_WALL ||
-					   map.Terrain[dx,dy].TerrainType == TerrainType_Old.DUNGEON_CORRIDOR){
+					if(MapHelper.isOfTileType(map,map.Terrain[dx,dy], "WALL") ||
+					   MapHelper.isOfTileType(map,map.Terrain[dx,dy], "CORRIDOR")){
 						//perform tests if it can be reached
-						if(map.Terrain[dx,dy+1].TerrainType == TerrainType_Old.DUNGEON_FLOOR ||
-						   map.Terrain[dx,dy+1].TerrainType == TerrainType_Old.DUNGEON_CORRIDOR){
+						if(MapHelper.isOfTileType(map,map.Terrain[dx,dy+1], "FLOOR") ||
+						   MapHelper.isOfTileType(map,map.Terrain[dx,dy+1], "CORRIDOR")){
 							direction = NORTH;
 							xmod = 0;
 							ymod = -1;
 						}
-						if(map.Terrain[dx-1,dy].TerrainType == TerrainType_Old.DUNGEON_FLOOR ||
-						   map.Terrain[dx-1,dy].TerrainType == TerrainType_Old.DUNGEON_CORRIDOR){
+						if(MapHelper.isOfTileType(map,map.Terrain[dx-1,dy], "FLOOR") ||
+						   MapHelper.isOfTileType(map,map.Terrain[dx-1,dy], "CORRIDOR")){
 							direction = EAST;
 							xmod = 1;
 							ymod = 0;
 						}
-						if(map.Terrain[dx,dy-1].TerrainType == TerrainType_Old.DUNGEON_FLOOR ||
-						   map.Terrain[dx,dy-1].TerrainType == TerrainType_Old.DUNGEON_CORRIDOR){
+						if(MapHelper.isOfTileType(map,map.Terrain[dx,dy-1], "FLOOR") ||
+						   MapHelper.isOfTileType(map,map.Terrain[dx,dy-1], "CORRIDOR")){
 							direction = SOUTH;
 							xmod = 0;
 							ymod = 1;
 						}
-						if(map.Terrain[dx+1,dy].TerrainType == TerrainType_Old.DUNGEON_FLOOR ||
-						   map.Terrain[dx+1,dy].TerrainType == TerrainType_Old.DUNGEON_CORRIDOR){
+						if(MapHelper.isOfTileType(map,map.Terrain[dx+1,dy], "FLOOR") ||
+						   MapHelper.isOfTileType(map,map.Terrain[dx+1,dy], "CORRIDOR")){
 							direction = WEST;
 							xmod = -1;
 							ymod = 0;
@@ -160,10 +162,10 @@ namespace Vaerydian.Generators
 
 						//make sure there isnt another opening nearby
 						if(direction > -1){
-							if(map.Terrain[dx,dy+1].TerrainType == TerrainType_Old.DUNGEON_DOOR) direction = -1;
-							if(map.Terrain[dx,dy-1].TerrainType == TerrainType_Old.DUNGEON_DOOR) direction = -1;
-							if(map.Terrain[dx+1,dy].TerrainType == TerrainType_Old.DUNGEON_DOOR) direction = -1;
-							if(map.Terrain[dx-1,dy].TerrainType == TerrainType_Old.DUNGEON_DOOR) direction = -1;
+							if(MapHelper.isOfTileType(map,map.Terrain[dx,dy+1], "DOOR")) direction = -1;
+							if(MapHelper.isOfTileType(map,map.Terrain[dx,dy-1], "DOOR")) direction = -1;
+							if(MapHelper.isOfTileType(map,map.Terrain[dx+1,dy], "DOOR")) direction = -1;
+							if(MapHelper.isOfTileType(map,map.Terrain[dx-1,dy], "DOOR")) direction = -1;
 						}
 
 						//if we found a valid direction, break out of this look
@@ -180,18 +182,21 @@ namespace Vaerydian.Generators
 							createdFeatures++;
 
 							//set its entrance and ensure its reachable
-							map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_DOOR;
-							map.Terrain[dx,dy].IsBlocking = false;
-							map.Terrain[dx+xmod,dy+ymod].TerrainType = TerrainType_Old.DUNGEON_FLOOR;
-							map.Terrain[dx+xmod,dy+ymod].IsBlocking = false;
+							//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_DOOR;
+							//map.Terrain[dx,dy].IsBlocking = false;
+							MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "DOOR");
+							//map.Terrain[dx+xmod,dy+ymod].TerrainType = TerrainType_Old.DUNGEON_FLOOR;
+							//map.Terrain[dx+xmod,dy+ymod].IsBlocking = false;
+							MapHelper.setTerrain(map.Terrain[dx+xmod,dy+ymod], map.MapDef.Name, "FLOOR");
 						}
 					}
 					else if(feature >= 100){//make a corridor
 						if(makeCorridor(map,dx+xmod,dy+ymod,d_Rand.Next(6,20),direction)){
 							createdFeatures++;
 
-							map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_DOOR;
-							map.Terrain[dx,dy].IsBlocking = false;
+							//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_DOOR;
+							//map.Terrain[dx,dy].IsBlocking = false;
+							MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "DOOR");
 						}
 					}
 
@@ -218,13 +223,14 @@ namespace Vaerydian.Generators
 				//same thing here, to make sure it's not out of the boundaries
 				for (dy = y; dy > (y-len); dy--){
 					if (dy < 0 || dy > map.YSize) return false; //oh boho, it was!
-					if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+					if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 				}
 	 
 				//if we're still here, let's start building
 				for (dy = y; dy > (y-len); dy--){
-					map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
-					map.Terrain[dx,dy].IsBlocking = false;
+					//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
+					//map.Terrain[dx,dy].IsBlocking = false;
+					MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "CORRIDOR");
 				}
 				break;
 			case EAST:
@@ -233,12 +239,13 @@ namespace Vaerydian.Generators
  
 				for (dx = x; dx < (x+len); dx++){
 					if (dx < 0 || dx > map.XSize) return false;
-					if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+					if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 				}
  
 				for (dx = x; dx < (x+len); dx++){
-					map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
-					map.Terrain[dx,dy].IsBlocking = false;
+					//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
+					//map.Terrain[dx,dy].IsBlocking = false;
+					MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "CORRIDOR");
 				}
 				break;
 			case SOUTH:
@@ -247,12 +254,13 @@ namespace Vaerydian.Generators
 	 
 				for (dy = y; dy < (y+len); dy++){
 					if (dy < 0 || dy > map.YSize) return false;
-					if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+					if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 				}
 	 
 				for (dy = y; dy < (y+len); dy++){
-					map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
-					map.Terrain[dx,dy].IsBlocking = false;
+					//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
+					//map.Terrain[dx,dy].IsBlocking = false;
+					MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "CORRIDOR");
 				}
 				break;
 			case WEST:
@@ -261,12 +269,13 @@ namespace Vaerydian.Generators
 	 
 				for (dx = x; dx > (x-len); dx--){
 					if (dx < 0 || dx > map.XSize) return false;
-					if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+					if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 				}
 	 
 				for (dx = x; dx > (x-len); dx--){
-					map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
-					map.Terrain[dx,dy].IsBlocking = false;
+					//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_CORRIDOR;
+					//map.Terrain[dx,dy].IsBlocking = false;
+					MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "CORRIDOR");
 				}
 				break;
 			default:
@@ -290,18 +299,18 @@ namespace Vaerydian.Generators
 					if(dy<0||dy>map.YSize) return false;
 					for(int dx = (x-xlen/2);dx<(x+(xlen+1)/2);dx++){
 						if(dx<0||dx>map.XSize) return false;
-						if(map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+						if(!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 					}
 				}
 
 				//ok to build room
 				for(int dy = y; dy > (y -ylen);dy--){
 					for(int dx = (x-xlen/2);dx<(x+(xlen+1)/2);dx++){
-						if(dx == (x-xlen/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if(dx == (x+(xlen-1)/2))map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if(dy == y) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if(dy == (y-ylen+1)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else{ map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
+						if(dx == (x-xlen/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if(dx == (x+(xlen-1)/2))MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if(dy == y) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if(dy == (y-ylen+1)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else{ MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "FLOOR");}//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
 					}
 				}
 				break;
@@ -311,7 +320,7 @@ namespace Vaerydian.Generators
 					if (dy < 0 || dy > map.YSize) return false;
 					for (int dx = x; dx < (x+xlen); dx++){
 						if (dx < 0 || dx > map.XSize) return false;
-						if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+						if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 					}
 				}
 	 
@@ -319,10 +328,10 @@ namespace Vaerydian.Generators
 				for (int dy = (y-ylen/2); dy < (y+(ylen+1)/2); dy++){
 					for (int dx = x; dx < (x+xlen); dx++){
 	 					if (dx == x) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dx == (x+xlen-1)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == (y-ylen/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == (y+(ylen-1)/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-	 					else{ map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
+						else if (dx == (x+xlen-1)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == (y-ylen/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == (y+(ylen-1)/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else{ MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "FLOOR");}//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
 					}
 				}
 
@@ -333,18 +342,18 @@ namespace Vaerydian.Generators
 					if (dy < 0 || dy > map.YSize) return false;
 					for (int dx = (x-xlen/2); dx < (x+(xlen+1)/2); dx++){
 						if (dx < 0 || dx > map.XSize) return false;
-						if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+						if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 					}
 				}
 
 				//ok to build room
 				for (int dy = y; dy < (y+ylen); dy++){
 					for (int dx = (x-xlen/2); dx < (x+(xlen+1)/2); dx++){
-						if (dx == (x-xlen/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dx == (x+(xlen-1)/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == y) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == (y+ylen-1)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else{ map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
+						if (dx == (x-xlen/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dx == (x+(xlen-1)/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == y) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == (y+ylen-1)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else{ MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "FLOOR");}//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
 					}
 				}
 				break;
@@ -354,18 +363,18 @@ namespace Vaerydian.Generators
 					if (dy < 0 || dy > map.YSize) return false;
 					for (int dx = x; dx > (x-xlen); dx--){
 						if (dx < 0 || dx > map.XSize) return false;
-						if (map.Terrain[dx,dy].TerrainType != TerrainType_Old.DUNGEON_EARTH) return false;
+						if (!MapHelper.isOfTileType(map, map.Terrain[dx,dy], "EARTH")) return false;
 					}
 				}
 
 				//ok to build room
 				for (int dy = (y-ylen/2); dy < (y+(ylen+1)/2); dy++){
 					for (int dx = x; dx > (x-xlen); dx--){
-						if (dx == x) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dx == (x-xlen+1)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == (y-ylen/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else if (dy == (y+(ylen-1)/2)) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
-						else{ map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
+						if (dx == x) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dx == (x-xlen+1)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == (y-ylen/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else if (dy == (y+(ylen-1)/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						else{ MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "FLOOR");}//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_FLOOR; map.Terrain[dx,dy].IsBlocking = false;}
 					}
 				}
 				break;

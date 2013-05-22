@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,7 +71,7 @@ namespace Vaerydian.Utils
             return neighbors;
         }
 
-        public static bool isOfType(Map map, Terrain terrain, string tileName)
+        public static bool isOfTileType(Map map, Terrain terrain, string tileName)
         {
             List<TileDef> tiles = map.MapDef.Tiles[tileName];
 
