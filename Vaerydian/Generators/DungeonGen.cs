@@ -327,7 +327,7 @@ namespace Vaerydian.Generators
 				//ok to build room
 				for (int dy = (y-ylen/2); dy < (y+(ylen+1)/2); dy++){
 					for (int dx = x; dx < (x+xlen); dx++){
-	 					if (dx == x) map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
+						if (dx == x) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
 						else if (dx == (x+xlen-1)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
 						else if (dy == (y-ylen/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
 						else if (dy == (y+(ylen-1)/2)) MapHelper.setTerrain(map.Terrain[dx,dy], map.MapDef.Name, "WALL");//map.Terrain[dx,dy].TerrainType = TerrainType_Old.DUNGEON_WALL;
