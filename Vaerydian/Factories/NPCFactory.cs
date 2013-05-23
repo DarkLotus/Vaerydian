@@ -128,7 +128,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, attributes);
 
             //create health
-            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 5);
+            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 3);
             health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
             health.RecoveryRate = 1000;
             n_EcsInstance.EntityManager.addComponent(e, health);
@@ -261,7 +261,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, attributes);
 
             //create health
-            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 5);
+            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 3);
             health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
             health.RecoveryRate = 1000;
             n_EcsInstance.EntityManager.addComponent(e, health);
