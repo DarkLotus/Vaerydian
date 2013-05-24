@@ -1,28 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Generators/WorldGen.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\GameConfig.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Utils/MapHelper.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Generators/ForestGen.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/VaerydianGame.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Generators/DungeonGen.cs" Line="393" Column="1" />
-      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Behaviors/WanderingEnemyBehavior.cs" Line="149" Column="29" />
-      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="15" Column="31" />
-      <File FileName="Vaerydian/Generators/WorldGen.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian\GameConfig.cs" Line="23" Column="38" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
+            <Node name="References" expanded="True" selected="True" />
             <Node name="ACB" expanded="True" />
             <Node name="Behaviors" expanded="True" />
-            <Node name="Generators" expanded="True">
-              <Node name="WorldGen.cs" selected="True" />
-            </Node>
+            <Node name="Generators" expanded="True" />
             <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
