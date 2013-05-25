@@ -143,6 +143,6 @@ namespace Vaerydian.Utils
             set { t_Variation = value; }
         }
 
-		public float Lighting = 0f;
+		public float Lighting = 0.1f;
     }
 }

@@ -1,17 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Systems/Update/LightSystem.cs">
     <Files>
-      <File FileName="Vaerydian/Systems/Update/LightSystem.cs" Line="97" Column="84" />
-      <File FileName="Vaerydian/Components/Graphical/Light.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Components/Utils/GameMap.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Utils/Terrain.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Behaviors/WanderingEnemyBehavior.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Systems/Update/LightSystem.cs" Line="91" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -30,7 +21,7 @@
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True">
-                <Node name="MeleeSystem.cs" selected="True" />
+                <Node name="LightSystem.cs" selected="True" />
               </Node>
             </Node>
             <Node name="Utils" expanded="True" />

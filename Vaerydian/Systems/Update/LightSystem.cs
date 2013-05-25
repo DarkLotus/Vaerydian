@@ -88,14 +88,10 @@ namespace Vaerydian
 						continue;
 
 
-					if(terrain.Lighting == 0f){
-						//apply lighting to tile
-						terrain.Lighting = 1f/(Vector2.Distance(pos.Pos,new Vector2(x*32,y*32))*.05f);
-					}else{
-						//apply additive lighting to tile
-						float newLight = 1f/(Vector2.Distance(pos.Pos,new Vector2(x*32,y*32))*.05f);
-						terrain.Lighting = newLight > terrain.Lighting ? newLight : terrain.Lighting;
-					}
+					//apply lighting to tile
+					float newLight = 1f/(Vector2.Distance(pos.Pos,new Vector2(x*32,y*32))*.05f);
+					terrain.Lighting = newLight > terrain.Lighting ? newLight : terrain.Lighting;
+
 
 
 					if(terrain.Lighting > 1f)
