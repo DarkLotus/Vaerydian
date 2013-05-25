@@ -153,7 +153,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, factions);
 
 
-			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1, 1, 1, 1)));
+			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 5, new Vector3(position, 10), 0.5f, new Vector4(1, 1, 1, 1)));
 
 
             n_EcsInstance.refresh(e);
@@ -289,7 +289,7 @@ namespace Vaerydian.Factories
             Aggrivation aggro = new Aggrivation();
             n_EcsInstance.EntityManager.addComponent(e, aggro);
 
-			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 100, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
+			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 5, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
 
             n_EcsInstance.GroupManager.addEntityToGroup("WANDERERS", e);
 

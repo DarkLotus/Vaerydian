@@ -70,6 +70,7 @@ namespace Vaerydian.Screens
         private EntitySystem uiUpdateSystem;
         private EntitySystem triggerSystem;
 		private EntitySystem actionSystem;
+		private EntitySystem lightSystem;
         
         //audio
         private EntitySystem audioSystem;
@@ -206,6 +207,7 @@ namespace Vaerydian.Screens
             uiUpdateSystem = ecsInstance.SystemManager.setSystem(new UIUpdateSystem(), new UserInterface());
             triggerSystem = ecsInstance.SystemManager.setSystem(new TriggerSystem(), new Trigger());
 			actionSystem = ecsInstance.SystemManager.setSystem (new ActionSystem (), new VAction ());
+			lightSystem = ecsInstance.SystemManager.setSystem (new LightSystem (), new Light (), new Position ());
 
             //audio systems
             audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
@@ -254,6 +256,7 @@ namespace Vaerydian.Screens
 			ecsInstance.ComponentManager.registerComponentType(new Audio());
             ecsInstance.ComponentManager.registerComponentType(new Vaerydian.Components.Utils.Path());
             ecsInstance.ComponentManager.registerComponentType(new StateContainer<EnemyState, EnemyState>());
+			ecsInstance.ComponentManager.registerComponentType (new Light ());
 
             //initialize all systems
             ecsInstance.SystemManager.initializeSystems();
@@ -527,6 +530,7 @@ namespace Vaerydian.Screens
             victorySystem.process();
             triggerSystem.process();
 			actionSystem.process ();
+			lightSystem.process ();
 
             mapCollisionSystem.process();
 

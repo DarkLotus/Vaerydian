@@ -41,14 +41,13 @@ namespace Vaerydian.Factories
             //ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
 			ECSInstance.EntityManager.addComponent(e, new Velocity(4f));
 			ECSInstance.EntityManager.addComponent(e, new Controllable());
-            //ECSInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));
-
+            //ECSInstance.EntityManager.addComponent(e, new Sprite("characters\\lord_lard_sheet", "characters\\normals\\lord_lard_sheet_normals",32,32,0,0));;
             
 			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation());
 			ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
             //ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 			ECSInstance.EntityManager.addComponent(e, new Heading());
-			ECSInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+			ECSInstance.EntityManager.addComponent(e, createLight(true, 5, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
@@ -153,7 +152,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation()); ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
 			ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 			ECSInstance.EntityManager.addComponent(e, new Heading());
-            //ECSInstance.EntityManager.addComponent(e, createLight(true, 100, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+            ECSInstance.EntityManager.addComponent(e, createLight(true, 5, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             /* LIKELY NOT NEEDED
@@ -206,7 +205,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
 			ECSInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
 			ECSInstance.EntityManager.addComponent(e, new MousePosition());
-			ECSInstance.EntityManager.addComponent(e, createLight(true, 75, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
+			//ECSInstance.EntityManager.addComponent(e, createLight(true, 2, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
 			ECSInstance.TagManager.tagEntity("MOUSE", e);
@@ -288,7 +287,7 @@ namespace Vaerydian.Factories
 
             //1152, 720
 			ECSInstance.EntityManager.addComponent(e, createLight(true, 
-                                                        rand.Next(100)+100,
+                                                        rand.Next(5)+5,
                                                         pos, 
                                                         (float)rand.NextDouble()*.5f+0.5f,
                                                         new Vector4((float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble())));

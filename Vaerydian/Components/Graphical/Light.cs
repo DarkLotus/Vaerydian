@@ -26,6 +26,15 @@ namespace Vaerydian.Components.Graphical
             return l_TypeID;
         }
 
+		public static int TypeID {
+			get {
+				return l_TypeID;
+			}
+			set {
+				l_TypeID = value;
+			}
+		}
+
         public void setEntityId(int entityId)
         {
             l_EntityID = entityId;

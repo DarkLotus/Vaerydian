@@ -573,7 +573,7 @@ namespace Vaerydian.Behaviors
             trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
             trans.RotationOrigin = new Vector2(16);
 
-			EntityFactory.createSonicProjectile(pos + dir * 16, dir, 10, 1000, EntityFactory.createLight(true, 25, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
+			EntityFactory.createSonicProjectile(pos + dir * 16, dir, 10, 1000, EntityFactory.createLight(true, 2, new Vector3(pos + position.Offset, 10), 0.7f, Color.Blue.ToVector4()), trans, w_ThisEntity);
 
             UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
 

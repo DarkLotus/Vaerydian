@@ -62,6 +62,15 @@ namespace Vaerydian.Components.Utils
             return g_TypeID;
         }
 
+		public static int TypeID {
+			get {
+				return g_TypeID;
+			}
+			set {
+				g_TypeID = value;
+			}
+		}
+
         public void setEntityId(int entityId)
         {
             g_EntityID = entityId;

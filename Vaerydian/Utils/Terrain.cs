@@ -142,5 +142,7 @@ namespace Vaerydian.Utils
             get { return t_Variation; }
             set { t_Variation = value; }
         }
+
+		public float Lighting = 0f;
     }
 }

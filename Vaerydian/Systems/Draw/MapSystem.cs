@@ -98,6 +98,26 @@ namespace Vaerydian.Systems.Draw
 
 		}
 
+		protected override void end ()
+		{
+			GameMap map = (GameMap) m_GameMapMapper.get(e_ECSInstance.TagManager.getEntityByTag("MAP"));
+
+			for (int x = m_xStart; x <= m_xFinish; x++) {
+				for (int y = m_yStart; y <= m_yFinish; y++) {
+					//grab current tile terrain
+					m_Terrain = map.getTerrain (x, y);
+					
+					//ensure its useable
+					if (m_Terrain == null)
+						continue;
+
+					m_Terrain.Lighting = 0f;
+				}
+			}
+
+			base.end ();
+		}
+
         protected override void cleanUp(Bag<Entity> entities) { }
 
         protected override void process(Entity entity)
@@ -146,8 +166,9 @@ namespace Vaerydian.Systems.Draw
                     }
 
                     m_SpriteBatch.Draw(m_Textures[m_Terrain.TerrainDef.Texture], pos - origin, null,
-                                       getColorVariation2(m_Terrain), 0f, new Vector2(0), new Vector2(1),
+                                       applyLighting(m_Terrain), 0f, new Vector2(0), new Vector2(1),
                                        SpriteEffects.None, 0f);
+
 
                 }
             }
@@ -240,6 +261,16 @@ namespace Vaerydian.Systems.Draw
                 m_yFinish = map.YSize-1;// (int)m_ViewPort.getDimensions().X - 1;
         }
 
+		private Color applyLighting(Terrain terrain){
+
+			Vector3 colVec = getColorVariation2 (terrain).ToVector3();
+			
+			colVec.X *= terrain.Lighting;
+			colVec.Y *= terrain.Lighting;
+			colVec.Z *= terrain.Lighting;
+
+			return new Color (colVec);
+		}
 
         private Color getColorVariation(Terrain terrain)
         {

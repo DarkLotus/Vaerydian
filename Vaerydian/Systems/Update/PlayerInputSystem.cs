@@ -268,7 +268,7 @@ namespace Vaerydian.Systems.Update
                 trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
                 trans.RotationOrigin = new Vector2(16);
 
-				EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 35, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+				EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 2, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
                 
 				UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
             } 

@@ -202,7 +202,7 @@
       <HintPath>..\..\..\Libs\LibNoise\LibNoise\bin\Release\LibNoise.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\MonoGame\MonoGame.Framework\bin\WindowsGL\Release\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\MonoGame\MonoGame.Framework\bin\Linux\Release\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

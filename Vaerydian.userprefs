@@ -1,21 +1,37 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\GameConfig.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Systems/Update/LightSystem.cs">
     <Files>
-      <File FileName="Vaerydian\GameConfig.cs" Line="23" Column="38" />
+      <File FileName="Vaerydian/Systems/Update/LightSystem.cs" Line="97" Column="84" />
+      <File FileName="Vaerydian/Components/Graphical/Light.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Components/Utils/GameMap.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Utils/Terrain.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Behaviors/WanderingEnemyBehavior.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
-            <Node name="References" expanded="True" selected="True" />
+            <Node name="References" expanded="True" />
             <Node name="ACB" expanded="True" />
             <Node name="Behaviors" expanded="True" />
+            <Node name="Components" expanded="True">
+              <Node name="Graphical" expanded="True" />
+              <Node name="Utils" expanded="True" />
+            </Node>
+            <Node name="Factories" expanded="True" />
             <Node name="Generators" expanded="True" />
             <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
-              <Node name="Update" expanded="True" />
+              <Node name="Update" expanded="True">
+                <Node name="MeleeSystem.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>
