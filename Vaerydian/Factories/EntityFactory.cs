@@ -47,7 +47,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
             //ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 			ECSInstance.EntityManager.addComponent(e, new Heading());
-			ECSInstance.EntityManager.addComponent(e, createLight(true, 5, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+			ECSInstance.EntityManager.addComponent(e, createLight(true, 8, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
@@ -152,7 +152,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation()); ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
 			ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 			ECSInstance.EntityManager.addComponent(e, new Heading());
-            ECSInstance.EntityManager.addComponent(e, createLight(true, 5, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
+            ECSInstance.EntityManager.addComponent(e, createLight(true, 8, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             /* LIKELY NOT NEEDED
