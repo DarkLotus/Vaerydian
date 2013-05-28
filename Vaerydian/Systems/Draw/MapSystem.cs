@@ -111,7 +111,7 @@ namespace Vaerydian.Systems.Draw
 					if (m_Terrain == null)
 						continue;
 
-					m_Terrain.Lighting = 0.05f;
+					m_Terrain.Lighting = 0.25f;
 				}
 			}
 
