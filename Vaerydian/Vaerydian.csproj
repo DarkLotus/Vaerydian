@@ -185,10 +185,13 @@
     <Reference Include="Glimpse">
       <HintPath>..\..\Glimpse\Glimpse\bin\Release\Glimpse.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="MonoGame.Framework, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\MonoGame\MonoGame.Framework\bin\WindowsGL\Release\MonoGame.Framework.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 0fed9e74e1d3253c931e699aa1832293c536d1d9
     <Reference Include="System" />
     <Reference Include="AgentComponentBus">
       <HintPath>..\..\AgentComponentBus\AgentComponentBus\bin\Release\AgentComponentBus.dll</HintPath>
@@ -204,6 +207,9 @@
     </Reference>
     <Reference Include="LibNoise">
       <HintPath>..\..\..\Libs\LibNoise\LibNoise\bin\Release\LibNoise.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\..\MonoGame\MonoGame.Framework\bin\Linux\Release\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

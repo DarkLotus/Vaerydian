@@ -87,13 +87,9 @@ namespace Vaerydian
 					if(terrain == null)
 						continue;
 
-
 					//apply lighting to tile
-					//float newLight = 1f/)*.05f);
                     float newLight = ((light.LightRadius * 32) - Vector2.Distance(pos.Pos,new Vector2(x*32,y*32))) / (light.LightRadius * 32);
 					terrain.Lighting = newLight > terrain.Lighting ? newLight : terrain.Lighting;
-
-
 
 					if(terrain.Lighting > 1f)
 						terrain.Lighting = 1f;
