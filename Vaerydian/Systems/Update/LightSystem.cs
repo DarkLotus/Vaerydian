@@ -154,12 +154,22 @@ namespace Vaerydian
 
 		private bool isNotObscured(GameMap map, int x, int y, int px, int py){
 			List<Vector2> line = bressenham (x, y, px, py);
-			for (int i = 0; i < line.Count; i++) {
-				Terrain terrain = map.getTerrain((int)line[i].X,(int)line[i].Y);
+
+			if (line.Count < 2) {
+				Terrain terrain = map.getTerrain ((int)line [0].X, (int)line [0].Y);
 				if (terrain == null)
 					return false;
-				if(terrain.IsBlocking)
+				if (terrain.IsBlocking)
 					return false;
+			} else {
+
+				for (int i = 1; i < line.Count; i++) {
+					Terrain terrain = map.getTerrain ((int)line [i].X, (int)line [i].Y);
+					if (terrain == null)
+						return false;
+					if (terrain.IsBlocking)
+						return false;
+				}
 			}
 
 			return true;
