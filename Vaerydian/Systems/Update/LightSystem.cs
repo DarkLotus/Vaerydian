@@ -107,6 +107,56 @@ namespace Vaerydian
 
 		#endregion
 
+		private List<Vector2> bress(int x0, int y0, int x1, int y1){
+			int dx = x1 - x0;
+			int dy = y1 - y0;
+			float err = 0f;
+			float derr = Math.Abs ((float)dy / (float)dx);
+
+			List<Vector2> line = new List<Vector2> ();
+			line.Add (new Vector2 (x0, y0));
+
+			int sx, sy;
+			
+			if (x0 < x1)
+				sx = 1;
+			else
+				sx = -1;
+			
+			if (y0 < y1)
+				sy = 1;
+			else
+				sy = -1;
+
+			int y = y0;
+
+			if (sx == 1) {
+				for (int x = x0; x <= x1; x++) {
+					line.Add (new Vector2 (x, y));
+
+					err = err + derr;
+
+					if (err >= 0.5f) {
+						y = y + sy;
+						err = err - 1.0f;
+					}
+				}
+			} else {
+				for (int x = x0; x >= x1; x--) {
+					line.Add (new Vector2 (x, y));
+					
+					err = err + derr;
+					
+					if (err >= 0.5f) {
+						y = y + sy;
+						err = err - 1.0f;
+					}
+				}
+			}
+
+			return line;
+		}
+
 		private List<Vector2> bressenham(int x0, int y0, int x1, int y1){
 			int dx = Math.Abs (x1 - x0);
 			int dy = Math.Abs (y1 - y0);
