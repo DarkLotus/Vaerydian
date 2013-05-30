@@ -53,11 +53,7 @@ namespace Vaerydian
             graphics.PreferredBackBufferWidth = width;
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;
-<<<<<<< HEAD
             //this.IsFixedTimeStep = false;
-=======
-			//this.IsFixedTimeStep = false;
->>>>>>> 0fed9e74e1d3253c931e699aa1832293c536d1d9
 			//this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 16);
             graphics.PreferMultiSampling = false;
             graphics.ApplyChanges();
