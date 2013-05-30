@@ -192,17 +192,17 @@
     <Reference Include="BehaviorLibrary">
       <HintPath>..\..\BehaviorLibrary\BehaviorLibrary\bin\Release\BehaviorLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="fastJSON">
-      <HintPath>..\..\..\Libs\fastJSON\fastJSON\bin\Release\fastJSON.dll</HintPath>
-    </Reference>
     <Reference Include="ECSFramework">
       <HintPath>..\..\ECSFramework\ECSFramework\bin\Release\ECSFramework.dll</HintPath>
     </Reference>
-    <Reference Include="LibNoise">
-      <HintPath>..\..\..\Libs\LibNoise\LibNoise\bin\Release\LibNoise.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>..\..\MonoGame\MonoGame.Framework\bin\Linux\Release\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="fastJSON">
+      <HintPath>..\..\..\Libs\fastJSON\fastJSON\bin\Release\fastJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="LibNoise">
+      <HintPath>..\..\..\Libs\LibNoise\LibNoise\bin\Release\LibNoise.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

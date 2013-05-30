@@ -8,6 +8,7 @@ using Vaerydian.Components.Graphical;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Utils;
+using System.Collections.Generic;
 
 namespace Vaerydian
 {
@@ -70,22 +71,28 @@ namespace Vaerydian
 			if (pos == null)
 				return;
 
-			int x, y;
+			int x, y, px, py;
 
 			for (int i = - light.LightRadius; i < light.LightRadius; i++) {
 				for(int j = - light.LightRadius; j < light.LightRadius; j++){
 
 					//convert location to tilespace
-					x = (((int)pos.Pos.X + (int) pos.Offset.X) / 32) + i;
-					y = (((int)pos.Pos.Y + (int) pos.Offset.Y) / 32) + j;
+					px = ((int)pos.Pos.X + (int) pos.Offset.X) / 32;
+					py = ((int)pos.Pos.Y + (int) pos.Offset.Y) / 32;
+					x = px + i;
+					y = py + j;
 
 					if(Vector2.Distance(pos.Pos - pos.Offset,new Vector2(x*32,y*32))>light.LightRadius*32)
+						continue;
+
+					if(!isNotObscured(l_Map, x, y, px,py))
 						continue;
 
 					Terrain terrain = l_Map.getTerrain(x,y);
 
 					if(terrain == null)
 						continue;
+
 
 					//apply lighting to tile
                     float newLight = ((light.LightRadius * 32) - Vector2.Distance(pos.Pos,new Vector2(x*32,y*32))) / (light.LightRadius * 32);
@@ -99,6 +106,64 @@ namespace Vaerydian
 		}
 
 		#endregion
+
+		private List<Vector2> bressenham(int x0, int y0, int x1, int y1){
+			int dx = Math.Abs (x1 - x0);
+			int dy = Math.Abs (y1 - y0);
+			int sx, sy;
+
+			if (x0 < x1)
+				sx = 1;
+			else
+				sx = -1;
+
+			if (y0 < y1)
+				sy = 1;
+			else
+				sy = -1;
+
+			int err = dx - dy;
+			int e2;
+
+			List<Vector2> line = new List<Vector2> ();
+
+			while (true) {
+				line.Add(new Vector2(x0,y0));
+
+				if(x0 == x1 && y0 == y1)
+					return line;
+
+				e2 = 2*err;
+
+				if(e2 >-dy){
+					err = err - dy;
+					x0 = x0 + sx;
+				}
+
+				if(x0 == x1 && y0 == y1){
+					line.Add(new Vector2(x0,y0));
+					return line;
+				}
+
+				if(e2 < dx){
+					err = err + dx;
+					y0 = y0 + sy;
+				}
+			}
+		}
+
+		private bool isNotObscured(GameMap map, int x, int y, int px, int py){
+			List<Vector2> line = bressenham (x, y, px, py);
+			for (int i = 0; i < line.Count; i++) {
+				Terrain terrain = map.getTerrain((int)line[i].X,(int)line[i].Y);
+				if (terrain == null)
+					return false;
+				if(terrain.IsBlocking)
+					return false;
+			}
+
+			return true;
+		}
 	}
 }
 
