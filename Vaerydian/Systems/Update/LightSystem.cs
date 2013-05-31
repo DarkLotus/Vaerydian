@@ -114,7 +114,7 @@ namespace Vaerydian
 			float derr = Math.Abs ((float)dy / (float)dx);
 
 			List<Vector2> line = new List<Vector2> ();
-			line.Add (new Vector2 (x0, y0));
+			//line.Add (new Vector2 (x0, y0));
 
 			int sx, sy;
 			
@@ -149,7 +149,7 @@ namespace Vaerydian
 					
 					if (err >= 0.5f) {
 						y = y + sy;
-						err = err - 1.0f;
+					 	err = err - 1.0f;
 					}
 				}
 			}
