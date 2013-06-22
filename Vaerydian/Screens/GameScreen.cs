@@ -177,6 +177,9 @@ namespace Vaerydian.Screens
 			UIFactory.ECSInstance = ecsInstance;
 			UIFactory.Container = gameContainer;
             
+			ResourcePool.ECSInstance = ecsInstance;
+
+			BatHSM.ECSInstance = ecsInstance;
 
             taskWorker = new TaskWorker();
             taskWorker.initialize();

@@ -31,7 +31,7 @@ namespace Vaerydian.ACB
     static class BatHSM
     {
 
-        private static ECSInstance b_ECSInstance;
+        public static ECSInstance ECSInstance;
 
 		public static string COMMITTED = "AI_COMITTED";
 		public static string RETRIEVED = "AI_RETRIEVED";
@@ -76,13 +76,14 @@ namespace Vaerydian.ACB
 		}
 
 		public static void run(Agent agent){
-			
+			ResourcePool.issueTask (agent, BatHSM.getComponents, delegate (TaskObject TaskObject){});
 		}
 
 		public static void doStateMachine(EventObject eventObject)
         {
 			Agent agent = eventObject.Agent;
-			Bag<IComponent> components = (Bag<IComponent>)eventObject.Parameters [0];
+			BusDataRetrieval bdr = (BusDataRetrieval) eventObject.Parameters [0];
+			Bag<IComponent> components = bdr.Data;
 
             //retrieve state container
             StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
@@ -129,7 +130,7 @@ namespace Vaerydian.ACB
                 if ( dist >= 200f)
                 {
                     AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
-                    behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, b_ECSInstance);
+                    behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, ECSInstance);
 
                     StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
                     stateContainer.StateMachine.changeState(EnemyState.Following);
@@ -163,7 +164,7 @@ namespace Vaerydian.ACB
                 if (dist < 100f)
                 {
                     AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
-                    behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, b_ECSInstance);
+                    behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, ECSInstance);
 
                     StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
                     stateContainer.StateMachine.changeState(EnemyState.Wandering);

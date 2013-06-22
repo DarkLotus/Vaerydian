@@ -2,9 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
     <Files>
-      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="60" Column="30" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="600" Column="101" />
-      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="196" Column="4" />
+      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="34" Column="46" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="182" Column="37" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="196" Column="30" />
+      <File FileName="Vaerydian/Behaviors/FollowerBehavior.cs" Line="151" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

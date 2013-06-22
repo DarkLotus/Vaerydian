@@ -193,7 +193,7 @@ namespace Vaerydian.Factories
             //create ACB component
             BusAgent busAgent = new BusAgent();
 			busAgent.Agent = ResourcePool.createAgent ();
-
+			busAgent.Agent.Entity = e;
 			busAgent.Agent.Init = BatHSM.init;
 			busAgent.Agent.Run = BatHSM.run;
 
