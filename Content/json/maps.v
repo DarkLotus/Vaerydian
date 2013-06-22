@@ -38,7 +38,6 @@
 					"map_to":"WALL",
 					"tiles":[
 						{"name":"DUNGEON_WALL","prob":100},
-						{"name":"FACE","prob":100}
 					]
 				},
 				{

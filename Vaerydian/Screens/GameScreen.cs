@@ -34,7 +34,7 @@ using Glimpse.Components;
 using Glimpse.Managers;
 
 using AgentComponentBus.Core;
-using AgentComponentBus.Components.ECS;
+using AgentComponentBus.Components;
 using AgentComponentBus.Systems;
 using Vaerydian.Utils;
 using Vaerydian.Sessions;
@@ -94,10 +94,10 @@ namespace Vaerydian.Screens
         private EntitySystem busCommitSystem;
         private EntitySystem busRetrieveSystem;
         private EntitySystem busRegistrationSystem;
+		private EntitySystem busSyncOpSystem;
 
-        private Bus bus;
         private TaskWorker taskWorker;
-        private Thread busThread, twThread;
+        private Thread twThread;
 
         //private EntityFactory entityFactory;
         private NPCFactory npcFactory;
@@ -176,19 +176,15 @@ namespace Vaerydian.Screens
 			UtilFactory.Container = gameContainer;
 			UIFactory.ECSInstance = ecsInstance;
 			UIFactory.Container = gameContainer;
-
-            //instantiate the bus
-            bus = new Bus();
-            bus.initialize();
-            bus.UpdateIntervalTime = 32;
-            bus.MaxUpdatesPerCycle = 10;
             
 
             taskWorker = new TaskWorker();
             taskWorker.initialize();
             taskWorker.MaxTasksPerCycle = 10;
-            taskWorker.MaxCommitsPerCycle = 10;
-            taskWorker.MaxRetrievesPerCycle = 10;
+			taskWorker.MaxEventsPerCycle = 10;
+			taskWorker.MaxCallBacksPerCycle = 10;
+			taskWorker.MaxTimeInTicks = 10000L;
+			taskWorker.SleepTime = new TimeSpan (160000L);
 
             //create & register systems
             //register update systems
@@ -229,9 +225,10 @@ namespace Vaerydian.Screens
 
 
             //bus setup
-            busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(bus), new BusAgent());
-            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(taskWorker), new BusDataCommit());
-            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(taskWorker), new BusDataRetrieval());
+            busRegistrationSystem = ecsInstance.SystemManager.setSystem(new BusRegistrationSystem(), new BusAgent());
+            busCommitSystem = ecsInstance.SystemManager.setSystem(new BusCommitSystem(), new BusDataCommit());
+            busRetrieveSystem = ecsInstance.SystemManager.setSystem(new BusRetrieveSystem(), new BusDataRetrieval());
+			busSyncOpSystem = ecsInstance.SystemManager.setSystem (new SyncOperationSystem(), new SyncOperation ());
 
             //any additional component registration
             ecsInstance.ComponentManager.registerComponentType(new Vaerydian.Components.Graphical.ViewPort());
@@ -388,14 +385,8 @@ namespace Vaerydian.Screens
             //geometry = (GeometryMap)geometryMapper.get(ecsInstance.TagManager.getEntityByTag("GEOMETRY"));
 
             //setup bus components
-            bus.addComponent(new ComponentRegisterArgs(new PathFinder(), "PATH_FINDER"));
-            bus.addComponent(new ComponentRegisterArgs(new BatHSM(ecsInstance), "BAT_HSBM"));
 
-            //launch bus
-            busThread = new Thread(bus.run);
-            busThread.Start();
-
-            twThread = new Thread(taskWorker.run);
+            twThread = new Thread(taskWorker.runByTime);
             twThread.Start();
                 
         }
@@ -408,11 +399,8 @@ namespace Vaerydian.Screens
 
             ecsInstance.cleanUp();
 
-            
-            bus.shutdown();
             taskWorker.shutdown();
 
-            busThread.Join();
             twThread.Join();
 
             ResourcePool.cleanup();
@@ -544,6 +532,7 @@ namespace Vaerydian.Screens
             busRegistrationSystem.process();
             busCommitSystem.process();
             busRetrieveSystem.process();
+			busSyncOpSystem.process();
 
 			prevCycles = currentCycles;
 			currentCycles = taskWorker.Cycles;
@@ -606,7 +595,10 @@ namespace Vaerydian.Screens
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointClamp,DepthStencilState.Default,RasterizerState.CullNone);
 
             spriteBatch.DrawString(FontManager.Fonts["General"], "Entities: " + ecsInstance.EntityManager.getEntityCount(), new Vector2(0, 14), Color.Red);
-			spriteBatch.DrawString(FontManager.Fonts["General"], "TCycles/Frame: " + elapsedCycles, new Vector2(0, 28), Color.Red);
+			spriteBatch.DrawString(FontManager.Fonts["General"], "Tasks: " + ResourcePool.Tasks.Count, new Vector2(0, 28), Color.Red);
+			spriteBatch.DrawString(FontManager.Fonts["General"], "Events: " + ResourcePool.Events.Count, new Vector2(0, 42), Color.Red);
+			spriteBatch.DrawString(FontManager.Fonts["General"], "CallBacks: " + ResourcePool.CallBacks.Count, new Vector2(0, 56), Color.Red);
+
 
             spriteBatch.End();
 

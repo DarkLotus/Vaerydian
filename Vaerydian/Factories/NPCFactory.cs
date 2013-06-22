@@ -17,10 +17,9 @@ using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
 using Vaerydian.Components.Actions;
 using Vaerydian.Components.Graphical;
-using AgentComponentBus.Components.ACB;
-using AgentComponentBus.Components.ECS;
-using AgentComponentBus.Core;
+using AgentComponentBus.Components;
 using Vaerydian.ACB;
+using AgentComponentBus.Core;
 
 
 namespace Vaerydian.Factories
@@ -193,20 +192,10 @@ namespace Vaerydian.Factories
 
             //create ACB component
             BusAgent busAgent = new BusAgent();
-            busAgent.Agent = new Agent();
-            busAgent.Agent.Entity = e;
+			busAgent.Agent = ResourcePool.createAgent ();
 
-            Activity activity = new Activity();
-            activity.ActivityName = "activity1";
-            activity.ComponentName = "BAT_HSBM";
-            activity.InitialActivity = true;
-            activity.NextActivity = "activity1";
-
-            AgentProcess process = new AgentProcess();
-            process.ProcessName = "bat hsbm";
-            process.Activities.Add(activity.ActivityName, activity);
-
-            busAgent.Agent.AgentProcess = process;
+			busAgent.Agent.Init = BatHSM.init;
+			busAgent.Agent.Run = BatHSM.run;
 
             n_EcsInstance.EntityManager.addComponent(e, busAgent);
 

@@ -1,30 +1,38 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Utils/MapHelper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
     <Files>
-      <File FileName="Vaerydian/Systems/Update/LightSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/VaerydianGame.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="166" Column="22" />
-      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Generators/DungeonGen.cs" Line="373" Column="38" />
-      <File FileName="Vaerydian/Utils/MapHelper.cs" Line="332" Column="1" />
-      <File FileName="Vaerydian/Utils/Map.cs" Line="26" Column="3" />
+      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="60" Column="30" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="600" Column="101" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="196" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Vaerydian" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="ACB" expanded="True" />
+            <Node name="Behaviors" expanded="True">
+              <Node name="Actions" expanded="True" />
+            </Node>
             <Node name="Factories" expanded="True" />
             <Node name="Generators" expanded="True" />
+            <Node name="Screens" expanded="True">
+              <Node name="GameScreen.cs" selected="True" />
+            </Node>
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
               <Node name="Update" expanded="True" />
             </Node>
-            <Node name="Utils" expanded="True">
-              <Node name="MapHelper.cs" selected="True" />
-            </Node>
+            <Node name="Utils" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

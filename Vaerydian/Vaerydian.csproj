@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ACB\BatHSM.cs" />
-    <Compile Include="ACB\PathFinder.cs" />
     <Compile Include="Behaviors\Actions\FindPathAction.cs" />
     <Compile Include="Behaviors\CharacterBehavior.cs" />
     <Compile Include="Behaviors\FollowerBehavior.cs" />
