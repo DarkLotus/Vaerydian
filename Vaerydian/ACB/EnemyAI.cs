@@ -13,6 +13,7 @@ using Vaerydian.Components.Utils;
 using Vaerydian.Components.Spatials;
 using Vaerydian.Utils;
 using Microsoft.Xna.Framework;
+using AgentComponentBus.Components;
 
 namespace Vaerydian.ACB
 {
@@ -27,20 +28,20 @@ namespace Vaerydian.ACB
     }
 
 
-    class BatHSM : BusComponent
+    static class EnemyAI
     {
 
-        private static ECSInstance b_ECSInstance;
+        public static ECSInstance ECSInstance;
 
-        //private StateMachine<EnemyState, short> b_StateMachine;
+		public static string COMMITTED = "AI_COMITTED";
+		public static string RETRIEVED = "AI_RETRIEVED";
 
+		public static void init(Agent agent){
+			ResourcePool.on (EnemyAI.COMMITTED, agent, onCommitted);
+			ResourcePool.on (EnemyAI.RETRIEVED, agent, doStateMachine);
+		}
 
-        public BatHSM(ECSInstance ecsInstance)
-        {
-            b_ECSInstance = ecsInstance;
-        }
-
-        protected override Bag<IComponent> requestRetrievePacakge(Agent agent)
+        public static TaskObject getComponents(TaskObject taskObject)
         {
             Bag<IComponent> components = new Bag<IComponent>();
             
@@ -49,11 +50,41 @@ namespace Vaerydian.ACB
             components.Set(Position.TypeID, new Position());
             components.Set(StateContainer<EnemyState, EnemyState>.TypeID, new StateContainer<EnemyState, EnemyState>());
 
-            return components;
+			BusDataRetrieval bdr = new BusDataRetrieval ();
+			bdr.Agent = taskObject.Agent;
+			bdr.Data = components;
+			bdr.EventName = EnemyAI.RETRIEVED;
+
+			ResourcePool.issueRetrieve (bdr);
+
+            return taskObject;
         }
 
-        protected override Bag<IComponent> runProcess(Agent agent, Bag<IComponent> components)
+		public static TaskObject doCommit(TaskObject taskObject){
+			BusDataCommit bdc = new BusDataCommit ();
+			bdc.Agent = taskObject.Agent;
+			bdc.Data = (Bag<IComponent>)taskObject.Parameters [0];
+			bdc.EventName = EnemyAI.COMMITTED;
+
+			ResourcePool.issueCommit (bdc);
+
+			return taskObject;
+		}
+
+		public static void onCommitted(EventObject eventObject){
+			ResourcePool.issueTask (eventObject.Agent, EnemyAI.getComponents, delegate(TaskObject taskObject) {});
+		}
+
+		public static void run(Agent agent){
+			ResourcePool.issueTask (agent, EnemyAI.getComponents, delegate (TaskObject TaskObject){});
+		}
+
+		public static void doStateMachine(EventObject eventObject)
         {
+			Agent agent = eventObject.Agent;
+			BusDataRetrieval bdr = (BusDataRetrieval) eventObject.Parameters [0];
+			Bag<IComponent> components = bdr.Data;
+
             //retrieve state container
             StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
 
@@ -61,7 +92,9 @@ namespace Vaerydian.ACB
             if(stateContainer != null)
                 stateContainer.StateMachine.evaluate(agent, components);// aggro);
 
-            return components;
+			ResourcePool.issueTask (eventObject.Agent, doCommit, delegate(TaskObject taskObject) {}, components);
+
+			return;
         }
 
         /// <summary>
@@ -97,7 +130,7 @@ namespace Vaerydian.ACB
                 if ( dist >= 200f)
                 {
                     AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
-                    behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, b_ECSInstance);
+                    behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, ECSInstance);
 
                     StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
                     stateContainer.StateMachine.changeState(EnemyState.Following);
@@ -131,7 +164,7 @@ namespace Vaerydian.ACB
                 if (dist < 100f)
                 {
                     AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
-                    behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, b_ECSInstance);
+                    behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, ECSInstance);
 
                     StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
                     stateContainer.StateMachine.changeState(EnemyState.Wandering);

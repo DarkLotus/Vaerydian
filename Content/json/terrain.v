@@ -725,7 +725,7 @@
             "effect" : "NONE",
             "type" : "FLOOR"
         },
-		        {
+		    {
             "name" : "DUNGEON_CORRIDOR",
             "id" : 4,
             "texture" : "terrain\\default",
@@ -742,6 +742,5 @@
             "effect" : "NONE",
             "type" : "FLOOR"
         },
-        
     ]
 }

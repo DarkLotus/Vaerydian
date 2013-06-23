@@ -1,12 +1,41 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Systems/Update/LightSystem.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
     <Files>
-      <File FileName="Vaerydian/Systems/Update/LightSystem.cs" Line="213" Column="19" />
-      <File FileName="Vaerydian/VaerydianGame.cs" Line="56" Column="15" />
-      <File FileName="Vaerydian/Systems/Draw/MapSystem.cs" Line="50" Column="3" />
-      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="48" Column="25" />
+      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="34" Column="46" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="182" Column="37" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="196" Column="30" />
+      <File FileName="Vaerydian/Behaviors/FollowerBehavior.cs" Line="151" Column="45" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Vaerydian" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="ACB" expanded="True" />
+            <Node name="Behaviors" expanded="True">
+              <Node name="Actions" expanded="True" />
+            </Node>
+            <Node name="Factories" expanded="True" />
+            <Node name="Generators" expanded="True" />
+            <Node name="Screens" expanded="True">
+              <Node name="GameScreen.cs" selected="True" />
+            </Node>
+            <Node name="Systems" expanded="True">
+              <Node name="Draw" expanded="True" />
+              <Node name="Update" expanded="True" />
+            </Node>
+            <Node name="Utils" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

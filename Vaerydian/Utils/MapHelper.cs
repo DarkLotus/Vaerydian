@@ -327,7 +327,7 @@ namespace Vaerydian.Utils
 
             List<TileDef> tiles = mDef.Tiles[tileName];
 
-            TerrainDef tDef = tiles[Random.Next(0, tiles.Count - 1)].TerrainDef;
+            TerrainDef tDef = tiles[Random.Next(0, tiles.Count)].TerrainDef;
 
             terrain.TerrainDef = tDef;
             terrain.IsBlocking = !tDef.Passible;
