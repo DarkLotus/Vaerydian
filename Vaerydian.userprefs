@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
     <Files>
-      <File FileName="Vaerydian/ACB/BatHSM.cs" Line="34" Column="46" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="182" Column="37" />
-      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="196" Column="30" />
-      <File FileName="Vaerydian/Behaviors/FollowerBehavior.cs" Line="151" Column="45" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="392" Column="56" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Behaviors/FollowerBehavior.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/ACB/EnemyAI.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

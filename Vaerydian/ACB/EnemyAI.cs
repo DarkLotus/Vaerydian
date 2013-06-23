@@ -129,7 +129,10 @@ namespace Vaerydian.ACB
                 float dist = Vector2.Distance(ePos.Pos, tPos.Pos);
                 if ( dist >= 200f)
                 {
-                    AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
+                    
+					Console.Error.WriteLine("Agent {0} switching to follow...", agent.Id);
+
+					AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
                     behavior.Behavior = new FollowerBehavior(agent.Entity, aggro.Target, 100, ECSInstance);
 
                     StateContainer<EnemyState, EnemyState> stateContainer = (StateContainer<EnemyState, EnemyState>)components.Get(StateContainer<EnemyState, EnemyState>.TypeID);
@@ -163,6 +166,8 @@ namespace Vaerydian.ACB
                 float dist = Vector2.Distance(ePos.Pos, tPos.Pos);
                 if (dist < 100f)
                 {
+					Console.Error.WriteLine("Agent {0} switching to attack...", agent.Id);
+
                     AiBehavior behavior = (AiBehavior)components.Get(AiBehavior.TypeID);
                     behavior.Behavior = new WanderingEnemyBehavior(agent.Entity, ECSInstance);
 
