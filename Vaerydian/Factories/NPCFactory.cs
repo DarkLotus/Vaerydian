@@ -173,11 +173,11 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
 
             //create state machine
-            StateMachine<EnemyState,EnemyState> stateMachine = new StateMachine<EnemyState, EnemyState>(EnemyState.Idle, BatHSM.whenIdle, EnemyState.Idle);
+            StateMachine<EnemyState,EnemyState> stateMachine = new StateMachine<EnemyState, EnemyState>(EnemyState.Idle, EnemyAI.whenIdle, EnemyState.Idle);
 
             //define states
-            stateMachine.addState(EnemyState.Wandering, BatHSM.whenWandering);
-            stateMachine.addState(EnemyState.Following, BatHSM.whenFollowing);
+            stateMachine.addState(EnemyState.Wandering, EnemyAI.whenWandering);
+            stateMachine.addState(EnemyState.Following, EnemyAI.whenFollowing);
             
             //define transitions
             stateMachine.addStateChange(EnemyState.Idle, EnemyState.Wandering, EnemyState.Wandering);
@@ -194,8 +194,8 @@ namespace Vaerydian.Factories
             BusAgent busAgent = new BusAgent();
 			busAgent.Agent = ResourcePool.createAgent ();
 			busAgent.Agent.Entity = e;
-			busAgent.Agent.Init = BatHSM.init;
-			busAgent.Agent.Run = BatHSM.run;
+			busAgent.Agent.Init = EnemyAI.init;
+			busAgent.Agent.Run = EnemyAI.run;
 
             n_EcsInstance.EntityManager.addComponent(e, busAgent);
 

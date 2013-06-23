@@ -179,14 +179,14 @@ namespace Vaerydian.Screens
             
 			ResourcePool.ECSInstance = ecsInstance;
 
-			BatHSM.ECSInstance = ecsInstance;
+			EnemyAI.ECSInstance = ecsInstance;
 
             taskWorker = new TaskWorker();
             taskWorker.initialize();
             taskWorker.MaxTasksPerCycle = 10;
 			taskWorker.MaxEventsPerCycle = 10;
 			taskWorker.MaxCallBacksPerCycle = 10;
-			taskWorker.MaxTimeInTicks = 10000L;
+			taskWorker.MaxTimeInTicks = 1000L;
 			taskWorker.SleepTime = new TimeSpan (160000L);
 
             //create & register systems

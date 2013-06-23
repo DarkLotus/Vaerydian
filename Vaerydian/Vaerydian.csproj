@@ -38,7 +38,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACB\BatHSM.cs" />
     <Compile Include="Behaviors\Actions\FindPathAction.cs" />
     <Compile Include="Behaviors\CharacterBehavior.cs" />
     <Compile Include="Behaviors\FollowerBehavior.cs" />
@@ -179,6 +178,7 @@
     <Compile Include="Characters\Skill.cs" />
     <Compile Include="Characters\Statistic.cs" />
     <Compile Include="Utils\AwardUtils.cs" />
+    <Compile Include="ACB\EnemyAI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Glimpse">

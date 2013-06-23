@@ -28,7 +28,7 @@ namespace Vaerydian.ACB
     }
 
 
-    static class BatHSM
+    static class EnemyAI
     {
 
         public static ECSInstance ECSInstance;
@@ -37,8 +37,8 @@ namespace Vaerydian.ACB
 		public static string RETRIEVED = "AI_RETRIEVED";
 
 		public static void init(Agent agent){
-			ResourcePool.on (BatHSM.COMMITTED, agent, onCommitted);
-			ResourcePool.on (BatHSM.RETRIEVED, agent, doStateMachine);
+			ResourcePool.on (EnemyAI.COMMITTED, agent, onCommitted);
+			ResourcePool.on (EnemyAI.RETRIEVED, agent, doStateMachine);
 		}
 
         public static TaskObject getComponents(TaskObject taskObject)
@@ -53,7 +53,7 @@ namespace Vaerydian.ACB
 			BusDataRetrieval bdr = new BusDataRetrieval ();
 			bdr.Agent = taskObject.Agent;
 			bdr.Data = components;
-			bdr.EventName = BatHSM.RETRIEVED;
+			bdr.EventName = EnemyAI.RETRIEVED;
 
 			ResourcePool.issueRetrieve (bdr);
 
@@ -64,7 +64,7 @@ namespace Vaerydian.ACB
 			BusDataCommit bdc = new BusDataCommit ();
 			bdc.Agent = taskObject.Agent;
 			bdc.Data = (Bag<IComponent>)taskObject.Parameters [0];
-			bdc.EventName = BatHSM.COMMITTED;
+			bdc.EventName = EnemyAI.COMMITTED;
 
 			ResourcePool.issueCommit (bdc);
 
@@ -72,11 +72,11 @@ namespace Vaerydian.ACB
 		}
 
 		public static void onCommitted(EventObject eventObject){
-			ResourcePool.issueTask (eventObject.Agent, BatHSM.getComponents, delegate(TaskObject taskObject) {});
+			ResourcePool.issueTask (eventObject.Agent, EnemyAI.getComponents, delegate(TaskObject taskObject) {});
 		}
 
 		public static void run(Agent agent){
-			ResourcePool.issueTask (agent, BatHSM.getComponents, delegate (TaskObject TaskObject){});
+			ResourcePool.issueTask (agent, EnemyAI.getComponents, delegate (TaskObject TaskObject){});
 		}
 
 		public static void doStateMachine(EventObject eventObject)
