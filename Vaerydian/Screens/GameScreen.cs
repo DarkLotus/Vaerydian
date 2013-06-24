@@ -389,7 +389,7 @@ namespace Vaerydian.Screens
 
             //setup bus components
 
-            twThread = new Thread(taskWorker.runByTime);
+            twThread = new Thread(taskWorker.runByCount);
             twThread.Start();
                 
         }
