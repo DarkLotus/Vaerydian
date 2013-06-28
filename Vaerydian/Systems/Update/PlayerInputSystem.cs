@@ -32,10 +32,13 @@ namespace Vaerydian.Systems.Update
         private ComponentMapper p_TransformMapper;
         private ComponentMapper p_CharacterMapper;
         private ComponentMapper p_SpatialMapper;
+		private ComponentMapper p_TargetMapper;
+		private ComponentMapper p_SpriteMapper;
 
         private Entity p_Camera;
         private Entity p_Mouse;
         private Entity p_Spatial;
+		private Entity p_Target;
 
         private const int MOVE_DOWN = 0;
         private const int MOVE_DOWNLEFT = 1;
@@ -77,6 +80,8 @@ namespace Vaerydian.Systems.Update
             p_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
             p_CharacterMapper = new ComponentMapper(new Character(), e_ECSInstance);
             p_SpatialMapper = new ComponentMapper(new SpatialPartition(), e_ECSInstance);
+			p_TargetMapper = new ComponentMapper (new Target (), e_ECSInstance);
+			p_SpriteMapper = new ComponentMapper (new Sprite (), e_ECSInstance);
         }
 
         protected override void preLoadContent(Bag<Entity> entities)
@@ -84,6 +89,7 @@ namespace Vaerydian.Systems.Update
             p_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
             p_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");
             p_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
+			p_Target = e_ECSInstance.TagManager.getEntityByTag ("TARGET");
         }
 
         protected override void cleanUp(Bag<Entity> entities) { }
@@ -253,24 +259,28 @@ namespace Vaerydian.Systems.Update
 
             if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
             {
-                p_LastFired = 0;
+				Target target = (Target)p_TargetMapper.get(p_Target);
+				if(target.Active){
 
-                Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
+					p_LastFired = 0;
 
-                dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
+					Position targetPos = (Position) p_PositionMapper.get (p_Target);
 
-                dir.Normalize();
+					Vector2 dir = targetPos.Pos + targetPos.Offset - new Vector2(16) - pos;
+	                //Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;// +new Vector2(-20 + (float)rand.NextDouble() * 40, -20 + (float)rand.NextDouble() * 40);
 
-                
+	                dir = VectorHelper.rotateVectorRadians(dir, -0.08726f + (float)rand.NextDouble() * 0.1745f);
 
+	                dir.Normalize();
 
-                Transform trans = new Transform();
-                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
-                trans.RotationOrigin = new Vector2(16);
+	                Transform trans = new Transform();
+	                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+	                trans.RotationOrigin = new Vector2(16);
 
-				EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 2, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
-                
-				UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
+					EntityFactory.createCollidingProjectile(pos + dir * 16, dir, 10f, 1000, EntityFactory.createLight(true, 2, new Vector3(pos + position.Offset, 10), 0.7f, Color.OrangeRed.ToVector4()), trans, entity);
+	                
+					UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
+				}
             } 
 
 			if (InputManager.isKeyToggled(Keys.B))
@@ -290,15 +300,32 @@ namespace Vaerydian.Systems.Update
 			if (InputManager.isKeyToggled (Keys.R)) {
 				List<Entity> locals = spatial.QuadTree.findAllWithinRange (pos, 300);
 				if (locals.Count > 1) {
-					if (locals [0] != entity) {
-						//use local[0]
-						Position lPos = (Position)p_PositionMapper.get (locals[0]);
-						UtilFactory.createTarget (locals[0], lPos);
-					} else {
-						//use local[1]
-						Position lPos = (Position)p_PositionMapper.get (locals[1]);
-						UtilFactory.createTarget (locals[1], lPos);
+
+					Target target = (Target) p_TargetMapper.get (p_Target);
+					Sprite sprite = (Sprite) p_SpriteMapper.get (p_Target);
+					sprite.Visible = true;
+					target.Active = true;
+
+					Entity closest = null;
+					float min = float.MaxValue;
+
+					for(int i = 0; i < locals.Count;i++){
+						if(locals[i] == entity)
+							continue;
+
+						Position p = (Position) p_PositionMapper.get(locals[i]);
+
+						if(p == null)
+							continue;
+
+						float dist = Vector2.Distance(p.Pos,position.Pos);
+						if(dist < min){
+							closest = locals[i];
+							min = dist;
+						}
 					}
+
+					target.TargetEntity = closest;
 				}
 			}
 

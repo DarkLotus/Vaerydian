@@ -23,6 +23,8 @@ using ECSFramework;
 
 using Vaerydian.Components.Spatials;
 using Vaerydian.Components.Utils;
+using Vaerydian.Components.Characters;
+using Vaerydian.Components.Graphical;
 
 namespace Vaerydian.Systems.Update
 {
@@ -30,6 +32,8 @@ namespace Vaerydian.Systems.Update
 	{
 		ComponentMapper t_TargetMapper;
 		ComponentMapper t_PositionMapper;
+		ComponentMapper t_LifeMapper;
+		ComponentMapper t_SpriteMapper;
 
 		public TargetingSystem ()
 		{
@@ -45,6 +49,8 @@ namespace Vaerydian.Systems.Update
 		{
 			t_TargetMapper = new ComponentMapper (new Target(), e_ECSInstance);
 			t_PositionMapper = new ComponentMapper (new Position(), e_ECSInstance);
+			t_LifeMapper = new ComponentMapper (new Life (), e_ECSInstance);
+			t_SpriteMapper = new ComponentMapper(new Sprite(), e_ECSInstance);
 
 			base.initialize ();
 		}
@@ -64,13 +70,32 @@ namespace Vaerydian.Systems.Update
 			if (target == null)
 				return;
 
-			Position tPos = (Position)t_PositionMapper.get (entity);
-			Position ePos = (Position)t_PositionMapper.get (target.TargetEntity);
-
-			if (ePos == null)
+			if (target.TargetEntity == null)
 				return;
 
-			tPos.Pos = ePos.Pos;
+			Life entityLife = (Life)t_LifeMapper.get (target.TargetEntity);
+
+			if (entityLife == null) {
+				target.Active = false;
+				return;
+			}
+
+			if (entityLife.IsAlive) {
+
+				Position targetPos = (Position)t_PositionMapper.get (entity);
+				Position entityPos = (Position)t_PositionMapper.get (target.TargetEntity);
+
+				if (entityPos == null)
+					return;
+
+				targetPos.Pos = entityPos.Pos;
+				targetPos.Offset = entityPos.Offset;
+			} else {
+				Sprite sprite = (Sprite)t_SpriteMapper.get (entity);
+				sprite.Visible = false;
+				target.Active = false;
+				target.TargetEntity = null;
+			}
 		}
 
 		#endregion

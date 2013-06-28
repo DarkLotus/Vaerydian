@@ -86,8 +86,14 @@ namespace Vaerydian.Systems.Draw
 
         protected override void process(Entity entity)
         {
-            Position position = (Position) s_PositionMapper.get(entity);
-            Sprite sprite = (Sprite) s_SpriteMapper.get(entity);
+            
+			Sprite sprite = (Sprite) s_SpriteMapper.get(entity);
+
+			if (!sprite.Visible)
+				return;
+
+			Position position = (Position) s_PositionMapper.get(entity);
+            
             ViewPort viewport = (ViewPort) s_ViewportMapper.get(s_Camera);
             //GeometryMap geometry = (GeometryMap)s_GeometryMapper.get(s_Geometry);
             Transform transform = (Transform)s_TranformMapper.get(entity);

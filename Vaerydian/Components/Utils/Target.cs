@@ -53,6 +53,8 @@ namespace Vaerydian.Components.Utils
 		}
 
 		public Entity TargetEntity;
+
+		public bool Active = false;
 	}
 }
 

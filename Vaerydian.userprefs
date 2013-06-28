@@ -1,12 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Factories/UtilFactory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Systems/Update/PlayerInputSystem.cs">
     <Files>
-      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="300" Column="41" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="530" Column="31" />
-      <File FileName="Vaerydian/Systems/Update/TargetingSystem.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian/Factories/UtilFactory.cs" Line="207" Column="44" />
-      <File FileName="Vaerydian/Factories/EntityFactory.cs" Line="206" Column="94" />
+      <File FileName="Vaerydian/Systems/Update/PlayerInputSystem.cs" Line="324" Column="19" />
+      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Systems/Update/TargetingSystem.cs" Line="92" Column="41" />
+      <File FileName="Vaerydian/Factories/UtilFactory.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian/Components/Utils/Target.cs" Line="57" Column="30" />
+      <File FileName="Vaerydian/Systems/Draw/SpriteRenderSystem.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,16 +19,17 @@
               <Node name="Actions" expanded="True" />
             </Node>
             <Node name="Components" expanded="True">
+              <Node name="Graphical" expanded="True" />
               <Node name="Utils" expanded="True" />
             </Node>
-            <Node name="Factories" expanded="True">
-              <Node name="UtilFactory.cs" selected="True" />
-            </Node>
+            <Node name="Factories" expanded="True" />
             <Node name="Generators" expanded="True" />
             <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Draw" expanded="True" />
-              <Node name="Update" expanded="True" />
+              <Node name="Update" expanded="True">
+                <Node name="PlayerInputSystem.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>

@@ -343,6 +343,7 @@ namespace Vaerydian.Screens
 				}
 			}
 
+			UtilFactory.createTarget ();
 
             mapState = new MapState();
             mapState.MapType = g_Map.Map.MapDef.MapType;

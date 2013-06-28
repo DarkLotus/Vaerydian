@@ -191,18 +191,18 @@ namespace Vaerydian.Factories
             ECSInstance.refresh(e);
         }
 
-		public static void createTarget(Entity entity, Position position){
-
-			if (ECSInstance.TagManager.doesTagExist ("TARGET"))
-				return;
+		public static void createTarget(){
 
 			Entity e = ECSInstance.create ();
 			Target target = new Target ();
-			target.TargetEntity = entity;
+			target.TargetEntity = null;
 
 			ECSInstance.EntityManager.addComponent (e, target);
-			ECSInstance.EntityManager.addComponent (e, new Position(position.Pos,new Vector2(24)));
-			ECSInstance.EntityManager.addComponent (e, new Sprite("reticle","reticle_normal",48,48,0,0));
+			ECSInstance.EntityManager.addComponent (e, new Position(new Vector2(0),new Vector2(24)));
+
+			Sprite sprite = new Sprite ("reticle", "reticle_normal", 48, 48, 0, 0);
+			sprite.Visible = false;
+			ECSInstance.EntityManager.addComponent (e, sprite);
 
 			ECSInstance.TagManager.tagEntity("TARGET",e);
 

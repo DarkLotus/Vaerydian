@@ -134,7 +134,7 @@ namespace Vaerydian.Components.Graphical
             set { s_ShouldSystemAnimate = value; }
         }
 
-
+		public bool Visible = true;
 
     }
 }
