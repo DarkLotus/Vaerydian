@@ -54,7 +54,7 @@ namespace Vaerydian
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;
             //this.IsFixedTimeStep = false;
-			//this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 16);
+			//this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             graphics.PreferMultiSampling = false;
             graphics.ApplyChanges();
 			

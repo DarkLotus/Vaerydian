@@ -273,6 +273,37 @@ namespace Vaerydian.Systems.Update
 				UtilFactory.createSound("audio\\effects\\fire", true, 0.5f);
             } 
 
+			if (InputManager.isKeyToggled(Keys.B))
+			{
+				if(!p_StatWindowOpen){
+					p_StatWindow = UIFactory.createStatWindow(entity, new Point(100,100),new Point(300,315),20);
+
+					p_StatWindowOpen = true;
+				}else
+				{
+					e_ECSInstance.deleteEntity(p_StatWindow);
+					p_StatWindowOpen = false;
+				}
+			}
+
+
+			if (InputManager.isKeyToggled (Keys.R)) {
+				List<Entity> locals = spatial.QuadTree.findAllWithinRange (pos, 300);
+				if (locals.Count > 1) {
+					if (locals [0] != entity) {
+						//use local[0]
+						Position lPos = (Position)p_PositionMapper.get (locals[0]);
+						UtilFactory.createTarget (locals[0], lPos);
+					} else {
+						//use local[1]
+						Position lPos = (Position)p_PositionMapper.get (locals[1]);
+						UtilFactory.createTarget (locals[1], lPos);
+					}
+				}
+			}
+
+			//TEST FUNCTIONS PAST HERE
+
             if (InputManager.isKeyPressed(Keys.Up))
             {
                 transform.Rotation += 0.1f;
@@ -330,18 +361,6 @@ namespace Vaerydian.Systems.Update
 				ActionFactory.createAction(def,entity,entity);
             }
 
-            if (InputManager.isKeyToggled(Keys.B))
-            {
-				if(!p_StatWindowOpen){
-					p_StatWindow = UIFactory.createStatWindow(entity, new Point(100,100),new Point(300,315),20);
-
-					p_StatWindowOpen = true;
-				}else
-				{
-					e_ECSInstance.deleteEntity(p_StatWindow);
-					p_StatWindowOpen = false;
-				}
-            }
 
         }
 

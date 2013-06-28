@@ -55,7 +55,7 @@ namespace Vaerydian.Screens
         private GameContainer gameContainer = new GameContainer();
 
         //update systems
-        private EntitySystem playerMovementSystem;
+        private EntitySystem playerInputSystem;
         private EntitySystem cameraFocusSystem;
         private EntitySystem mousePointerSystem;
         private EntitySystem behaviorSystem;
@@ -71,6 +71,7 @@ namespace Vaerydian.Screens
         private EntitySystem triggerSystem;
 		private EntitySystem actionSystem;
 		private EntitySystem lightSystem;
+		private EntitySystem targetingSystem;
         
         //audio
         private EntitySystem audioSystem;
@@ -191,7 +192,7 @@ namespace Vaerydian.Screens
 
             //create & register systems
             //register update systems
-            playerMovementSystem = ecsInstance.SystemManager.setSystem(new PlayerInputSystem(), new Position(), new Velocity(), new Controllable());
+            playerInputSystem = ecsInstance.SystemManager.setSystem(new PlayerInputSystem(), new Position(), new Velocity(), new Controllable());
             cameraFocusSystem = ecsInstance.SystemManager.setSystem(new CameraFocusSystem(), new CameraFocus(), new Position());
             mousePointerSystem = ecsInstance.SystemManager.setSystem(new MousePointerSystem(), new Position(), new MousePosition());
             behaviorSystem = ecsInstance.SystemManager.setSystem(new BehaviorSystem(), new AiBehavior());
@@ -207,6 +208,7 @@ namespace Vaerydian.Screens
             triggerSystem = ecsInstance.SystemManager.setSystem(new TriggerSystem(), new Trigger());
 			actionSystem = ecsInstance.SystemManager.setSystem (new ActionSystem (), new VAction ());
 			lightSystem = ecsInstance.SystemManager.setSystem (new LightSystem (), new Light (), new Position ());
+			targetingSystem = ecsInstance.SystemManager.setSystem (new TargetingSystem(), new Target ());
 
             //audio systems
             audioSystem = ecsInstance.SystemManager.setSystem(new AudioSystem(gameContainer), new Audio());
@@ -451,8 +453,11 @@ namespace Vaerydian.Screens
 				parameters [GameScreen.GAMESCREEN_LAST_PLAYER_POSITION] = null;
 
 				this.ScreenManager.removeScreen (this);
-				NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType.CAVE, parameters));
-
+				if((int)parameters[GameScreen.GAMESCREEN_SEED] % 2 == 0){
+					NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType.CAVE, parameters));
+				}else{
+					NewLoadingScreen.Load (this.ScreenManager, false, new GameScreen (false, MapType.DUNGEON, parameters));
+				}
 			}
 
 			//return to previous map
@@ -508,7 +513,7 @@ namespace Vaerydian.Screens
             ecsInstance.resolveEntities();
 
             //process systems
-            playerMovementSystem.process();
+            playerInputSystem.process();
             cameraFocusSystem.process();
             mousePointerSystem.process();
             behaviorSystem.process();
@@ -522,6 +527,7 @@ namespace Vaerydian.Screens
             triggerSystem.process();
 			actionSystem.process ();
 			lightSystem.process ();
+			targetingSystem.process ();
 
             mapCollisionSystem.process();
 

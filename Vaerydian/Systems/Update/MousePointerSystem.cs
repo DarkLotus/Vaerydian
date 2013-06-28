@@ -44,7 +44,7 @@ namespace Vaerydian.Systems.Update
             Position pos = (Position) m_PositionMapper.get(entity);
 
             ViewPort viewPort = (ViewPort)m_ViewPortMapper.get(m_Camera);
-            Vector2 center = viewPort.getDimensions() / 2;
+            //Vector2 center = viewPort.getDimensions() / 2;
             Vector2 origin = viewPort.getOrigin();
 
             pos.Pos = InputManager.getMousePositionVector()+origin;
