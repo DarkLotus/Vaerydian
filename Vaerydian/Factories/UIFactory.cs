@@ -303,5 +303,87 @@ namespace Vaerydian.Factories
 						 "  Personality: " + attributes.StatisticSet[StatType.PERSONALITY] + "\n" +
 						 "  Quickness: " + attributes.StatisticSet[StatType.QUICKNESS];
 		}
+
+		public static Entity createInventoryWindow(Entity caller, 
+		                                     Point position, Point dimensions, 
+		                                     int buttonHeight, int rows, int cols){
+			Entity e = ECSInstance.create ();
+			
+			BasicWindow window = new BasicWindow (e, caller, ECSInstance, position, dimensions, buttonHeight);
+		
+			//initialize the window
+			window.init();
+
+			//setup background frame
+			window.Frame.BackgroundColor = Color.Black;
+			window.Frame.BackgroundName = "frame";
+			window.Frame.Transparency = 0.5f;
+
+			//setup close button
+			window.Button.NormalTextureName = "test_dialog";
+			window.Button.PressedTextureName = "test_dialog2";
+			window.Button.MouseOverTextureName = "test_dialog2";
+			window.Button.Color = Color.Gray;
+			window.Button.Transparency = 1f;
+			window.Button.Border = 0;
+			window.Button.FontName = "General";
+			window.Button.AutoSize = false;
+			window.Button.CenterText = true;
+			window.Button.Text = "Inventory";
+			window.Button.NormalTextColor = Color.White;
+			window.Button.MouseOverTextColor = Color.Yellow;
+			window.Button.PressedTextColor = Color.Red;
+
+			//setup window delete
+			window.Button.MouseClick += destroyUI;
+
+			//pre-assemble window
+			window.preAssemble();
+
+			//add what i need here
+			int x = window.Frame.Bounds.X;
+			int y = window.Frame.Bounds.Y + buttonHeight;
+
+			int xSize = window.Frame.Bounds.Width / cols;
+			int ySize = window.Frame.Bounds.Height / rows;
+
+			for (int i = 0; i < cols; i++) {
+				for(int j = 0; j < rows; j++){
+					GFrame slot = new GFrame ();
+					slot.Owner = e;
+					slot.Caller = caller;
+					slot.ECSInstance = ECSInstance;
+					slot.Bounds = new Rectangle (x + i*xSize, y + j*ySize, xSize-1, ySize-1);
+
+					slot.BackgroundColor = Color.White;
+					slot.BackgroundName = "frame";
+					slot.Transparency = 0.75f;
+
+					window.Canvas.Controls.Add (slot);
+				}
+			}
+
+			//final assemble
+			window.assemble();
+
+			//create the UI component and assign it to the entity
+			UserInterface ui = new UserInterface(window.Form);
+
+			ECSInstance.ComponentManager.addComponent(e, ui);
+
+			ECSInstance.refresh (e);
+
+			return e;
+		}
+
+		public static void createConsole(){
+			Entity e = UIFactory.ECSInstance.create ();
+
+			GForm form = new GForm ();
+
+			GCanvas canvas = new GCanvas ();
+
+			GTextBox textBox = new GTextBox ();
+		}
     }
 }

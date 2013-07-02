@@ -68,6 +68,9 @@ namespace Vaerydian.Systems.Update
 		private bool p_StatWindowOpen = false;
 		private Entity p_StatWindow;
 
+		private bool p_InvWindowOpen = false;
+		private Entity p_InvWindow;
+
         public PlayerInputSystem() : base() { }
 
         public override void initialize()
@@ -293,6 +296,16 @@ namespace Vaerydian.Systems.Update
 				{
 					e_ECSInstance.deleteEntity(p_StatWindow);
 					p_StatWindowOpen = false;
+				}
+			}
+
+			if (InputManager.isKeyToggled (Keys.I)) {
+				if (!p_InvWindowOpen) {
+					p_InvWindow = UIFactory.createInventoryWindow (entity, new Point (300, 100), new Point (300, 300), 20, 10, 10);
+					p_InvWindowOpen = true;
+				}else {
+					e_ECSInstance.deleteEntity (p_InvWindow);
+					p_InvWindowOpen = false;
 				}
 			}
 
