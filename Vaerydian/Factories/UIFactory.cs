@@ -357,7 +357,9 @@ namespace Vaerydian.Factories
 
 					slot.BackgroundColor = Color.White;
 					slot.BackgroundName = "frame";
-					slot.Transparency = 0.75f;
+					slot.Transparency = 0.5f;
+
+					slot.MouseClick += getItem;
 
 					window.Canvas.Controls.Add (slot);
 				}
@@ -374,6 +376,10 @@ namespace Vaerydian.Factories
 			ECSInstance.refresh (e);
 
 			return e;
+		}
+
+		public static void getItem(IControl sender, InterfaceArgs args){
+
 		}
 
 		public static void createConsole(){
