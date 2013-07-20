@@ -26,7 +26,6 @@ namespace Vaerydian.Systems.Update
 
         private ComponentMapper p_PositionMapper;
         private ComponentMapper p_VelocityMapper;
-        private ComponentMapper p_ViewPortMapper;
         private ComponentMapper p_HeadingMapper;
         private ComponentMapper p_LightMapper;
         private ComponentMapper p_TransformMapper;
@@ -35,7 +34,6 @@ namespace Vaerydian.Systems.Update
 		private ComponentMapper p_TargetMapper;
 		private ComponentMapper p_SpriteMapper;
 
-        private Entity p_Camera;
         private Entity p_Mouse;
         private Entity p_Spatial;
 		private Entity p_Target;
@@ -77,7 +75,6 @@ namespace Vaerydian.Systems.Update
         {
             p_PositionMapper = new ComponentMapper(new Position(), e_ECSInstance);
             p_VelocityMapper = new ComponentMapper(new Velocity(), e_ECSInstance);
-            p_ViewPortMapper = new ComponentMapper(new ViewPort(), e_ECSInstance);
             p_HeadingMapper = new ComponentMapper(new Heading(), e_ECSInstance);
             p_LightMapper = new ComponentMapper(new Light(), e_ECSInstance);
             p_TransformMapper = new ComponentMapper(new Transform(), e_ECSInstance);
@@ -89,7 +86,6 @@ namespace Vaerydian.Systems.Update
 
         protected override void preLoadContent(Bag<Entity> entities)
         {
-            p_Camera = e_ECSInstance.TagManager.getEntityByTag("CAMERA");
             p_Mouse = e_ECSInstance.TagManager.getEntityByTag("MOUSE");
             p_Spatial = e_ECSInstance.TagManager.getEntityByTag("SPATIAL");
 			p_Target = e_ECSInstance.TagManager.getEntityByTag ("TARGET");

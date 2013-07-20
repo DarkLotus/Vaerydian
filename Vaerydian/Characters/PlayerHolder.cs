@@ -43,9 +43,9 @@ namespace Vaerydian.Characters
             set { p_Knowledges = value; }
         }
 
-        private Vaerydian.Components.Characters.Statistics p_Statistics;
+        private Statistics p_Statistics;
 
-        public Vaerydian.Components.Characters.Statistics Statistics
+        public Statistics Statistics
         {
             get { return p_Statistics; }
             set { p_Statistics = value; }
@@ -59,17 +59,17 @@ namespace Vaerydian.Characters
             set { p_Health = value; }
         }
 
-        private Vaerydian.Components.Characters.Skills p_Skills;
+        private Skills p_Skills;
 
-        public Vaerydian.Components.Characters.Skills Skills
+        public Skills Skills
         {
             get { return p_Skills; }
             set { p_Skills = value; }
         }
 
-        private Vaerydian.Components.Characters.Factions p_Factions;
+        private Factions p_Factions;
 
-        public Vaerydian.Components.Characters.Factions Factions
+        public Factions Factions
         {
             get { return p_Factions; }
             set { p_Factions = value; }

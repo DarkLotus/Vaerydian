@@ -44,8 +44,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The effects.
+		/// </summary>
 		public static Dictionary<string, short> Effects = new Dictionary<string, short>();
 
+		/// <summary>
+		/// Loads the effect defs.
+		/// </summary>
+		/// <returns><c>true</c>, if effect defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadEffectDefs(){
 
 			Effects.Add ("NONE", 0);
@@ -53,8 +60,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The damage defs.
+		/// </summary>
 		public static Dictionary<string, DamageDef> DamageDefs = new Dictionary<string, DamageDef>();
 
+		/// <summary>
+		/// Loads the damage defs.
+		/// </summary>
+		/// <returns><c>true</c>, if damage defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool LoadDamageDefs(){
 			try{
 				string json = g_JM.loadJSON("./Content/json/damage.v");
@@ -84,9 +98,15 @@ namespace Vaerydian
 			return true;
 		}
 
-
+		/// <summary>
+		/// The action defs.
+		/// </summary>
 		public static Dictionary<string, ActionDef> ActionDefs = new Dictionary<string, ActionDef>();
 
+		/// <summary>
+		/// Loads the action defs.
+		/// </summary>
+		/// <returns><c>true</c>, if action defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadActionDefs(){
 			try{
 				string json = g_JM.loadJSON("./Content/json/actions.v");
@@ -114,8 +134,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The terrain defs.
+		/// </summary>
 		public static Dictionary<string,TerrainDef> TerrainDefs = new Dictionary<string, TerrainDef> ();
 
+		/// <summary>
+		/// Loads the terrain defs.
+		/// </summary>
+		/// <returns><c>true</c>, if terrain defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadTerrainDefs(){
 			try{
 				string json = g_JM.loadJSON ("./Content/json/terrain.v");
@@ -153,8 +180,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The map defs.
+		/// </summary>
 		public static Dictionary<string,MapDef> MapDefs = new Dictionary<string, MapDef>();
 
+		/// <summary>
+		/// Loads the map defs.
+		/// </summary>
+		/// <returns><c>true</c>, if map defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadMapDefs(){
 
 			try{
@@ -211,8 +245,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The start defs.
+		/// </summary>
 		public static StartDefs StartDefs;
-		
+
+		/// <summary>
+		/// Loads the start defs.
+		/// </summary>
+		/// <returns><c>true</c>, if start defs was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadStartDefs(){
 			try{
 				string json = g_JM.loadJSON ("./Content/json/start_screen.v");
@@ -230,10 +271,23 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The animation defs.
+		/// </summary>
 		public static Dictionary<string, AnimationDef> AnimationDefs = new Dictionary<string, AnimationDef> ();
+		/// <summary>
+		/// The skeletal defs.
+		/// </summary>
 		public static Dictionary<string, SkeletalDef> SkeletalDefs = new Dictionary<string, SkeletalDef> ();
+		/// <summary>
+		/// The character defs.
+		/// </summary>
 		public static Dictionary<string, CharacterDef> CharacterDefs = new Dictionary<string, CharacterDef>();
 
+		/// <summary>
+		/// Loads the character animation.
+		/// </summary>
+		/// <returns><c>true</c>, if character animation was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadCharacterAnimation(){
 			try{
 				string json = g_JM.loadJSON("./Content/json/animation.v");
@@ -343,8 +397,15 @@ namespace Vaerydian
 			return true;
 		}
 
+		/// <summary>
+		/// The creature defs.
+		/// </summary>
 		public static Dictionary<string,CreatureDef> CreatureDefs = new Dictionary<string, CreatureDef> ();
 
+		/// <summary>
+		/// Loads the creatures.
+		/// </summary>
+		/// <returns><c>true</c>, if creatures was loaded, <c>false</c> otherwise.</returns>
 		private static bool loadCreatures(){
 			try{
 				string json = g_JM.loadJSON ("./Content/json/creatures.v");
@@ -370,12 +431,18 @@ namespace Vaerydian
 		}
 	}
 
+	/// <summary>
+	/// Creature def.
+	/// </summary>
 	public struct CreatureDef{
 		public string Name;
 		public CharacterDef CharacterDef;
 		public int SkillLevel;
 	}
 
+	/// <summary>
+	/// Character def.
+	/// </summary>
 	public struct CharacterDef{
 		public string Name;
 		public List<SkeletalDef> SkeletalDefs;
@@ -383,11 +450,17 @@ namespace Vaerydian
 		public string CurrentAnimation;
 	}
 
+	/// <summary>
+	/// Skeletal def.
+	/// </summary>
 	public struct SkeletalDef{
 		public string Name;
 		public List<BoneDef> BoneDefs;
 	}
 
+	/// <summary>
+	/// Bone def.
+	/// </summary>
 	public struct BoneDef{
 		public string Name;
 		public string Texture;
@@ -398,11 +471,17 @@ namespace Vaerydian
 		public Dictionary<string,AnimationDef> Animations;
 	}
 
+	/// <summary>
+	/// Animation def.
+	/// </summary>
 	public struct AnimationDef{
 		public string Name;
 		public List<KeyFrameDef> KeyFrameDefs;
 	}
 
+	/// <summary>
+	/// Key frame def.
+	/// </summary>
 	public struct KeyFrameDef{
 		public float Percent;
 		public Vector2 Position;
