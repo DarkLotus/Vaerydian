@@ -86,35 +86,35 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
-            Statistics attributes = new Statistics();
-            attributes.StatisticSet.Add(StatType.FOCUS, skillLevel);
-            attributes.StatisticSet.Add(StatType.ENDURANCE, skillLevel);
-            attributes.StatisticSet.Add(StatType.MIND, skillLevel);
-            attributes.StatisticSet.Add(StatType.MUSCLE, skillLevel);
-            attributes.StatisticSet.Add(StatType.PERCEPTION, skillLevel);
-            attributes.StatisticSet.Add(StatType.PERSONALITY, skillLevel);
-            attributes.StatisticSet.Add(StatType.QUICKNESS, skillLevel);
-			ECSInstance.EntityManager.addComponent(e, attributes);
+            Statistics statistics = new Statistics();
+			statistics.Focus = new Statistic {Name="FOCUS",Value=skillLevel,StatType=StatType.FOCUS };
+			statistics.Endurance = new Statistic {Name= "ENDURANCE",Value= skillLevel,StatType= StatType.ENDURANCE };
+			statistics.Mind = new Statistic {Name= "MIND",Value= skillLevel,StatType= StatType.MIND };
+			statistics.Muscle = new Statistic {Name= "MUSCLE",Value= skillLevel,StatType= StatType.MUSCLE };
+			statistics.Perception = new Statistic {Name= "PERCEPTION",Value= skillLevel,StatType= StatType.PERCEPTION };
+			statistics.Personality = new Statistic {Name= "PERSONALITY",Value= skillLevel,StatType= StatType.PERSONALITY };
+			statistics.Quickness = new Statistic {Name= "QUICKNESS",Value= skillLevel,StatType= StatType.QUICKNESS };
+			ECSInstance.EntityManager.addComponent(e, statistics);
 
             //create health
-			Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 5);// new Health(5000);//
-			health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
+			Health health = new Health(statistics.Endurance.Value * 5);// new Health(5000);//
+			health.RecoveryAmmount = statistics.Endurance.Value / 5;
             health.RecoveryRate = 1000;
 			ECSInstance.EntityManager.addComponent(e, health);
 
             //setup skills
             Skills skills = new Skills();
-            Skill skill = new Skill("Ranged", skillLevel, SkillType.Offensive);
+			Skill skill = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
             skills.SkillSet.Add(SkillName.RANGED, skill);
-            skill = new Skill("Avoidance", skillLevel, SkillType.Defensive);
+			skill = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
             skills.SkillSet.Add(SkillName.AVOIDANCE, skill);
-            skill = new Skill("Melee", skillLevel, SkillType.Offensive);
+			skill = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
             skills.SkillSet.Add(SkillName.MELEE, skill);
 			ECSInstance.EntityManager.addComponent(e, skills);
 
-            Faction faction = new Faction(100, FactionType.Player);
-            Faction enemy = new Faction(-10, FactionType.Wilderness);
-            Faction ally = new Faction(100, FactionType.Ally);
+			Faction faction = new Faction{Name="PLAYER",Value=100,FactionType= FactionType.Player};
+			Faction enemy = new Faction{Name="WILDERNESS",Value=-10,FactionType= FactionType.Wilderness};
+			Faction ally = new Faction{Name="ALLY",Value=100,FactionType=FactionType.Ally};
             
             Factions factions = new Factions();
             factions.OwnerFaction = faction;
@@ -123,7 +123,7 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, factions);
 
             GameSession.PlayerState = new PlayerState();
-            GameSession.PlayerState.Statistics = attributes;
+            GameSession.PlayerState.Statistics = statistics;
             GameSession.PlayerState.Factions = factions;
             GameSession.PlayerState.Health = health;
             GameSession.PlayerState.Information = info;

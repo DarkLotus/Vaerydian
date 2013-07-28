@@ -37,14 +37,9 @@ namespace Vaerydian.Components.Characters
             s_TypeID = typeId;
         }
 
-        private Dictionary<SkillName, Skill> s_SkillSet = new Dictionary<SkillName, Skill>();
         /// <summary>
         /// available skills
         /// </summary>
-        public Dictionary<SkillName, Skill> SkillSet
-        {
-            get { return s_SkillSet; }
-            set { s_SkillSet = value; }
-        }
+		public Dictionary<SkillName, Skill> SkillSet;
     }
 }

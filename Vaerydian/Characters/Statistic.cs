@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Vaerydian.Characters
@@ -17,48 +16,9 @@ namespace Vaerydian.Characters
 		FOCUS = 7
 	}
 
-    public class Statistic
-    {
-        /// <summary>
-        /// default constructor
-        /// </summary>
-        public Statistic() { }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public Statistic(String name, int value)
-        {
-            a_Name = name;
-            a_Value = value;
-        }
-
-        /// <summary>
-        /// name of the skill
-        /// </summary>
-        private String a_Name;
-        /// <summary>
-        /// name of the skill
-        /// </summary>
-        public String Name
-        {
-            get { return a_Name; }
-            set { a_Name = value; }
-        }
-
-        /// <summary>
-        /// current value of the skill
-        /// </summary>
-        private int a_Value;
-        /// <summary>
-        /// current value of the skill
-        /// </summary>
-        public int Value
-        {
-            get { return a_Value; }
-            set { a_Value = value; }
-        }
-    }
+	public struct Statistic{
+		public string Name;
+		public int Value;
+		public StatType StatType;
+	}
 }

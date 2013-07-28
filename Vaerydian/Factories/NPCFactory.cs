@@ -105,50 +105,51 @@ namespace Vaerydian.Factories
             ItemFactory iFactory = new ItemFactory(n_EcsInstance);
             n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-            int val = 25;
+            int skillLevel = 25;
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(val));
+            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(skillLevel));
             knowledges.VariationKnowledge.Add(CreatureVariationGroup.NONE, new Knowledge(0));
             knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.NONE, new Knowledge(0));
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
-            Statistics attributes = new Statistics();
+            Statistics statistics = new Statistics();
 
-            attributes.StatisticSet.Add(StatType.FOCUS, val);
-            attributes.StatisticSet.Add(StatType.ENDURANCE, val);
-            attributes.StatisticSet.Add(StatType.MIND, val);
-            attributes.StatisticSet.Add(StatType.MUSCLE, val);
-            attributes.StatisticSet.Add(StatType.PERCEPTION, val);
-            attributes.StatisticSet.Add(StatType.PERSONALITY, val);
-            attributes.StatisticSet.Add(StatType.QUICKNESS, val);
-            n_EcsInstance.EntityManager.addComponent(e, attributes);
+			statistics.Focus = new Statistic {Name="FOCUS",Value=skillLevel,StatType=StatType.FOCUS };
+			statistics.Endurance = new Statistic {Name= "ENDURANCE",Value= skillLevel,StatType= StatType.ENDURANCE };
+			statistics.Mind = new Statistic {Name= "MIND",Value= skillLevel,StatType= StatType.MIND };
+			statistics.Muscle = new Statistic {Name= "MUSCLE",Value= skillLevel,StatType= StatType.MUSCLE };
+			statistics.Perception = new Statistic {Name= "PERCEPTION",Value= skillLevel,StatType= StatType.PERCEPTION };
+			statistics.Personality = new Statistic {Name= "PERSONALITY",Value= skillLevel,StatType= StatType.PERSONALITY };
+			statistics.Quickness = new Statistic {Name= "QUICKNESS",Value= skillLevel,StatType= StatType.QUICKNESS };
+            n_EcsInstance.EntityManager.addComponent(e, statistics);
 
             //create health
-            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 3);
-            health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
+			Health health = new Health(statistics.Endurance.Value * 3);
+            health.RecoveryAmmount = statistics.Endurance.Value / 5;
             health.RecoveryRate = 1000;
             n_EcsInstance.EntityManager.addComponent(e, health);
 
             //setup skills
-            Skill skill = new Skill("Avoidance", val, SkillType.Offensive);
-            Skills skills = new Skills();
-            skills.SkillSet.Add(SkillName.AVOIDANCE, skill);
+			Skills skills = new Skills();
+			Skill skill = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
+			skills.SkillSet.Add(SkillName.RANGED, skill);
+			skill = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
+			skills.SkillSet.Add(SkillName.AVOIDANCE, skill);
+			skill = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
+			skills.SkillSet.Add(SkillName.MELEE, skill);
+			n_EcsInstance.EntityManager.addComponent(e, skills);
 
-            skill = new Skill("Ranged", val, SkillType.Offensive);
-            skills.SkillSet.Add(SkillName.RANGED, skill);
-            n_EcsInstance.EntityManager.addComponent(e, skills);
-
-            Faction faction = new Faction(100, FactionType.Ally);
-            Faction enemy = new Faction(-10, FactionType.Wilderness);
-            Faction player = new Faction(100, FactionType.Player);
+			Faction faction = new Faction{Name="PLAYER",Value=100,FactionType= FactionType.Player};
+			Faction enemy = new Faction{Name="WILDERNESS",Value=-10,FactionType= FactionType.Wilderness};
+			Faction ally = new Faction{Name="ALLY",Value=100,FactionType=FactionType.Ally};
 
             Factions factions = new Factions();
             factions.OwnerFaction = faction;
             factions.KnownFactions.Add(enemy.FactionType, enemy);
-            factions.KnownFactions.Add(player.FactionType, player);
+            factions.KnownFactions.Add(ally.FactionType, ally);
             n_EcsInstance.EntityManager.addComponent(e, factions);
 
 
@@ -238,20 +239,20 @@ namespace Vaerydian.Factories
             n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
-            Statistics attributes = new Statistics();
+            Statistics statistics = new Statistics();
 
-            attributes.StatisticSet.Add(StatType.FOCUS, skillLevel);
-            attributes.StatisticSet.Add(StatType.ENDURANCE, skillLevel);
-            attributes.StatisticSet.Add(StatType.MIND, skillLevel);
-            attributes.StatisticSet.Add(StatType.MUSCLE, skillLevel);
-            attributes.StatisticSet.Add(StatType.PERCEPTION, skillLevel);
-            attributes.StatisticSet.Add(StatType.PERSONALITY, skillLevel);
-            attributes.StatisticSet.Add(StatType.QUICKNESS, skillLevel);
-            n_EcsInstance.EntityManager.addComponent(e, attributes);
+            statistics.StatisticSet.Add(StatType.FOCUS, skillLevel);
+            statistics.StatisticSet.Add(StatType.ENDURANCE, skillLevel);
+            statistics.StatisticSet.Add(StatType.MIND, skillLevel);
+            statistics.StatisticSet.Add(StatType.MUSCLE, skillLevel);
+            statistics.StatisticSet.Add(StatType.PERCEPTION, skillLevel);
+            statistics.StatisticSet.Add(StatType.PERSONALITY, skillLevel);
+            statistics.StatisticSet.Add(StatType.QUICKNESS, skillLevel);
+            n_EcsInstance.EntityManager.addComponent(e, statistics);
 
             //create health
-            Health health = new Health(attributes.StatisticSet[StatType.ENDURANCE] * 3);
-            health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
+            Health health = new Health(statistics.StatisticSet[StatType.ENDURANCE] * 3);
+            health.RecoveryAmmount = statistics.StatisticSet[StatType.ENDURANCE] / 5;
             health.RecoveryRate = 1000;
             n_EcsInstance.EntityManager.addComponent(e, health);
 
