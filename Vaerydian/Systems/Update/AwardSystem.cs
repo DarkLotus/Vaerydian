@@ -138,6 +138,8 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
                 
                 recGeneral.Value += val;
+				receiver.GeneralKnowledge.Remove (info.CreatureGeneralGroup);
+				receiver.GeneralKnowledge.Add (info.CreatureGeneralGroup, recGeneral);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
@@ -154,6 +156,8 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
 
                 recVaration.Value += val;
+				receiver.VariationKnowledge.Remove (info.CreatureVariationGroup);
+				receiver.VariationKnowledge.Add (info.CreatureVariationGroup, recVaration);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
@@ -170,6 +174,8 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
 
                 recUnique.Value += val;
+				receiver.UniqueKnowledge.Remove (info.CreatureUniqueGroup);
+				receiver.UniqueKnowledge.Add (info.CreatureUniqueGroup, recUnique);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
