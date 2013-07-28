@@ -15,6 +15,11 @@ When built, copy the Content directory to the build output directory and run the
 
 ## Controls
 
+### Start Menu
+* Click Buttons - start a new game, generate a world map, exit the game
+* ESC - exit the game
+
+### New Game
 * WASD - movement
 * R - target closest enemy
 * RightClick - fire bolts at target
@@ -22,7 +27,13 @@ When built, copy the Content directory to the build output directory and run the
 * Enter - descend to next level based on current map position (i.e., generates the next map based on current map & position)
 * F12 - go back to previous map
 * F6 - dump current map and player configuration to .v files
-* ESC - return to start menu / exit game
+* ESC - return to start menu
+
+### World Map
+* WASD - movement
+* T - show temperature map
+* P - show precipitation map
+* ESC - return to start menu
 
 ## Data
 
