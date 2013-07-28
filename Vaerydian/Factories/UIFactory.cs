@@ -238,7 +238,7 @@ namespace Vaerydian.Factories
 
 			//setup background frame
 			window.Frame.BackgroundColor = Color.Black;
-			window.Frame.BackgroundName = "frame";
+			window.Frame.BackgroundName = "whitebg";
 			window.Frame.Transparency = 0.5f;
 
 			//setup close button
