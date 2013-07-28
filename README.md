@@ -13,7 +13,13 @@ Vaerydian can can compile under both Windows (MonoGame WindowsGL) and Linux(Mono
 
 When built, copy the Content directory to the build output directory and run the game.
 
-## Controls
+### Dependencies on Linux:
+These are dependencies that I have typically had to double-check to install on most Linux distros. There may be others, but the error output of mono & MonoGame is usually good at telling you what is missing.
+* Mono 2.10.x
+* LibSDL-Image
+* OpenAL
+
+## Controls:
 
 ### Start Menu
 * Click Buttons - start a new game, generate a world map, exit the game
@@ -28,9 +34,10 @@ When built, copy the Content directory to the build output directory and run the
 * F12 - go back to previous map
 * F6 - dump current map and player configuration to .v files
 * ESC - return to start menu
+* Others - some other debug commands in here... ;)
 
 ### World Map
-* WASD - movement
+* Up/Down/Left/Right - movement
 * T - show temperature map
 * P - show precipitation map
 * ESC - return to start menu
@@ -38,9 +45,11 @@ When built, copy the Content directory to the build output directory and run the
 ## Data
 
 All data that drives the game is stored in
+
 	Content/json/
 
 All files are the format of
+
 	filename.v
 
 At this time I have no guidance for editing the files, so do so at your own risk. Nothing will permanently break anything, but you may want to back these up in case you forget to undo all your changes.

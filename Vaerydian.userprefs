@@ -1,18 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\Screens\GameScreen.cs">
-    <Files>
-      <File FileName="Vaerydian\Screens\GameScreen.cs" Line="484" Column="33" />
-      <File FileName="Vaerydian\Characters\Knowledge.cs" Line="17" Column="38" />
-      <File FileName="c:\GitHub\Vaerydian\Vaerydian\Factories\EntityFactory.cs" Line="112" Column="1" />
-      <File FileName="Vaerydian\Components\Characters\Knowledges.cs" Line="39" Column="16" />
-      <File FileName="c:\GitHub\Vaerydian\Vaerydian\Factories\NPCFactory.cs" Line="261" Column="17" />
-      <File FileName="c:\GitHub\Vaerydian\Vaerydian\Systems\Update\AttackSystem.cs" Line="173" Column="102" />
-      <File FileName="Vaerydian\Components\Characters\Information.cs" Line="48" Column="1" />
-      <File FileName="Vaerydian\Components\Characters\Factions.cs" Line="49" Column="30" />
-      <File FileName="c:\GitHub\Vaerydian\Vaerydian\Behaviors\WanderingEnemyBehavior.cs" Line="321" Column="93" />
-      <File FileName="Vaerydian\Characters\Faction.cs" Line="8" Column="22" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
