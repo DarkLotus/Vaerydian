@@ -1,6 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/UI/BasicWindow.cs">
+    <Files>
+      <File FileName="Vaerydian/UI/BasicWindow.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -15,11 +18,12 @@
               <Node name="Characters" expanded="True" />
             </Node>
             <Node name="Factories" expanded="True" />
-            <Node name="Screens" expanded="True">
-              <Node name="GameScreen.cs" selected="True" />
-            </Node>
+            <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Update" expanded="True" />
+            </Node>
+            <Node name="UI" expanded="True">
+              <Node name="BasicWindow.cs" selected="True" />
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>
