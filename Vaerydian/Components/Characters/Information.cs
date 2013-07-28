@@ -45,34 +45,17 @@ namespace Vaerydian.Components.Characters
             set { i_Name = value; }
         }
 
-        private CreatureGeneralGroup e_CreatureGenerapGroup;
         /// <summary>
         /// type of creature
         /// </summary>
-        public CreatureGeneralGroup CreatureGeneralGroup
-        {
-            get { return e_CreatureGenerapGroup; }
-            set { e_CreatureGenerapGroup = value; }
-        }
-
-        private CreatureVariationGroup e_CreatureVariationGroup;
+		public string CreatureGeneralGroup;
         /// <summary>
         /// type of creature variation
         /// </summary>
-        public CreatureVariationGroup CreatureVariationGroup
-        {
-            get { return e_CreatureVariationGroup; }
-            set { e_CreatureVariationGroup = value; }
-        }
-
-        private CreatureUniqueGroup e_CreatureUniqueGroup;
+		public string CreatureVariationGroup;
         /// <summary>
         /// type of unique creature
         /// </summary>
-        public CreatureUniqueGroup CreatureUniqueGroup
-        {
-            get { return e_CreatureUniqueGroup; }
-            set { e_CreatureUniqueGroup = value; }
-        }
+		public string CreatureUniqueGroup;
     }
 }

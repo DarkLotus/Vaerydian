@@ -43,15 +43,9 @@ namespace Vaerydian.Components.Characters
             get { return f_OwnerFaction; }
             set { f_OwnerFaction = value; }
         }
-
-        private Dictionary<FactionType, Faction> f_KnownFactions = new Dictionary<FactionType, Faction>();
-        /// <summary>
-        /// factions known to entity
-        /// </summary>
-        public Dictionary<FactionType, Faction> KnownFactions
-        {
-            get { return f_KnownFactions; }
-            set { f_KnownFactions = value; }
-        }
+		/// <summary>
+		/// factions known to entity
+		/// </summary>
+		public Dictionary<string, Faction> KnownFactions = new Dictionary<string, Faction>();
     }
 }

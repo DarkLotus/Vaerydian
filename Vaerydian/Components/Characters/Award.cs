@@ -106,12 +106,12 @@ namespace Vaerydian.Components.Characters
             set { v_SkillName = value; }
         }
 
-        private StatType v_AttributeType;
+        private StatType v_StatType;
 
-        public StatType AttributeType
+        public StatType StatType
         {
-            get { return v_AttributeType; }
-            set { v_AttributeType = value; }
+            get { return v_StatType; }
+            set { v_StatType = value; }
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Vaerydian.Factories
             award.Awarder = awarder;
             award.Receiver = receiver;
             award.MaxAwardable = maxAwardable;
-            award.AttributeType = attribute;
+            award.StatType = attribute;
 
             ECSInstance.EntityManager.addComponent(e, award);
 

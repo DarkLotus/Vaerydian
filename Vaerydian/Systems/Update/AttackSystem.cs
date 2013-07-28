@@ -139,10 +139,10 @@ namespace Vaerydian.Systems.Update
             if (attAttr == null || defAttr == null)
                 return;
 
-            int perception = attAttr.StatisticSet[StatType.PERCEPTION];
-            int muscle = attAttr.StatisticSet[StatType.MUSCLE];
-            int quickness = defAttr.StatisticSet[StatType.QUICKNESS];
-            int endurance = defAttr.StatisticSet[StatType.ENDURANCE];
+            int perception = attAttr.Perception.Value;
+            int muscle = attAttr.Muscle.Value;
+            int quickness = defAttr.Quickness.Value;
+            int endurance = defAttr.Endurance.Value;
 
             //get Experience
             Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
@@ -160,8 +160,8 @@ namespace Vaerydian.Systems.Update
             if (attSkills == null || defSkills == null)
                 return;
 
-            int atkSkill = attSkills.SkillSet[SkillName.MELEE].Value;
-            int defSkill = defSkills.SkillSet[SkillName.AVOIDANCE].Value;
+            int atkSkill = attSkills.Melee.Value;
+            int defSkill = defSkills.Avoidance.Value;
 
             Information infoDef = (Information)a_InfoMapper.get(attack.Defender);
             Information infoAtk = (Information)a_InfoMapper.get(attack.Attacker);
@@ -307,10 +307,10 @@ namespace Vaerydian.Systems.Update
             if (attAttr == null || defAttr == null)
                 return;
 
-            int perception = attAttr.StatisticSet[StatType.PERCEPTION];
-            int quickness = defAttr.StatisticSet[StatType.QUICKNESS];
-            int focus = attAttr.StatisticSet[StatType.FOCUS];
-            int endurance = defAttr.StatisticSet[StatType.ENDURANCE];
+            int perception = attAttr.Perception.Value;
+            int quickness = defAttr.Quickness.Value;
+            int focus = attAttr.Focus.Value;
+			int endurance = defAttr.Endurance.Value;
 
             //get Experience
             Knowledges attKnw = (Knowledges)a_KnowledgeMapper.get(attack.Attacker);
@@ -328,8 +328,8 @@ namespace Vaerydian.Systems.Update
             if (attSkills == null || defSkills == null)
                 return;
 
-            int atkSkill = attSkills.SkillSet[SkillName.RANGED].Value;
-            int defSkill = defSkills.SkillSet[SkillName.AVOIDANCE].Value;
+            int atkSkill = attSkills.Ranged.Value;
+            int defSkill = defSkills.Avoidance.Value;
 
 
             Information infoDef = (Information)a_InfoMapper.get(attack.Defender);

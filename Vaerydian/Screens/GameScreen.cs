@@ -429,7 +429,7 @@ namespace Vaerydian.Screens
 
 				//set skill level
 				Skills skills = new Skills ();
-				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).SkillSet [SkillName.RANGED].Value;
+				int skilllevel = ((Skills)ecsInstance.ComponentManager.getComponent (player, skills.getTypeId ())).Ranged.Value;
                 
 				//set seed
 				Position pos = new Position ();

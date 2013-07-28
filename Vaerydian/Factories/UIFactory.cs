@@ -290,18 +290,18 @@ namespace Vaerydian.Factories
 
 			GLabel label = (GLabel) sender;
 			label.Text = "Skills" + "\n" +
-					     "  Range: " + skills.SkillSet[SkillName.RANGED].Value + "\n" +
-						 "  Melee: " + skills.SkillSet[SkillName.MELEE].Value + "\n" +
-					     "  Avoidance: " + skills.SkillSet[SkillName.AVOIDANCE].Value + "\n"+
-						 "\n" +
-						 "Attributes" + "\n" +
-						 "  Endurance: " + attributes.StatisticSet[StatType.ENDURANCE] + "\n" +
-						 "  Focus: " + attributes.StatisticSet[StatType.FOCUS] + "\n" +
-						 "  Mind: " + attributes.StatisticSet[StatType.MIND] + "\n" +
-						 "  Muscle: " + attributes.StatisticSet[StatType.MUSCLE] + "\n" +
-						 "  Perception: " + attributes.StatisticSet[StatType.PERCEPTION] + "\n" +
-						 "  Personality: " + attributes.StatisticSet[StatType.PERSONALITY] + "\n" +
-						 "  Quickness: " + attributes.StatisticSet[StatType.QUICKNESS];
+				"  Range: " + skills.Ranged.Value + "\n" +
+				"  Melee: " + skills.Melee.Value + "\n" +
+				"  Avoidance: " + skills.Avoidance.Value + "\n" +
+				"\n" +
+				"Attributes" + "\n" +
+				"  Endurance: " + attributes.Endurance.Value + "\n" +
+				"  Focus: " + attributes.Focus.Value + "\n" +
+				"  Mind: " + attributes.Mind.Value + "\n" +
+				"  Muscle: " + attributes.Muscle.Value + "\n" +
+				"  Perception: " + attributes.Perception.Value + "\n" +
+				"  Personality: " + attributes.Personality.Value + "\n" +
+				"  Quickness: " + attributes.Quickness.Value;
 		}
 
 		public static Entity createInventoryWindow(Entity caller, 

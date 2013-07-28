@@ -51,9 +51,9 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
-            info.CreatureGeneralGroup = CreatureGeneralGroup.HUMAN;
-            info.CreatureVariationGroup = CreatureVariationGroup.NONE;
-            info.CreatureUniqueGroup = CreatureUniqueGroup.NONE;
+			info.CreatureGeneralGroup = "HUMAN";
+			info.CreatureVariationGroup = "NONE";
+			info.CreatureUniqueGroup = "NONE";
             info.Name = "PLAYER";
 			ECSInstance.EntityManager.addComponent(e, info);
 
@@ -79,10 +79,10 @@ namespace Vaerydian.Factories
 
             //setup experiences
             Knowledges knowledges = new Knowledges();
-			knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.HUMAN, new Knowledge(skillLevel));
-            knowledges.GeneralKnowledge.Add(CreatureGeneralGroup.BAT, new Knowledge(skillLevel));
-            knowledges.VariationKnowledge.Add(CreatureVariationGroup.NONE, new Knowledge(0));
-            knowledges.UniqueKnowledge.Add(CreatureUniqueGroup.NONE, new Knowledge(0));
+			knowledges.GeneralKnowledge.Add ("HUMAN", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
+			knowledges.GeneralKnowledge.Add ("BAT", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
+			knowledges.VariationKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
+			knowledges.UniqueKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
 			ECSInstance.EntityManager.addComponent(e, knowledges);
 
             //setup attributes
@@ -104,22 +104,15 @@ namespace Vaerydian.Factories
 
             //setup skills
             Skills skills = new Skills();
-			Skill skill = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
-            skills.SkillSet.Add(SkillName.RANGED, skill);
-			skill = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
-            skills.SkillSet.Add(SkillName.AVOIDANCE, skill);
-			skill = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
-            skills.SkillSet.Add(SkillName.MELEE, skill);
+			skills.Ranged = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
+			skills.Avoidance = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
+			skills.Melee = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
 			ECSInstance.EntityManager.addComponent(e, skills);
 
-			Faction faction = new Faction{Name="PLAYER",Value=100,FactionType= FactionType.Player};
-			Faction enemy = new Faction{Name="WILDERNESS",Value=-10,FactionType= FactionType.Wilderness};
-			Faction ally = new Faction{Name="ALLY",Value=100,FactionType=FactionType.Ally};
-            
             Factions factions = new Factions();
-            factions.OwnerFaction = faction;
-            factions.KnownFactions.Add(enemy.FactionType, enemy);
-            factions.KnownFactions.Add(ally.FactionType, ally);
+			factions.OwnerFaction = new Faction{Name="PLAYER",Value=100,FactionType= FactionType.Player};
+			factions.KnownFactions.Add("WILDERNESS", new Faction{Name="WILDERNESS",Value=-10,FactionType= FactionType.Wilderness});
+			factions.KnownFactions.Add("ALLY", new Faction{Name="ALLY",Value=100,FactionType=FactionType.Ally});
 			ECSInstance.EntityManager.addComponent(e, factions);
 
             GameSession.PlayerState = new PlayerState();

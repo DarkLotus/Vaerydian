@@ -195,11 +195,41 @@ namespace Vaerydian.Utils
 		}
 
 		private static float getSkill(Entity entity, SkillName skillname){
-			return ComponentMapper.get<Skills> (entity).SkillSet [skillname].Value;
+			Skills skills = ComponentMapper.get<Skills> (entity);
+
+			switch (skillname) {
+			case SkillName.AVOIDANCE:
+				return skills.Avoidance.Value;
+			case SkillName.MELEE:
+				return skills.Melee.Value;
+			case SkillName.RANGED:
+				return skills.Ranged.Value;
+			default:
+				return default(Skill).Value;
+			}
 		}
 
 		private static float getStat(Entity entity, StatType stat){
-			return (float)ComponentMapper.get<Statistics> (entity).StatisticSet [stat];
+			Statistics stats = ComponentMapper.get<Statistics> (entity);
+
+			switch (stat) {
+			case StatType.ENDURANCE:
+				return stats.Endurance.Value;
+			case StatType.FOCUS:
+				return stats.Focus.Value;
+			case StatType.MIND:
+				return stats.Mind.Value;
+			case StatType.MUSCLE:
+				return stats.Muscle.Value;
+			case StatType.PERCEPTION:
+				return stats.Perception.Value;
+			case StatType.PERSONALITY:
+				return stats.Personality.Value;
+			case StatType.QUICKNESS:
+				return stats.Quickness.Value;
+			default:
+				return default(Statistic).Value;
+			}
 		}
 
 		private static Weapon getWeapon(Entity entity){

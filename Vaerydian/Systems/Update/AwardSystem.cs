@@ -169,7 +169,18 @@ namespace Vaerydian.Systems.Update
         {
             Skills skills = (Skills)v_SkillMapper.get(award.Receiver);
 
-            skills.SkillSet[award.SkillName].Value += award.MaxAwardable;
+            //skills.SkillSet[award.SkillName].Value += award.MaxAwardable;
+			switch (award.SkillName) {
+			case SkillName.AVOIDANCE:
+				skills.Avoidance.Value += award.MaxAwardable;
+				break;
+			case SkillName.MELEE:
+				skills.Melee.Value += award.MaxAwardable;
+				break;
+			case SkillName.RANGED:
+				skills.Ranged.Value += award.MaxAwardable;
+				break;
+			}
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
@@ -183,22 +194,45 @@ namespace Vaerydian.Systems.Update
         /// <param name="award"></param>
         private void awardAttributeUp(Award award)
         {
-            Statistics attributes = (Statistics)v_AttributeMapper.get(award.Receiver);
+            Statistics statistics = (Statistics)v_AttributeMapper.get(award.Receiver);
 
-            attributes.StatisticSet[award.AttributeType] += award.MaxAwardable;
+            //attributes.StatisticSet[award.AttributeType] += award.MaxAwardable;
+			switch (award.StatType) {
+			case StatType.ENDURANCE:
+				statistics.Endurance.Value += award.MaxAwardable;
+				break;
+			case StatType.FOCUS:
+				statistics.Focus.Value += award.MaxAwardable;
+				break;
+			case StatType.MIND:
+				statistics.Mind.Value += award.MaxAwardable;
+				break;
+			case StatType.MUSCLE:
+				statistics.Muscle.Value += award.MaxAwardable;
+				break;
+			case StatType.PERCEPTION:
+				statistics.Perception.Value += award.MaxAwardable;
+				break;
+			case StatType.PERSONALITY:
+				statistics.Personality.Value += award.MaxAwardable;
+				break;
+			case StatType.QUICKNESS:
+				statistics.Quickness.Value += award.MaxAwardable;
+				break;
+			}
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)
-                UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.AttributeType.ToString() + "]", "GENERAL", Color.Orange, 1000, new Position(pos.Pos, pos.Offset));
+				UIFactory.createFloatingText("+" + award.MaxAwardable + " [" + award.StatType.ToString() + "]", "GENERAL", Color.Orange, 1000, new Position(pos.Pos, pos.Offset));
         }
 
         private void awardHealthUp(Award award)
         {
             Health health = (Health)v_HealthMapper.get(award.Receiver);
-            Statistics attributes = (Statistics)v_AttributeMapper.get(award.Receiver);
+            Statistics statistics = (Statistics)v_AttributeMapper.get(award.Receiver);
 
             health.MaxHealth += award.MaxAwardable;
-            health.RecoveryAmmount = attributes.StatisticSet[StatType.ENDURANCE] / 5;
+            health.RecoveryAmmount = statistics.Endurance.Value / 5;
 
             Position pos = (Position)v_PositionMapper.get(award.Receiver);
             if (pos != null)

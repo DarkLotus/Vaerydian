@@ -315,10 +315,10 @@ namespace Vaerydian.Behaviors
                     continue;
 
                 //is this local known to this entity
-                if (factions.KnownFactions.ContainsKey(w_EntityFaction.OwnerFaction.FactionType))
+                if (factions.KnownFactions.ContainsKey(w_EntityFaction.OwnerFaction.Name))
                 {
                     //should this entity be hostile towards this local?
-                    if (factions.KnownFactions[w_EntityFaction.OwnerFaction.FactionType].Value < 0)
+                    if (factions.KnownFactions[w_EntityFaction.OwnerFaction.Name].Value < 0)
                     {
                         Position pos = (Position)w_PositionMapper.get(w_ThisEntity);
                         Position tPos = (Position)w_PositionMapper.get(locals[i]);

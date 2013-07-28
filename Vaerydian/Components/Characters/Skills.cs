@@ -37,9 +37,8 @@ namespace Vaerydian.Components.Characters
             s_TypeID = typeId;
         }
 
-        /// <summary>
-        /// available skills
-        /// </summary>
-		public Dictionary<SkillName, Skill> SkillSet;
+		public Skill Melee;
+		public Skill Ranged;
+		public Skill Avoidance;
     }
 }
