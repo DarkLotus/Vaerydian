@@ -371,7 +371,6 @@ namespace Vaerydian.Screens
             
 
 			EntityFactory.createCamera();
-			EntityFactory.createMousePointer();
 
 			UIFactory.createHitPointLabel(player, 100, 50, new Point((this.ScreenManager.GraphicsDevice.Viewport.Width - 100) / 2, 0));
 
@@ -399,6 +398,8 @@ namespace Vaerydian.Screens
             //create spatialpartition
 			EntityFactory.createSpatialPartition(new Vector2(0, 0), new Vector2(3200, 3200), 4);
 
+            //create mouse
+            EntityFactory.createMousePointer();
 
             //early entity reslove
             ecsInstance.resolveEntities();

@@ -214,8 +214,8 @@ namespace Vaerydian.Factories
         public static void createMousePointer()
         {
 			Entity e = ECSInstance.create();
-			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(24)));
-			ECSInstance.EntityManager.addComponent(e, new Sprite("reticle","reticle_normal",48,48,0,0));
+			ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0), new Vector2(5)));
+            ECSInstance.EntityManager.addComponent(e, new Sprite("pointer", "pointer", 10, 10, 0, 0));
 			ECSInstance.EntityManager.addComponent(e, new MousePosition());
 			//ECSInstance.EntityManager.addComponent(e, createLight(true, 2, new Vector3(576, 360, 50), 0.3f, new Vector4(1f, 1f, 0.6f, 1f)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());
