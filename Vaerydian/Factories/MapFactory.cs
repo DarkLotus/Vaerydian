@@ -192,7 +192,7 @@ namespace Vaerydian.Factories
             return map;
         }
 
-        public Vector2 findSafeLocation(GameMap map)
+        public static Vector2 findSafeLocation(GameMap map)
         {
             for (int i = 0; i < map.Map.XSize; i++)
             {

@@ -59,7 +59,6 @@ using Vaerydian.Utils;
 using Vaerydian.Sessions;
 using Vaerydian.Maps;
 using Vaerydian.ACB;
-using Vaerydian.Characters;
 
 
 namespace Vaerydian.Screens
@@ -358,7 +357,7 @@ namespace Vaerydian.Screens
 				if ((bool)g_Parameters [GAMESCREEN_RETURNING])
 					player = EntityFactory.recreatePlayer (GameSession.PlayerState, (Position)g_Parameters [GAMESCREEN_LAST_PLAYER_POSITION]);
 				else {
-					player = EntityFactory.recreatePlayer (GameSession.PlayerState, new Position (mapFactory.findSafeLocation (g_Map), new Vector2 (16, 16)));
+					player = EntityFactory.recreatePlayer (GameSession.PlayerState, new Position (MapFactory.findSafeLocation (g_Map), new Vector2 (16, 16)));
 				}
 			}
 

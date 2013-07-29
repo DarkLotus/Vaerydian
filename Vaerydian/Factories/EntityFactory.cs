@@ -56,7 +56,12 @@ namespace Vaerydian.Factories
         public static Entity createPlayer(int skillLevel)
         {
             Entity e = ECSInstance.create();
-            ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
+
+			GameMap gameMap = ComponentMapper.get<GameMap> (ECSInstance.TagManager.getEntityByTag ("MAP"));
+			Vector2 pos = MapFactory.findSafeLocation (gameMap);
+
+            //ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(576f, 360f),new Vector2(12.5f)));
+			ECSInstance.EntityManager.addComponent(e, new Position(pos,new Vector2(16)));
             //ECSInstance.EntityManager.addComponent(e, new Position(new Vector2(0, 0), new Vector2(12.5f)));
 			ECSInstance.EntityManager.addComponent(e, new Velocity(4f));
 			ECSInstance.EntityManager.addComponent(e, new Controllable());
@@ -64,7 +69,7 @@ namespace Vaerydian.Factories
             
 			ECSInstance.EntityManager.addComponent(e, AnimationFactory.createPlayerAnimation());
 			ECSInstance.EntityManager.addComponent(e, new CameraFocus(75));
-            //ECSInstance.EntityManager.addComponent(e, new MapCollidable());
+            ECSInstance.EntityManager.addComponent(e, new MapCollidable());
 			ECSInstance.EntityManager.addComponent(e, new Heading());
 			ECSInstance.EntityManager.addComponent(e, createLight(true, 8, new Vector3(new Vector2(576f, 360f), 10), 0.5f, new Vector4(1, 1, .6f, 1)));
 			ECSInstance.EntityManager.addComponent(e, new Transform());

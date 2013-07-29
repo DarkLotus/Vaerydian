@@ -364,7 +364,7 @@ namespace Vaerydian.Factories
 			int y = window.Frame.Bounds.Y + buttonHeight;
 
 			int xSize = window.Frame.Bounds.Width / cols;
-			int ySize = window.Frame.Bounds.Height / rows;
+			int ySize = (window.Frame.Bounds.Height - buttonHeight) / rows;
 
 			for (int i = 0; i < cols; i++) {
 				for(int j = 0; j < rows; j++){
