@@ -1,6 +1,6 @@
 ﻿/*
  Author:
-      Thomas H. Jonell <thjonell@gmail.com>
+      Thomas H. Jonell <thjonell AT gmail DOT com>
  
  Copyright (c) 2013 Thomas H. Jonell
 

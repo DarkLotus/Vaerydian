@@ -1,14 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\Factories\UIFactory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\Components\Characters\Award.cs">
     <Files>
-      <File FileName="Vaerydian\UI\BasicWindow.cs" Line="1" Column="1" />
-      <File FileName="Vaerydian\Factories\UIFactory.cs" Line="366" Column="49" />
-      <File FileName="Vaerydian\VaerydianGame.cs" Line="59" Column="31" />
-      <File FileName="Vaerydian\Screens\GameScreen.cs" Line="357" Column="51" />
-      <File FileName="Vaerydian\Factories\EntityFactory.cs" Line="71" Column="67" />
-      <File FileName="Vaerydian\Factories\MapFactory.cs" Line="195" Column="23" />
-      <File FileName="Vaerydian\Systems\Update\PlayerInputSystem.cs" Line="319" Column="42" />
+      <File FileName="Vaerydian\Factories\UIFactory.cs" Line="3" Column="51" />
+      <File FileName="Vaerydian\Components\Characters\Award.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,11 +16,11 @@
             </Node>
             <Node name="Characters" expanded="True" />
             <Node name="Components" expanded="True">
-              <Node name="Characters" expanded="True" />
+              <Node name="Characters" expanded="True">
+                <Node name="Award.cs" selected="True" />
+              </Node>
             </Node>
-            <Node name="Factories" expanded="True">
-              <Node name="UIFactory.cs" selected="True" />
-            </Node>
+            <Node name="Factories" expanded="True" />
             <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True">
               <Node name="Update" expanded="True" />
