@@ -1,6 +1,6 @@
 ﻿/*
  Author:
-      Thomas H. Jonell <thjonell AT gmail DOT com>
+      Thomas H. Jonell <@Net_Gnome>
  
  Copyright (c) 2013 Thomas H. Jonell
 
