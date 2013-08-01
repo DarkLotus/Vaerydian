@@ -120,13 +120,13 @@ namespace Vaerydian.Systems.Update
                 return;
 
             //look up skills/knowledge
-            Knowledge awdGeneral = awarder.GeneralKnowledge[info.CreatureGeneralGroup];
-            Knowledge awdVaration = awarder.VariationKnowledge[info.CreatureVariationGroup];
-            Knowledge awdUnique = awarder.UniqueKnowledge[info.CreatureUniqueGroup];
+            Knowledge awdGeneral = awarder.GeneralKnowledge[info.GeneralGroup];
+            Knowledge awdVaration = awarder.VariationKnowledge[info.VariationGroup];
+            Knowledge awdUnique = awarder.UniqueKnowledge[info.UniqueGroup];
 
-            Knowledge recGeneral = receiver.GeneralKnowledge[info.CreatureGeneralGroup];
-            Knowledge recVaration = receiver.VariationKnowledge[info.CreatureVariationGroup];
-            Knowledge recUnique = receiver.UniqueKnowledge[info.CreatureUniqueGroup];
+            Knowledge recGeneral = receiver.GeneralKnowledge[info.GeneralGroup];
+            Knowledge recVaration = receiver.VariationKnowledge[info.VariationGroup];
+            Knowledge recUnique = receiver.UniqueKnowledge[info.UniqueGroup];
 
             //reward general
             if (recGeneral.Value < awdGeneral.Value)
@@ -138,13 +138,13 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
                 
                 recGeneral.Value += val;
-				receiver.GeneralKnowledge.Remove (info.CreatureGeneralGroup);
-				receiver.GeneralKnowledge.Add (info.CreatureGeneralGroup, recGeneral);
+				receiver.GeneralKnowledge.Remove (info.GeneralGroup);
+				receiver.GeneralKnowledge.Add (info.GeneralGroup, recGeneral);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureGeneralGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.GeneralGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
             //reward variation
             if (recVaration.Value < awdVaration.Value)
@@ -156,13 +156,13 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
 
                 recVaration.Value += val;
-				receiver.VariationKnowledge.Remove (info.CreatureVariationGroup);
-				receiver.VariationKnowledge.Add (info.CreatureVariationGroup, recVaration);
+				receiver.VariationKnowledge.Remove (info.VariationGroup);
+				receiver.VariationKnowledge.Add (info.VariationGroup, recVaration);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureVariationGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.VariationGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
             //reward unique
             if (recUnique.Value < awdUnique.Value)
@@ -174,13 +174,13 @@ namespace Vaerydian.Systems.Update
                     val = award.MinAwardable;
 
                 recUnique.Value += val;
-				receiver.UniqueKnowledge.Remove (info.CreatureUniqueGroup);
-				receiver.UniqueKnowledge.Add (info.CreatureUniqueGroup, recUnique);
+				receiver.UniqueKnowledge.Remove (info.UniqueGroup);
+				receiver.UniqueKnowledge.Add (info.UniqueGroup, recUnique);
 
                 //announce reward
                 Position pos = (Position)v_PositionMapper.get(award.Receiver);
                 if (pos != null)
-                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.CreatureUniqueGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
+                    UIFactory.createFloatingText("+" + val.ToString("#.0") + " [" + info.UniqueGroup.ToString() + "]", "GENERAL", Color.MediumPurple, 1000, new Position(pos.Pos, pos.Offset));
             }
 
 

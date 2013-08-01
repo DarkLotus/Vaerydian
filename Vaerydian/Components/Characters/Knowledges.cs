@@ -28,7 +28,12 @@ using Vaerydian.Characters;
 
 namespace Vaerydian.Components.Characters
 {
-    public class Knowledges : IComponent
+    
+	struct KnowledgeDef{
+
+	}
+
+	public class Knowledges : IComponent
     {
         private static int e_TypeID;
         private int e_EntityID;

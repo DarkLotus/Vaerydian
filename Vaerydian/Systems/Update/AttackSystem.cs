@@ -189,8 +189,8 @@ namespace Vaerydian.Systems.Update
             if (infoDef == null || infoAtk == null)
                 return;
 
-            float probHit = atkSkill / 4 + perception / 4 + attKnw.GeneralKnowledge[infoDef.CreatureGeneralGroup].Value + weapon.Speed;
-            float probDef = defSkill / 4 + quickness / 4 + defKnw.GeneralKnowledge[infoAtk.CreatureGeneralGroup].Value + armor.Mobility;
+            float probHit = atkSkill / 4 + perception / 4 + attKnw.GeneralKnowledge[infoDef.GeneralGroup].Value + weapon.Speed;
+            float probDef = defSkill / 4 + quickness / 4 + defKnw.GeneralKnowledge[infoAtk.GeneralGroup].Value + armor.Mobility;
 
             float hitProb = (probHit / (probHit + probDef)) * 1.75f + (probDef / (probHit + probDef)) * 0.15f;
 
@@ -358,8 +358,8 @@ namespace Vaerydian.Systems.Update
             if (infoDef == null || infoAtk == null)
                 return;
 
-            float probHit = atkSkill / 4 + perception / 4 + attKnw.GeneralKnowledge[infoDef.CreatureGeneralGroup].Value + weapon.Speed;
-            float probDef = defSkill / 4 + quickness / 4 + defKnw.GeneralKnowledge[infoAtk.CreatureGeneralGroup].Value + armor.Mobility;
+            float probHit = atkSkill / 4 + perception / 4 + attKnw.GeneralKnowledge[infoDef.GeneralGroup].Value + weapon.Speed;
+            float probDef = defSkill / 4 + quickness / 4 + defKnw.GeneralKnowledge[infoAtk.GeneralGroup].Value + armor.Mobility;
 
             float hitProb = (probHit / (probHit + probDef)) * 1.75f + (probDef / (probHit + probDef)) * 0.15f;
 

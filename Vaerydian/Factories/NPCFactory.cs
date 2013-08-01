@@ -99,9 +99,9 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST FOLLOWER";
-			info.CreatureGeneralGroup = "BAT";
-			info.CreatureVariationGroup = "NONE";
-			info.CreatureUniqueGroup = "NONE";
+			info.GeneralGroup = "BAT";
+			info.VariationGroup = "NONE";
+			info.UniqueGroup = "NONE";
             n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
@@ -218,9 +218,9 @@ namespace Vaerydian.Factories
             //create info
             Information info = new Information();
             info.Name = "TEST WANDERER";
-			info.CreatureGeneralGroup = "BAT";
-			info.CreatureVariationGroup = "NONE";
-			info.CreatureUniqueGroup = "NONE";
+			info.GeneralGroup = "BAT";
+			info.VariationGroup = "NONE";
+			info.UniqueGroup = "NONE";
             n_EcsInstance.EntityManager.addComponent(e, info);
 
             //create life
@@ -292,6 +292,124 @@ namespace Vaerydian.Factories
 
             n_EcsInstance.refresh(e);
         }
+
+		public Entity createCreature (string creatureDef, Vector2 position, int skillLevel){
+			Entity e = n_EcsInstance.create();
+
+			n_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(16)));
+			n_EcsInstance.EntityManager.addComponent(e, new Velocity(3f));
+			n_EcsInstance.EntityManager.addComponent(e, new AiBehavior(new WanderingEnemyBehavior(e, n_EcsInstance)));
+			n_EcsInstance.EntityManager.addComponent(e, new MapCollidable());
+			n_EcsInstance.EntityManager.addComponent(e, new Heading());
+			n_EcsInstance.EntityManager.addComponent(e, new Transform());
+			n_EcsInstance.EntityManager.addComponent(e, new Aggrivation());
+
+			//create state machine
+			StateMachine<EnemyState,EnemyState> stateMachine = new StateMachine<EnemyState, EnemyState>(EnemyState.Idle, EnemyAI.whenIdle, EnemyState.Idle);
+
+			//define states
+			stateMachine.addState(EnemyState.Wandering, EnemyAI.whenWandering);
+			stateMachine.addState(EnemyState.Following, EnemyAI.whenFollowing);
+
+			//define transitions
+			stateMachine.addStateChange(EnemyState.Idle, EnemyState.Wandering, EnemyState.Wandering);
+			stateMachine.addStateChange(EnemyState.Wandering, EnemyState.Following, EnemyState.Following);
+			stateMachine.addStateChange(EnemyState.Following, EnemyState.Wandering, EnemyState.Wandering);
+
+			StateContainer<EnemyState, EnemyState> stateContainer = new StateContainer<EnemyState, EnemyState>();
+			stateContainer.StateMachine = stateMachine;
+
+			n_EcsInstance.EntityManager.addComponent(e, stateContainer);
+
+			//create ACB component
+			BusAgent busAgent = new BusAgent();
+			busAgent.Agent = ResourcePool.createAgent ();
+			busAgent.Agent.Entity = e;
+			busAgent.Agent.Init = EnemyAI.init;
+			busAgent.Agent.Run = EnemyAI.run;
+
+			n_EcsInstance.EntityManager.addComponent(e, busAgent);
+
+			CreatureDef cDef = GameConfig.CreatureDefs [creatureDef];
+
+
+			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createCharacter (cDef.CharacterDef.Name));
+
+			//create info
+			Information info = new Information();
+			info.Name = cDef.InfoDef.Name;
+			info.GeneralGroup = cDef.InfoDef.GeneralGroup;
+			info.VariationGroup = cDef.InfoDef.VariationGroup;
+			info.UniqueGroup = cDef.InfoDef.UniqueGroup;
+			n_EcsInstance.EntityManager.addComponent(e, info);
+
+			//create life
+			Life life = new Life();
+			life.IsAlive = true;
+			life.DeathLongevity = cDef.LifeDef.DeathLongevity;
+			n_EcsInstance.EntityManager.addComponent(e, life);
+
+			//create interactions
+			Interactable interact = new Interactable();
+			interact.SupportedInteractions = cDef.SupportedInteractions;
+			n_EcsInstance.EntityManager.addComponent(e, interact);
+
+			//create test equipment
+			ItemFactory iFactory = new ItemFactory(n_EcsInstance);
+			n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
+
+			//setup experiences
+			Knowledges knowledges = new Knowledges();
+			knowledges.GeneralKnowledge.Add ("HUMAN", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
+			knowledges.GeneralKnowledge.Add ("BAT", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
+			knowledges.VariationKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
+			knowledges.UniqueKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
+			n_EcsInstance.EntityManager.addComponent(e, knowledges);
+
+			//setup attributes
+			Statistics statistics = new Statistics();
+
+			statistics.Focus = new Statistic {Name="FOCUS",Value=skillLevel,StatType=StatType.FOCUS };
+			statistics.Endurance = new Statistic {Name= "ENDURANCE",Value= skillLevel,StatType= StatType.ENDURANCE };
+			statistics.Mind = new Statistic {Name= "MIND",Value= skillLevel,StatType= StatType.MIND };
+			statistics.Muscle = new Statistic {Name= "MUSCLE",Value= skillLevel,StatType= StatType.MUSCLE };
+			statistics.Perception = new Statistic {Name= "PERCEPTION",Value= skillLevel,StatType= StatType.PERCEPTION };
+			statistics.Personality = new Statistic {Name= "PERSONALITY",Value= skillLevel,StatType= StatType.PERSONALITY };
+			statistics.Quickness = new Statistic {Name= "QUICKNESS",Value= skillLevel,StatType= StatType.QUICKNESS };
+			n_EcsInstance.EntityManager.addComponent(e, statistics);
+
+			//create health
+			Health health = new Health(statistics.Endurance.Value * 3);
+			health.RecoveryAmmount = statistics.Endurance.Value / 5;
+			health.RecoveryRate = 1000;
+			n_EcsInstance.EntityManager.addComponent(e, health);
+
+			//setup skills
+			Skills skills = new Skills();
+			skills.Ranged = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
+			skills.Avoidance = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
+			skills.Melee = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
+			n_EcsInstance.EntityManager.addComponent(e, skills);
+
+			//setup factions
+			Factions factions = new Factions();
+			factions.OwnerFaction = new Faction{Name="WILDERNESS",Value=100,FactionType= FactionType.Wilderness};
+			factions.KnownFactions.Add ("PLAYER", new Faction { Name="PLAYER", Value=-10, FactionType= FactionType.Player });
+			factions.KnownFactions.Add ("ALLY", new Faction { Name="ALLY", Value=-10, FactionType=FactionType.Ally });
+			n_EcsInstance.EntityManager.addComponent(e, factions);
+
+			Aggrivation aggro = new Aggrivation();
+			n_EcsInstance.EntityManager.addComponent(e, aggro);
+
+			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 3, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
+
+			n_EcsInstance.GroupManager.addEntityToGroup("WANDERERS", e);
+
+			n_EcsInstance.refresh(e);
+
+
+			return e;
+		}
 
         public void createWanders(int count, GameMap map, int skillLevel)
         {

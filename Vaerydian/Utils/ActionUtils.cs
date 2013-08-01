@@ -263,7 +263,7 @@ namespace Vaerydian.Utils
 
 		private static float getKnowledge(Entity entity, Entity target){
 			Information info = ComponentMapper.get<Information> (target);
-			return ComponentMapper.get<Knowledges> (entity).GeneralKnowledge [info.CreatureGeneralGroup].Value;
+			return ComponentMapper.get<Knowledges> (entity).GeneralKnowledge [info.GeneralGroup].Value;
 		}
 
 		private static StatType getOppositeStat(StatType stat){

@@ -75,9 +75,9 @@ namespace Vaerydian.Factories
 			ECSInstance.EntityManager.addComponent(e, new Transform());
 
             Information info = new Information();
-			info.CreatureGeneralGroup = "HUMAN";
-			info.CreatureVariationGroup = "NONE";
-			info.CreatureUniqueGroup = "NONE";
+			info.GeneralGroup = "HUMAN";
+			info.VariationGroup = "NONE";
+			info.UniqueGroup = "NONE";
             info.Name = "PLAYER";
 			ECSInstance.EntityManager.addComponent(e, info);
 

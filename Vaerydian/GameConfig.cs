@@ -26,6 +26,7 @@ using Vaerydian.Utils;
 using Vaerydian.Screens;
 using Vaerydian.Components.Actions;
 using Vaerydian.Characters;
+using Vaerydian.Components.Characters;
 
 namespace Vaerydian
 {
@@ -457,6 +458,9 @@ namespace Vaerydian
 		public string Name;
 		public CharacterDef CharacterDef;
 		public int SkillLevel;
+		public InfoDef InfoDef;
+		public LifeDef LifeDef;
+		public SupportedInteractions SupportedInteractions;
 	}
 
 	/// <summary>

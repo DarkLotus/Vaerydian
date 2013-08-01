@@ -27,6 +27,14 @@ using ECSFramework;
 
 namespace Vaerydian.Components.Characters
 {
+	public struct InfoDef{
+		public string Name;
+		public string GeneralGroup;
+		public string VariationGroup;
+		public string UniqueGroup;
+	}
+
+
     class Information : IComponent
     {
         private static int i_TypeID;
@@ -54,27 +62,22 @@ namespace Vaerydian.Components.Characters
             i_TypeID = typeId;
         }
 
-        private String i_Name;
         /// <summary>
         /// name of creature
         /// </summary>
-        public String Name
-        {
-            get { return i_Name; }
-            set { i_Name = value; }
-        }
+		public string Name;
 
         /// <summary>
         /// type of creature
         /// </summary>
-		public string CreatureGeneralGroup;
+		public string GeneralGroup;
         /// <summary>
         /// type of creature variation
         /// </summary>
-		public string CreatureVariationGroup;
+		public string VariationGroup;
         /// <summary>
         /// type of unique creature
         /// </summary>
-		public string CreatureUniqueGroup;
+		public string UniqueGroup;
     }
 }

@@ -308,19 +308,19 @@ namespace Vaerydian.Factories
 			Vaerydian.Components.Characters.Statistics attributes = ComponentMapper.get<Vaerydian.Components.Characters.Statistics>(sender.Caller);
 
 			GLabel label = (GLabel) sender;
-			label.Text = "Skills" + "\n" +
-				"  Range: " + skills.Ranged.Value + "\n" +
-				"  Melee: " + skills.Melee.Value + "\n" +
-				"  Avoidance: " + skills.Avoidance.Value + "\n" +
+			label.Text = "  Skills" + "\n" +
+				"    Range: " + skills.Ranged.Value + "\n" +
+				"    Melee: " + skills.Melee.Value + "\n" +
+				"    Avoidance: " + skills.Avoidance.Value + "\n" +
 				"\n" +
-				"Attributes" + "\n" +
-				"  Endurance: " + attributes.Endurance.Value + "\n" +
-				"  Focus: " + attributes.Focus.Value + "\n" +
-				"  Mind: " + attributes.Mind.Value + "\n" +
-				"  Muscle: " + attributes.Muscle.Value + "\n" +
-				"  Perception: " + attributes.Perception.Value + "\n" +
-				"  Personality: " + attributes.Personality.Value + "\n" +
-				"  Quickness: " + attributes.Quickness.Value;
+				"  Attributes" + "\n" +
+				"    Endurance: " + attributes.Endurance.Value + "\n" +
+				"    Focus: " + attributes.Focus.Value + "\n" +
+				"    Mind: " + attributes.Mind.Value + "\n" +
+				"    Muscle: " + attributes.Muscle.Value + "\n" +
+				"    Perception: " + attributes.Perception.Value + "\n" +
+				"    Personality: " + attributes.Personality.Value + "\n" +
+				"    Quickness: " + attributes.Quickness.Value;
 		}
 
 		public static Entity createInventoryWindow(Entity caller, 

@@ -26,6 +26,10 @@ using ECSFramework;
 
 namespace Vaerydian.Components.Characters
 {
+	public struct LifeDef{
+		public int DeathLongevity;
+	}
+
     class Life : IComponent
     {
 
