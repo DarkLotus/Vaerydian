@@ -265,7 +265,9 @@ namespace Vaerydian.Systems.Update
             {
                 p_LastFired = 0;
 
-                Vector2 dir = mPosition.Pos + mPosition.Offset - new Vector2(16) - pos;
+				Position targetPos = (Position) p_PositionMapper.get (p_Target);
+
+				Vector2 dir = targetPos.Pos + targetPos.Offset - new Vector2(16) - pos;
                 dir.Normalize();
 
                 Transform trans = new Transform();

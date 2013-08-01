@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian\Components\Characters\Award.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="c:\GitHub\Vaerydian\Vaerydian\Behaviors\Actions\FindPathAction.cs">
     <Files>
       <File FileName="Vaerydian\Factories\UIFactory.cs" Line="1" Column="1" />
       <File FileName="Vaerydian\Components\Characters\Award.cs" Line="1" Column="1" />
+      <File FileName="Vaerydian\Systems\Update\PlayerInputSystem.cs" Line="1" Column="1" />
+      <File FileName="c:\GitHub\Vaerydian\Vaerydian\Behaviors\Actions\FindPathAction.cs" Line="12" Column="25" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,13 +14,13 @@
             <Node name="References" expanded="True" />
             <Node name="ACB" expanded="True" />
             <Node name="Behaviors" expanded="True">
-              <Node name="Actions" expanded="True" />
+              <Node name="Actions" expanded="True">
+                <Node name="FindPathAction.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="Characters" expanded="True" />
             <Node name="Components" expanded="True">
-              <Node name="Characters" expanded="True">
-                <Node name="Award.cs" selected="True" />
-              </Node>
+              <Node name="Characters" expanded="True" />
             </Node>
             <Node name="Factories" expanded="True" />
             <Node name="Screens" expanded="True" />
