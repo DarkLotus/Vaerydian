@@ -263,18 +263,23 @@ namespace Vaerydian.Systems.Update
 
             if (InputManager.isLeftButtonDown() && (p_LastFired >= 3*p_FireRate))
             {
-                p_LastFired = 0;
+                Target target = (Target)p_TargetMapper.get(p_Target);
+                if (target.Active)
+                {
 
-				Position targetPos = (Position) p_PositionMapper.get (p_Target);
+                    p_LastFired = 0;
 
-				Vector2 dir = targetPos.Pos + targetPos.Offset - new Vector2(16) - pos;
-                dir.Normalize();
+                    Position targetPos = (Position)p_PositionMapper.get(p_Target);
 
-                Transform trans = new Transform();
-                trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
-                trans.RotationOrigin = new Vector2(0, 16);
+                    Vector2 dir = targetPos.Pos + targetPos.Offset - new Vector2(16) - pos;
+                    dir.Normalize();
 
-				UtilFactory.createMeleeAction(pos + dir * 16, dir, trans, entity);
+                    Transform trans = new Transform();
+                    trans.Rotation = -VectorHelper.getAngle(new Vector2(1, 0), dir);
+                    trans.RotationOrigin = new Vector2(0, 16);
+
+                    UtilFactory.createMeleeAction(pos + dir * 16, dir, trans, entity);
+                }
             }
 
             if (InputManager.isRightButtonDown() && (p_LastFired >= p_FireRate))
