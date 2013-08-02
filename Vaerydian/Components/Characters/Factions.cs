@@ -28,7 +28,13 @@ using Vaerydian.Characters;
 
 namespace Vaerydian.Components.Characters
 {
-    class Factions : IComponent
+    public struct FactionsDef{
+		public string Name;
+		public Faction OwnerFaction;
+		public List<Faction> Factions;
+	}
+
+	class Factions : IComponent
     {
         private static int f_TypeID;
         private int f_EntityID;

@@ -1,14 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/Screens/GameScreen.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Vaerydian/GameConfig.cs">
     <Files>
-      <File FileName="Vaerydian/GameConfig.cs" Line="462" Column="13" />
-      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="355" Column="38" />
-      <File FileName="Vaerydian/Components/Characters/Knowledges.cs" Line="33" Column="3" />
-      <File FileName="Vaerydian/Components/Characters/Information.cs" Line="37" Column="2" />
-      <File FileName="Vaerydian/Components/Characters/Life.cs" Line="26" Column="1" />
-      <File FileName="Vaerydian/Factories/UIFactory.cs" Line="312" Column="48" />
-      <File FileName="Vaerydian/Screens/GameScreen.cs" Line="619" Column="36" />
+      <File FileName="Vaerydian/GameConfig.cs" Line="469" Column="34" />
+      <File FileName="Vaerydian/Factories/NPCFactory.cs" Line="415" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -23,14 +18,14 @@
             <Node name="Components" expanded="True">
               <Node name="Actions" expanded="True" />
               <Node name="Characters" expanded="True" />
+              <Node name="Items" expanded="True" />
             </Node>
             <Node name="Factories" expanded="True" />
-            <Node name="Screens" expanded="True">
-              <Node name="GameScreen.cs" selected="True" />
-            </Node>
+            <Node name="Screens" expanded="True" />
             <Node name="Systems" expanded="True" />
             <Node name="UI" expanded="True" />
             <Node name="Utils" expanded="True" />
+            <Node name="GameConfig.cs" selected="True" />
           </Node>
         </State>
       </Pad>

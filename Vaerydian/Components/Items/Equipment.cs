@@ -26,6 +26,13 @@ using ECSFramework;
 
 namespace Vaerydian.Components.Items
 {
+
+	public struct EquipmentDef{
+		public string Name;
+		public ArmorDef ArmorDef;
+		public WeaponDef WeaponDef;
+	}
+
     class Equipment : IComponent
     {
         private static int e_TypeID;

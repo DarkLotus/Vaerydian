@@ -213,7 +213,7 @@ namespace Vaerydian.Factories
 
             n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
-			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createCharacter ("BAT"));
+			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createAvatar ("BAT"));
 
             //create info
             Information info = new Information();
@@ -293,7 +293,7 @@ namespace Vaerydian.Factories
             n_EcsInstance.refresh(e);
         }
 
-		public Entity createCreature (string creatureDef, Vector2 position, int skillLevel){
+		public Entity createCharacter (CharacterDef characterDef, Vector2 position){
 			Entity e = n_EcsInstance.create();
 
 			n_EcsInstance.EntityManager.addComponent(e, new Position(position, new Vector2(16)));
@@ -318,7 +318,6 @@ namespace Vaerydian.Factories
 
 			StateContainer<EnemyState, EnemyState> stateContainer = new StateContainer<EnemyState, EnemyState>();
 			stateContainer.StateMachine = stateMachine;
-
 			n_EcsInstance.EntityManager.addComponent(e, stateContainer);
 
 			//create ACB component
@@ -327,55 +326,58 @@ namespace Vaerydian.Factories
 			busAgent.Agent.Entity = e;
 			busAgent.Agent.Init = EnemyAI.init;
 			busAgent.Agent.Run = EnemyAI.run;
-
 			n_EcsInstance.EntityManager.addComponent(e, busAgent);
 
-			CreatureDef cDef = GameConfig.CreatureDefs [creatureDef];
-
-
-			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createCharacter (cDef.CharacterDef.Name));
+			//create avatar
+			n_EcsInstance.EntityManager.addComponent(e, AnimationFactory.createAvatar (characterDef.AvatarDef.Name));
 
 			//create info
 			Information info = new Information();
-			info.Name = cDef.InfoDef.Name;
-			info.GeneralGroup = cDef.InfoDef.GeneralGroup;
-			info.VariationGroup = cDef.InfoDef.VariationGroup;
-			info.UniqueGroup = cDef.InfoDef.UniqueGroup;
+			info.Name = characterDef.InfoDef.Name;
+			info.GeneralGroup = characterDef.InfoDef.GeneralGroup;
+			info.VariationGroup = characterDef.InfoDef.VariationGroup;
+			info.UniqueGroup = characterDef.InfoDef.UniqueGroup;
 			n_EcsInstance.EntityManager.addComponent(e, info);
 
 			//create life
 			Life life = new Life();
 			life.IsAlive = true;
-			life.DeathLongevity = cDef.LifeDef.DeathLongevity;
+			life.DeathLongevity = characterDef.LifeDef.DeathLongevity;
 			n_EcsInstance.EntityManager.addComponent(e, life);
 
 			//create interactions
 			Interactable interact = new Interactable();
-			interact.SupportedInteractions = cDef.SupportedInteractions;
+			interact.SupportedInteractions = characterDef.SupportedInteractions;
 			n_EcsInstance.EntityManager.addComponent(e, interact);
 
 			//create test equipment
 			ItemFactory iFactory = new ItemFactory(n_EcsInstance);
 			n_EcsInstance.EntityManager.addComponent(e, iFactory.createTestEquipment());
 
-			//setup experiences
+			//setup knowledges
 			Knowledges knowledges = new Knowledges();
-			knowledges.GeneralKnowledge.Add ("HUMAN", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
-			knowledges.GeneralKnowledge.Add ("BAT", new Knowledge { Name="", Value=skillLevel, KnowledgeType=KnowledgeType.General });
-			knowledges.VariationKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
-			knowledges.UniqueKnowledge.Add ("NONE", new Knowledge { Name="", Value=0f, KnowledgeType=KnowledgeType.General });
+			foreach (Knowledge knowledge in characterDef.KnowledgesDef.GeneralKnowledges) {
+				knowledges.GeneralKnowledge.Add(knowledge.Name,knowledge);
+			}
+
+			foreach (Knowledge knowledge in characterDef.KnowledgesDef.VariationKnowledges) {
+				knowledges.VariationKnowledge.Add(knowledge.Name,knowledge);
+			}
+
+			foreach (Knowledge knowledge in characterDef.KnowledgesDef.UniqueKnowledges) {
+				knowledges.UniqueKnowledge.Add(knowledge.Name,knowledge);
+			}
 			n_EcsInstance.EntityManager.addComponent(e, knowledges);
 
 			//setup attributes
 			Statistics statistics = new Statistics();
-
-			statistics.Focus = new Statistic {Name="FOCUS",Value=skillLevel,StatType=StatType.FOCUS };
-			statistics.Endurance = new Statistic {Name= "ENDURANCE",Value= skillLevel,StatType= StatType.ENDURANCE };
-			statistics.Mind = new Statistic {Name= "MIND",Value= skillLevel,StatType= StatType.MIND };
-			statistics.Muscle = new Statistic {Name= "MUSCLE",Value= skillLevel,StatType= StatType.MUSCLE };
-			statistics.Perception = new Statistic {Name= "PERCEPTION",Value= skillLevel,StatType= StatType.PERCEPTION };
-			statistics.Personality = new Statistic {Name= "PERSONALITY",Value= skillLevel,StatType= StatType.PERSONALITY };
-			statistics.Quickness = new Statistic {Name= "QUICKNESS",Value= skillLevel,StatType= StatType.QUICKNESS };
+			statistics.Endurance = characterDef.StatisticsDef.Endurance;
+			statistics.Focus = characterDef.StatisticsDef.Focus;
+			statistics.Mind = characterDef.StatisticsDef.Mind;
+			statistics.Muscle = characterDef.StatisticsDef.Muscle;
+			statistics.Perception = characterDef.StatisticsDef.Perception;
+			statistics.Personality = characterDef.StatisticsDef.Personality;
+			statistics.Quickness = characterDef.StatisticsDef.Quickness;
 			n_EcsInstance.EntityManager.addComponent(e, statistics);
 
 			//create health
@@ -386,16 +388,20 @@ namespace Vaerydian.Factories
 
 			//setup skills
 			Skills skills = new Skills();
-			skills.Ranged = new Skill{Name="RANGED",Value= skillLevel,SkillType= SkillType.Offensive};
-			skills.Avoidance = new Skill{Name="AVOIDANCE",Value= skillLevel,SkillType= SkillType.Defensive};
-			skills.Melee = new Skill{Name="MELEE",Value= skillLevel,SkillType= SkillType.Offensive};
+			skills.Avoidance = characterDef.SkillsDef.Avoidance;
+			skills.Melee = characterDef.SkillsDef.Melee;
+			skills.Ranged = characterDef.SkillsDef.Ranged;
+			skills.Ranged.Value = characterDef.SkillLevel;
+			skills.Avoidance.Value = characterDef.SkillLevel;
+			skills.Melee.Value = characterDef.SkillLevel;
 			n_EcsInstance.EntityManager.addComponent(e, skills);
 
 			//setup factions
 			Factions factions = new Factions();
-			factions.OwnerFaction = new Faction{Name="WILDERNESS",Value=100,FactionType= FactionType.Wilderness};
-			factions.KnownFactions.Add ("PLAYER", new Faction { Name="PLAYER", Value=-10, FactionType= FactionType.Player });
-			factions.KnownFactions.Add ("ALLY", new Faction { Name="ALLY", Value=-10, FactionType=FactionType.Ally });
+			factions.OwnerFaction = characterDef.FactionsDef.OwnerFaction;
+			foreach (Faction faction in characterDef.FactionsDef.Factions) {
+				factions.KnownFactions.Add (faction.Name, faction);
+			}
 			n_EcsInstance.EntityManager.addComponent(e, factions);
 
 			Aggrivation aggro = new Aggrivation();
@@ -403,10 +409,9 @@ namespace Vaerydian.Factories
 
 			n_EcsInstance.EntityManager.addComponent(e, EntityFactory.createLight(true, 3, new Vector3(position, 10), 0.5f, new Vector4(1,1,.6f, 1)));
 
-			n_EcsInstance.GroupManager.addEntityToGroup("WANDERERS", e);
+			n_EcsInstance.GroupManager.addEntityToGroup("CHARACTERS", e);
 
 			n_EcsInstance.refresh(e);
-
 
 			return e;
 		}

@@ -27,6 +27,10 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Items
 {
+	public struct WeaponDef{
+		public string Name;
+	}
+
     class Weapon : IComponent
     {
         private static int w_TypeID;

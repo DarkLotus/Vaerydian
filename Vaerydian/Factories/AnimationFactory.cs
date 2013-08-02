@@ -35,14 +35,14 @@ namespace Vaerydian.Factories
 
         public static ECSInstance ECSInstance;
 
-		public static Character createCharacter(string character){
+		public static Character createAvatar(string avatarName){
 
-			CharacterDef cDef = GameConfig.CharacterDefs[character];
+			AvatarDef aDef = GameConfig.AvatarDefs[avatarName];
 			Character c = new Character ();
-			c.CurrentAnimtaion = cDef.CurrentAnimation;
-			c.CurrentSkeleton = cDef.CurrentSkeleton;
+			c.CurrentAnimtaion = aDef.CurrentAnimation;
+			c.CurrentSkeleton = aDef.CurrentSkeleton;
 
-			foreach (SkeletalDef sDef in cDef.SkeletalDefs) {
+			foreach (SkeletalDef sDef in aDef.SkeletalDefs) {
 				Skeleton skel = new Skeleton();
 
 				foreach(BoneDef bDef in sDef.BoneDefs){
@@ -78,7 +78,7 @@ namespace Vaerydian.Factories
 
         public static Character createBatAnimation()
         {
-			return createCharacter ("BAT");
+			return createAvatar ("BAT");
 			/*
 			Character bat = new Character();
 
@@ -148,7 +148,7 @@ namespace Vaerydian.Factories
 
             return player;
             */
-			return createCharacter ("PLAYER");
+			return createAvatar ("PLAYER");
         }
 
         public static Skeleton createStandingSkeleton()

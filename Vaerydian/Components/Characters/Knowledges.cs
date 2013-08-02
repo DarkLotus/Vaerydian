@@ -29,8 +29,11 @@ using Vaerydian.Characters;
 namespace Vaerydian.Components.Characters
 {
     
-	struct KnowledgeDef{
-
+	public struct KnowledgesDef{
+		public string Name;
+		public List<Knowledge> GeneralKnowledges;
+		public List<Knowledge> VariationKnowledges;
+		public List<Knowledge> UniqueKnowledges;	
 	}
 
 	public class Knowledges : IComponent

@@ -27,6 +27,7 @@ using Vaerydian.Screens;
 using Vaerydian.Components.Actions;
 using Vaerydian.Characters;
 using Vaerydian.Components.Characters;
+using Vaerydian.Components.Items;
 
 namespace Vaerydian
 {
@@ -302,7 +303,7 @@ namespace Vaerydian
 		/// <summary>
 		/// The character defs.
 		/// </summary>
-		public static Dictionary<string, CharacterDef> CharacterDefs = new Dictionary<string, CharacterDef>();
+		public static Dictionary<string, AvatarDef> AvatarDefs = new Dictionary<string, AvatarDef>();
 
 		/// <summary>
 		/// Loads the character animation.
@@ -392,7 +393,7 @@ namespace Vaerydian
 				foreach(Dictionary<string,object> dict in cDefs){
 					jo = new JsonObject(dict);
 
-					CharacterDef cDef = default(CharacterDef);
+					AvatarDef cDef = default(AvatarDef);
 					cDef.SkeletalDefs = new List<SkeletalDef>();
 					cDef.Name = jo["name"].asString();
 					cDef.CurrentSkeleton = jo["current_skeleton"].asString();
@@ -405,7 +406,7 @@ namespace Vaerydian
 						cDef.SkeletalDefs.Add (SkeletalDefs[skel]);
 					}
 
-					CharacterDefs.Add(cDef.Name,cDef);
+					AvatarDefs.Add(cDef.Name,cDef);
 				}
 
 
@@ -420,7 +421,7 @@ namespace Vaerydian
 		/// <summary>
 		/// The creature defs.
 		/// </summary>
-		public static Dictionary<string,CreatureDef> CreatureDefs = new Dictionary<string, CreatureDef> ();
+		public static Dictionary<string,CharacterDef> CharacterDefs = new Dictionary<string, CharacterDef> ();
 
 		/// <summary>
 		/// Loads the creatures.
@@ -436,12 +437,12 @@ namespace Vaerydian
 				foreach (Dictionary<string,object> dict in cDefs) {
 					jo = new JsonObject(dict);
 
-					CreatureDef cDef = default(CreatureDef);
+					CharacterDef cDef = default(CharacterDef);
 					cDef.Name = jo["name"].asString();
-					cDef.CharacterDef = CharacterDefs[jo["character_def"].asString()];
+					cDef.AvatarDef = AvatarDefs[jo["character_def"].asString()];
 					cDef.SkillLevel = jo["skill_level"].asInt();
 
-					CreatureDefs.Add(cDef.Name,cDef);
+					CharacterDefs.Add(cDef.Name,cDef);
 				}
 			}catch(Exception e){
 				Console.Error.WriteLine("ERROR: could not load creatures:\n" + e.ToString());
@@ -454,19 +455,24 @@ namespace Vaerydian
 	/// <summary>
 	/// Creature def.
 	/// </summary>
-	public struct CreatureDef{
+	public struct CharacterDef{
 		public string Name;
-		public CharacterDef CharacterDef;
+		public AvatarDef AvatarDef;
 		public int SkillLevel;
 		public InfoDef InfoDef;
 		public LifeDef LifeDef;
 		public SupportedInteractions SupportedInteractions;
+		public EquipmentDef EquipmentDef;
+		public KnowledgesDef KnowledgesDef;
+		public StatisticsDef StatisticsDef;
+		public SkillsDef SkillsDef;
+		public FactionsDef FactionsDef;
 	}
 
 	/// <summary>
 	/// Character def.
 	/// </summary>
-	public struct CharacterDef{
+	public struct AvatarDef{
 		public string Name;
 		public List<SkeletalDef> SkeletalDefs;
 		public string CurrentSkeleton;

@@ -28,7 +28,16 @@ using Vaerydian.Characters;
 
 namespace Vaerydian.Components.Characters
 {
-
+	public struct StatisticsDef{
+		public string Name;
+		public Statistic Muscle;
+		public Statistic Endurance;
+		public Statistic Mind;
+		public Statistic Personality;
+		public Statistic Quickness;
+		public Statistic Perception;
+		public Statistic Focus;
+	}
 
     class Statistics : IComponent
     {

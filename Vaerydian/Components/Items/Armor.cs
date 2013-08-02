@@ -28,6 +28,10 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Items
 {
+	public struct ArmorDef{
+		public string Name;
+	}
+
     class Armor : IComponent
     {
         private static int a_TypeID;

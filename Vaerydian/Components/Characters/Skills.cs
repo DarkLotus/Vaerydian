@@ -29,7 +29,14 @@ using Vaerydian.Utils;
 
 namespace Vaerydian.Components.Characters
 {
-    class Skills : IComponent
+    public struct SkillsDef{
+		public string Name;
+		public Skill Melee;
+		public Skill Ranged;
+		public Skill Avoidance;
+	}
+
+	class Skills : IComponent
     {
         private static int s_TypeID;
         private int s_EntityID;
